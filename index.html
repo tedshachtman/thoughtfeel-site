@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute Cobalt list exercise.">
+<link rel="canonical" href="https://thoughtfeel.net/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="thoughtfeel">
+<meta property="og:title" content="thoughtfeel: a practical guide">
+<meta property="og:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute Cobalt list exercise.">
+<meta property="og:url" content="https://thoughtfeel.net/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="thoughtfeel: a practical guide">
+<meta name="twitter:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute Cobalt list exercise.">
+</head>
+<body>
+<title>thoughtfeel guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
+<style>
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-2: #e6e9f0;
+    --ink: #19213a;
+    --ink-2: #4b5369;
+    --rule: #d3d8e2;
+    --indigo: #2c3f8f;
+    --indigo-soft: #dfe4f5;
+    --weld: #b87a1c;
+    --term: #7f5210;
+    --ok: #2b7451;
+    --ok-soft: #dcefe4;
+    --miss: #a9412e;
+    --miss-soft: #f6e0db;
+    --serif: "Literata", Georgia, "Times New Roman", serif;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #10131b;
+      --surface: #181c27;
+      --surface-2: #212634;
+      --ink: #e5e8ef;
+      --ink-2: #a4aabb;
+      --rule: #2c3243;
+      --indigo: #a5b5ff;
+      --indigo-soft: #232b4a;
+      --weld: #e2a84a;
+      --term: #eab964;
+      --ok: #7fd1a3;
+      --ok-soft: #173326;
+      --miss: #f09a86;
+      --miss-soft: #3a1f1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #10131b;
+    --surface: #181c27;
+    --surface-2: #212634;
+    --ink: #e5e8ef;
+    --ink-2: #a4aabb;
+    --rule: #2c3243;
+    --indigo: #a5b5ff;
+    --indigo-soft: #232b4a;
+    --weld: #e2a84a;
+    --term: #eab964;
+    --ok: #7fd1a3;
+    --ok-soft: #173326;
+    --miss: #f09a86;
+    --miss-soft: #3a1f1a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--indigo); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--weld); outline-offset: 3px; border-radius: 3px; }
+
+  .page { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    padding-block: 24px 40px;
+  }
+  @media (min-width: 860px) {
+    .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; padding-block: 48px 56px; }
+  }
+  .wordmark {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(48px, 9vw, 92px);
+    line-height: .95;
+    letter-spacing: -0.035em;
+    margin: 0;
+  }
+  .wordmark span { color: var(--weld); }
+  .tagline {
+    font-size: clamp(20px, 2.4vw, 25px);
+    line-height: 1.4;
+    margin: 18px 0 0;
+    max-width: 30ch;
+    text-wrap: balance;
+  }
+  .byline { font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--ink-2); margin: 18px 0 0; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--sans); font-weight: 500; font-size: 16px;
+    padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--indigo);
+    text-decoration: none; cursor: pointer; line-height: 1.2;
+    background: transparent; color: var(--indigo);
+  }
+  .btn:hover { background: var(--indigo-soft); }
+  .btn.primary { background: var(--indigo); color: var(--bg); }
+  .btn.primary:hover { filter: brightness(1.1); }
+  .btn.quiet { border-color: var(--rule); color: var(--ink-2); }
+  .swatch-wrap { position: relative; }
+  #swatch { display: block; width: 100%; max-width: 100%; aspect-ratio: 5 / 4; border-radius: 6px; }
+  .swatch-key {
+    display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0; padding: 0; list-style: none;
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-2);
+  }
+  .swatch-key i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+  @media (max-width: 859px) { #swatch { aspect-ratio: 5 / 2; } }
+
+  /* ---------- Exercise ---------- */
+  .try {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: clamp(20px, 4vw, 44px);
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
+  }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--weld); margin: 0 0 10px;
+  }
+  .try h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
+    line-height: 1.15; letter-spacing: -0.015em; margin: 0; text-wrap: balance;
+  }
+  .try-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 48px; margin-top: 24px; }
+  @media (min-width: 900px) { .try-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
+  .try p { margin: 0 0 14px; }
+  .try .lede { color: var(--ink-2); max-width: 60ch; margin-top: 12px; }
+  .check {
+    border-left: 3px solid var(--weld); padding: 4px 0 4px 16px; margin: 0 0 18px;
+  }
+  .check strong { font-family: var(--sans); font-weight: 500; }
+  .steps { margin: 0 0 18px; padding-left: 1.3em; }
+  .steps li { margin-bottom: 8px; padding-left: 4px; }
+  .steps li::marker { font-family: var(--mono); color: var(--weld); font-size: .85em; }
+  .say { font-style: italic; }
+
+  .panel {
+    background: var(--surface-2); border-radius: 10px; padding: 20px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .panel-title { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0; }
+  .timer { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 14px; color: var(--ink-2); }
+  .cobalt { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .cobalt li {
+    display: grid; grid-template-columns: 3ch 1fr; gap: 14px; align-items: baseline;
+    background: var(--surface); border-radius: 8px; padding: 10px 14px;
+  }
+  .pos { font-family: var(--mono); font-size: 14px; color: var(--weld); font-variant-numeric: tabular-nums; }
+  .word { font-family: var(--sans); font-weight: 500; font-size: 20px; letter-spacing: .01em; }
+  .covered .word { color: transparent; background: var(--rule); border-radius: 4px; user-select: none; }
+  .hint { font-size: 15px; color: var(--ink-2); margin: 0; }
+  .recall-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .recall-list li { display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: 14px; align-items: center; }
+  .recall-list .answer { grid-column: 2; font-family: var(--mono); font-size: 13px; margin-top: -2px; }
+  input[type="text"], select {
+    font: 500 18px/1.2 var(--sans); color: var(--ink); background: var(--surface);
+    border: 1.5px solid var(--rule); border-radius: 8px; padding: 10px 12px; width: 100%; min-width: 0;
+  }
+  input[type="text"]:focus, select:focus { border-color: var(--indigo); outline: none; box-shadow: 0 0 0 3px var(--indigo-soft); }
+  input.is-ok { border-color: var(--ok); background: var(--ok-soft); }
+  input.is-miss { border-color: var(--miss); background: var(--miss-soft); }
+  .q { display: grid; gap: 8px; }
+  .q label { font-size: 16px; }
+  .q select { max-width: 12ch; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .score {
+    font-family: var(--sans); font-weight: 700; font-size: 30px; letter-spacing: -0.01em; margin: 0;
+  }
+  .score small { font-weight: 500; font-size: 16px; color: var(--ink-2); letter-spacing: 0; }
+  .result-line {
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.5; background: var(--surface);
+    border: 1px dashed var(--rule); border-radius: 8px; padding: 12px 14px; margin: 0; white-space: pre-wrap; word-break: break-word;
+  }
+  .banner {
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
+    background: var(--indigo-soft); border-radius: 8px; padding: 12px 16px; font-size: 16px;
+  }
+  .ok { color: var(--ok); }
+  .miss { color: var(--miss); }
+  .linkish { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+  /* ---------- Reading layout ---------- */
+  .read { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; margin-top: 72px; }
+  @media (min-width: 1100px) { .read { grid-template-columns: 220px minmax(0, 1fr); gap: 64px; } }
+  .sidenav { display: none; }
+  @media (min-width: 1100px) {
+    .sidenav { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; max-height: calc(100vh - 48px); overflow-y: auto; }
+  }
+  .sidenav p { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 8px; }
+  .sidenav ul { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 2px; }
+  .sidenav a { font-family: var(--sans); font-size: 14.5px; color: var(--ink-2); text-decoration: none; display: block; padding: 4px 0 4px 12px; border-left: 2px solid var(--rule); line-height: 1.35; }
+  .sidenav a:hover, .sidenav a.here { color: var(--ink); border-left-color: var(--weld); }
+
+  .guide { max-width: 68ch; }
+  .guide p { margin: 0 0 1.05em; }
+  .guide h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(28px, 3.2vw, 36px); line-height: 1.15;
+    letter-spacing: -0.015em; margin: 2.4em 0 .6em; text-wrap: balance; scroll-margin-top: 24px;
+  }
+  .guide h2:first-child { margin-top: 0; }
+  .guide h3 {
+    font-family: var(--sans); font-weight: 500; font-size: 21px; line-height: 1.3; margin: 1.8em 0 .5em; text-wrap: balance;
+  }
+  .part-label {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--weld);
+    margin: 3.2em 0 -1.4em; padding-top: 20px; border-top: 1px solid var(--rule);
+  }
+  .thought { font-style: italic; }
+  dfn { font-style: normal; font-weight: 500; color: var(--term); }
+  .benefits { margin: 0 0 1.2em; padding-left: 1.1em; }
+  .benefits li { margin-bottom: .7em; }
+  .benefits li::marker { color: var(--weld); }
+  .benefits strong { font-family: var(--sans); font-weight: 500; }
+  blockquote {
+    margin: 1.2em 0; padding: 14px 20px; border-left: 3px solid var(--weld); background: var(--surface);
+    border-radius: 0 8px 8px 0; font-size: 19px;
+  }
+  .digits { font-family: var(--mono); font-size: 22px; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+  .table-wrap { overflow-x: auto; margin: 1.2em 0 1.4em; }
+  table { border-collapse: collapse; width: 100%; font-size: 16.5px; }
+  th, td { text-align: left; padding: 10px 14px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+  td.num { font-family: var(--mono); color: var(--weld); font-variant-numeric: tabular-nums; }
+  .contents td:first-child a { font-family: var(--sans); font-weight: 500; }
+  .contents td { padding-block: 12px; }
+  .back { font-family: var(--sans); font-size: 14.5px; }
+  .back a { color: var(--ink-2); }
+  .note { color: var(--ink-2); font-size: 16px; }
+
+  /* ---------- Footer ---------- */
+  .join {
+    margin-top: 72px; padding-top: 32px; border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px 48px;
+  }
+  @media (min-width: 820px) { .join { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
+  .join h2 { font-family: var(--sans); font-weight: 700; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .join p { margin: 0 0 14px; color: var(--ink-2); }
+  .join ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-family: var(--sans); }
+  .join li span { display: block; font-family: var(--serif); font-size: 15px; color: var(--ink-2); }
+  .colophon { margin-top: 40px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <div>
+      <h1 class="wordmark">thought<span>feel</span></h1>
+      <p class="tagline">A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once.</p>
+      <p class="byline">BY TED SHACHTMAN · READER’S GUIDE, DRAFT 4</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#try">Try it in 5 minutes</a>
+        <a class="btn" href="#guide">Read the guide</a>
+        <a class="btn quiet" href="thoughtfeel_guide.pdf" target="_blank" rel="noopener">PDF</a>
+      </div>
+    </div>
+    <div class="swatch-wrap" aria-hidden="true">
+      <canvas id="swatch"></canvas>
+      <ul class="swatch-key">
+        <li><i style="background: var(--indigo)"></i>fabric: the whole thought</li>
+        <li><i style="background: var(--weld)"></i>texture: one component</li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ================= Exercise ================= -->
+  <section class="try" id="try" aria-labelledby="try-title">
+    <p class="eyebrow">Try it first · about 5 minutes</p>
+    <h2 id="try-title">Remember the Cobalt list through its feel</h2>
+    <p class="lede">By <em>thoughtfeel</em> I mean the feel a thought has even without a mental picture or an inner voice. Thinking about a person feels different from thinking about a number. This exercise uses that feel to hold five words, their positions and the list they belong to, then checks what you kept.</p>
+
+    <div class="try-grid">
+      <div>
+        <div class="check">
+          <p><strong>A 30-second check.</strong> Without picturing anything or saying words in your head, think <span class="thought">it might rain</span>, then <span class="thought">it rained</span>. Then a knight, then a king. If each pair feels different with no image or words involved, that difference is what this guide works with. If you notice nothing, try the exercise anyway and compare it with how you usually remember.</p>
+        </div>
+        <ol class="steps">
+          <li>Bring <strong>cobalt</strong> to mind and attend to what it feels like as an idea: the metal or the shade of blue, whichever meaning you know.</li>
+          <li>Give it its position. Say aloud <span class="say">“Cobalt is the first entry in the Cobalt list,”</span> attending to cobalt as you say <em>cobalt</em> and giving it that place as you say <em>first</em>. If “first” feels vague, think of the first person in a queue and the first song on an album, and attend to what they share.</li>
+          <li>Do the same for periscope (second), bramble (third), lantern (fourth) and tundra (fifth).</li>
+          <li>Give each entry membership: <span class="say">“This lantern entry belongs to the Cobalt list.”</span> Aim to return to a word and have its position and list come with it.</li>
+        </ol>
+        <p class="hint">Talking aloud helps direct what you are doing in thoughtfeel. The full method is in <a href="#remember-a-list">Remember a list</a>.</p>
+      </div>
+
+      <div class="panel" id="ex" aria-live="polite">
+        <!-- rendered by script; this is the no-script / initial state -->
+        <div class="panel-head">
+          <p class="panel-title">The Cobalt list</p>
+          <span class="timer" id="ex-timer">study 0:00</span>
+        </div>
+        <ol class="cobalt" id="ex-list">
+          <li><span class="pos">1</span><span class="word">Cobalt</span></li>
+          <li><span class="pos">2</span><span class="word">Periscope</span></li>
+          <li><span class="pos">3</span><span class="word">Bramble</span></li>
+          <li><span class="pos">4</span><span class="word">Lantern</span></li>
+          <li><span class="pos">5</span><span class="word">Tundra</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Guide ================= -->
+  <div class="read" id="guide">
+    <nav class="sidenav" aria-label="Guide sections">
+      <p>The main explanation</p>
+      <ul>
+        <li><a href="#how-it-started">How this started</a></li>
+        <li><a href="#a-sense-for-thought">A sense for thought</a></li>
+        <li><a href="#what-the-sense-makes-available">What the sense makes available</a></li>
+        <li><a href="#working-memory">A working memory for thoughtfeel</a></li>
+        <li><a href="#learning-a-texture">Learning a texture</a></li>
+        <li><a href="#weaving-a-thought">Weaving a thought</a></li>
+        <li><a href="#why-useful">Why the practice becomes useful</a></li>
+      </ul>
+      <p>Applications</p>
+      <ul>
+        <li><a href="#remember-a-list">Remember a list</a></li>
+        <li><a href="#remember-numbers">Remember a sequence of numbers</a></li>
+        <li><a href="#songs-and-poems">Remember songs and poems</a></li>
+        <li><a href="#board-games">Learn board-game rules</a></li>
+        <li><a href="#mental-chess">Play mental chess</a></li>
+        <li><a href="#further-reading">The model and further reading</a></li>
+      </ul>
+    </nav>
+
+    <article class="guide">
+      <h2 id="how-it-started">How this started</h2>
+      <p>A while ago, I was talking with friends when one of them asked me: Is any part of your thinking non-sensory? And if so, what’s it doing for you when you think or learn?</p>
+      <p>This guide teaches a technique I’ve developed that uses this non-sensory experience to significantly improve my learning and memory. If you recognize a non-sensory component in your own thinking, you can try the technique yourself.</p>
+      <p>My answer to my friend’s question was yes: I knew what that non-sensory component felt like in my own mind. My friend Ben said he didn’t experience anything like it.</p>
+      <p>By non-sensory, we meant a thought you experience without seeing a mental picture, hearing an inner voice, or imagining a sensation such as touch. For me, there was something left: the thought itself had a recognizable feel. Thinking about a person felt different from thinking about a number. A possibility felt different from something that had already happened. I could attend to those differences directly, even without an image or a sentence in my head. I call that experience <dfn>thoughtfeel</dfn>.</p>
+      <p>I got the insight for how to use thoughtfeel for learning when I asked my friend Henry how he learned board games. I was interested because Henry could read the rulebook of a complicated game and come away knowing how to play. Neither I nor our other friends could do that reliably. I wanted to know what happened in his head while he read.</p>
+      <p>Henry told me that he constructed the game in thoughtfeel. As he read, he represented its pieces, their properties, and the rules governing what they could do through their thought textures. He could return to that representation and think through what would happen during play.</p>
+      <p>I had been attending to how thoughts felt as they occurred to me. Henry was deliberately using those feelings to keep a game available in his head. His explanation suggested a way to put thoughtfeel to use: perhaps it could be a medium I could think in, the way I used my mind’s eye or inner voice.</p>
+      <p>I tried representing numbers and words through their feel, together with their positions in a list. I could recall the entries in order, retrieve a particular position directly, and answer questions about an entry while retaining where it belonged. After a similar amount of study, I could recall much more of that information the next day using thoughtfeel than when I used visual imagery or inner speech to remember it. I also tried keeping a chess position in thoughtfeel and moving its pieces mentally. This was much easier for me than trying to maintain a visual image of the board.</p>
+      <p>Compared with the other memory strategies I’ve used, including memory palaces, visual mnemonics, verbal rehearsal, and chunking, I’ve found the following improvements with thoughtfeel:</p>
+      <ul class="benefits">
+        <li><strong>Better retention for numbers, words, facts, and ideas.</strong> I remember more of what I study, for longer, with a similar amount of effort.</li>
+        <li><strong>Improved comprehension of discussions.</strong> During meetings, I retain more points and follow the discussion better than I do with my usual strategies.</li>
+        <li><strong>Improved ability to think about more information at once.</strong> I can keep more ideas and details in mind while considering how they affect a problem or decision.</li>
+        <li><strong>Improved pattern recognition and analogical reasoning.</strong> I find it easier to notice relevant similarities between ideas, generate analogies, and judge how well an analogy fits.</li>
+        <li><strong>Improved learning and problem solving.</strong> I find it easier to learn board-game rules and card effects, understand algorithms, and use what I’ve learned to reason about strategy or solve a problem.</li>
+      </ul>
+      <p>If thoughtfeel works similarly for you, these are the improvements you could gain over the cognitive strategies you use now.</p>
+      <p>This work is still a personal investigation, growing out of everyday use and conversations with friends. I have done a substantial amount of reading about related ideas. Although I have found close precedents for attending to felt meaning, I have not found an account that teaches the same combination of applications I am developing here.</p>
+      <p>In this guide, I will explain how thoughtfeel works and show you how to use it: what to attend to, how to represent an idea in thoughtfeel, and how to use it to remember complex ideas. By the end, you should know how to use thoughtfeel in your day-to-day life, whether you are learning new material, following a discussion, or working through a difficult problem.</p>
+
+      <h2 id="contents">Contents</h2>
+      <p>The main explanation develops the method in order. Afterward, choose whichever application interests you; the five applications can be read independently.</p>
+      <div class="table-wrap">
+        <table class="contents">
+          <thead><tr><th scope="col">The main explanation</th><th scope="col">What you will learn</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#a-sense-for-thought">A sense for thought</a></td><td>What to attend to when you attend to thoughtfeel</td></tr>
+            <tr><td><a href="#what-the-sense-makes-available">What the sense makes available</a></td><td>How thoughts and their components become recognizable through their feel</td></tr>
+            <tr><td><a href="#working-memory">A working memory for thoughtfeel</a></td><td>How specificity, capacity, and retention affect its usefulness</td></tr>
+            <tr><td><a href="#learning-a-texture">Learning a texture</a></td><td>How to become familiar with the feel of a concept</td></tr>
+            <tr><td><a href="#weaving-a-thought">Weaving a thought</a></td><td>How to combine familiar textures and refine the representation</td></tr>
+            <tr><td><a href="#why-useful">Why the practice becomes useful</a></td><td>What changes when meanings remain available while you think</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="contents">
+          <thead><tr><th scope="col">Optional applications</th><th scope="col">What you can try</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#remember-a-list">Remember a list</a></td><td>Keep words, their positions, and their list identities together</td></tr>
+            <tr><td><a href="#remember-numbers">Remember a sequence of numbers</a></td><td>Represent digit groups and preserve their internal order</td></tr>
+            <tr><td><a href="#songs-and-poems">Remember songs and poems</a></td><td>Retain a line through its feel and recover its exact wording</td></tr>
+            <tr><td><a href="#board-games">Learn board-game rules</a></td><td>Represent the game’s objects and the procedures that change them</td></tr>
+            <tr><td><a href="#mental-chess">Play mental chess</a></td><td>Keep track of pieces and update their positions through thoughtfeel</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">A <a href="#further-reading">note on the model and further reading</a> follows the applications.</p>
+
+      <p class="part-label">The main explanation</p>
+
+      <h2 id="a-sense-for-thought">A sense for thought</h2>
+      <p>When you hear a familiar voice, its sound gives you something to recognize. You may know who is speaking before you have considered what they are saying. thoughtfeel gives me a comparable way to recognize what I am thinking about: the thought itself has a particular feel.</p>
+      <p>Consider the thought <span class="thought">Sam enjoys peanut butter</span>. Bring to mind a person called Sam, the food, and his enjoyment of it. You might picture him eating, or hear the sentence internally. You can also attend to what the thought means: Sam is the person enjoying, and peanut butter is what he enjoys.</p>
+      <p>For me, that meaning has a recognizable feel. Sam feels like a particular person. Peanut butter feels like the food I know. His enjoyment has a different character from either the person or the food, and it relates them in a particular way. Together, they give the whole thought its feel. I can recognize what I am thinking without needing to see Sam eating or hear the sentence again.</p>
+      <p>This is why I describe thoughtfeel as a sense for thought. Differences in what I am thinking about are available to me as differences in how those thoughts feel. When I think of a knight and then a king, I can recognize the difference through thoughtfeel, even without seeing the pieces.</p>
+      <p>By “feel,” I mean the thought’s own qualitative character. I do not mean imagining a physical surface or necessarily experiencing an emotion. A number can feel very specific without making me happy or sad. I use the word <dfn>texture</dfn> for a distinguishable component of this experience, such as the feel of enjoyment within the thought about Sam.</p>
+
+      <h3>Choosing what to attend to</h3>
+      <p>The picture, the inner sentence, and the thoughtfeel of Sam enjoying peanut butter can accompany one another. They give you different aspects of the thought to attend to. You might inspect Sam’s imagined face, listen to the words, or attend directly to the felt meaning of his enjoyment.</p>
+      <p>For me, moving attention between those aspects makes a considerable difference. When I concentrate on the picture, I barely register the detail of the thoughtfeel. When I attend to thoughtfeel, the picture’s appearance recedes, even if I know the image is still present. The aspect I attend to becomes the one I can inspect and work with clearly.</p>
+      <p>As you read the examples here, first bring the intended thought to mind. Then attend specifically to its felt meaning. If a picture helps you identify what you are thinking about, use it for that purpose, then shift your attention to thoughtfeel. You do not have to erase the picture or silence every accompanying word.</p>
+      <p>When I later describe returning to a number or a chess piece, this is what I mean. I know it is that number or that piece because I recognize its feel. In many of these exercises I am not seeing or hearing anything internally. If an image or phrase does appear, I still work with the thought by attending to its texture.</p>
+
+      <h2 id="what-the-sense-makes-available">What the sense makes available</h2>
+      <p>You can deliberately bring an idea to mind and work with it through its thoughtfeel. For example, return to <span class="thought">Sam enjoys peanut butter</span>. When I do this, I recognize Sam, peanut butter, and his enjoyment through how they feel. I can then think about his preference without needing to keep a picture of him eating or a sentence playing in my head.</p>
+      <p>That recognizable feel gives me a way to return to the idea after thinking about something else. I know which person I mean, which food I mean, and how the person relates to the food. The thought’s meaning is what I am returning to.</p>
+
+      <h3>Changing a thought while keeping track of what stays the same</h3>
+      <p>Once I have that thought in mind, I can change it. Suppose I imagine <span class="thought">Sam enjoys tea</span> instead. Sam is still the person I am thinking about, and he is still enjoying something. I have changed what he enjoys. Tea has a different thoughtfeel from peanut butter, so the whole thought now feels different too.</p>
+      <p>This is a way of imagining through thoughtfeel. Just as I can deliberately change an imagined picture, I can deliberately change the meaning I am holding in mind. In this case, I keep Sam and his enjoyment while substituting tea for peanut butter. I do not need to watch a picture of one food turning into another.</p>
+      <p>Now return to <span class="thought">Sam enjoys peanut butter</span> and imagine <span class="thought">Sam dislikes peanut butter</span>. This time I have kept the person and the food, but changed how he relates to it. Dislike feels different from enjoyment. The change is available in thoughtfeel even if I imagine no facial expression and hear no words.</p>
+      <p>The point is that the relationship has a felt character, just as the person and the food do. I can attend to any of these parts and use them when thinking about the situation.</p>
+
+      <h3>A whole thought and its textures</h3>
+      <p>I call the whole felt thought a <dfn>fabric</dfn>. Its distinguishable components are <dfn>textures</dfn>. In the fabric of <span class="thought">Sam enjoys peanut butter</span>, I can attend to Sam’s identity, to peanut butter, or to the relationship of enjoyment.</p>
+      <p>A texture can remain recognizable when it appears in a different fabric. In <span class="thought">Sam enjoys peanut butter</span> and <span class="thought">Sam enjoys tea</span>, enjoyment has the same familiar character, even though the food or drink differs. I can also imagine a different person enjoying music and recognize that relationship there. Becoming familiar with enjoyment in one thought gives me a component I can use in another.</p>
+      <p>The same familiarity helps me recognize an idea when its presentation changes. Someone could tell me that Sam enjoys peanut butter, or I could read it in a message. The sound of the explanation and the appearance of the writing differ, but when I understand the same meaning, I recognize its thoughtfeel. This is the property I use when looking for patterns and analogies: I attend to what feels familiar in the meanings, even when the words, pictures, or subject matter differ.</p>
+
+      <h3>The general ability behind these examples</h3>
+      <p>People, foods, and preferences are examples of thoughts I can have. A plan, a requirement, or a procedure is also something I can think about, and each has its own thoughtfeel. My working principle is: <strong>if I can think it, it has a thoughtfeel I can attend to and use.</strong></p>
+      <p>Since beginning this practice, I have not encountered a kind of thought I could think about but could not work with in thoughtfeel. I have often struggled to find a useful way to represent a particular idea. For example, I might understand that Sam enjoys peanut butter while finding it difficult to deliberately establish that relationship between them in thoughtfeel. Knowing what I mean and knowing how to express it clearly in this medium are different skills.</p>
+      <p>The techniques later in this guide address that difficulty: becoming familiar with a texture, then using it to represent the thought you intend. But expressing the thought is only part of what makes the practice useful. To use Sam’s preference while considering what to offer him, I also need to keep that preference available as I consider the options. That brings us to thoughtfeel working memory.</p>
+
+      <h2 id="working-memory">A working memory for thoughtfeel</h2>
+      <p>Suppose you are deciding what snack to offer Sam. You want to keep his preference for peanut butter in mind while considering what you have in the kitchen. You need to retain one thought while thinking about something else that relates to it.</p>
+      <p>I use <dfn>thoughtfeel working memory</dfn> to describe the mental workspace where I do this through felt thoughts. Sam’s preference remains recognizable through its feel while I consider possible snacks. I can return to it without repeating “Sam enjoys peanut butter” internally or maintaining a picture of him eating it.</p>
+      <p>How useful that workspace is depends on three things: how clearly I can distinguish the thoughts, how much information I can keep available together, and how long it remains available. I call these <dfn>specificity</dfn>, <dfn>capacity</dfn>, and <dfn>retention</dfn>.</p>
+
+      <h3>Specificity: how clearly you can tell thoughts apart</h3>
+      <p>The thought <span class="thought">Sam enjoys peanut butter</span> tells you his preference. The thought <span class="thought">Sam wants peanut butter right now</span> tells you his current desire. Those are different: he can enjoy peanut butter generally while wanting something else today.</p>
+      <p>In thoughtfeel, those meanings can feel distinctly different. I can recognize which one I am thinking about. If both felt only like a vague positive attitude toward peanut butter, I would lose a distinction relevant to the decision.</p>
+      <p>That is what I mean by specificity: how precisely the feel of a thought lets you recognize its meaning. The same issue arises with remembering words. If I want to remember <em>cobalt</em>, its feel needs to be distinguishable from <em>obsidian</em>. A general impression of “some material” would not preserve which word I meant.</p>
+      <p>This resembles the difference between recalling the particular sound and pitch of a voice and remembering only the words. Specificity concerns how much detail is available in the experience, including the distinctions between similar ideas.</p>
+      <p>In my experience, familiarity improves this: a texture I have attended to carefully and used several times becomes easier to recognize and work with.</p>
+
+      <h3>Capacity: how much information you can keep available together</h3>
+      <p>Now suppose you are choosing snacks for several people. Along with Sam’s preference, you want to remember what each other person likes, which foods you have, and how much time you have to prepare them. More information needs to remain available while you make the decision.</p>
+      <p>Capacity describes how much of that information you can work with together. I sometimes have a whole situation available in thoughtfeel: its people, their preferences, and the relevant conditions feel like parts of one thought. When a situation becomes too much to hold together, I have to move between its parts to recover how they relate.</p>
+      <p>Information can also remain available without being my current focus. I might attend to Sam’s preference while remaining aware of another person’s preference in the background. I can then return to the second person easily. That ready access is part of what makes the workspace useful.</p>
+      <p>Organization affects how much I can handle. In the snack example, representing each person together with their preference preserves who likes what. If I kept the people and preferences as unrelated items, I would also have to recover which preference belonged to whom.</p>
+      <p>In my practice, organizing the same facts more usefully can make a problem easier to think about and let me keep more of it available at once.</p>
+
+      <h3>Retention: how long the information stays available</h3>
+      <p>Suppose you have brought Sam’s preference to mind, then spend a few minutes considering the food you have. Retention concerns how well you can return to the preference afterward. Does it still feel clear, or has it become harder to recover?</p>
+      <p>For me, thoughts I deliberately retain in thoughtfeel often remain available longer than when I use visual imagery or inner speech. In a meeting, this means I can retain more of my earlier points while listening to the discussion. I can return to what I wanted to say with less effort spent remembering it again.</p>
+      <p>I have also found better retention over longer delays. After a similar amount of study, I could recall more numbers and words the next day using thoughtfeel than with my usual visual and auditory memory strategies. Those improvements are a large part of why I want to use it for learning.</p>
+      <p>Returning to an idea during a task and remembering it the next day are different kinds of persistence; both are useful. For exact information such as a digit sequence, I compare what I recall with the original to check how much detail I retained.</p>
+
+      <h3>Developing a useful workspace</h3>
+      <p>These three dimensions describe different aspects of the ability. A thought could feel very specific when you first bring it to mind, yet be difficult to recover later. Or you might retain several ideas for a long time while finding it difficult to consider their relationships together.</p>
+      <p>I would therefore expect people’s workspaces to differ in more than one way. In my own practice, I aim for clearer meanings, more information available together, and better retention than I get with my other strategies.</p>
+      <p>Becoming familiar with individual textures helped me develop that workspace. The next section returns to Sam’s enjoyment of peanut butter to explain how I learn to recognize a texture and make it easier to use.</p>
+
+      <h2 id="learning-a-texture">Learning a texture</h2>
+      <p>Return to <span class="thought">Sam enjoys peanut butter</span>. You may understand the whole thought while finding it difficult to pick out the feel of enjoyment within it. That becomes a practical problem when you want to use enjoyment in another thought: you know the relationship you mean, but you are not yet familiar with the texture you want to use.</p>
+      <p>To get to know that texture, I compare thoughts that contain the same relationship. As the surrounding details change, the shared feel becomes easier to recognize. I call this <dfn>texture discovery</dfn>.</p>
+
+      <h3>Finding a familiar ingredient</h3>
+      <p>Imagine tasting lasagna. You know it contains tomato sauce, but in a bite of the whole dish, the sauce’s flavor may be difficult to distinguish from the cheese and pasta. Knowing the ingredient is there is different from recognizing its flavor.</p>
+      <p>Now compare the lasagna with pizza made using the same sauce. The surrounding flavors change, but the sauce remains. Moving between the two dishes can help you pick out its particular taste. Once that flavor becomes familiar, you have a clearer sense of what to recognize in another dish.</p>
+      <p>The same approach helps me learn a thought texture. In the thought about Sam, enjoyment is the ingredient I want to become familiar with. I therefore bring up other thoughts that include someone enjoying something, and attend to the feel of that relationship in each.</p>
+
+      <h3>Directing attention to the shared texture</h3>
+      <p>First, think of a person enjoying a favorite song. Bring the situation to mind, then attend to the thoughtfeel of that person enjoying the music. A picture of the person or an imagined sound may help you establish the situation. Once you know what you mean, direct your attention to the felt meaning of their enjoyment.</p>
+      <p>Next, think of someone enjoying a warm bath. Again, attend to the thoughtfeel of the person enjoying the experience. The activity has changed, but the relationship you are interested in is present in both thoughts.</p>
+      <p>Move back to the person enjoying the song, then to the person enjoying the bath. In each thought, keep attending to the texture of enjoyment. I find it helpful to say aloud, “This person enjoys this,” while focusing on what those words mean in the example. The words guide my attention toward the relationship I want to recognize.</p>
+      <p>As I make this comparison, enjoyment becomes easier to distinguish from the particular person, song, or bath. I begin to know what that relationship “looks like” in thoughtfeel: I recognize its felt character when I encounter it. I do not need to invent a visual symbol for enjoyment or memorize a verbal definition.</p>
+
+      <h3>Choosing examples that clarify what you mean</h3>
+      <p>Sometimes the first examples share more than the relationship you want. A person enjoying gentle music and a person enjoying a warm bath might both be relaxed. You could accidentally become familiar with the texture of relaxation while trying to identify enjoyment.</p>
+      <p>A third example can help separate them. Think of someone enjoying an exciting, competitive game. They are enjoying themselves without necessarily being relaxed. Attend to enjoyment across the game, song, and bath examples. The change gives you a way to distinguish enjoying an experience from being calm during it.</p>
+      <p>The purpose of the comparison is to become familiar with the particular meaning you need. You can vary the examples until you have a clearer sense of its texture, rather than forcing the first comparison to work.</p>
+      <p>You can now return to <span class="thought">Sam enjoys peanut butter</span> and notice whether the enjoyment within that thought feels more familiar. Once you know what enjoyment feels like, you can also use it with someone new. In the next section, we will take that step: using the relationship you have explored to form a new thought.</p>
+
+      <h2 id="weaving-a-thought">Weaving a thought</h2>
+      <p>You have been getting to know enjoyment through familiar examples. Now let’s use that texture to form a new thought: <span class="thought">a dog enjoys peanut butter</span>. You will bring a dog to mind, bring peanut butter to mind, and use the enjoyment texture to establish the relationship between them.</p>
+      <p>I call this process <dfn>weaving</dfn>: combining thought textures to form the particular thought you want. The relationship you learned from people enjoying music or a bath can now express a dog’s enjoyment of food.</p>
+
+      <h3>Giving the relationship its participants</h3>
+      <p>First, think of a dog. It can be a dog you know or one you invent. Attend to its thoughtfeel. For me, the dog has a recognizable feel: I know it is a dog, even without seeing a mental picture or hearing the word “dog.”</p>
+      <p>Next, bring peanut butter to mind and attend to its feel, while keeping the dog available. Having the dog and the food in mind leaves their relationship open. The dog could enjoy peanut butter, dislike it, or have never tasted it. We are going to give this dog the preference we chose for the exercise: it enjoys peanut butter.</p>
+      <p>Recall the person enjoying a song, and attend to the texture of enjoyment you explored earlier. Within that relationship, there is the one who enjoys and the thing being enjoyed. The dog will take the first role; peanut butter will take the second.</p>
+      <p>For me, a familiar relationship feels like a small chassis that can hold two things and define how they relate. I am not picturing a chassis. I can feel the distinction between the one enjoying and the thing they enjoy. Those roles remain familiar when I replace the person and the song with the dog and the food.</p>
+      <p>To do this, say aloud, “This dog enjoys peanut butter.” As you say it, take your thoughtfeel of the dog and “put” it in the role of the one enjoying. Take your thoughtfeel of peanut butter and put it in the role of what is enjoyed. I find talking aloud very helpful: the words guide what I am trying to express in thoughtfeel. Without them, I often find it much harder to give a thought the relationship I intend.</p>
+      <p>Now attend to the dog again. Does its enjoyment of peanut butter feel like part of the dog you are imagining? At the start, you brought a dog to mind. You have now worked on giving it a particular preference. The change to look for is that the preference itself is recognizable in thoughtfeel. Making a picture of the dog sharper, or hearing the sentence more clearly in your inner voice, would be a different change.</p>
+      <p>This can be tricky. When I was first figuring out how to combine textures, I tried several things in my head before the operation became familiar. If the dog and peanut butter feel clear but enjoyment remains vague, spend more time getting to know enjoyment in the song and bath examples. Then try again with the dog as the one enjoying and peanut butter as what it enjoys.</p>
+
+      <h3>Keeping the pieces you have learned</h3>
+      <p>The enjoyment texture you used with the dog is now available for other thoughts. You can use it with another animal, a person, a different food, or an activity. Each time you discover another texture and learn to use it, you gain another component you can weave with. Over time, you develop a <dfn>repertoire</dfn>: a collection of familiar textures you can combine in new ways.</p>
+      <p>Think of that growing repertoire as a collection of Lego pieces and ways to connect them. The dog and peanut butter are like pieces you can work with. You can give a piece a property, such as making the dog small. You can add another piece, such as Sam, and connect them by making Sam the dog’s owner. Each addition lets you express more about the situation you are imagining.</p>
+      <p>Sometimes you want to form a thought but have not yet learned a texture it needs. This is like wanting to build a Lego set and finding that you are missing a piece. Texture discovery gives you a way to get that piece. If ownership feels unfamiliar, for example, think of someone owning a bicycle and someone owning a house. Attend to the shared feel of ownership until you recognize what that relationship feels like, then use it with Sam and the dog.</p>
+      <p>As your repertoire grows, fewer thoughts require that extra work. When I learned the game Mancala, I needed to represent a hand holding stones. I already knew the feel of containment from thinking about a tank holding water. The hand and stones could take the places of the tank and water in a relationship I knew how to use. I was learning new rules with the help of a familiar texture.</p>
+
+      <h3>Checking what you have made</h3>
+      <p>Once you have woven a thought, you can try using it and check whether it behaves as you intend. You can understand how something works and still make a mistake when representing it in thoughtfeel.</p>
+      <p>I noticed this when learning to move chess pieces in my head. I started with a knight on one square and an empty square it could move to. The result I wanted was simple: the knight would be on the second square, and the first square would be empty.</p>
+      <p>When I tried the move in thoughtfeel, the knight arrived on the second square, but the first square did not become empty. I had to make that change separately. My mental operation included the arrival and left out the departure.</p>
+      <p>I already knew that a chess move does not copy the piece. That ordinary understanding gave me a way to check the operation I had constructed. There were two things to compare: what I knew a move should do, and what happened when I performed my thoughtfeel version of it. Their disagreement showed me which part needed work.</p>
+      <p>To revise the move, I needed a familiar operation that included both leaving and arriving. A person changing seats was one example. Cutting and pasting a file between folders was another. In each case, the same thing changes places: it arrives at the destination and is no longer at the starting place. Attending to the shared thoughtfeel across those examples helped me get to know relocation as a whole operation.</p>
+      <p>I could then use that operation with the knight. The knight took the role of the thing being moved. Its original square was the starting place, and the empty square was the destination. Saying aloud, “The same knight leaves this square and arrives on that square,” helped me express both changes in thoughtfeel. After trying the move, I checked whether the first square had become empty as part of it. Eventually, moving the knight felt like one operation with both consequences.</p>
+      <p>You can use the same approach with whatever you are learning. Try using the thought you have woven, and compare what it does with what you understand should happen. A rule might be missing a condition, or a relationship might belong to the wrong person. Once you notice the mismatch, you can focus on that particular part and revise it. If you are unsure what should happen, return to the rulebook, explanation, or worked example you are learning from.</p>
+
+      <h2 id="why-useful">Why the practice becomes useful</h2>
+      <p>For me, using thoughtfeel has three main benefits: I can work with more information at once, recognize familiar patterns in new material, and reuse familiar textures when learning new ideas.</p>
+
+      <h3>Keeping more available while thinking</h3>
+      <p>On the whole, the ideas I work with in thoughtfeel remain available much longer than when I use my usual visual or verbal strategies.</p>
+      <p>In a meeting, for example, I might want to retain a proposal, the reason someone suggested it, and an objection another person raised. Each of those thoughts has its own feel, and I can represent how they relate. While considering the objection, I can still return to the proposal and its purpose. Compared with my other strategies, I retain more of the discussion and find it easier to consider those points together.</p>
+
+      <h3>Recognizing what you have learned elsewhere</h3>
+      <p>In the enjoyment exercise, you found the same relationship in music, a bath, and food. For me, the enjoyment has the same feel across those examples. Who is enjoying, and what they enjoy, can change while the relationship remains recognizable.</p>
+      <p>The same principle applies to a larger pattern, such as relocation. A person changing seats, a file being cut and pasted, and a knight moving between squares all have a thing that moves, a starting place, and a destination. That whole pattern has the same thoughtfeel whether I am thinking about a person, a file, or a chess piece. In each example, the objects have their own feel, while the arrangement of relationships feels the same.</p>
+      <p>This matters because the same pattern can be difficult to recognize in other sensory modalities. Two diagrams may look very different while showing the same relationships. Two spoken explanations may describe those relationships with very different vocabulary and sentence structure. In thoughtfeel, when I represent a particular pattern, it has the same feel regardless of how it was pictured or described. I can recognize the pattern I already know within the new example.</p>
+
+      <h3>Having more familiar textures to work with</h3>
+      <p>Once I have learned to recognize a texture, I can use it in a new thought without going through the discovery process again. Enjoyment can be ready to use with a new person or activity. Containment can be ready when I encounter a hand holding stones. The more textures I know, the more often I can start weaving with familiar components.</p>
+      <p>Here is a useful analogy for how a repertoire develops. As a chef gets to know more flavors, they have more familiar ingredients to combine in a dish. My repertoire of thought textures develops in the same way. In my experience, after I explore a texture, it often stays familiar for a long time. I can recognize it faster and use it more easily the next time I need it.</p>
+
+      <h3>Why I often prefer it to a visual mnemonic</h3>
+      <p>A visual mnemonic gives me an image that can remind me of an idea. The image serves as a clue: to recover the idea, I need to remember what I meant that image to stand for.</p>
+      <p>For example, let’s say I wanted to remember three goals for myself: to spend more time learning, to be more social, and to create meaningful products. To remember those three goals, I imagined two light bulbs holding hands with an Amazon package between them. The bulbs stood for learning, the hand-holding for being social, and the package for making products.</p>
+      <p>When I attended to the thoughtfeel of that image, I did not get my intended meaning. The light bulbs felt like living agents, and I was thinking about them in the third person. Their social interaction felt like it was between specific people who were not me. The Amazon package felt like an abstract good, such as a resource in a game. Those were quite different thoughts from me learning, me being social, and me creating something meaningful.</p>
+      <p>At the time I created this visual mnemonic, I remembered the intended mapping, so I could use the picture to recover my three goals. But the picture gave me reminders of those goals. I still had to recover what I had intended each reminder to mean.</p>
+      <p>In thoughtfeel, I could represent each intention directly. Learning felt like me choosing to develop my understanding. Being social felt like me spending time with other people, with the hopeful quality that goal had for me. Creating products felt like me working toward making something I could share. When I returned to those thoughts, I recognized the particular goals I wanted to think about. Their meaning was already there to work with.</p>
+      <p>A later experience showed me what happens when I remember a mnemonic image but lose its intended meaning. I made an image of four farmers gathered around a table, with smoke rising above them, to represent a complicated idea. Even when I first made it, the image’s thoughtfeel did not express that idea clearly. I nevertheless knew what I had intended the farmers, table, and smoke to mean.</p>
+      <p>Several hours later, I could still recall the scene, but I could no longer recover the idea I had assigned to it. Attending to the image gave me the thoughtfeel of specific farmers meeting at a gathering and paying attention to some object. The idea I had wanted those farmers to stand for was missing. What had faded was the connection between the picture and what I had wanted it to represent.</p>
+      <p>That experience helped explain why a memorable image was not always enough for me. I could retain the image while losing access to the information it was supposed to preserve. Representing the intended thought directly in thoughtfeel has worked better for me. When I return to an idea in thoughtfeel, the entire idea is immediately available to me, without needing to reconstruct what a symbol means.</p>
+      <p>The following sections show how I use this approach for particular tasks: remembering a list, remembering numbers, remembering songs and poems, learning board-game rules, and playing mental chess. Choose whichever interests you. Each section explains how I organize that information in thoughtfeel and gives you a way to try it yourself.</p>
+
+      <p class="part-label">Optional applications</p>
+
+      <h2 id="remember-a-list">Remember a list</h2>
+      <p>When I remember a list in thoughtfeel, I retain each word’s meaning together with its position. I can then ask for the fourth entry, or bring an entry to mind and know where it belongs. If I am remembering several lists, I also retain which list each entry belongs to.</p>
+      <p>Here is a short list to practice with. We will call this particular collection the Cobalt list:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Position</th><th scope="col">Word</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Cobalt</td></tr>
+            <tr><td class="num">2</td><td>Periscope</td></tr>
+            <tr><td class="num">3</td><td>Bramble</td></tr>
+            <tr><td class="num">4</td><td>Lantern</td></tr>
+            <tr><td class="num">5</td><td>Tundra</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Giving each word a position</h3>
+      <p>Begin by thinking about cobalt. Attend to what cobalt feels like as an idea. You might associate it with a metal or a shade of blue; use the meaning you know. For me, recognizing cobalt through thoughtfeel does not require seeing the written word, picturing a blue object, or hearing its name.</p>
+      <p>Now you need to represent cobalt as first. If the feel of <em>first in a sequence</em> is unfamiliar, think of the first person in a queue and the first song on an album. In each example, attend to the thoughtfeel of being first. Get to know that position through its feel, then use cobalt as the entry that occupies it.</p>
+      <p>Say aloud, “Cobalt is the first entry in the Cobalt list.” As you say <em>cobalt</em>, attend to its meaning; as you say <em>first</em>, give cobalt that place in the sequence. Talking aloud helps me direct what I am doing in thoughtfeel. The result I am aiming for is to return to cobalt and have its position come to mind with it.</p>
+      <p>Continue with the remaining entries, giving each one its position. Periscope is second, Bramble third, Lantern fourth, and Tundra fifth. The position changes, but you are using the same kind of relationship each time: a particular entry occupies a particular place in an ordered collection.</p>
+
+      <h3>Keeping track of which list it belongs to</h3>
+      <p>The name <em>Cobalt list</em> identifies the collection we are working with. I also need each entry to feel like it belongs to that particular collection. I found that this membership did not reliably become part of an entry just because I was thinking about the list when I created it.</p>
+      <p>If membership is unfamiliar in thoughtfeel, compare a player belonging to a team with a song belonging to an album. Focus on the shared feel of belonging to a particular group. You are getting to know a relationship with a member and a group it belongs to.</p>
+      <p>Now bring the Cobalt list to mind as one particular collection. Attend to Lantern and say, “This Lantern entry belongs to the Cobalt list.” Put Lantern in the member’s role and the Cobalt list in the group’s role. Do this for every entry, including cobalt itself.</p>
+      <p>These relationships let me distinguish separate occurrences of the same word. If another list also contains Lantern, I can retain one Lantern entry as fourth in the Cobalt list and the other as belonging to that other list, in its own position.</p>
+      <p>After working through the entries, look away from the table. Ask for the fourth entry. Then try a question about meaning: which entry refers to something used for light, and what is its position? You can also recall the words in reverse order. Check what you recover against the table.</p>
+      <p>For me, an answer can arrive with all three parts together: Lantern, fourth, Cobalt list. I am not seeing a numbered list or hearing its words recited. I recognize the entry, its position, and its membership through their feel. That is what makes the information useful beyond reciting the words in order.</p>
+      <p class="back"><a href="#try">Test yourself on the Cobalt list</a> · <a href="#contents">Back to contents</a></p>
+
+      <h2 id="remember-numbers">Remember a sequence of numbers</h2>
+      <p>To remember a long sequence of digits, I divide it into groups. Each group has a particular thoughtfeel, and I retain where that group belongs in the sequence. Within each group, I can still attend to the individual digits and their positions.</p>
+      <p>For practice, use this sixteen-digit sequence, divided into four groups of four:</p>
+      <blockquote class="digits">6602 / 4400 / 0047 / 7318</blockquote>
+
+      <h3>Keeping the digits distinct within a group</h3>
+      <p>Start with 6602. For me, six thousand six hundred and two has a specific feel as a whole number. I can also attend to its parts: six thousands, six hundreds, zero tens, and two ones. The first six and the second six feel different because each occupies a different place. Zero feels specifically like zero tens.</p>
+      <p>Bring 6602 to mind and attend to its thoughtfeel. Then attend to each digit in its place. Say aloud, “Six thousands, six hundreds, zero tens, two ones,” using the words to guide your attention. Keep those places together as the four parts of this group. For me, the whole number remains recognizable while I attend to a particular part. I do not need to see written digits or hear the number being repeated internally.</p>
+      <p>The group 0047 needs one further detail: its length is four digits. As a quantity, 0047 is simply forty-seven. If you remember only that quantity, the leading zeros may disappear. Represent the group as four places, with zero thousands, zero hundreds, four tens, and seven ones.</p>
+
+      <h3>Giving each group its place in the sequence</h3>
+      <p>You now have two kinds of position to retain. A digit has a place within its group, such as the tens place in 6602. The whole group has a place within the sequence: 6602 is the first group.</p>
+      <p>The relationship we need for 6602 is <em>first in a sequence</em>. If that relationship is unfamiliar in thoughtfeel, compare the first song on an album with the first person in a queue. Attend to the shared thoughtfeel of being first. Then say, “6602 is the first group in this sequence,” using the whole number group as what occupies that position.</p>
+      <p>Continue with 4400 as the second group, 0047 as the third, and 7318 as the fourth. If you are remembering more than one sequence, also give each group membership in its particular sequence. Attend to the whole sequence as one collection and to each number group as belonging to it. This lets you distinguish a group that appears in more than one sequence.</p>
+      <p>Now look away and recover the sixteen digits. You can also ask for a group directly, then attend to a place within it: what is the tens digit of the third group? Check both the group order and the digits against the source, including the leading zeros.</p>
+      <p>Four-digit groups worked better for me than three-digit groups: I had fewer groups to retain, and each number still felt specific. Choose a group size that lets you recognize each group and recover every digit in order.</p>
+      <p class="back"><a href="#contents">Back to contents</a></p>
+
+      <h2 id="songs-and-poems">Remember songs and poems</h2>
+      <p>I use thoughtfeel to remember the wording of song lyrics and poems. As I read a line, I attend to what the whole line feels like in thoughtfeel. I retain that feel as one item I can return to. The line’s feel is specific enough for me to recover its exact words.</p>
+      <p>Here is a Jon Bellion lyric I worked with:</p>
+      <blockquote>Bring me down to Brooklyn if I lose my life.</blockquote>
+      <p>As I read it, “bring me down” has a particular thoughtfeel. “To Brooklyn” adds a specific destination: I can recognize Brooklyn through its feel. “If I lose my life” also feels like something particular, including the condition it places on the request. Together, those parts form the thoughtfeel of the whole line: one fabric whose components I can attend to.</p>
+      <p>The specificity of that fabric is what lets me recover the wording. Replacing “bring” with “carry” makes the line feel distinctly different to me. So does replacing “Brooklyn” with “the Bronx.” When I return to the original line’s thoughtfeel, I can recognize which wording belongs to it.</p>
+      <p>In this process, I am attending to the felt character of the line. I do not need to see the words on an imagined page or hear a recording of the singer in my head. A picture or sound may accompany the thought, but my attention is on the thoughtfeel that the words produce.</p>
+
+      <h3>Trying it with a line you want to remember</h3>
+      <p>Choose one line from a song or poem and read it. As you read, attend to what each phrase feels like and how the phrases combine into the whole line. If reading aloud helps you direct your attention, use your voice to guide that process. Keep your attention on the felt meaning of what you are saying.</p>
+      <p>Now look away from the text and return to the line’s thoughtfeel. Attend to the beginning of the line, recover its words, and continue through the remaining phrases. For me, I can attend to the parts within the whole fabric and recover the wording from them.</p>
+      <p>Check the words you recalled against the source. If you recover the general idea but a particular word is unclear, return to that phrase. Compare the original wording with the wording that came to mind, attending to how each version feels. Then read the original line again and retain its specific feel as a whole.</p>
+      <p>Continue with the remaining lines. To keep their order, you can give each line a position in the song or poem, just as you would give a word a position in a list. Say, for example, “This is the second line,” while attending to the whole line’s thoughtfeel and its place in the sequence. Each line can remain one recognizable item while its words remain available within it.</p>
+      <p class="back"><a href="#contents">Back to contents</a></p>
+
+      <h2 id="board-games">Learn board-game rules</h2>
+      <p>When I learn a board game, I want to remember which actions are available, when a rule applies, and what changes when I carry out an action. In thoughtfeel, I can represent the game’s pieces together with those conditions and actions. Returning to a rule can then bring its meaning to mind in a form I can use during play.</p>
+      <p>Here is a made-up rule to show how I approach that work:</p>
+      <blockquote>At the end of your turn, if you have no cards in your hand, draw two cards from the deck.</blockquote>
+      <p>Here, <em>your hand</em> means the collection of cards you are holding. To represent the rule, we need to express three things in thoughtfeel: when to check the hand, what to check for, and what to do if that condition is met.</p>
+
+      <h3>Representing the condition and the action</h3>
+      <p>Begin with the hand as a collection that can contain cards. The condition we will check is whether that collection is empty. If emptiness is unfamiliar in thoughtfeel, think of an empty cup, an empty seat, and an empty parking space. Attend to the shared texture of emptiness until you recognize what the absence of the contents or occupant feels like.</p>
+      <p>Now put that texture on your thoughtfeel of the hand. Say, “There are no cards in this hand,” while attending to the hand and its emptiness. You are representing the state the rule asks you to check for.</p>
+      <p>Next, bring drawing two cards to mind as an action. Two cards leave the deck and join your hand. Attend to what that change feels like, including the quantity of two. This gives you the action that the rule calls for when the hand is empty at the end of the turn.</p>
+
+      <h3>Connecting the check to the action</h3>
+      <p>Knowing what emptiness feels like and knowing what drawing feels like leaves one relationship to express: if the hand is empty, draw. We also need the check to happen at the end of the turn.</p>
+      <p>To get to know this arrangement, imagine two everyday routines. Before leaving home, you check whether it is raining; if it is, you take an umbrella. Before a car journey, you check whether fuel is low; if it is, you fill the tank.</p>
+      <p>In each example, attend to the thoughtfeel of the procedure. There is a particular time to check something, a condition you check for, and an action you take if the condition is met. Focus on how those parts relate, until you recognize the shared arrangement through its feel.</p>
+      <p>Now use the game rule’s parts in those roles. The end of the turn is when the check happens. Having no cards is the condition. Drawing two cards is the action that follows if the condition is met. Say the complete rule aloud, directing your attention to each part as you say it and to how it connects with the next.</p>
+      <p>Try using the rule in three situations:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Situation</th><th scope="col">What this rule does</th></tr></thead>
+          <tbody>
+            <tr><td>Your turn ends and your hand is empty</td><td>You draw two cards</td></tr>
+            <tr><td>Your turn ends and you have one card</td><td>You draw no cards under this rule</td></tr>
+            <tr><td>Your hand is empty but your turn has not ended</td><td>The rule has not called for the check yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These situations help you check whether your thoughtfeel version preserves the rule’s timing and condition. If it tells you to draw as soon as the hand becomes empty, for example, the end-of-turn requirement needs work. Return to that part of the procedure and make the end of the turn the event that calls for the check.</p>
+
+      <h3>Remembering what happens in a phase</h3>
+      <p>A game may collect several instructions into a named phase. During play, the phase’s name needs to bring back what you are supposed to do.</p>
+      <p>I encountered this while learning <em>Moon Colony Bloodbath</em>, with phases such as farm, mine, and build. At first, I represented each phase as an object. I could recognize farm, but the way I held it in thoughtfeel did not help me carry out its instructions. I knew the rules; I needed a better way to represent their behavior.</p>
+      <p>To represent a phase as something I could run, I brought a familiar computer program to mind. I knew what the program would do when I ran it, and that behavior was part of how it felt. I did not have to see a program window or hear its instructions internally.</p>
+      <p>I then represented farm as a program too, with the farm phase’s instructions as the actions it performed. Bringing farm to mind now gave me a procedure I knew how to carry out. The phase had both a recognizable identity and behavior.</p>
+      <p>To try this with a phase you are learning, begin with the actions specified in its rules. Say, “When this phase begins, first I do this, then I do this,” naming the actual actions. Attend to the thoughtfeel of carrying out each action and to the order in which they happen. Then bring the whole procedure to mind under the phase’s name. Check that returning to the name brings back what the phase does.</p>
+      <p>You can weave while reading a rulebook, or read a passage first and represent what you understood afterward. When a relationship is unfamiliar in thoughtfeel, use texture discovery to get to know it, then return to the rule and put its participants into that relationship. Check uncertain details against the rulebook. Familiar textures make this easier over time: containment, emptiness, sequence, and conditional actions become components you already know how to use.</p>
+      <p class="back"><a href="#contents">Back to contents</a></p>
+
+      <h2 id="mental-chess">Play mental chess</h2>
+      <p>When I keep a chess position in thoughtfeel, I recognize the pieces and their locations through their feel. I can think about a move and update where the pieces are without maintaining a visual picture of the board. For me, this is much easier than playing through visual imagery alone.</p>
+      <p>To practice, use a board with only a white knight on B1. We will move it to C3. Keeping track of this one move lets us work through how to represent a piece, its location, and the changes a move makes.</p>
+
+      <h3>Getting to know the two squares</h3>
+      <p>View the board from White’s side. Count columns from the left edge and rows from the bottom edge, starting at one. B1 is in the second column and the first row. C3 is in the third column and the third row.</p>
+      <p>For me, B1 has the feel of being at the bottom, in the way a cup resting on the floor feels like it is at the bottom. Its horizontal position also feels specific: second from the left. C3 feels like third from the left and third from the bottom.</p>
+      <p>The horizontal and vertical directions feel like two separate things. Together, they give me the position of a particular square. I can attend to either direction within that position, just as I can attend to the tens or ones within a number.</p>
+      <p>The numbers involved have precise feels too. A distance of one feels like the age difference between a six-year-old and a seven-year-old. Distances of two and three each feel specific in the same way. I recognize a square’s position through those relationships without needing to see the square on an internal grid.</p>
+      <p>Bring B1 to mind, then C3, attending to where each square is through thoughtfeel. An image may accompany the thought. Direct your attention to the felt position: how far along each direction the square is, and how those two positions belong together.</p>
+
+      <h3>Putting the knight on B1</h3>
+      <p>Think of a knight, then a king. Attend to how differently the two pieces feel in thoughtfeel. Return to the knight. For me, that recognizable feel is how I know which piece I am thinking about.</p>
+      <p>To place the knight on B1, you need the relationship of <em>occupies</em>. Think of a car occupying a parking space and a person occupying a seat. Focus on the texture of the relationship between each occupant and its place until you have a sense of what <em>occupies</em> feels like.</p>
+      <p>Now “put” the knight and B1 into that relationship. The knight takes the occupant’s role, and B1 takes the place’s role. Say aloud, “The knight occupies B1,” using the words to guide what you are expressing in thoughtfeel. For me, this feels like using a little chassis with two places: one for the occupant and one for the occupied space. I do not see a chassis; I recognize the two roles and their relationship through their feel.</p>
+      <p>C3 needs the property of emptiness. Think of an empty cup, an empty seat, and an empty parking space. Attend to the shared thoughtfeel of emptiness. Then take your thoughtfeel of C3 as a chess square and put that texture on it: “C3 has no piece on it.”</p>
+      <p>You now have a piece on a particular square and an empty destination. Those are the parts we need for the move.</p>
+
+      <h3>Considering a move and making it</h3>
+      <p>A knight moves two squares horizontally and one vertically, or two vertically and one horizontally. From B1, one column to the right and two rows up reaches C3.</p>
+      <p>First consider moving the knight there. You can think about the knight being on C3 if you make the move, while retaining the knight is currently on B1. These thoughts refer to different states of the board: one is a possibility, and the other is the position you are keeping track of. For me, the difference between possible and current is itself recognizable in thoughtfeel.</p>
+      <p>Now choose to make the move in your mental game. Update the position you are keeping: the knight occupies C3, and B1 is empty. You are retaining C3 as the knight’s current location.</p>
+      <p>When I first tried this, arrival and departure did not happen together in my representation. The knight arrived at its destination, but I had to make its starting square empty separately. To make both changes part of one operation, I used texture discovery.</p>
+      <p>Think of a person changing seats and a file being cut and pasted between folders. In each example, attend to the thoughtfeel of the whole relocation: the same thing leaves one place and occupies another. Once that operation feels familiar, use the knight as the thing being moved, B1 as its starting place, and C3 as its destination.</p>
+      <p>Restore the starting position: the knight occupies B1, and C3 is empty. Then try the move again, saying, “The same knight leaves B1 and occupies C3.” Attend to departure and arrival as parts of the same change. Check whether B1 becomes empty as part of moving the knight. If it does not, return to the seat and file examples and focus on how leaving the starting place belongs to the relocation.</p>
+      <p>When I return to the knight after making a move, I know it is the knight because it feels like the knight. Its current location comes with it. I can attend to that relationship without replaying an internal animation of the move.</p>
+      <p>As you expand to a full game, retain the other pieces and their locations, whose turn it is, and the rules that determine which moves are legal. Use the chess rules you already know to check the operations you weave. For example, a knight capturing an enemy pawn must remove that pawn, while moving the knight onto one of your own pieces is disallowed. Each rule becomes part of what your mental move does, or a condition that determines whether you can make it.</p>
+      <p class="back"><a href="#contents">Back to contents</a></p>
+
+      <h2 id="further-reading">A note on the model and further reading</h2>
+      <p>The account in this guide comes from learning to use thoughtfeel in my own life and discussing it with people who describe similar experiences. I call it a sense because thoughts have a recognizable feel I can attend to. I describe a working memory because I can keep information available in that form and work with it. How this experience relates to the brain’s memory systems remains an open question.</p>
+      <p>There is existing work on developing ideas through felt meaning. Eugene Gendlin’s <a href="https://focusing.org/felt-sense/thinking-edge-tae" target="_blank" rel="noopener">Thinking at the Edge</a>, for example, works with a felt sense, examples, and language. Readers interested in that connection can explore his account alongside this one. My emphasis here has been on getting to know reusable textures and combining them to retain and think with particular information.</p>
+      <p>You can begin using the method with one rule you are learning, one point you want to retain during a conversation, or one short list. Start with what you mean, then attend to how that meaning feels. If a relationship is difficult to express, find familiar examples and get to know its texture before returning to your thought. As you become familiar with more textures, you have more of the components ready when you next need them.</p>
+    </article>
+  </div>
+
+  <footer class="join">
+    <div>
+      <h2>Compare notes on r/ThoughtFeel</h2>
+      <p>Tried an exercise? Post what you compared, what you noticed and your recall score. Concrete reports (which examples, which textures, what came back the next day) are what help most, including reports that it didn’t work for you.</p>
+      <a class="btn primary" href="https://www.reddit.com/r/ThoughtFeel/" target="_blank" rel="noopener">Open r/ThoughtFeel</a>
+    </div>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=gh08gtKVLI4" target="_blank" rel="noopener">Lesson 1: A practical guide to the texture of thought</a><span>Animated introduction to what a thought’s texture is.</span></li>
+      <li><a href="https://www.youtube.com/watch?v=tEDCi06aZ6E" target="_blank" rel="noopener">Lesson 2: How to break down a complex thought</a><span>Comparing situations to isolate a shared texture.</span></li>
+      <li><a href="thoughtfeel_guide.pdf" target="_blank" rel="noopener">The guide as a PDF</a><span>Same text, print layout.</span></li>
+    </ul>
+    <p class="colophon">thoughtfeel · Reader’s guide, Draft 4 · Ted Shachtman</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  /* ---------- Woven swatch ---------- */
+  var canvas = document.getElementById('swatch');
+  function drawSwatch() {
+    if (!canvas) return;
+    var rect = canvas.getBoundingClientRect();
+    if (!rect.width) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var cs = getComputedStyle(document.documentElement);
+    var indigo = cs.getPropertyValue('--indigo').trim();
+    var weld = cs.getPropertyValue('--weld').trim();
+    var surface = cs.getPropertyValue('--surface-2').trim();
+    var ink = cs.getPropertyValue('--ink').trim();
+    var W = rect.width, H = rect.height, cell = Math.max(10, Math.round(W / 26)), gap = Math.max(2, cell * 0.18);
+    ctx.fillStyle = surface; ctx.fillRect(0, 0, W, H);
+    // deterministic pseudo-random so the swatch is stable
+    var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var cols = Math.ceil(W / cell), rows = Math.ceil(H / cell);
+    // one weft band of weld: the texture you pick out of the fabric
+    var band0 = Math.floor(rows * 0.42), band1 = band0 + 2;
+    var tones = [];
+    for (var c = 0; c < cols; c++) tones.push(0.72 + rnd() * 0.28);
+    function thread(x, y, w, h, color, alpha) {
+      ctx.globalAlpha = alpha; ctx.fillStyle = color;
+      var r = Math.min(w, h) / 5;
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
+      ctx.fill();
+    }
+    for (var y = 0; y < rows; y++) {
+      var isBand = y >= band0 && y <= band1;
+      for (var x = 0; x < cols; x++) {
+        var over = (x + y) % 2 === 0; // plain weave
+        var px = x * cell, py = y * cell;
+        var warp = function () { thread(px + gap / 2, py - 1, cell - gap, cell + 2, indigo, tones[x]); };
+        var weft = function () { thread(px - 1, py + gap / 2, cell + 2, cell - gap, isBand ? weld : ink, isBand ? 0.95 : 0.16); };
+        if (over) { weft(); warp(); } else { warp(); weft(); }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  var raf; function schedule() { cancelAnimationFrame(raf); raf = requestAnimationFrame(drawSwatch); }
+  window.addEventListener('resize', schedule);
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', schedule); } catch (e) {}
+  new MutationObserver(schedule).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  schedule();
+
+  /* ---------- Cobalt list exercise ---------- */
+  var WORDS = ['cobalt', 'periscope', 'bramble', 'lantern', 'tundra'];
+  var KEY = 'thoughtfeel.cobalt';
+  var DELAY_HOURS = 8;
+  var ex = document.getElementById('ex');
+  var state = { step: 'intro', studyStart: 0, studySeconds: 0, mode: 'same-day', hoursSince: 0 };
+  var tick;
+
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  function clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
+  function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+  function cap(w) { return w.charAt(0).toUpperCase() + w.slice(1); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function listHTML(covered) {
+    return '<ol class="cobalt' + (covered ? ' covered' : '') + '">' + WORDS.map(function (w, i) {
+      return '<li><span class="pos">' + (i + 1) + '</span><span class="word">' + cap(w) + '</span></li>';
+    }).join('') + '</ol>';
+  }
+
+  function renderIntro() {
+    var saved = load(), banner = '';
+    if (saved && saved.studiedAt && !saved.delayedDone) {
+      var hrs = (Date.now() - saved.studiedAt) / 36e5;
+      if (hrs >= DELAY_HOURS) {
+        banner = '<div class="banner"><span>You studied this list <strong>' + Math.round(hrs) + ' hours ago</strong>. Test your next-day recall before looking.</span>' +
+          '<button class="btn primary" type="button" data-act="delayed">Test next-day recall</button></div>';
+      } else {
+        banner = '<div class="banner"><span>Studied ' + (hrs < 1 ? 'less than an hour' : Math.round(hrs) + ' hours') + ' ago. Come back tomorrow for a next-day test.</span></div>';
+      }
+    }
+    ex.innerHTML = banner +
+      '<div class="panel-head"><p class="panel-title">The Cobalt list</p><span class="timer">covered</span></div>' +
+      listHTML(true) +
+      '<p class="hint">Work through the steps on the left while the list is showing. A few minutes is enough. The timer records how long you studied.</p>' +
+      '<div class="row"><button class="btn primary" type="button" data-act="study">Show the list and start studying</button></div>';
+  }
+
+  function renderStudy() {
+    ex.innerHTML =
+      '<div class="panel-head"><p class="panel-title">The Cobalt list</p><span class="timer" id="ex-timer">study 0:00</span></div>' +
+      listHTML(false) +
+      '<p class="hint">Say each one aloud: <em>“Periscope is the second entry in the Cobalt list.”</em> Then give each entry its membership.</p>' +
+      '<div class="row"><button class="btn primary" type="button" data-act="hide">Hide the list and test me</button></div>';
+    state.studyStart = Date.now();
+    clearInterval(tick);
+    tick = setInterval(function () {
+      var t = document.getElementById('ex-timer');
+      if (t) t.textContent = 'study ' + fmt(Math.floor((Date.now() - state.studyStart) / 1000));
+    }, 1000);
+  }
+
+  function renderRecall() {
+    var title = state.mode === 'delayed' ? 'Next-day recall' : 'Recall';
+    var items = WORDS.map(function (w, i) {
+      return '<li><span class="pos">' + (i + 1) + '</span><input type="text" id="recall-' + (i + 1) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Entry ' + (i + 1) + '"></li>';
+    }).join('');
+    ex.innerHTML =
+      '<div class="panel-head"><p class="panel-title">' + title + '</p><span class="timer">list hidden</span></div>' +
+      '<p class="hint">Without looking back, return to each entry through its feel and write it in its position.</p>' +
+      '<ol class="recall-list">' + items + '</ol>' +
+      '<div class="q"><label for="q-light">Which position holds the entry that refers to something used for light?</label>' +
+      '<select id="q-light"><option value="">Choose…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>' +
+      '<div class="row"><button class="btn primary" type="button" data-act="check">Check my answers</button></div>';
+    var first = document.getElementById('recall-1'); if (first) first.focus({ preventScroll: true });
+  }
+
+  function renderResult() {
+    var hits = 0, rows = WORDS.map(function (w, i) {
+      var el = document.getElementById('recall-' + (i + 1));
+      var got = (el ? el.value : '').trim().toLowerCase();
+      var ok = got === w; if (ok) hits++;
+      return { pos: i + 1, got: got, want: w, ok: ok };
+    });
+    var lightEl = document.getElementById('q-light');
+    var light = lightEl ? lightEl.value : '';
+    var lightOk = light === '4';
+
+    var saved = load() || {};
+    if (state.mode === 'delayed') { saved.delayedDone = true; saved.delayedScore = hits; save(saved); }
+
+    var when = state.mode === 'delayed' ? 'next day (' + state.hoursSince + 'h later)' : 'same session';
+    var line = 'thoughtfeel Cobalt list, ' + when + ': ' + hits + '/5 in order, light question ' + (lightOk ? 'right' : 'wrong') +
+      (state.studySeconds ? ', studied ' + fmt(state.studySeconds) : '') + '.';
+
+    var list = rows.map(function (r) {
+      return '<li><span class="pos">' + r.pos + '</span><input type="text" readonly class="' + (r.ok ? 'is-ok' : 'is-miss') + '" value="' + esc(r.got || '—') + '" aria-label="Entry ' + r.pos + ', you wrote ' + esc(r.got || 'nothing') + '">' +
+        (r.ok ? '' : '<span class="answer miss">was ' + cap(r.want) + '</span>') + '</li>';
+    }).join('');
+
+    var next = state.mode === 'delayed'
+      ? '<p class="hint">Compare this with your same-day score. If you have used a memory palace or rote repetition before, try the same test with one of them on a fresh list and compare.</p>'
+      : '<p class="hint">The more telling test is tomorrow. Come back to this page after at least ' + DELAY_HOURS + ' hours, without reviewing the list, and it will offer a next-day test.</p>';
+
+    ex.innerHTML =
+      '<div class="panel-head"><p class="panel-title">' + (state.mode === 'delayed' ? 'Next-day result' : 'Your result') + '</p><span class="timer">' + (state.studySeconds ? 'studied ' + fmt(state.studySeconds) : '') + '</span></div>' +
+      '<p class="score">' + hits + '/5 <small>in order · light question <span class="' + (lightOk ? 'ok">right' : 'miss">wrong, it was position 4 (Lantern)') + '</span></small></p>' +
+      '<ol class="recall-list">' + list + '</ol>' +
+      '<p class="hint">Also try: say the five words in reverse order, and ask yourself what the third entry is. Check against the list.</p>' +
+      next +
+      '<p class="result-line" id="ex-line">' + esc(line) + '</p>' +
+      '<div class="row"><button class="btn" type="button" data-act="copy" id="ex-copy">Copy result</button>' +
+      '<a class="btn primary" href="https://www.reddit.com/r/ThoughtFeel/" target="_blank" rel="noopener">Share on r/ThoughtFeel</a></div>' +
+      '<div class="row"><button class="linkish" type="button" data-act="reset">Start over</button></div>';
+  }
+
+  ex.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var act = b.getAttribute('data-act');
+    if (act === 'study') { state.mode = 'same-day'; renderStudy(); }
+    else if (act === 'hide') {
+      clearInterval(tick);
+      state.studySeconds = Math.floor((Date.now() - state.studyStart) / 1000);
+      save({ studiedAt: Date.now(), studySeconds: state.studySeconds });
+      renderRecall();
+    }
+    else if (act === 'delayed') {
+      var s = load() || {};
+      state.mode = 'delayed';
+      state.studySeconds = s.studySeconds || 0;
+      state.hoursSince = Math.round((Date.now() - (s.studiedAt || Date.now())) / 36e5);
+      renderRecall();
+    }
+    else if (act === 'check') { renderResult(); }
+    else if (act === 'copy') {
+      var text = document.getElementById('ex-line').textContent;
+      var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy result'; }, 1800); };
+      var fallback = function () {
+        var r = document.createRange(); r.selectNodeContents(document.getElementById('ex-line'));
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        b.textContent = 'Selected, press copy';
+      };
+      try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
+    }
+    else if (act === 'reset') { clear(); state = { step: 'intro', studyStart: 0, studySeconds: 0, mode: 'same-day', hoursSince: 0 }; renderIntro(); }
+  });
+  ex.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' || e.target.tagName !== 'INPUT' || e.target.readOnly) return;
+    var m = /^recall-(\d)$/.exec(e.target.id); if (!m) return;
+    e.preventDefault();
+    var n = document.getElementById(+m[1] < 5 ? 'recall-' + (+m[1] + 1) : 'q-light'); if (n) n.focus();
+  });
+
+  renderIntro();
+
+  /* ---------- Side nav: mark current section ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.sidenav a'));
+  if ('IntersectionObserver' in window && links.length) {
+    var map = {}; links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && map[en.target.id]) {
+          links.forEach(function (a) { a.classList.remove('here'); });
+          map[en.target.id].classList.add('here');
+        }
+      });
+    }, { rootMargin: '0px 0px -70% 0px' });
+    Object.keys(map).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  }
+})();
+</script>
+
+</body>
+</html>
