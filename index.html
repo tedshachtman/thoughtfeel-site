@@ -366,6 +366,30 @@
   .back a { color: var(--ink-2); }
   .note { color: var(--ink-2); font-size: 16px; }
 
+  /* ---------- About ---------- */
+  .byline a { color: inherit; }
+  .about {
+    margin-top: 80px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; align-items: start;
+  }
+  @media (min-width: 900px) { .about { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
+  .about-text { max-width: 62ch; }
+  .about h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
+    line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 14px;
+  }
+  .about-text p:not(.eyebrow) { margin: 0 0 12px; }
+  .contact {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 24px;
+    box-shadow: 0 18px 40px -30px rgba(20, 30, 70, .35);
+  }
+  .contact h3 { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 10px; }
+  .contact p { margin: 0 0 14px; }
+  .contact strong { font-family: var(--sans); font-weight: 500; color: var(--term); }
+  .email {
+    font-family: var(--mono); font-size: 17px; background: var(--surface-2); border-radius: 8px;
+    padding: 10px 14px; user-select: all; word-break: break-all;
+  }
+
   /* ---------- Footer ---------- */
   .join {
     margin-top: 72px; padding-top: 32px; border-top: 1px solid var(--rule);
@@ -385,7 +409,7 @@
     <div>
       <h1 class="wordmark">thought<span>feel</span></h1>
       <p class="tagline">A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once.</p>
-      <p class="byline">BY TED SHACHTMAN · READER’S GUIDE, DRAFT 4</p>
+      <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · READER’S GUIDE, DRAFT 4</p>
       <div class="hero-actions">
         <a class="btn primary" href="#what">What is thoughtfeel?</a>
         <a class="btn" href="#try">Try it in 5 minutes</a>
@@ -541,6 +565,10 @@
         <li><a href="#board-games">Learn board-game rules</a></li>
         <li><a href="#mental-chess">Play mental chess</a></li>
         <li><a href="#further-reading">The model and further reading</a></li>
+      </ul>
+      <p>The author</p>
+      <ul>
+        <li><a href="#about">About Ted and free tutoring</a></li>
       </ul>
     </nav>
 
@@ -881,6 +909,25 @@
     </article>
   </div>
 
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="about-text">
+      <p class="eyebrow">About the author</p>
+      <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
+      <p>I’m Ted (Theodore) Shachtman, and I developed thoughtfeel as a technique for learning and memory. It grew out of my own experience and experiments, starting with a question a friend asked our group: is any part of your thinking non-sensory?</p>
+      <p>Since then I’ve been working out how to put that sense to use: remembering lists, numbers, song lyrics and what people said, learning board games, and playing chess in my head. I wrote this guide, made the animated lessons, and started r/ThoughtFeel so people can compare notes.</p>
+      <p>This is still a personal investigation. I keep my own observations separate from established research, and I’d like to hear how the technique works for you, or doesn’t.</p>
+    </div>
+    <div class="contact">
+      <h3>Get in touch</h3>
+      <p>If you want to reach out about the technique, ask questions, or have a <strong>free tutoring session</strong>, please email me. I’d be very happy to jump on a call.</p>
+      <p class="email" id="email-address">teddyshachtman@gmail.com</p>
+      <div class="row">
+        <a class="btn primary" href="mailto:teddyshachtman@gmail.com?subject=thoughtfeel">Email me</a>
+        <button class="btn" type="button" id="copy-email">Copy address</button>
+      </div>
+    </div>
+  </section>
+
   <footer class="join">
     <div>
       <h2>Compare notes on r/ThoughtFeel</h2>
@@ -892,6 +939,7 @@
       <li><a href="https://www.youtube.com/watch?v=tEDCi06aZ6E" target="_blank" rel="noopener">Video 2: The texture discovery technique</a><span>Thought Feel: What Is a Thought Made Of?</span></li>
       <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The Thought Feel YouTube channel</a><span>New lessons as they’re published.</span></li>
       <li><a href="thoughtfeel_guide.pdf" target="_blank" rel="noopener">The guide as a PDF</a><span>Same text, print layout.</span></li>
+      <li><a href="#about">Email Ted</a><span>Questions, or a free tutoring session: teddyshachtman@gmail.com</span></li>
     </ul>
     <p class="colophon">thoughtfeel · Reader’s guide, Draft 4 · Ted Shachtman</p>
   </footer>
@@ -1095,6 +1143,23 @@
   });
 
   renderIntro();
+
+  /* ---------- Copy email ---------- */
+  var copyEmail = document.getElementById('copy-email');
+  if (copyEmail) copyEmail.addEventListener('click', function () {
+    var el = document.getElementById('email-address');
+    var select = function () {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      copyEmail.textContent = 'Selected, press copy';
+    };
+    try {
+      navigator.clipboard.writeText(el.textContent.trim()).then(function () {
+        copyEmail.textContent = 'Copied';
+        setTimeout(function () { copyEmail.textContent = 'Copy address'; }, 1800);
+      }, select);
+    } catch (e) { select(); }
+  });
 
   /* ---------- Side nav: mark current section ---------- */
   var links = Array.prototype.slice.call(document.querySelectorAll('.sidenav a'));
