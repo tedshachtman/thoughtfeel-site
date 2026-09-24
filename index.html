@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute Cobalt list exercise.">
+<meta name="description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute memory exercise.">
 <link rel="canonical" href="https://thoughtfeel.net/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
 <meta property="og:title" content="thoughtfeel: a practical guide">
-<meta property="og:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute Cobalt list exercise.">
+<meta property="og:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute memory exercise.">
 <meta property="og:url" content="https://thoughtfeel.net/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="thoughtfeel: a practical guide">
-<meta name="twitter:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute Cobalt list exercise.">
+<meta name="twitter:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute memory exercise.">
 </head>
 <body>
 <title>thoughtfeel guide</title>
@@ -142,6 +142,45 @@
   }
   .swatch-key i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
   @media (max-width: 859px) { #swatch { aspect-ratio: 5 / 2; } }
+
+  /* ---------- Definition ---------- */
+  .what { padding-block: 8px 72px; }
+  .what h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.1; letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+  }
+  .what-lead {
+    font-size: clamp(21px, 2.5vw, 27px); line-height: 1.45; max-width: 36ch;
+    margin: 16px 0 0; text-wrap: balance;
+  }
+  .what-lead em { color: var(--term); }
+  .what-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px 56px; margin-top: 36px; align-items: start; }
+  @media (min-width: 900px) { .what-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+  .what-text { max-width: 62ch; }
+  .what-text h3 { font-family: var(--sans); font-weight: 500; font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
+  .what-text h3:not(:first-child) { margin-top: 28px; }
+  .what-text p { margin: 0 0 12px; }
+  .what-text strong { font-family: var(--sans); font-weight: 500; color: var(--term); }
+  .ingredients {
+    margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 20px;
+  }
+  .thought-card { background: var(--surface-2); border-radius: 10px; padding: 16px; }
+  .thought-name { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 12px; }
+  .thought-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .thought-card li {
+    font-family: var(--mono); font-size: 14px; padding: 6px 10px; border-radius: 6px;
+    border: 1px solid var(--rule); color: var(--ink-2); background: var(--surface);
+  }
+  .thought-card li.shared { border-color: var(--weld); color: var(--term); font-weight: 500; background: transparent; box-shadow: inset 3px 0 0 var(--weld); }
+  .ingredients figcaption { grid-column: 1 / -1; font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
+  .shared-word { font-family: var(--mono); color: var(--term); font-weight: 500; }
+  .not-list {
+    list-style: none; margin: 36px 0 0; padding: 20px 0 0; border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px 40px; font-size: 16.5px; color: var(--ink-2);
+  }
+  @media (min-width: 820px) { .not-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .not-list strong { display: block; font-family: var(--sans); font-weight: 500; color: var(--ink); margin-bottom: 2px; }
 
   /* ---------- Exercise ---------- */
   .try {
@@ -326,9 +365,9 @@
       <p class="tagline">A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once.</p>
       <p class="byline">BY TED SHACHTMAN · READER’S GUIDE, DRAFT 4</p>
       <div class="hero-actions">
-        <a class="btn primary" href="#try">Try it in 5 minutes</a>
+        <a class="btn primary" href="#what">What is thoughtfeel?</a>
+        <a class="btn" href="#try">Try it in 5 minutes</a>
         <a class="btn" href="#videos">Watch the videos</a>
-        <a class="btn" href="#guide">Read the guide</a>
         <a class="btn quiet" href="thoughtfeel_guide.pdf" target="_blank" rel="noopener">PDF</a>
       </div>
     </div>
@@ -341,22 +380,57 @@
     </div>
   </header>
 
+  <!-- ================= Definition ================= -->
+  <section class="what" id="what" aria-labelledby="what-title">
+    <p class="eyebrow">Start here</p>
+    <h2 id="what-title">What is thoughtfeel?</h2>
+    <p class="what-lead">Every thought has a particular feel to it, almost like a taste. That feel is specific enough that you can recognize <em>what</em> you are thinking from the feel alone.</p>
+
+    <div class="what-grid">
+      <div class="what-text">
+        <h3>Ways thoughts are the same feel the same</h3>
+        <p>The thought of a giraffe and the thought of a monkey share an ingredient: <strong>animal</strong>. I can tell from the feel of the two thoughts that they share it, the way you can taste the same sauce in two different dishes. Where the thoughts differ, they feel different.</p>
+        <h3>The feel alone is enough to tell what the thought is</h3>
+        <p>This is the precise claim. Suppose you handed me only the sensation of a thought, without my knowing what I had been thinking about. I could attend to that sensation and tell you it’s an animal, and specifically that it’s a giraffe.</p>
+        <p>It’s the same way you can look at a physical object in front of you, recognize it and say what it is. The feel doesn’t just tell me that two thoughts are different. It tells me what each one is.</p>
+      </div>
+
+      <figure class="ingredients" aria-label="Example: the thoughts giraffe and monkey share the ingredient animal">
+        <div class="thought-card">
+          <p class="thought-name">giraffe</p>
+          <ul><li class="shared">animal</li><li>long neck</li><li>savanna</li></ul>
+        </div>
+        <div class="thought-card">
+          <p class="thought-name">monkey</p>
+          <ul><li class="shared">animal</li><li>tail</li><li>trees</li></ul>
+        </div>
+        <figcaption>Two thoughts, one shared ingredient. You can sense the <span class="shared-word">animal</span> in both, and the rest of each feel tells you which animal it is.</figcaption>
+      </figure>
+    </div>
+
+    <ul class="not-list" aria-label="What thoughtfeel is not">
+      <li><strong>Not a mental picture or an inner voice.</strong> Those can come along with a thought, but the feel is still there without them.</li>
+      <li><strong>Not an emotion.</strong> A number can feel very specific without making you happy or sad.</li>
+      <li><strong>Not a vague sense that something is different.</strong> It’s detailed enough to identify which thought it is.</li>
+    </ul>
+  </section>
+
   <!-- ================= Exercise ================= -->
   <section class="try" id="try" aria-labelledby="try-title">
-    <p class="eyebrow">Try it first · about 5 minutes</p>
-    <h2 id="try-title">Remember the Cobalt list through its feel</h2>
-    <p class="lede">By <em>thoughtfeel</em> I mean the feel a thought has even without a mental picture or an inner voice. Thinking about a person feels different from thinking about a number. This exercise uses that feel to hold five words, their positions and the list they belong to, then checks what you kept.</p>
+    <p class="eyebrow">Try it · about 5 minutes</p>
+    <h2 id="try-title">Remember five words through their feel</h2>
+    <p class="lede">This exercise uses thoughtfeel to hold five words in order, then checks what you kept.</p>
 
     <div class="try-grid">
       <div>
         <div class="check">
-          <p><strong>A 30-second check.</strong> Without picturing anything or saying words in your head, think <span class="thought">it might rain</span>, then <span class="thought">it rained</span>. Then a knight, then a king. If each pair feels different with no image or words involved, that difference is what this guide works with. If you notice nothing, try the exercise anyway and compare it with how you usually remember.</p>
+          <p><strong>A 30-second check.</strong> Think of a giraffe, then a monkey. If a picture or the word comes along, that’s fine; look past it to the feel of the thought itself. Can you sense the ingredient they share, <em>animal</em>, and what’s different about each? Then the real test: if you had only that feel, could you tell which animal it was? That recognizable feel is what the exercise uses. If you notice nothing, try the exercise anyway and compare it with how you usually remember.</p>
         </div>
         <ol class="steps">
           <li>Bring <strong>cobalt</strong> to mind and attend to what it feels like as an idea: the metal or the shade of blue, whichever meaning you know.</li>
-          <li>Give it its position. Say aloud <span class="say">“Cobalt is the first entry in the Cobalt list,”</span> attending to cobalt as you say <em>cobalt</em> and giving it that place as you say <em>first</em>. If “first” feels vague, think of the first person in a queue and the first song on an album, and attend to what they share.</li>
+          <li>Give it its position. Say aloud <span class="say">“Cobalt is first,”</span> attending to cobalt as you say <em>cobalt</em> and giving it that place as you say <em>first</em>. If “first” feels vague, think of the first person in a queue and the first song on an album, and attend to what they share.</li>
           <li>Do the same for periscope (second), bramble (third), lantern (fourth) and tundra (fifth).</li>
-          <li>Give each entry membership: <span class="say">“This lantern entry belongs to the Cobalt list.”</span> Aim to return to a word and have its position and list come with it.</li>
+          <li>Go back through the words. Aim for each one’s position to come with it, so that the feel of <em>lantern</em> also carries <em>fourth</em>.</li>
         </ol>
         <p class="hint">Talking aloud helps direct what you are doing in thoughtfeel. The full method is in <a href="#remember-a-list">Remember a list</a>.</p>
       </div>
@@ -364,7 +438,7 @@
       <div class="panel" id="ex" aria-live="polite">
         <!-- rendered by script; this is the no-script / initial state -->
         <div class="panel-head">
-          <p class="panel-title">The Cobalt list</p>
+          <p class="panel-title">Five words</p>
           <span class="timer" id="ex-timer">study 0:00</span>
         </div>
         <ol class="cobalt" id="ex-list">
@@ -651,7 +725,7 @@
       <p>These relationships let me distinguish separate occurrences of the same word. If another list also contains Lantern, I can retain one Lantern entry as fourth in the Cobalt list and the other as belonging to that other list, in its own position.</p>
       <p>After working through the entries, look away from the table. Ask for the fourth entry. Then try a question about meaning: which entry refers to something used for light, and what is its position? You can also recall the words in reverse order. Check what you recover against the table.</p>
       <p>For me, an answer can arrive with all three parts together: Lantern, fourth, Cobalt list. I am not seeing a numbered list or hearing its words recited. I recognize the entry, its position, and its membership through their feel. That is what makes the information useful beyond reciting the words in order.</p>
-      <p class="back"><a href="#try">Test yourself on the Cobalt list</a> · <a href="#contents">Back to contents</a></p>
+      <p class="back"><a href="#try">Try the five-word exercise</a> · <a href="#contents">Back to contents</a></p>
 
       <h2 id="remember-numbers">Remember a sequence of numbers</h2>
       <p>To remember a long sequence of digits, I divide it into groups. Each group has a particular thoughtfeel, and I retain where that group belongs in the sequence. Within each group, I can still attend to the individual digits and their positions.</p>
@@ -862,7 +936,7 @@
       }
     }
     ex.innerHTML = banner +
-      '<div class="panel-head"><p class="panel-title">The Cobalt list</p><span class="timer">covered</span></div>' +
+      '<div class="panel-head"><p class="panel-title">Five words</p><span class="timer">covered</span></div>' +
       listHTML(true) +
       '<p class="hint">Work through the steps on the left while the list is showing. A few minutes is enough. The timer records how long you studied.</p>' +
       '<div class="row"><button class="btn primary" type="button" data-act="study">Show the list and start studying</button></div>';
@@ -870,9 +944,9 @@
 
   function renderStudy() {
     ex.innerHTML =
-      '<div class="panel-head"><p class="panel-title">The Cobalt list</p><span class="timer" id="ex-timer">study 0:00</span></div>' +
+      '<div class="panel-head"><p class="panel-title">Five words</p><span class="timer" id="ex-timer">study 0:00</span></div>' +
       listHTML(false) +
-      '<p class="hint">Say each one aloud: <em>“Periscope is the second entry in the Cobalt list.”</em> Then give each entry its membership.</p>' +
+      '<p class="hint">Say each one aloud: <em>“Periscope is second.”</em> Attend to each word’s meaning as you give it its place.</p>' +
       '<div class="row"><button class="btn primary" type="button" data-act="hide">Hide the list and test me</button></div>';
     state.studyStart = Date.now();
     clearInterval(tick);
@@ -912,7 +986,7 @@
     if (state.mode === 'delayed') { saved.delayedDone = true; saved.delayedScore = hits; save(saved); }
 
     var when = state.mode === 'delayed' ? 'next day (' + state.hoursSince + 'h later)' : 'same session';
-    var line = 'thoughtfeel Cobalt list, ' + when + ': ' + hits + '/5 in order, light question ' + (lightOk ? 'right' : 'wrong') +
+    var line = 'thoughtfeel five-word list, ' + when + ': ' + hits + '/5 in order, light question ' + (lightOk ? 'right' : 'wrong') +
       (state.studySeconds ? ', studied ' + fmt(state.studySeconds) : '') + '.';
 
     var list = rows.map(function (r) {
