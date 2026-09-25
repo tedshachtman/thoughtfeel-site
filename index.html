@@ -274,7 +274,7 @@
   }
   .pos { font-family: var(--mono); font-size: 14px; color: var(--term); font-variant-numeric: tabular-nums; }
   .word { font-family: var(--sans); font-weight: 500; font-size: 20px; letter-spacing: .01em; }
-  .covered .word { color: transparent; background: var(--rule); border-radius: 4px; user-select: none; }
+  .covered .word { display: inline-block; width: 9ch; max-width: 100%; height: 1.1em; background: var(--rule); border-radius: 4px; }
   .hint { font-size: 15px; color: var(--ink-2); margin: 0; }
   .recall-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
   .recall-list li { display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: 14px; align-items: center; }
@@ -1049,8 +1049,10 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function listHTML(covered) {
+    // A covered list renders blank placeholders, so the words can't be selected or read aloud.
     return '<ol class="cobalt' + (covered ? ' covered' : '') + '">' + WORDS.map(function (w, i) {
-      return '<li><span class="pos">' + (i + 1) + '</span><span class="word">' + cap(w) + '</span></li>';
+      var word = covered ? '<span class="word" aria-label="hidden word"></span>' : '<span class="word">' + cap(w) + '</span>';
+      return '<li><span class="pos">' + (i + 1) + '</span>' + word + '</li>';
     }).join('') + '</ol>';
   }
 
