@@ -5,14 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute memory exercise.">
 <link rel="canonical" href="https://thoughtfeel.net/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
 <meta property="og:title" content="thoughtfeel: a practical guide">
 <meta property="og:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute memory exercise.">
 <meta property="og:url" content="https://thoughtfeel.net/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://thoughtfeel.net/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="thoughtfeel: every thought has a particular feel, almost like a taste.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="thoughtfeel: a practical guide">
 <meta name="twitter:description" content="A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once. Try the 5-minute memory exercise.">
+<meta name="twitter:image" content="https://thoughtfeel.net/og.png">
 </head>
 <body>
 <title>thoughtfeel guide</title>
@@ -77,6 +83,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
@@ -142,6 +149,11 @@
   }
   .swatch-key i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
   @media (max-width: 859px) { #swatch { aspect-ratio: 5 / 2; } }
+  /* On phones the weave is a slim band so the definition reaches the first screen. */
+  @media (max-width: 600px) {
+    #swatch { aspect-ratio: 6 / 1; }
+    .swatch-key { display: none; }
+  }
 
   /* ---------- Definition ---------- */
   .what { padding-block: 8px 72px; }
@@ -202,6 +214,14 @@
     display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px 40px; font-size: 16.5px; color: var(--ink-2);
   }
   @media (min-width: 820px) { .not-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .vocab {
+    margin: 28px 0 0; padding: 16px 20px; max-width: 76ch; background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 10px; font-size: 16.5px; line-height: 1.6;
+  }
+  .vocab-label {
+    display: block; font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-2); margin-bottom: 4px;
+  }
   .not-list strong { display: block; font-family: var(--sans); font-weight: 500; color: var(--ink); margin-bottom: 2px; }
 
   /* ---------- Exercise ---------- */
@@ -214,7 +234,7 @@
   }
   .eyebrow {
     font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--weld); margin: 0 0 10px;
+    color: var(--term); margin: 0 0 10px;
   }
   .try h2 {
     font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
@@ -228,9 +248,16 @@
     border-left: 3px solid var(--weld); padding: 4px 0 4px 16px; margin: 0 0 18px;
   }
   .check strong { font-family: var(--sans); font-weight: 500; }
+  .check-list { margin: 0 0 12px; padding-left: 1.2em; }
+  .check-list li { margin-bottom: 6px; }
+  .check-list li::marker { color: var(--term); }
+  .check p:last-child { margin-bottom: 0; }
+  /* While recalling, the instructions are hidden and the panel takes the whole row. */
+  .try-grid.solo { grid-template-columns: minmax(0, 1fr); }
+  .try-grid.solo .panel { max-width: 560px; }
   .steps { margin: 0 0 18px; padding-left: 1.3em; }
   .steps li { margin-bottom: 8px; padding-left: 4px; }
-  .steps li::marker { font-family: var(--mono); color: var(--weld); font-size: .85em; }
+  .steps li::marker { font-family: var(--mono); color: var(--term); font-size: .85em; }
   .say { font-style: italic; }
 
   .panel {
@@ -245,7 +272,7 @@
     display: grid; grid-template-columns: 3ch 1fr; gap: 14px; align-items: baseline;
     background: var(--surface); border-radius: 8px; padding: 10px 14px;
   }
-  .pos { font-family: var(--mono); font-size: 14px; color: var(--weld); font-variant-numeric: tabular-nums; }
+  .pos { font-family: var(--mono); font-size: 14px; color: var(--term); font-variant-numeric: tabular-nums; }
   .word { font-family: var(--sans); font-weight: 500; font-size: 20px; letter-spacing: .01em; }
   .covered .word { color: transparent; background: var(--rule); border-radius: 4px; user-select: none; }
   .hint { font-size: 15px; color: var(--ink-2); margin: 0; }
@@ -308,7 +335,7 @@
   }
   .video:hover .play { transform: scale(1.08); }
   @media (prefers-reduced-motion: reduce) { .play { transition: none; } }
-  .video-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--weld); }
+  .video-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--term); }
   .video-title { font-family: var(--sans); font-weight: 700; font-size: 20px; line-height: 1.3; text-wrap: balance; }
   .video:hover .video-title { color: var(--indigo); text-decoration: underline; text-underline-offset: 3px; }
   .video-desc { font-size: 16px; color: var(--ink-2); line-height: 1.55; }
@@ -341,7 +368,7 @@
     font-family: var(--sans); font-weight: 500; font-size: 21px; line-height: 1.3; margin: 1.8em 0 .5em; text-wrap: balance;
   }
   .part-label {
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--weld);
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--term);
     margin: 3.2em 0 -1.4em; padding-top: 20px; border-top: 1px solid var(--rule);
   }
   .thought { font-style: italic; }
@@ -359,7 +386,7 @@
   table { border-collapse: collapse; width: 100%; font-size: 16.5px; }
   th, td { text-align: left; padding: 10px 14px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
   th { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-  td.num { font-family: var(--mono); color: var(--weld); font-variant-numeric: tabular-nums; }
+  td.num { font-family: var(--mono); color: var(--term); font-variant-numeric: tabular-nums; }
   .contents td:first-child a { font-family: var(--sans); font-weight: 500; }
   .contents td { padding-block: 12px; }
   .back { font-family: var(--sans); font-size: 14.5px; }
@@ -409,7 +436,7 @@
     <div>
       <h1 class="wordmark">thought<span>feel</span></h1>
       <p class="tagline">A practical guide to using the textures of thought to remember more, learn faster, and think with more ideas at once.</p>
-      <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · READER’S GUIDE, DRAFT 4</p>
+      <p class="byline">BY <a href="#about">TED SHACHTMAN</a></p>
       <div class="hero-actions">
         <a class="btn primary" href="#what">What is thoughtfeel?</a>
         <a class="btn" href="#try">Try it in 5 minutes</a>
@@ -477,10 +504,12 @@
     </div>
 
     <ul class="not-list" aria-label="What thoughtfeel is not">
-      <li><strong>Not a mental picture or an inner voice.</strong> Those can come along with a thought, but the feel is still there without them.</li>
+      <li><strong>Not a mental picture, an inner voice, or an imagined taste or touch.</strong> Those can come along with a thought, but the feel is still there without them. “Taste” and “texture” are analogies.</li>
       <li><strong>Not an emotion.</strong> A number can feel very specific without making you happy or sad.</li>
       <li><strong>Not a vague sense that something is different.</strong> It’s detailed enough to identify which thought it is.</li>
     </ul>
+
+    <p class="vocab"><span class="vocab-label">Three words you’ll see here and in the videos</span> A <dfn>texture</dfn> is one component of a thought’s feel, like <em>animal</em>. The <dfn>fabric</dfn> is the whole felt thought. <dfn>Weaving</dfn> is combining textures to form a new thought.</p>
   </section>
 
   <!-- ================= Exercise ================= -->
@@ -489,16 +518,21 @@
     <h2 id="try-title">Remember five words through their feel</h2>
     <p class="lede">This exercise uses thoughtfeel to hold five words in order, then checks what you kept.</p>
 
-    <div class="try-grid">
-      <div>
+    <div class="try-grid" id="ex-grid">
+      <div id="ex-steps">
         <div class="check">
-          <p><strong>A 30-second check.</strong> Think of a giraffe, then a monkey. If a picture or the word comes along, that’s fine; look past it to the feel of the thought itself. Can you sense the ingredient they share, <em>animal</em>, and what’s different about each? Then the real test: if you had only that feel, could you tell which animal it was? That recognizable feel is what the exercise uses. If you notice nothing, try the exercise anyway and compare it with how you usually remember.</p>
+          <p><strong>A 30-second check.</strong> Think of a giraffe, then a monkey. If a picture or the word comes along, that’s fine; look past it to the feel of the thought itself.</p>
+          <ul class="check-list">
+            <li>Can you sense the ingredient they share, <em>animal</em>, and what’s different about each?</li>
+            <li>If you had only that feel, could you tell which animal it was?</li>
+          </ul>
+          <p>That recognizable feel is what this exercise uses. If you notice nothing, try it anyway and compare it with how you usually remember.</p>
         </div>
         <ol class="steps">
-          <li>Bring <strong>cobalt</strong> to mind and attend to what it feels like as an idea: the metal or the shade of blue, whichever meaning you know.</li>
+          <li>Bring the first word, <strong>cobalt</strong>, to mind and attend to what it feels like as an idea: the metal or the shade of blue, whichever meaning you know.</li>
           <li>Give it its position. Say aloud <span class="say">“Cobalt is first,”</span> attending to cobalt as you say <em>cobalt</em> and giving it that place as you say <em>first</em>. If “first” feels vague, think of the first person in a queue and the first song on an album, and attend to what they share.</li>
-          <li>Do the same for periscope (second), bramble (third), lantern (fourth) and tundra (fifth).</li>
-          <li>Go back through the words. Aim for each one’s position to come with it, so that the feel of <em>lantern</em> also carries <em>fourth</em>.</li>
+          <li>Do the same for the other four words, giving each one its position.</li>
+          <li>Go back through the list. Aim for each word’s position to come with it, so that the feel of a word also carries its place.</li>
         </ol>
         <p class="hint">Talking aloud helps direct what you are doing in thoughtfeel. The full method is in <a href="#remember-a-list">Remember a list</a>.</p>
       </div>
@@ -913,7 +947,7 @@
     <div class="about-text">
       <p class="eyebrow">About the author</p>
       <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
-      <p>I’m Ted (Theodore) Shachtman, a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and I’m finishing a master’s in computer science at the University of Colorado Boulder in November 2026.</p>
+      <p>I’m a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and I’m finishing a master’s in computer science at the University of Colorado Boulder in November 2026.</p>
       <p>I developed thoughtfeel as a technique for learning and memory. It grew out of my own experience and experiments, starting with a question a friend asked our group: is any part of your thinking non-sensory?</p>
       <p>Since then I’ve been working out how to put that sense to use: remembering lists, numbers, song lyrics and what people said, learning board games, and playing chess in my head. I wrote this guide, made the animated lessons, and started r/ThoughtFeel so people can compare notes.</p>
       <p>This is still a personal investigation. I keep my own observations separate from established research, and I’d like to hear how the technique works for you, or doesn’t.</p>
@@ -939,10 +973,10 @@
       <li><a href="https://www.youtube.com/watch?v=gh08gtKVLI4" target="_blank" rel="noopener">Video 1: Introduction to thoughtfeel</a><span>What Does a Thought Feel Like? A Practical Exercise</span></li>
       <li><a href="https://www.youtube.com/watch?v=tEDCi06aZ6E" target="_blank" rel="noopener">Video 2: The texture discovery technique</a><span>Thought Feel: What Is a Thought Made Of?</span></li>
       <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The Thought Feel YouTube channel</a><span>New lessons as they’re published.</span></li>
-      <li><a href="thoughtfeel_guide.pdf" target="_blank" rel="noopener">The guide as a PDF</a><span>Same text, print layout.</span></li>
+      <li><a href="thoughtfeel_guide.pdf" target="_blank" rel="noopener">The original guide as a PDF</a><span>Draft 4, before the additions on this page.</span></li>
       <li><a href="#about">Email Ted</a><span>Questions, or a free tutoring session: teddyshachtman@gmail.com</span></li>
     </ul>
-    <p class="colophon">thoughtfeel · Reader’s guide, Draft 4 · Ted Shachtman</p>
+    <p class="colophon">thoughtfeel · a practical guide by Ted Shachtman</p>
   </footer>
 </div>
 
@@ -1020,11 +1054,22 @@
     }).join('') + '</ol>';
   }
 
+  // The instructions name the words, so they stay hidden whenever the viewer is recalling
+  // or has a next-day test waiting.
+  var stepsEl = document.getElementById('ex-steps');
+  var gridEl = document.getElementById('ex-grid');
+  function showSteps(show) {
+    if (stepsEl) stepsEl.hidden = !show;
+    if (gridEl) gridEl.classList.toggle('solo', !show);
+  }
+
   function renderIntro() {
     var saved = load(), banner = '';
+    showSteps(true);
     if (saved && saved.studiedAt && !saved.delayedDone) {
       var hrs = (Date.now() - saved.studiedAt) / 36e5;
       if (hrs >= DELAY_HOURS) {
+        showSteps(false);
         banner = '<div class="banner"><span>You studied this list <strong>' + Math.round(hrs) + ' hours ago</strong>. Test your next-day recall before looking.</span>' +
           '<button class="btn primary" type="button" data-act="delayed">Test next-day recall</button></div>';
       } else {
@@ -1034,11 +1079,12 @@
     ex.innerHTML = banner +
       '<div class="panel-head"><p class="panel-title">Five words</p><span class="timer">covered</span></div>' +
       listHTML(true) +
-      '<p class="hint">Work through the steps on the left while the list is showing. A few minutes is enough. The timer records how long you studied.</p>' +
+      '<p class="hint">Show the list, then work through the steps while it’s showing. A few minutes is enough; the timer records how long you studied.</p>' +
       '<div class="row"><button class="btn primary" type="button" data-act="study">Show the list and start studying</button></div>';
   }
 
   function renderStudy() {
+    showSteps(true);
     ex.innerHTML =
       '<div class="panel-head"><p class="panel-title">Five words</p><span class="timer" id="ex-timer">study 0:00</span></div>' +
       listHTML(false) +
@@ -1057,13 +1103,15 @@
     var items = WORDS.map(function (w, i) {
       return '<li><span class="pos">' + (i + 1) + '</span><input type="text" id="recall-' + (i + 1) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Entry ' + (i + 1) + '"></li>';
     }).join('');
+    showSteps(false);
     ex.innerHTML =
       '<div class="panel-head"><p class="panel-title">' + title + '</p><span class="timer">list hidden</span></div>' +
-      '<p class="hint">Without looking back, return to each entry through its feel and write it in its position.</p>' +
+      '<p class="hint">Without looking back, return to each entry through its feel and write it in its position. The instructions come back when you check your answers.</p>' +
       '<ol class="recall-list">' + items + '</ol>' +
       '<div class="q"><label for="q-light">Which position holds the entry that refers to something used for light?</label>' +
       '<select id="q-light"><option value="">Choose…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>' +
       '<div class="row"><button class="btn primary" type="button" data-act="check">Check my answers</button></div>';
+    if (ex.getBoundingClientRect().top < 0) ex.scrollIntoView({ block: 'start' });
     var first = document.getElementById('recall-1'); if (first) first.focus({ preventScroll: true });
   }
 
@@ -1078,6 +1126,7 @@
     var light = lightEl ? lightEl.value : '';
     var lightOk = light === '4';
 
+    showSteps(true);
     var saved = load() || {};
     if (state.mode === 'delayed') { saved.delayedDone = true; saved.delayedScore = hits; save(saved); }
 
