@@ -319,7 +319,7 @@
   .imt .imt-ways .gold b { color: var(--term); }
   .imt .imt-ways span { color: var(--ink-2); font-size: 16px; line-height: 1.5; }
   .imt .imt-panel { min-height: 330px; }
-  .imt .imt-progress { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .imt .imt-progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .imt .imt-progress span { height: 4px; border-radius: 2px; background: var(--rule); }
   .imt .imt-progress .done { background: var(--indigo); }
   .imt .imt-progress .now { background: var(--weld); }
@@ -595,14 +595,12 @@
 
       <div class="panel imt-panel" id="imt" aria-live="polite">
         <!-- rendered by script; this is the no-script version -->
-        <p class="imt-label">Five quick steps</p>
+        <p class="imt-label">Four quick steps</p>
         <ol class="steps">
           <li>Imagine a purple giraffe on roller skates. Can you picture it?</li>
           <li>Now hear it: the wheels rolling, or the words in your head. Can you hear it?</li>
           <li>Let the picture and the sounds go. Do you still know what you were imagining?</li>
-          <li>Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to?</li>
-          <li>Keep the picture the same. The skates are borrowed. Now they’re stolen. Did the idea itself change in a way you could attend to?</li>
-        </ol>
+          <li>Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to?</li>        </ol>
       </div>
     </div>
   </section>
@@ -1353,9 +1351,7 @@
       { key: 'knowing', label: 'Knowing', prompt: 'Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing.',
         q: 'Do you still know what it was?', a: ['Yes', 'Sort of', 'No'] },
       { key: 'concepts', label: 'In concepts', prompt: 'Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to: the giraffe, the purple, the skating, and how they fit together?',
-        q: 'Can you imagine it in concepts?', a: ['Yes, clearly', 'Sort of', 'No, I just know it'] },
-      { key: 'check', label: 'The check', prompt: 'Keep the picture exactly the same. First, the skates are borrowed. Now, they’re stolen.',
-        q: 'The picture didn’t change. Apart from knowing which is which, did the idea itself change in a way you could attend to?', a: ['Yes', 'A little', 'No'] }
+        q: 'Can you imagine it in concepts?', a: ['Yes, clearly', 'Sort of', 'No, I just know it'] }
     ];
     var STRENGTH = [2, 1, 0];                 // answer position → 2 yes, 1 partly, 0 no
     var WORD = ['no', 'sort of', 'yes'];      // strength → word for the summary
@@ -1384,7 +1380,8 @@
     function renderResult() {
       var A = {};
       STEPS.forEach(function (s, k) { A[s.key] = answers[k]; });
-      imtOutcome = A.concepts === 2 && A.check >= 1 ? 'strong' : (A.concepts >= 1 || A.check >= 1) ? 'faint' : 'none';
+      // Whether someone has thoughtfeel is just whether they can imagine in concepts.
+      imtOutcome = A.concepts === 2 ? 'strong' : A.concepts === 1 ? 'faint' : 'none';
       imtSummary = STEPS.map(function (s) { return s.key + ': ' + WORD[A[s.key]]; }).join(', ') + ' (' + imtOutcome + ')';
 
       var head, text;
@@ -1405,7 +1402,7 @@
       }
 
       var rows = [['In images', A.images, ''], ['In sounds', A.sounds, ''], ['Knowing', A.knowing, ''],
-                  ['In concepts', A.concepts, 'gold'], ['The check', A.check, 'gold']];
+                  ['In concepts', A.concepts, 'gold']];
       imt.innerHTML =
         '<p class="imt-label">Your result</p>' +
         '<p class="imt-head" tabindex="-1">' + head + '</p>' +
