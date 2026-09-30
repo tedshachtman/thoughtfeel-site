@@ -101,16 +101,17 @@
 
   .page { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; }
 
-  /* ---------- Hero ---------- */
+  /* ---------- Hero: the pitch, and the test beside it ---------- */
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    align-items: center;
-    padding-block: 24px 40px;
+    gap: 32px;
+    align-items: start; /* the test card changes height as you answer; keep the pitch still */
+    padding-block: 24px 48px;
   }
-  @media (min-width: 860px) {
-    .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; padding-block: 48px 56px; }
+  @media (min-width: 900px) {
+    .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; padding-block: 56px 72px; }
+    .hero-text { padding-top: 20px; }
   }
   .wordmark {
     font-family: var(--sans);
@@ -122,15 +123,21 @@
   }
   .wordmark span { color: var(--weld); }
   .tagline {
-    font-size: clamp(20px, 2.4vw, 25px);
-    line-height: 1.4;
-    margin: 18px 0 0;
-    max-width: 30ch;
+    font-size: clamp(25px, 3vw, 34px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 16px 0 0;
     text-wrap: balance;
   }
-  .tagline-sub { font-size: 17px; line-height: 1.55; color: var(--ink-2); margin: 12px 0 0; max-width: 44ch; }
-  .byline { font-family: var(--mono); font-size: 13px; letter-spacing: .04em; color: var(--ink-2); margin: 18px 0 0; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero-copy { font-size: clamp(18px, 1.9vw, 20px); line-height: 1.55; margin: 18px 0 0; max-width: 34ch; }
+  .hero-guide { font-size: 17px; line-height: 1.55; color: var(--ink-2); margin: 14px 0 0; max-width: 38ch; }
+  .byline { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); margin: 22px 0 0; }
+  /* On phones, keep the pitch short so the first question reaches the first screen. */
+  @media (max-width: 600px) {
+    .hero { gap: 24px; padding-top: 12px; }
+    .hero-guide { font-size: 16px; }
+    .byline { margin-top: 16px; }
+  }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-family: var(--sans); font-weight: 500; font-size: 16px;
@@ -142,19 +149,20 @@
   .btn.primary { background: var(--indigo); color: var(--bg); }
   .btn.primary:hover { filter: brightness(1.1); }
   .btn.quiet { border-color: var(--rule); color: var(--ink-2); }
-  .swatch-wrap { position: relative; }
-  #swatch { display: block; width: 100%; max-width: 100%; aspect-ratio: 5 / 4; border-radius: 6px; }
-  .swatch-key {
-    display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 12px 0 0; padding: 0; list-style: none;
-    font-family: var(--mono); font-size: 12.5px; color: var(--ink-2);
+
+  /* The test card: a strip of the weave on top, then the questions. */
+  .imt-card {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
   }
-  .swatch-key i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
-  @media (max-width: 859px) { #swatch { aspect-ratio: 5 / 2; } }
-  /* On phones the weave is a slim band so the definition reaches the first screen. */
-  @media (max-width: 600px) {
-    #swatch { aspect-ratio: 6 / 1; }
-    .swatch-key { display: none; }
+  #swatch { display: block; width: 100%; aspect-ratio: 10 / 1; }
+  .imt-card-body { padding: clamp(18px, 3vw, 28px); display: grid; gap: 10px; }
+  .imt-card .eyebrow { margin: 0; }
+  .imt-card h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 2.6vw, 30px);
+    line-height: 1.15; letter-spacing: -0.015em; margin: 0;
   }
+  .imt .imt-intro { margin: 0 0 8px; color: var(--ink-2); font-size: 16.5px; line-height: 1.5; }
 
   /* ---------- Definition ---------- */
   .what { padding-block: 8px 72px; }
@@ -308,23 +316,15 @@
   .linkish { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
   /* ---------- The test (imagine in concepts) ---------- */
-  .what.intro { padding-bottom: 32px; }
-  .what.intro .what-lead + .what-lead { margin-top: 12px; }
-  .imt + .what { margin-top: 72px; }
-  .imt .imt-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 48px; margin-top: 24px; align-items: start; }
-  @media (min-width: 900px) { .imt .imt-grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); } }
-  .imt .imt-ways-title { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0 0 12px; }
-  .imt .imt-ways { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  .imt .imt-ways li { display: grid; grid-template-columns: 10ch minmax(0, 1fr); gap: 12px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
-  .imt .imt-ways li:last-child { border-bottom: 0; padding-bottom: 0; }
-  .imt .imt-ways b { font-family: var(--sans); font-weight: 500; }
-  .imt .imt-ways .gold b { color: var(--term); }
-  .imt .imt-ways span { color: var(--ink-2); font-size: 16px; line-height: 1.5; }
-  .imt .imt-panel { min-height: 330px; }
-  .imt .imt-progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .imt .imt-progress span { height: 4px; border-radius: 2px; background: var(--rule); }
-  .imt .imt-progress .done { background: var(--indigo); }
-  .imt .imt-progress .now { background: var(--weld); }
+  .imt .imt-steps {
+    list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2);
+  }
+  .imt .imt-steps li { display: grid; gap: 7px; min-width: 0; }
+  .imt .imt-steps li::before { content: ""; height: 4px; border-radius: 2px; background: var(--rule); }
+  .imt .imt-steps .done::before { background: var(--indigo); }
+  .imt .imt-steps .now { color: var(--term); }
+  .imt .imt-steps .now::before { background: var(--weld); }
   .imt .imt-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0; }
   .imt .imt-prompt { font-size: clamp(20px, 2.2vw, 23px); line-height: 1.45; margin: 0; outline: none; text-wrap: pretty; }
   .imt .imt-q { font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.4; margin: 0; }
@@ -500,67 +500,38 @@
 <div class="page">
 
   <header class="hero">
-    <div>
+    <div class="hero-text">
       <h1 class="wordmark">thought<span>feel</span></h1>
-      <p class="tagline">The mnemonic technique for people who can imagine in concepts, not just words or images.</p>
-      <p class="tagline-sub">A practical guide to using the feel of your thoughts to remember more, learn faster, and think with more ideas at once.</p>
-      <p class="byline">BY <a href="#about">TED SHACHTMAN</a></p>
-      <div class="hero-actions">
-        <a class="btn primary" href="#test">Take the 1-minute test</a>
-        <a class="btn" href="#what">What is thoughtfeel?</a>
-        <a class="btn" href="#videos">Watch the videos</a>      </div>
+      <p class="tagline">An extra sense for concepts</p>
+      <p class="hero-copy">Some people have it and some don’t. If you do, you can imagine in concepts, not just words or images.</p>
+      <p class="hero-guide">This is a practical guide to harnessing that ability to learn faster and remember more.</p>
+      <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · <a href="#videos">WATCH THE VIDEOS</a></p>
     </div>
-    <div class="swatch-wrap" aria-hidden="true">
-      <canvas id="swatch"></canvas>
-      <ul class="swatch-key">
-        <li><i style="background: var(--indigo)"></i>fabric: the whole thought</li>
-        <li><i style="background: var(--weld)"></i>texture: one component</li>
-      </ul>
-    </div>
+
+    <section class="imt-card imt" id="test" aria-labelledby="test-title">
+      <canvas id="swatch" aria-hidden="true"></canvas>
+      <div class="imt-card-body">
+        <p class="eyebrow">The 1-minute test</p>
+        <h2 id="test-title">Do you have it?</h2>
+        <p class="imt-intro">Imagine one thing in four ways. There are no wrong answers.</p>
+        <div class="panel imt-panel" id="imt" aria-live="polite">
+          <!-- rendered by script; this is the no-script version -->
+          <ol class="steps">
+            <li>Imagine walking into a surprise party your friends secretly planned for you. Can you picture it?</li>
+            <li>Now hear it: everyone shouting “Surprise!”, or the words in your head. Can you hear it?</li>
+            <li>Let the picture and the sounds go. Do you still know what you were imagining?</li>
+            <li>Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
   </header>
-
-  <!-- ================= Start here ================= -->
-  <section class="what intro" id="start" aria-labelledby="start-title">
-    <p class="eyebrow">Start here</p>
-    <h2 id="start-title">An extra sense for concepts</h2>
-    <p class="what-lead">thoughtfeel is an extra sense for concepts. Some people seem to have it and some don’t, and if you have it, you can use it to remember more and learn faster.</p>
-    <p class="what-lead">If you have it, you can <em>imagine in concepts</em>, not just words or images. Here’s a one-minute test to find out.</p>
-  </section>
-
-  <!-- ================= Test ================= -->
-  <section class="try imt" id="test" aria-labelledby="test-title">
-    <p class="eyebrow">The test · about 1 minute</p>
-    <h2 id="test-title">Can you imagine in concepts, not just words or images?</h2>
-    <p class="lede">There’s more than one way to imagine something. Try each one with the same idea and mark what you can do. People differ here, so there are no wrong answers.</p>
-
-    <div class="imt-grid">
-      <div>
-        <p class="imt-ways-title">Four ways to imagine</p>
-        <ul class="imt-ways">
-          <li><b>In images</b><span>Picturing it.</span></li>
-          <li><b>In sounds</b><span>Hearing it, including words in your head.</span></li>
-          <li><b>Knowing</b><span>Just knowing what you’re imagining.</span></li>
-          <li class="gold"><b>In concepts</b><span>The idea itself, with a feel of its own. Some people can do this, and some can’t.</span></li>
-        </ul>
-      </div>
-
-      <div class="panel imt-panel" id="imt" aria-live="polite">
-        <!-- rendered by script; this is the no-script version -->
-        <p class="imt-label">Four quick steps</p>
-        <ol class="steps">
-          <li>Imagine walking into a surprise party your friends secretly planned for you. Can you picture it?</li>
-          <li>Now hear it: everyone shouting “Surprise!”, or the words in your head. Can you hear it?</li>
-          <li>Let the picture and the sounds go. Do you still know what you were imagining?</li>
-          <li>Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to?</li>        </ol>
-      </div>
-    </div>
-  </section>
 
   <!-- ================= Definition ================= -->
   <section class="what" id="what" aria-labelledby="what-title">
     <p class="eyebrow">My best guess</p>
     <h2 id="what-title">What I think thoughtfeel is</h2>
-    <p class="what-lead">My best guess is that thoughtfeel is an abstract sense for thoughts. For me, every thought has a particular feel to it, almost like a taste, and that feel is specific enough to recognize <em>what</em> I’m thinking from the feel alone.</p>
+    <p class="what-lead">My best guess is that thoughtfeel is a sense for the meaning of your thoughts. For me, the meaning of every thought has a particular feel, almost like a taste, and that feel is specific enough to recognize <em>what</em> I’m thinking from the feel alone.</p>
 
     <div class="what-grid">
       <div class="what-text">
@@ -1346,13 +1317,13 @@
   var imt = document.getElementById('imt');
   if (imt) (function () {
     var STEPS = [
-      { key: 'images', label: 'In images', prompt: 'Imagine walking into a surprise party your friends secretly planned for you.',
+      { key: 'images', label: 'In images', short: 'Images', prompt: 'Imagine walking into a surprise party your friends secretly planned for you.',
         q: 'Can you picture it?', a: ['Yes', 'Sort of', 'No'] },
-      { key: 'sounds', label: 'In sounds', prompt: 'Now hear it: everyone shouting “Surprise!”, or the words “a surprise party for me” in your head.',
+      { key: 'sounds', label: 'In sounds', short: 'Sounds', prompt: 'Now hear it: everyone shouting “Surprise!”, or the words “a surprise party for me” in your head.',
         q: 'Can you hear it?', a: ['Yes', 'Sort of', 'No'] },
-      { key: 'knowing', label: 'Knowing', prompt: 'Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing.',
+      { key: 'knowing', label: 'Knowing', short: 'Knowing', prompt: 'Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing.',
         q: 'Do you still know what it was?', a: ['Yes', 'Sort of', 'No'] },
-      { key: 'concepts', label: 'In concepts', prompt: 'Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to: your friends, the secret they kept, the fact that it’s all for you, and how it fits together?',
+      { key: 'concepts', label: 'In concepts', short: 'Concepts', prompt: 'Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to: your friends, the secret they kept, the fact that it’s all for you, and how it fits together?',
         q: 'Can you imagine it in concepts?', a: ['Yes, clearly', 'Sort of', 'No, I just know it'] }
     ];
     var STRENGTH = [2, 1, 0];                 // answer position → 2 yes, 1 partly, 0 no
@@ -1366,10 +1337,9 @@
     function renderStep(i, moveFocus) {
       var s = STEPS[i];
       imt.innerHTML =
-        '<div class="imt-progress" aria-hidden="true">' + STEPS.map(function (_, k) {
-          return '<span class="' + (k < i ? 'done' : k === i ? 'now' : '') + '"></span>';
-        }).join('') + '</div>' +
-        '<p class="imt-label">' + (i + 1) + ' of ' + STEPS.length + ' · ' + s.label + '</p>' +
+        '<ol class="imt-steps" aria-label="Step ' + (i + 1) + ' of ' + STEPS.length + ': ' + s.label + '">' + STEPS.map(function (t, k) {
+          return '<li class="' + (k < i ? 'done' : k === i ? 'now' : '') + '">' + t.short + '</li>';
+        }).join('') + '</ol>' +
         '<p class="imt-prompt" tabindex="-1">' + s.prompt + '</p>' +
         '<p class="imt-q">' + s.q + '</p>' +
         '<div class="imt-choices">' + s.a.map(function (t, k) {
