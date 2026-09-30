@@ -515,13 +515,13 @@
       <div class="imt-card-body">
         <p class="eyebrow">The 1-minute test</p>
         <h2 id="test-title">Do you have it?</h2>
-        <p class="imt-intro">Imagine one thing in four ways. There are no wrong answers.</p>
+        <p class="imt-intro">Imagine one thing in a few ways. There are no wrong answers.</p>
         <div class="panel imt-panel" id="imt" aria-live="polite">
           <!-- rendered by script; this is the no-script version -->
           <ol class="steps">
             <li>Imagine walking into a surprise party your friends secretly planned for you. Can you picture it?</li>
             <li>Now hear it: everyone shouting “Surprise!”, or the words in your head. Can you hear it?</li>
-            <li>Let the picture and the sounds go. Do you still know what you were imagining?</li>
+            <li>Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing, and it isn’t thoughtfeel. Imagining uses a sense in your mind, like picturing or hearing. Knowing doesn’t.</li>
             <li>Now imagine the party in concepts, with no picture and no words. It feels like something to notice things in an image you picture. Does noticing things in the concepts you’re imagining feel like something too?</li>
           </ol>
         </div>
@@ -1325,8 +1325,10 @@
         q: 'Can you picture it?', a: ['Yes', 'Sort of', 'No'] },
       { key: 'sounds', label: 'In sounds', short: 'Sounds', prompt: 'Now hear it: everyone shouting “Surprise!”, or the words “a surprise party for me” in your head.',
         q: 'Can you hear it?', a: ['Yes', 'Sort of', 'No'] },
-      { key: 'knowing', label: 'Knowing', short: 'Knowing', prompt: 'Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing.',
-        q: 'Do you still know what it was?', a: ['Yes', 'Sort of', 'No'] },
+      // Everyone can know what they imagined, and knowing isn't a way of imagining, so this step only explains the difference.
+      { key: 'knowing', label: 'Knowing', short: 'Knowing', info: true,
+        prompt: 'Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing, and it isn’t thoughtfeel.',
+        note: 'Imagining uses a sense in your mind, like picturing or hearing. Knowing doesn’t.', next: 'On to concepts' },
       { key: 'concepts', label: 'In concepts', short: 'Concepts', prompt: 'Now imagine the party in concepts, with no picture and no words. It feels like something to notice things in an image you picture. Pay attention to the concepts you’re imagining, and try noticing things in them the same way.',
         q: 'Does noticing things in the concepts feel like something too?', a: ['Yes, clearly', 'Sort of', 'No, I just know it'] }
     ];
@@ -1345,20 +1347,23 @@
           return '<li class="' + (k < i ? 'done' : k === i ? 'now' : '') + '">' + t.short + '</li>';
         }).join('') + '</ol>' +
         '<p class="imt-prompt" tabindex="-1">' + s.prompt + '</p>' +
-        '<p class="imt-q">' + s.q + '</p>' +
-        '<div class="imt-choices">' + s.a.map(function (t, k) {
-          return '<button type="button" class="btn imt-choice" data-v="' + STRENGTH[k] + '">' + t + '</button>';
-        }).join('') + '</div>' +
+        (s.info
+          ? '<p class="imt-q">' + s.note + '</p>' +
+            '<div class="imt-choices"><button type="button" class="btn primary" data-act="next">' + s.next + ' →</button></div>'
+          : '<p class="imt-q">' + s.q + '</p>' +
+            '<div class="imt-choices">' + s.a.map(function (t, k) {
+              return '<button type="button" class="btn imt-choice" data-v="' + STRENGTH[k] + '">' + t + '</button>';
+            }).join('') + '</div>') +
         (i > 0 ? '<p class="imt-text"><button type="button" class="linkish" data-act="back">Back</button></p>' : '');
       if (moveFocus) focusFirst('.imt-prompt');
     }
 
     function renderResult() {
       var A = {};
-      STEPS.forEach(function (s, k) { A[s.key] = answers[k]; });
+      STEPS.forEach(function (s, k) { if (!s.info) A[s.key] = answers[k]; });
       // Whether someone has thoughtfeel is just whether they can imagine in concepts.
       imtOutcome = A.concepts === 2 ? 'strong' : A.concepts === 1 ? 'faint' : 'none';
-      imtSummary = STEPS.map(function (s) { return s.key + ': ' + WORD[A[s.key]]; }).join(', ') + ' (' + imtOutcome + ')';
+      imtSummary = STEPS.filter(function (s) { return !s.info; }).map(function (s) { return s.key + ': ' + WORD[A[s.key]]; }).join(', ') + ' (' + imtOutcome + ')';
 
       var head, text;
       if (imtOutcome === 'strong') {
@@ -1371,14 +1376,13 @@
         var modes = [];
         if (A.images >= 1) modes.push('images');
         if (A.sounds >= 1) modes.push('sounds');
-        head = modes.length ? 'You imagine in ' + modes.join(' and ') + ', and by knowing.' : 'You imagine by knowing.';
+        head = modes.length ? 'You imagine in ' + modes.join(' and ') + '.' : 'You mostly know what you’re imagining.';
         text = modes.length
           ? 'Those are the usual ways to imagine. Some people can also imagine in concepts; the rest of this page is about how they can use it. If you’re curious what it’s like, the first lesson describes it.'
-          : 'With no picture and no sound, what you call knowing might be close to what I call imagining in concepts. The first lesson describes what it’s like for me, so you can compare.';
+          : 'Some people imagine in pictures, sounds or concepts. If you’re curious what imagining in concepts is like for me, the first lesson describes it.';
       }
 
-      var rows = [['In images', A.images, ''], ['In sounds', A.sounds, ''], ['Knowing', A.knowing, ''],
-                  ['In concepts', A.concepts, 'gold']];
+      var rows = [['In images', A.images, ''], ['In sounds', A.sounds, ''], ['In concepts', A.concepts, 'gold']];
       imt.innerHTML =
         '<p class="imt-label">Your result</p>' +
         '<p class="imt-head" tabindex="-1">' + head + '</p>' +
@@ -1421,7 +1425,8 @@
         return;
       }
       var act = b.getAttribute('data-act');
-      if (act === 'back') { answers.pop(); renderStep(answers.length, true); }
+      if (act === 'next') { answers.push(null); if (answers.length < STEPS.length) renderStep(answers.length, true); else renderResult(); }
+      else if (act === 'back') { answers.pop(); renderStep(answers.length, true); }
       else if (act === 'again') { answers = []; imtSummary = ''; imtOutcome = ''; renderStep(0, true); }
       else if (act === 'share') share(b);
       else if (act === 'join') {
