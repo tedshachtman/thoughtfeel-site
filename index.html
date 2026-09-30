@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="The mnemonic technique for people who think in concepts, not just words or images. Use the feel of your thoughts to remember more and learn faster.">
+<meta name="description" content="The mnemonic technique for people who can imagine in concepts, not just words or images. Take the 1-minute test.">
 <link rel="canonical" href="https://thoughtfeel.net/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
 <meta property="og:title" content="thoughtfeel: a practical guide">
-<meta property="og:description" content="The mnemonic technique for people who think in concepts, not just words or images. Use the feel of your thoughts to remember more and learn faster.">
+<meta property="og:description" content="The mnemonic technique for people who can imagine in concepts, not just words or images. Take the 1-minute test.">
 <meta property="og:url" content="https://thoughtfeel.net/">
 <meta property="og:image" content="https://thoughtfeel.net/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="thoughtfeel: the mnemonic technique for people who think in concepts, not just words or images.">
+<meta property="og:image:alt" content="thoughtfeel: the mnemonic technique for people who can imagine in concepts, not just words or images.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="thoughtfeel: a practical guide">
-<meta name="twitter:description" content="The mnemonic technique for people who think in concepts, not just words or images. Use the feel of your thoughts to remember more and learn faster.">
+<meta name="twitter:description" content="The mnemonic technique for people who can imagine in concepts, not just words or images. Take the 1-minute test.">
 <meta name="twitter:image" content="https://thoughtfeel.net/og.png">
 </head>
 <body>
@@ -307,6 +307,42 @@
   .miss { color: var(--miss); }
   .linkish { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
+  /* ---------- The test (imagine in concepts) ---------- */
+  .imt + .try { margin-top: 40px; }
+  .imt .imt-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 48px; margin-top: 24px; align-items: start; }
+  @media (min-width: 900px) { .imt .imt-grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); } }
+  .imt .imt-ways-title { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0 0 12px; }
+  .imt .imt-ways { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .imt .imt-ways li { display: grid; grid-template-columns: 10ch minmax(0, 1fr); gap: 12px; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+  .imt .imt-ways li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .imt .imt-ways b { font-family: var(--sans); font-weight: 500; }
+  .imt .imt-ways .gold b { color: var(--term); }
+  .imt .imt-ways span { color: var(--ink-2); font-size: 16px; line-height: 1.5; }
+  .imt .imt-panel { min-height: 330px; }
+  .imt .imt-progress { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .imt .imt-progress span { height: 4px; border-radius: 2px; background: var(--rule); }
+  .imt .imt-progress .done { background: var(--indigo); }
+  .imt .imt-progress .now { background: var(--weld); }
+  .imt .imt-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0; }
+  .imt .imt-prompt { font-size: clamp(20px, 2.2vw, 23px); line-height: 1.45; margin: 0; outline: none; text-wrap: pretty; }
+  .imt .imt-q { font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.4; margin: 0; }
+  .imt .imt-choices { display: flex; flex-wrap: wrap; gap: 10px; }
+  .imt .imt-choice { background: var(--surface); }
+  .imt .imt-choice:hover { background: var(--indigo-soft); }
+  .imt .imt-head { font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.2; letter-spacing: -0.01em; margin: 0; text-wrap: balance; outline: none; }
+  .imt .imt-text { margin: 0; }
+  .imt .imt-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .imt .imt-rows li {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto 7ch; gap: 12px; align-items: center;
+    background: var(--surface); border-radius: 8px; padding: 9px 14px; font-family: var(--sans); font-size: 15.5px;
+  }
+  .imt .imt-meter { display: inline-grid; grid-template-columns: 18px 18px; gap: 4px; }
+  .imt .imt-meter i { height: 8px; border-radius: 4px; background: var(--rule); }
+  .imt .imt-meter[data-v="1"] i:first-child, .imt .imt-meter[data-v="2"] i { background: var(--indigo); }
+  .imt .gold .imt-meter[data-v="1"] i:first-child, .imt .gold .imt-meter[data-v="2"] i { background: var(--weld); }
+  .imt .imt-rows .val { font-family: var(--mono); font-size: 13px; color: var(--ink-2); text-align: right; }
+  .imt .imt-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
   /* ---------- Videos ---------- */
   .videos { margin-top: 72px; }
   .videos-head { max-width: 62ch; }
@@ -464,12 +500,12 @@
   <header class="hero">
     <div>
       <h1 class="wordmark">thought<span>feel</span></h1>
-      <p class="tagline">The mnemonic technique for people who think in concepts, not just words or images.</p>
+      <p class="tagline">The mnemonic technique for people who can imagine in concepts, not just words or images.</p>
       <p class="tagline-sub">A practical guide to using the feel of your thoughts to remember more, learn faster, and think with more ideas at once.</p>
       <p class="byline">BY <a href="#about">TED SHACHTMAN</a></p>
       <div class="hero-actions">
-        <a class="btn primary" href="#what">What is thoughtfeel?</a>
-        <a class="btn" href="#try">Try it in 5 minutes</a>
+        <a class="btn primary" href="#test">Take the 1-minute test</a>
+        <a class="btn" href="#what">What is thoughtfeel?</a>
         <a class="btn" href="#videos">Watch the videos</a>      </div>
     </div>
     <div class="swatch-wrap" aria-hidden="true">
@@ -540,9 +576,40 @@
     <p class="vocab"><span class="vocab-label">Three words you’ll see here and in the videos</span> A <dfn>texture</dfn> is one component of a thought’s feel, like <em>animal</em>. The <dfn>fabric</dfn> is the whole felt thought. <dfn>Weaving</dfn> is combining textures to form a new thought.</p>
   </section>
 
+  <!-- ================= Test ================= -->
+  <section class="try imt" id="test" aria-labelledby="test-title">
+    <p class="eyebrow">The test · about 1 minute</p>
+    <h2 id="test-title">Can you imagine in concepts, not just words or images?</h2>
+    <p class="lede">There’s more than one way to imagine something. Try each one with the same idea and mark what you can do. People differ here, so there are no wrong answers.</p>
+
+    <div class="imt-grid">
+      <div>
+        <p class="imt-ways-title">Four ways to imagine</p>
+        <ul class="imt-ways">
+          <li><b>In images</b><span>Picturing it.</span></li>
+          <li><b>In sounds</b><span>Hearing it, including words in your head.</span></li>
+          <li><b>Knowing</b><span>Just knowing what you’re imagining.</span></li>
+          <li class="gold"><b>In concepts</b><span>The idea itself, with a feel of its own. Some people can do this, and some can’t.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel imt-panel" id="imt" aria-live="polite">
+        <!-- rendered by script; this is the no-script version -->
+        <p class="imt-label">Five quick steps</p>
+        <ol class="steps">
+          <li>Imagine a purple giraffe on roller skates. Can you picture it?</li>
+          <li>Now hear it: the wheels rolling, or the words in your head. Can you hear it?</li>
+          <li>Let the picture and the sounds go. Do you still know what you were imagining?</li>
+          <li>Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to?</li>
+          <li>Keep the picture the same. The skates are borrowed. Now they’re stolen. Did the idea itself change in a way you could attend to?</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= Exercise ================= -->
   <section class="try" id="try" aria-labelledby="try-title">
-    <p class="eyebrow">Try it · about 5 minutes</p>
+    <p class="eyebrow">Use it · about 5 minutes</p>
     <h2 id="try-title">Remember five words through their feel</h2>
     <p class="lede">This exercise uses thoughtfeel to hold five words in order, then checks what you kept.</p>
 
@@ -1273,6 +1340,131 @@
 
   renderIntro();
 
+  /* ---------- The test: can you imagine in concepts? ---------- */
+  // The answers go along with an email signup (as test_answers), so each signup says how the person imagines.
+  var imtSummary = '', imtOutcome = '';
+  var imt = document.getElementById('imt');
+  if (imt) (function () {
+    var STEPS = [
+      { key: 'images', label: 'In images', prompt: 'Imagine a purple giraffe on roller skates.',
+        q: 'Can you picture it?', a: ['Yes', 'Sort of', 'No'] },
+      { key: 'sounds', label: 'In sounds', prompt: 'Now hear it: the wheels rolling, or the words “purple giraffe on roller skates” in your head.',
+        q: 'Can you hear it?', a: ['Yes', 'Sort of', 'No'] },
+      { key: 'knowing', label: 'Knowing', prompt: 'Let the picture and the sounds go. You still know what you were imagining. That’s the feeling of knowing.',
+        q: 'Do you still know what it was?', a: ['Yes', 'Sort of', 'No'] },
+      { key: 'concepts', label: 'In concepts', prompt: 'Now imagine it in concepts: no picture, no words, and more than just knowing. Is there something specific you can attend to: the giraffe, the purple, the skating, and how they fit together?',
+        q: 'Can you imagine it in concepts?', a: ['Yes, clearly', 'Sort of', 'No, I just know it'] },
+      { key: 'check', label: 'The check', prompt: 'Keep the picture exactly the same. First, the skates are borrowed. Now, they’re stolen.',
+        q: 'The picture didn’t change. Apart from knowing which is which, did the idea itself change in a way you could attend to?', a: ['Yes', 'A little', 'No'] }
+    ];
+    var STRENGTH = [2, 1, 0];                 // answer position → 2 yes, 1 partly, 0 no
+    var WORD = ['no', 'sort of', 'yes'];      // strength → word for the summary
+    var FIRST_LESSON = 'https://www.youtube.com/watch?v=vn5jVP1_C-c';
+    var SHARE_URL = 'https://thoughtfeel.net/#test';
+    var answers = [];
+
+    function focusFirst(sel) { var el = imt.querySelector(sel); if (el) el.focus({ preventScroll: true }); }
+
+    function renderStep(i, moveFocus) {
+      var s = STEPS[i];
+      imt.innerHTML =
+        '<div class="imt-progress" aria-hidden="true">' + STEPS.map(function (_, k) {
+          return '<span class="' + (k < i ? 'done' : k === i ? 'now' : '') + '"></span>';
+        }).join('') + '</div>' +
+        '<p class="imt-label">' + (i + 1) + ' of ' + STEPS.length + ' · ' + s.label + '</p>' +
+        '<p class="imt-prompt" tabindex="-1">' + s.prompt + '</p>' +
+        '<p class="imt-q">' + s.q + '</p>' +
+        '<div class="imt-choices">' + s.a.map(function (t, k) {
+          return '<button type="button" class="btn imt-choice" data-v="' + STRENGTH[k] + '">' + t + '</button>';
+        }).join('') + '</div>' +
+        (i > 0 ? '<p class="imt-text"><button type="button" class="linkish" data-act="back">Back</button></p>' : '');
+      if (moveFocus) focusFirst('.imt-prompt');
+    }
+
+    function renderResult() {
+      var A = {};
+      STEPS.forEach(function (s, k) { A[s.key] = answers[k]; });
+      imtOutcome = A.concepts === 2 && A.check >= 1 ? 'strong' : (A.concepts >= 1 || A.check >= 1) ? 'faint' : 'none';
+      imtSummary = STEPS.map(function (s) { return s.key + ': ' + WORD[A[s.key]]; }).join(', ') + ' (' + imtOutcome + ')';
+
+      var head, text;
+      if (imtOutcome === 'strong') {
+        head = 'You can imagine in concepts.';
+        text = 'That’s what thoughtfeel is built on. For me, imagining in concepts is vivid, and distinct from both the picture and the words: every thought has a feel of its own, specific enough to recognize what I’m thinking from the feel alone. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
+      } else if (imtOutcome === 'faint') {
+        head = 'You may be able to imagine in concepts, a little.';
+        text = 'It may get clearer once you know what to attend to. The first lesson describes what the feel of a thought is like for me, and the exercise below gives you something to practice on.';
+      } else {
+        var modes = [];
+        if (A.images >= 1) modes.push('images');
+        if (A.sounds >= 1) modes.push('sounds');
+        head = modes.length ? 'You imagine in ' + modes.join(' and ') + ', and by knowing.' : 'You imagine by knowing.';
+        text = modes.length
+          ? 'Those are the usual ways to imagine. Some people can also imagine in concepts; the rest of this page is about how they can use it. If you’re curious what it’s like, the first lesson describes it.'
+          : 'With no picture and no sound, what you call knowing might be close to what I call imagining in concepts. The first lesson describes what it’s like for me, so you can compare.';
+      }
+
+      var rows = [['In images', A.images, ''], ['In sounds', A.sounds, ''], ['Knowing', A.knowing, ''],
+                  ['In concepts', A.concepts, 'gold'], ['The check', A.check, 'gold']];
+      imt.innerHTML =
+        '<p class="imt-label">Your result</p>' +
+        '<p class="imt-head" tabindex="-1">' + head + '</p>' +
+        '<ul class="imt-rows">' + rows.map(function (r) {
+          return '<li class="' + r[2] + '"><span>' + r[0] + '</span>' +
+            '<span class="imt-meter" data-v="' + r[1] + '" aria-hidden="true"><i></i><i></i></span>' +
+            '<span class="val">' + WORD[r[1]] + '</span></li>';
+        }).join('') + '</ul>' +
+        '<p class="imt-text">' + text + '</p>' +
+        '<div class="imt-actions">' +
+          '<a class="btn primary" href="' + FIRST_LESSON + '" target="_blank" rel="noopener">Watch the first lesson</a>' +
+          '<a class="btn" href="#updates" data-act="join">Get new lessons</a>' +
+          '<button type="button" class="btn quiet" data-act="share">Share the test</button>' +
+        '</div>' +
+        '<p class="imt-text"><button type="button" class="linkish" data-act="again">Take it again</button></p>';
+      focusFirst('.imt-head');
+    }
+
+    function share(button) {
+      var text = 'Can you imagine in concepts, not just words or images? A 1-minute test:';
+      var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = 'Share the test'; }, 1800); };
+      if (navigator.share) { navigator.share({ title: 'Can you imagine in concepts?', text: text, url: SHARE_URL }).catch(function () {}); return; }
+      var fallback = function () {
+        var ta = document.createElement('textarea'); ta.value = text + ' ' + SHARE_URL;
+        ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text + ' ' + SHARE_URL).then(done, fallback);
+      else fallback();
+    }
+
+    imt.addEventListener('click', function (e) {
+      var b = e.target.closest('button, a[data-act]');
+      if (!b) return;
+      if (b.classList.contains('imt-choice')) {
+        answers.push(Number(b.getAttribute('data-v')));
+        if (answers.length < STEPS.length) renderStep(answers.length, true); else renderResult();
+        return;
+      }
+      var act = b.getAttribute('data-act');
+      if (act === 'back') { answers.pop(); renderStep(answers.length, true); }
+      else if (act === 'again') { answers = []; imtSummary = ''; imtOutcome = ''; renderStep(0, true); }
+      else if (act === 'share') share(b);
+      else if (act === 'join') {
+        // Pre-answer the signup's "do you recognize it?" question from the result, unless it's already answered.
+        var form = document.getElementById('signup');
+        if (form && !form.querySelector('input[name="recognizes_thoughtfeel"]:checked')) {
+          var id = { strong: 'signup-yes', faint: 'signup-unsure', none: 'signup-no' }[imtOutcome];
+          var radio = id && document.getElementById(id);
+          if (radio) radio.checked = true;
+        }
+      }
+    });
+
+    renderStep(0, false);
+  })();
+
   /* ---------- Email signup (FormSubmit forwards each signup to Ted's inbox) ---------- */
   var signup = document.getElementById('signup');
   if (signup) signup.addEventListener('submit', function (e) {
@@ -1288,6 +1480,7 @@
     var payload = {
       email: email,
       recognizes_thoughtfeel: picked ? picked.value : 'not answered',
+      test_answers: imtSummary || 'not taken',
       _subject: 'New thoughtfeel signup',
       _template: 'table'
     };
