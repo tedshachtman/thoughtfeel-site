@@ -19,7 +19,16 @@
 <meta name="twitter:title" content="thoughtfeel: a practical guide">
 <meta name="twitter:description" content="The mnemonic technique for people who can imagine in concepts, not just words or images. Take the 1-minute test.">
 <meta name="twitter:image" content="https://thoughtfeel.net/og.png">
-<script>window.tfTrack = function () {};</script>
+<script>
+window.tfTrack = function (path, title) {
+  try {
+    var send = function () { window.goatcounter.count({ path: path, title: title || path, event: true }); };
+    if (window.goatcounter && window.goatcounter.count) send(); else (window.tfQueue = window.tfQueue || []).push(send);
+  } catch (e) {}
+};
+</script>
+<script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+  onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
 </head>
 <body>
 <title>thoughtfeel guide</title>
