@@ -19,6 +19,7 @@
 <meta name="twitter:title" content="thoughtfeel: a practical guide">
 <meta name="twitter:description" content="The mnemonic technique for people who can imagine in concepts, not just words or images. Take the 1-minute test.">
 <meta name="twitter:image" content="https://thoughtfeel.net/og.png">
+<script>window.tfTrack = function () {};</script>
 </head>
 <body>
 <title>thoughtfeel guide</title>
@@ -735,6 +736,7 @@
 
 <script>
 (function () {
+  var tfTrack = window.tfTrack || function () {};
   /* ---------- Woven swatch ---------- */
   var canvas = document.getElementById('swatch');
   function drawSwatch() {
@@ -915,7 +917,7 @@
   ex.addEventListener('click', function (e) {
     var b = e.target.closest('[data-act]'); if (!b) return;
     var act = b.getAttribute('data-act');
-    if (act === 'study') { state.mode = 'same-day'; renderStudy(); }
+    if (act === 'study') { state.mode = 'same-day'; renderStudy(); tfTrack('exercise-start'); }
     else if (act === 'hide') {
       clearInterval(tick);
       state.studySeconds = Math.floor((Date.now() - state.studyStart) / 1000);
@@ -929,7 +931,7 @@
       state.hoursSince = Math.round((Date.now() - (s.studiedAt || Date.now())) / 36e5);
       renderRecall();
     }
-    else if (act === 'check') { renderResult(); }
+    else if (act === 'check') { renderResult(); tfTrack('exercise-result'); }
     else if (act === 'copy') {
       var text = document.getElementById('ex-line').textContent;
       var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy result'; }, 1800); };
@@ -1036,6 +1038,7 @@
         '</div>' +
         '<p class="imt-text"><button type="button" class="linkish" data-act="again">Take it again</button></p>';
       focusFirst('.imt-head');
+      tfTrack('test-result-' + imtOutcome);
     }
 
     function share(button) {
@@ -1057,6 +1060,7 @@
       var b = e.target.closest('button, a[data-act]');
       if (!b) return;
       if (b.classList.contains('imt-choice')) {
+        if (answers.length === 0) tfTrack('test-start');
         answers.push(Number(b.getAttribute('data-v')));
         if (answers.length < STEPS.length) renderStep(answers.length, true); else renderResult();
         return;
@@ -1065,7 +1069,7 @@
       if (act === 'next') { answers.push(null); if (answers.length < STEPS.length) renderStep(answers.length, true); else renderResult(); }
       else if (act === 'back') { answers.pop(); renderStep(answers.length, true); }
       else if (act === 'again') { answers = []; imtSummary = ''; imtOutcome = ''; renderStep(0, true); }
-      else if (act === 'share') share(b);
+      else if (act === 'share') { share(b); tfTrack('test-share'); }
       else if (act === 'join') {
         // Pre-answer the signup's "do you recognize it?" question from the result, unless it's already answered.
         var form = document.getElementById('signup');
@@ -1079,6 +1083,21 @@
 
     renderStep(0, false);
   })();
+
+  /* ---------- Which lessons people open, and who goes on to the full quiz ---------- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a');
+    if (!a) return;
+    var v = /[?&]v=([\w-]+)/.exec(a.getAttribute('href') || '');
+    if (v) {
+      var card = a.closest('.video');
+      var label = card ? (card.querySelector('.video-label') || {}).textContent : '';
+      var num = /Video (\d+)/.exec(label || a.textContent || '');
+      tfTrack('lesson-' + (num ? num[1] : v[1]), (label || a.textContent || '').trim());
+    } else if ((a.getAttribute('href') || '').indexOf('/quiz/') === 0) {
+      tfTrack(a.closest('#test') ? 'test-to-quiz' : 'home-to-quiz');
+    }
+  });
 
   /* ---------- Email signup (FormSubmit forwards each signup to Ted's inbox) ---------- */
   var signup = document.getElementById('signup');
@@ -1111,6 +1130,7 @@
         if (String(data && data.success) !== 'true') throw new Error((data && data.message) || 'not accepted');
         setStatus('Thanks! You’re on the list.', 'ok');
         signup.reset();
+        tfTrack('signup-home');
       })
       .catch(function () {
         setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss');
