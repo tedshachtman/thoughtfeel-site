@@ -350,6 +350,9 @@
 
   /* ---------- Videos ---------- */
   .videos { margin-top: 72px; }
+  .what + .videos { margin-top: 0; }
+  .videos + .try { margin-top: 64px; }
+  .videos-head .videos-argument { color: var(--ink); font-size: clamp(18px, 1.9vw, 19.5px); line-height: 1.6; margin: 0 0 12px; }
   .videos-head { max-width: 62ch; }
   .videos-head h2 {
     font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
@@ -591,6 +594,79 @@
     <p class="vocab"><span class="vocab-label">Three words you’ll see here and in the videos</span> A <dfn>texture</dfn> is one component of a thought’s feel, like <em>animal</em>. The <dfn>fabric</dfn> is the whole felt thought. <dfn>Weaving</dfn> is combining textures to form a new thought.</p>
   </section>
 
+  <!-- ================= Videos ================= -->
+  <section class="videos" id="videos" aria-labelledby="videos-title">
+    <div class="videos-head">
+      <p class="eyebrow">The lessons</p>
+      <h2 id="videos-title">What is it useful for?</h2>
+      <p class="videos-argument">The mind’s eye and the inner voice are senses people imagine with, and both have long been used to remember and learn. A memory palace stores things in places you picture. A song lets your inner voice carry the words. thoughtfeel is a sense like these, with techniques of its own. Each lesson below teaches one.</p>
+      <p>Not sure you have it? Take the <a href="#test">one-minute test</a> or the <a href="/quiz/">full quiz</a>.</p>
+    </div>
+    <div class="video-grid">
+      <a class="video" href="https://www.youtube.com/watch?v=vn5jVP1_C-c" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/vn5jVP1_C-c/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Video 1 · What it’s like</span>
+        <span class="video-title">What It’s Like to Have an Extra Sense for Thoughts</span>
+        <span class="video-desc">Tell the feel of an idea apart from pictures, words and simply knowing.</span>
+      </a>
+      <a class="video" href="https://www.youtube.com/watch?v=bQvnFz86URY" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/bQvnFz86URY/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Video 2 · Learning a texture</span>
+        <span class="video-title">Why You Miss Ideas You Already Know</span>
+        <span class="video-desc">Learn an idea’s feel from two examples, then spot it when it turns up looking completely different.</span>
+      </a>
+      <a class="video" href="https://www.youtube.com/watch?v=EIzLxxCKIW0" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/EIzLxxCKIW0/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Video 3 · Building a model</span>
+        <span class="video-title">How to Hold a Chess Position Without Picturing the Board</span>
+        <span class="video-desc">Build a model in your head and keep track of every piece without picturing it, starting with a chess position.</span>
+      </a>
+      <a class="video" href="https://www.youtube.com/watch?v=S43p8VAw8r8" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/S43p8VAw8r8/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Video 4 · Lyrics and poems</span>
+        <span class="video-title">How to Memorize Lyrics and Poems Word for Word by Imagining in Concepts</span>
+        <span class="video-desc">Hold a line as one concept, and get the exact words back later.</span>
+      </a>
+      <a class="video" href="https://www.youtube.com/watch?v=PIZ0G-A8uy4" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/PIZ0G-A8uy4/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Video 5 · Pictures and ideas</span>
+        <span class="video-title">What a Picture Does to an Idea</span>
+        <span class="video-desc">Catch when a mental picture is steering you wrong, and think with the idea itself.</span>
+      </a>
+      <a class="video" href="https://www.youtube.com/watch?v=2lMqpiP8Clo" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/2lMqpiP8Clo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Video 6 · At the right moment</span>
+        <span class="video-title">You Didn’t Forget. You Missed the Moment.</span>
+        <span class="video-desc">Remember to do something at the right moment, even when the moment doesn’t look the way you pictured it.</span>
+      </a>
+    </div>
+    <div class="updates" id="updates">
+      <div class="updates-text">
+        <h3>Get new lessons by email</h3>
+        <p>More videos and exercises are on the way. Leave your email to get them when they’re out. You can also <a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">subscribe on YouTube</a>.</p>
+      </div>
+      <form class="signup" id="signup" action="https://formsubmit.co/teddyshachtman@gmail.com" method="POST">
+        <label class="visually-hidden" for="signup-email">Email address</label>
+        <div class="signup-row">
+          <input type="email" id="signup-email" name="email" required autocomplete="email" placeholder="you@example.com">
+          <button class="btn primary" type="submit" id="signup-submit">Send me new lessons</button>
+        </div>
+        <fieldset class="signup-q">
+          <legend>Do you recognize thoughtfeel in yourself? <span>(optional)</span></legend>
+          <label for="signup-yes"><input type="radio" id="signup-yes" name="recognizes_thoughtfeel" value="yes"> Yes</label>
+          <label for="signup-unsure"><input type="radio" id="signup-unsure" name="recognizes_thoughtfeel" value="not sure"> Not sure</label>
+          <label for="signup-no"><input type="radio" id="signup-no" name="recognizes_thoughtfeel" value="no"> No</label>
+        </fieldset>
+        <input type="hidden" name="_subject" value="New thoughtfeel signup">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://thoughtfeel.net/#updates">
+        <input type="text" name="_honey" class="signup-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
+        <p class="signup-note">Only thoughtfeel lessons and guides. Reply to any email to come off the list.</p>
+      </form>
+    </div>
+  </section>
+
   <!-- ================= Exercise ================= -->
   <section class="try" id="try" aria-labelledby="try-title">
     <p class="eyebrow">Use it · about 5 minutes</p>
@@ -622,78 +698,6 @@
           <li><span class="pos">5</span><span class="word">Tree</span></li>
         </ol>
       </div>
-    </div>
-  </section>
-
-  <!-- ================= Videos ================= -->
-  <section class="videos" id="videos" aria-labelledby="videos-title">
-    <div class="videos-head">
-      <p class="eyebrow">Animated lessons</p>
-      <h2 id="videos-title">Watch the lessons</h2>
-      <p>Six animated lessons, each on one way to use it. Not sure you have thoughtfeel? Take the <a href="#test">one-minute test</a>.</p>
-    </div>
-    <div class="video-grid">
-      <a class="video" href="https://www.youtube.com/watch?v=vn5jVP1_C-c" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/vn5jVP1_C-c/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 1 · What it’s like</span>
-        <span class="video-title">What It’s Like to Have an Extra Sense for Thoughts</span>
-        <span class="video-desc">What the feel of a thought is like: what it takes in, what it isn’t, and why taste is the closest comparison.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=bQvnFz86URY" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/bQvnFz86URY/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 2 · Learning a texture</span>
-        <span class="video-title">Why You Miss Ideas You Already Know</span>
-        <span class="video-desc">Learn the feel of an idea by comparing examples that share it, recognize it somewhere new, and break a new thought into feels you already know.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=EIzLxxCKIW0" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/EIzLxxCKIW0/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 3 · Building a model</span>
-        <span class="video-title">How to Hold a Chess Position Without Picturing the Board</span>
-        <span class="video-desc">Build a chess position in thoughtfeel and keep track of the pieces without a mental image of the board.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=S43p8VAw8r8" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/S43p8VAw8r8/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 4 · Lyrics and poems</span>
-        <span class="video-title">How to Memorize Lyrics and Poems Word for Word by Imagining in Concepts</span>
-        <span class="video-desc">Imagine a line of poetry in concepts, look away, and see whether the exact words come back.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=PIZ0G-A8uy4" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/PIZ0G-A8uy4/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 5 · Pictures and ideas</span>
-        <span class="video-title">What a Picture Does to an Idea</span>
-        <span class="video-desc">Why a mental picture brings the feel of what’s in it, not the feel of the idea: the hat puzzle, a visual mnemonic, and x in algebra.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=2lMqpiP8Clo" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/2lMqpiP8Clo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 6 · At the right moment</span>
-        <span class="video-title">You Didn’t Forget. You Missed the Moment.</span>
-        <span class="video-desc">Remember to do something at the right moment. A mental picture shows one scene from one angle, and the real moment rarely matches it, so imagine the moment in concepts and set an alarm on it.</span>
-      </a>
-    </div>
-    <div class="updates" id="updates">
-      <div class="updates-text">
-        <h3>Get new lessons by email</h3>
-        <p>More videos and exercises are on the way. Leave your email to get them when they’re out. You can also <a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">subscribe on YouTube</a>.</p>
-      </div>
-      <form class="signup" id="signup" action="https://formsubmit.co/teddyshachtman@gmail.com" method="POST">
-        <label class="visually-hidden" for="signup-email">Email address</label>
-        <div class="signup-row">
-          <input type="email" id="signup-email" name="email" required autocomplete="email" placeholder="you@example.com">
-          <button class="btn primary" type="submit" id="signup-submit">Send me new lessons</button>
-        </div>
-        <fieldset class="signup-q">
-          <legend>Do you recognize thoughtfeel in yourself? <span>(optional)</span></legend>
-          <label for="signup-yes"><input type="radio" id="signup-yes" name="recognizes_thoughtfeel" value="yes"> Yes</label>
-          <label for="signup-unsure"><input type="radio" id="signup-unsure" name="recognizes_thoughtfeel" value="not sure"> Not sure</label>
-          <label for="signup-no"><input type="radio" id="signup-no" name="recognizes_thoughtfeel" value="no"> No</label>
-        </fieldset>
-        <input type="hidden" name="_subject" value="New thoughtfeel signup">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://thoughtfeel.net/#updates">
-        <input type="text" name="_honey" class="signup-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
-        <p class="signup-note">Only thoughtfeel lessons and guides. Reply to any email to come off the list.</p>
-      </form>
     </div>
   </section>
 
