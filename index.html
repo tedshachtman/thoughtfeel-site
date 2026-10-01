@@ -134,9 +134,11 @@
   .byline { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); margin: 22px 0 0; }
   /* On phones, keep the pitch short so the first question reaches the first screen. */
   @media (max-width: 600px) {
-    .hero { gap: 24px; padding-top: 12px; }
-    .hero-guide { font-size: 16px; }
-    .byline { margin-top: 16px; }
+    .hero { gap: 20px; padding-top: 12px; }
+    .hero-copy { line-height: 1.5; margin-top: 14px; }
+    .hero-guide { font-size: 16px; margin-top: 10px; }
+    .byline { margin-top: 14px; }
+    .imt-intro-more { display: none; }
   }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -164,6 +166,10 @@
   }
   .imt .imt-intro { margin: 0 0 8px; color: var(--ink-2); font-size: 16.5px; line-height: 1.5; }
   .imt .imt-more { margin: 4px 0 0; font-family: var(--sans); font-size: 15.5px; color: var(--ink-2); }
+  @media (max-width: 600px) {
+    #swatch { aspect-ratio: 14 / 1; }
+    .imt-card-body { gap: 8px; }
+  }
 
   /* ---------- Definition ---------- */
   .what { padding-block: 8px 72px; }
@@ -509,7 +515,7 @@
     <div class="hero-text">
       <h1 class="wordmark">thought<span>feel</span></h1>
       <p class="tagline">An extra sense for concepts</p>
-      <p class="hero-copy">Some people have it and some don’t. If you do, you can imagine in concepts, not just words or images.</p>
+      <p class="hero-copy">Some people have it and some don’t. It’s like the mind’s eye: some people can picture things vividly, and some, with aphantasia, see nothing at all. If you have thoughtfeel, you can imagine in concepts, not just words or images.</p>
       <p class="hero-guide">This is a practical guide to harnessing that ability to learn faster and remember more.</p>
       <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · <a href="#videos">WATCH THE VIDEOS</a></p>
     </div>
@@ -519,7 +525,7 @@
       <div class="imt-card-body">
         <p class="eyebrow">The 1-minute test</p>
         <h2 id="test-title">Do you have it?</h2>
-        <p class="imt-intro">Imagine one thing in a few ways. There are no wrong answers.</p>
+        <p class="imt-intro">Imagine one thing in a few ways.<span class="imt-intro-more"> There are no wrong answers.</span></p>
         <div class="panel imt-panel" id="imt" aria-live="polite">
           <!-- rendered by script; this is the no-script version -->
           <ol class="steps">
