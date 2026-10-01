@@ -377,7 +377,7 @@
       text = 'That includes the two that matter most: imagining in concepts, and recognizing a thought by its feel alone. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
     } else if (result.outcome === 'maybe') {
       head = 'You may have a quieter version.';
-      text = 'It may get clearer once you know what to attend to. The first lesson describes what it’s like for me.';
+      text = 'It may get clearer once you know what to attend to. The first lesson describes what it’s like for people who have it.';
     } else {
       head = 'You probably don’t have thoughtfeel, or it’s very quiet.';
       text = 'Most of your answers describe pictures, words and knowing, which is how a lot of people think. If you’re curious what the other way is like, the first lesson describes it.';
@@ -487,7 +487,7 @@
         setStatus('Thanks! You’re on the list.', 'ok');
         emailEl.value = '';
       })
-      .catch(function () { setStatus('That didn’t go through. Email teddyshachtman@gmail.com and I’ll add you.', 'miss'); })
+      .catch(function () { setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss'); })
       .then(function () { button.disabled = false; });
   });
 })();
