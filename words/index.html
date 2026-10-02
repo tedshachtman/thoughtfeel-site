@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Learn ten Spanish words in about five minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
+<link rel="canonical" href="https://thoughtfeel.net/words/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="thoughtfeel">
+<meta property="og:title" content="Ten Spanish words: how many will stick?">
+<meta property="og:description" content="Learn ten Spanish words in about five minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
+<meta property="og:url" content="https://thoughtfeel.net/words/">
+<meta property="og:image" content="https://thoughtfeel.net/og-words.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Learn ten Spanish words in about five minutes. Tomorrow, find out how many stuck.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ten Spanish words: how many will stick?">
+<meta name="twitter:description" content="Learn ten Spanish words in about five minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
+<meta name="twitter:image" content="https://thoughtfeel.net/og-words.png">
+<script>
+window.tfTrack = function (path, title) {
+  try {
+    var send = function () { window.goatcounter.count({ path: path, title: title || path, event: true }); };
+    if (window.goatcounter && window.goatcounter.count) send(); else (window.tfQueue = window.tfQueue || []).push(send);
+  } catch (e) {}
+};
+</script>
+<script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+  onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
+</head>
+<body>
+<title>Ten Spanish words · thoughtfeel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
+<style>
+  /* Same tokens as the home page (thoughtfeel-guide.html) and the quiz. */
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-2: #e6e9f0;
+    --ink: #19213a;
+    --ink-2: #4b5369;
+    --rule: #d3d8e2;
+    --indigo: #2c3f8f;
+    --indigo-soft: #dfe4f5;
+    --weld: #b87a1c;
+    --term: #7f5210;
+    --ok: #2b7451;
+    --miss: #a9412e;
+    --serif: "Literata", Georgia, "Times New Roman", serif;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #10131b;
+      --surface: #181c27;
+      --surface-2: #212634;
+      --ink: #e5e8ef;
+      --ink-2: #a4aabb;
+      --rule: #2c3243;
+      --indigo: #a5b5ff;
+      --indigo-soft: #232b4a;
+      --weld: #e2a84a;
+      --term: #eab964;
+      --ok: #7fd1a3;
+      --miss: #f09a86;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #10131b;
+    --surface: #181c27;
+    --surface-2: #212634;
+    --ink: #e5e8ef;
+    --ink-2: #a4aabb;
+    --rule: #2c3243;
+    --indigo: #a5b5ff;
+    --indigo-soft: #232b4a;
+    --weld: #e2a84a;
+    --term: #eab964;
+    --ok: #7fd1a3;
+    --miss: #f09a86;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--serif); font-size: 18px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--indigo); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--weld); outline-offset: 3px; border-radius: 3px; }
+
+  .page { max-width: 760px; margin: 0 auto; padding: 20px 20px 56px; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 4px 0 20px; }
+  .mark { font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
+  .mark span { color: var(--weld); }
+  .home { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
+  }
+  #swatch { display: block; width: 100%; aspect-ratio: 12 / 1; }
+  .card-body { padding: clamp(20px, 4vw, 36px); display: grid; gap: 14px; }
+
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0; }
+  h1 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.1; letter-spacing: -0.02em; margin: 0; text-wrap: balance; outline: none;
+  }
+  .lede { margin: 0; font-size: clamp(18px, 2vw, 19.5px); }
+  .text { margin: 0; }
+  .note { margin: 0; color: var(--ink-2); font-size: 16px; }
+  .how { margin: 0; padding-left: 1.4em; display: grid; gap: 4px; }
+  .how-head { border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 4px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--sans); font-weight: 500; font-size: 16px;
+    padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--indigo);
+    text-decoration: none; cursor: pointer; line-height: 1.2; background: transparent; color: var(--indigo);
+  }
+  .btn:hover { background: var(--indigo-soft); }
+  .btn.primary { background: var(--indigo); color: var(--bg); }
+  .btn.primary:hover { filter: brightness(1.1); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .linkish { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+  .progress { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+  .progress span { height: 4px; border-radius: 2px; background: var(--rule); }
+  .progress .done { background: var(--indigo); }
+  .progress .now { background: var(--weld); }
+
+  /* A word and what to do with it */
+  .word-box { display: grid; gap: 8px; justify-items: start; padding: 2px 0; }
+  .word {
+    margin: 0; font-family: var(--sans); font-weight: 700; font-size: clamp(42px, 9vw, 64px);
+    line-height: 1.05; letter-spacing: -0.015em; overflow-wrap: anywhere;
+  }
+  .word-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  .say-it { font-family: var(--mono); font-size: 15px; letter-spacing: .04em; color: var(--ink-2); }
+  .hear {
+    display: inline-flex; align-items: center; gap: 7px; font: 500 15px/1 var(--sans); color: var(--indigo);
+    background: var(--indigo-soft); border: 0; border-radius: 999px; padding: 8px 14px 8px 11px; cursor: pointer;
+  }
+  .hear:hover { filter: brightness(1.06); }
+  .hear svg { flex: none; }
+  .meaning { margin: 0; font-size: clamp(20px, 2.4vw, 23px); outline: none; }
+  .meaning b { font-weight: 500; color: var(--term); }
+  .do { margin: 0; font-size: clamp(18px, 2vw, 19.5px); outline: none; }
+  .say { font-family: var(--sans); font-weight: 500; color: var(--indigo); }
+  .tip { margin: 0; font-size: 16px; color: var(--ink-2); border-left: 3px solid var(--weld); padding: 2px 0 2px 12px; }
+  .prompt { margin: 0; font-size: clamp(30px, 6vw, 42px); line-height: 1.15; color: var(--term); }
+  .ask { margin: 0; font-family: var(--sans); font-weight: 500; font-size: 17px; }
+
+  .answer-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .answer-row input {
+    flex: 1 1 220px; min-width: 0; font: 500 19px/1.2 var(--sans); color: var(--ink); background: var(--surface);
+    border: 1.5px solid var(--rule); border-radius: 999px; padding: 11px 18px;
+  }
+  .answer-row input:focus { border-color: var(--indigo); outline: none; box-shadow: 0 0 0 3px var(--indigo-soft); }
+
+  .remind { display: grid; gap: 10px; background: var(--surface-2); border-radius: 12px; padding: 16px; }
+  .remind-title { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 18px; }
+  .remind .actions { margin-top: 0; }
+
+  /* Result */
+  .meters { display: grid; gap: 14px; }
+  .meter { display: grid; gap: 7px; }
+  .meter-label { margin: 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 14px; font-family: var(--sans); font-size: 16px; max-width: 420px; }
+  .pills { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-width: 420px; }
+  .pills span { height: 10px; border-radius: 5px; background: var(--rule); }
+  .pills .on { background: var(--weld); }
+  .pills .near { background: var(--weld); opacity: .42; }
+  .review-title { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 14px 0 0; }
+  .review { list-style: none; margin: 0; padding: 0; display: grid; }
+  .review li { border-top: 1px solid var(--rule); padding: 12px 0; display: grid; gap: 6px; }
+  .rv-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+  .rv-word { font-family: var(--sans); font-weight: 700; font-size: 20px; }
+  .rv-mean { color: var(--ink-2); font-size: 17px; }
+  .rv-head .hear { padding: 6px 10px 6px 8px; font-size: 14px; }
+  .rv-line { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-family: var(--sans); font-size: 15px; color: var(--ink-2); }
+  .rv-line .ok { color: var(--ok); }
+  .rv-line .miss { color: var(--miss); }
+  .typed { font-family: var(--mono); font-size: 14.5px; color: var(--ink); }
+  .chips { display: inline-flex; border: 1.5px solid var(--rule); border-radius: 999px; overflow: hidden; }
+  .chips button { font: 500 14px/1 var(--sans); padding: 7px 11px; background: transparent; border: 0; color: var(--ink-2); cursor: pointer; }
+  .chips button + button { border-left: 1.5px solid var(--rule); }
+  .chips .m-exact[aria-pressed="true"] { background: var(--ok); color: var(--bg); }
+  .chips .m-close[aria-pressed="true"] { background: var(--weld); color: #19213a; }
+  .chips .m-missed[aria-pressed="true"] { background: var(--miss); color: var(--bg); }
+
+  .signup { display: grid; gap: 10px; background: var(--surface-2); border-radius: 12px; padding: 16px; margin-top: 6px; }
+  .signup-title { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 18px; }
+  .signup-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .signup input[type="email"] {
+    flex: 1 1 220px; min-width: 0; font: 500 17px/1.2 var(--sans); color: var(--ink); background: var(--surface);
+    border: 1.5px solid var(--rule); border-radius: 999px; padding: 11px 16px;
+  }
+  .signup input[type="email"]:focus { border-color: var(--indigo); outline: none; box-shadow: 0 0 0 3px var(--indigo-soft); }
+  .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .status { margin: 0; font-family: var(--sans); font-size: 15px; min-height: 1.2em; }
+  .status.ok { color: var(--ok); }
+  .status.miss { color: var(--miss); }
+  .share-panel { display: grid; gap: 12px; justify-items: start; }
+  .card-preview { width: 100%; max-width: 300px; border-radius: 10px; box-shadow: 0 12px 30px -18px rgba(0, 0, 0, .7); }
+
+  .foot { margin: 28px 0 0; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); text-align: center; }
+</style>
+
+<div class="page">
+  <header class="top">
+    <a class="mark" href="/">thought<span>feel</span></a>
+    <a class="home" href="/">← THOUGHTFEEL.NET</a>
+  </header>
+
+  <main class="card" id="words-card">
+    <canvas id="swatch" aria-hidden="true"></canvas>
+    <div class="card-body" id="words" aria-live="polite">
+      <!-- rendered by script; this is the intro and the no-script state -->
+      <p class="eyebrow">Ten Spanish words · 5 minutes</p>
+      <h1 tabindex="-1">How many will stick?</h1>
+      <p class="lede">Learn ten Spanish words with thoughtfeel, a sense for concepts. Tomorrow, take a two-minute test and find out how many stuck.</p>
+      <noscript><p class="note">This page needs JavaScript turned on.</p></noscript>
+      <div class="actions"><button class="btn primary" type="button" data-act="start">Start</button></div>
+      <p class="note">Turn your sound on, and find a spot where you can speak out loud.</p>
+      <p class="text how-head">People with thoughtfeel report that a word’s sounds have a feel of their own. For each word, you’ll:</p>
+      <ol class="how">
+        <li>Hear it, and notice the feel of its sounds.</li>
+        <li>Hold that feel while you say out loud what the word means.</li>
+        <li>Then the reverse: hold the feel of the meaning, and say the Spanish word.</li>
+      </ol>
+      <p class="note">Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a> first.</p>
+    </div>
+  </main>
+
+  <p class="foot">thoughtfeel · a practical guide by Ted Shachtman · <a href="/">thoughtfeel.net</a></p>
+</div>
+
+<script>
+(function () {
+  var tfTrack = window.tfTrack || function () {};
+  /* ---------- Woven strip (same weave as the home page) ---------- */
+  var canvas = document.getElementById('swatch');
+  function drawSwatch() {
+    if (!canvas) return;
+    var rect = canvas.getBoundingClientRect();
+    if (!rect.width) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var cs = getComputedStyle(document.documentElement);
+    var indigo = cs.getPropertyValue('--indigo').trim(), weld = cs.getPropertyValue('--weld').trim();
+    var surface = cs.getPropertyValue('--surface-2').trim(), ink = cs.getPropertyValue('--ink').trim();
+    var W = rect.width, H = rect.height, cell = Math.max(10, Math.round(W / 26)), gap = Math.max(2, cell * 0.18);
+    ctx.fillStyle = surface; ctx.fillRect(0, 0, W, H);
+    var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var cols = Math.ceil(W / cell), rows = Math.ceil(H / cell);
+    var band0 = Math.floor(rows * 0.42), band1 = band0 + 2, tones = [];
+    for (var c = 0; c < cols; c++) tones.push(0.72 + rnd() * 0.28);
+    function thread(x, y, w, h, color, alpha) {
+      ctx.globalAlpha = alpha; ctx.fillStyle = color;
+      var r = Math.min(w, h) / 5;
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
+      ctx.fill();
+    }
+    for (var y = 0; y < rows; y++) {
+      var isBand = y >= band0 && y <= band1;
+      for (var x = 0; x < cols; x++) {
+        var px = x * cell, py = y * cell;
+        var warp = function () { thread(px + gap / 2, py - 1, cell - gap, cell + 2, indigo, tones[x]); };
+        var weft = function () { thread(px - 1, py + gap / 2, cell + 2, cell - gap, isBand ? weld : ink, isBand ? 0.95 : 0.16); };
+        if ((x + y) % 2 === 0) { weft(); warp(); } else { warp(); weft(); }
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  var raf; function schedule() { cancelAnimationFrame(raf); raf = requestAnimationFrame(drawSwatch); }
+  window.addEventListener('resize', schedule);
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', schedule); } catch (e) {}
+  schedule();
+
+  /* ---------- The words ---------- */
+  // Words an English speaker is unlikely to know or to guess from English. The vocabulary lesson's
+  // own examples (hazaña, bisagra) are left out, so they stay fresh for people who come from the video.
+  var WORDS = [
+    { es: 'ardilla', say: 'ar-DEE-yah', en: 'squirrel' },
+    { es: 'embudo', say: 'em-BOO-doh', en: 'funnel' },
+    { es: 'relámpago', say: 'reh-LAHM-pah-goh', en: 'lightning' },
+    { es: 'cajón', say: 'kah-HOHN', en: 'drawer' },
+    { es: 'charco', say: 'CHAR-koh', en: 'puddle' },
+    { es: 'anzuelo', say: 'ahn-SWEH-loh', en: 'fishhook' },
+    { es: 'pereza', say: 'peh-REH-sah', en: 'laziness' },
+    { es: 'madrugada', say: 'mah-droo-GAH-dah', en: 'the hours before dawn' },
+    { es: 'buzón', say: 'boo-SOHN', en: 'mailbox' },
+    { es: 'ceja', say: 'SEH-hah', en: 'eyebrow' }
+  ];
+  var N = WORDS.length;
+  var KEY = 'thoughtfeel.words';
+  var WAIT = 8 * 3600e3; // the test opens 8 hours after learning, but the next day is the real test
+  var SHARE_URL = 'https://thoughtfeel.net/words/';
+  var LESSONS_URL = '/#videos'; // point this at the vocabulary lesson once it's published
+  var STEPS = ['Hear it', 'Bind it', 'The reverse'];
+  var box = document.getElementById('words');
+  var card = document.getElementById('words-card');
+  var INTRO = box.innerHTML;
+
+  // Saved on this device: { v: 1, learnedAt, minutes, test: { a, b, typed, marks, had, startedAt, doneAt } }.
+  // a and b are the word orders for the test's two parts; typed and marks follow a, had follows b.
+  function load() {
+    try { var s = JSON.parse(localStorage.getItem(KEY) || 'null'); return s && s.v === 1 && s.learnedAt ? s : null; } catch (e) { return null; }
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  var state = load(), learning = null, booted = false;
+
+  // The test link (in reminders) carries when the words were learned, so the test also works on another device.
+  (function fromLink() {
+    var t = /[?&]t=(\d{9,11})(?:&|$)/.exec(location.search), m = /[?&]m=(\d{1,3})(?:&|$)/.exec(location.search);
+    if (!t) return;
+    try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+    var at = Number(t[1]) * 1000;
+    if (state || at > Date.now() || Date.now() - at > 60 * 864e5) return;
+    state = { v: 1, learnedAt: at, minutes: m ? Math.max(1, Number(m[1])) : 0 };
+    save();
+  })();
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+  function range(n) { var a = []; for (var i = 0; i < n; i++) a.push(i); return a; }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function bringIntoView() {
+    if (card.getBoundingClientRect().top < 0) card.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }
+  // Swaps the card's content. After the first render, also scrolls the card into view and moves focus.
+  function show(html, focusSel) {
+    box.innerHTML = html;
+    if (!booted) return;
+    bringIntoView();
+    var el = focusSel && box.querySelector(focusSel);
+    if (el) el.focus({ preventScroll: true });
+  }
+  function actions(inner) { return '<div class="actions">' + inner + '</div>'; }
+  function progress(done) {
+    return '<div class="progress" aria-hidden="true">' + range(N).map(function (k) {
+      return '<span class="' + (k < done ? 'done' : k === done ? 'now' : '') + '"></span>';
+    }).join('') + '</div>';
+  }
+
+  /* ---------- Times ---------- */
+  function agoText(ms) {
+    var min = Math.round(ms / 60000);
+    if (min < 60) return plural(Math.max(1, min), 'minute');
+    var h = Math.round(ms / 3600e3);
+    return h < 48 ? plural(h, 'hour') : plural(Math.round(h / 24), 'day');
+  }
+  // How long after learning the test was taken, as the result and the card say it.
+  function laterText(ms) {
+    var h = ms / 3600e3;
+    if (h < 20) return plural(Math.max(1, Math.round(h)), 'hour') + ' later';
+    var d = Math.round(h / 24);
+    if (d <= 1) return 'A day later';
+    if (d < 7) return ['', '', 'Two', 'Three', 'Four', 'Five', 'Six'][d] + ' days later';
+    return d === 7 ? 'A week later' : d + ' days later';
+  }
+  function when(ms) {
+    var d = new Date(ms), now = new Date(), tomorrow = new Date(now.getTime());
+    tomorrow.setDate(now.getDate() + 1);
+    var time = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    if (d.toDateString() === now.toDateString()) return 'at ' + time;
+    if (d.toDateString() === tomorrow.toDateString()) return 'tomorrow at ' + time;
+    return 'on ' + d.toLocaleDateString([], { weekday: 'long' }) + ' at ' + time;
+  }
+
+  /* ---------- Hearing a word (the browser's own Spanish voice, when it has one) ---------- */
+  var voice = null;
+  var canSpeak = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  var SPEAKER = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 9.5v5h4l5 4.5v-14L7 9.5H3z"/><path d="M15.5 8.8a4.5 4.5 0 0 1 0 6.4M18.2 6.2a8.2 8.2 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  function pickVoice() {
+    if (!canSpeak) return;
+    // Natural-sounding voices first (Apple's novelty voices like Eddy and Grandma last), then Latin American Spanish,
+    // which matches the pronunciation guides.
+    var tier = function (v) {
+      if (/^(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley)\b/i.test(v.name)) return 3;
+      if (/premium|enhanced|natural|neural/i.test(v.name)) return 0;
+      if (/paulina|m[oó]nica|juan|jorge|diego|marisol|ang[eé]lica|francisca|google|microsoft|siri/i.test(v.name)) return 1;
+      return 2;
+    };
+    var order = ['es-mx', 'es-us', 'es-419', 'es-co', 'es-ar', 'es-cl', 'es-es'];
+    var rank = function (v) { var i = order.indexOf(v.lang.replace('_', '-').toLowerCase()); return i < 0 ? order.length : i; };
+    var es = (speechSynthesis.getVoices() || []).filter(function (v) { return /^es([-_]|$)/i.test(v.lang); });
+    es.sort(function (a, b) { return tier(a) - tier(b) || rank(a) - rank(b) || Number(b.localService) - Number(a.localService); });
+    var had = !!voice;
+    voice = es[0] || null;
+    if (voice && !had) box.querySelectorAll('.hear').forEach(function (b) { b.hidden = false; });
+  }
+  if (canSpeak) {
+    pickVoice();
+    if (speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged', pickVoice);
+    else speechSynthesis.onvoiceschanged = pickVoice;
+  }
+  function speak(text) {
+    if (!voice) return;
+    try {
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.voice = voice; u.lang = voice.lang; u.rate = 0.8;
+      speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function hearButton(w) {
+    return '<button type="button" class="hear" data-act="hear" data-word="' + w.es + '" aria-label="Hear ' + w.es + '"' + (voice ? '' : ' hidden') + '>' + SPEAKER + 'Hear it</button>';
+  }
+  function wordBlock(w) {
+    return '<div class="word-box"><p class="word" lang="es">' + w.es + '</p>' +
+      '<div class="word-meta"><span class="say-it">' + w.say + '</span>' + hearButton(w) + '</div></div>';
+  }
+
+  /* ---------- Learning: hear it, bind it, the reverse ---------- */
+  function startLearning() {
+    learning = { startedAt: Date.now(), i: 0, step: 0 };
+    renderLearn();
+    tfTrack('words-start');
+  }
+
+  function renderLearn() {
+    var w = WORDS[learning.i], s = learning.step, first = learning.i === 0, last = learning.i === N - 1;
+    var html = progress(learning.i) +
+      '<p class="eyebrow">Word ' + (learning.i + 1) + ' of ' + N + ' · ' + STEPS[s] + '</p>' +
+      wordBlock(w);
+    if (s === 0) {
+      html += '<p class="do" tabindex="-1">' + (first
+        ? 'Say it to yourself: <span class="say" lang="es">' + w.es + '</span>. Then notice the feel of its sounds.'
+        : 'Say it to yourself, and notice the feel of its sounds.') + '</p>' +
+        actions('<button type="button" class="btn primary" data-act="step">Next</button>');
+    } else if (s === 1) {
+      html += '<p class="meaning">It means <b>' + w.en + '</b>.</p>' +
+        '<p class="do" tabindex="-1">' + (first
+          ? 'Bring up the feel of the sounds of ' + w.es + '. While you hold that feel, say out loud: <span class="say">“this means ' + w.en + '.”</span>'
+          : 'Hold the feel of its sounds, and say out loud: <span class="say">“this means ' + w.en + '.”</span>') + '</p>' +
+        (first ? '<p class="tip">If the feel switches to ' + w.en + ' as you say it, that’s okay. Switch between them: the feel of ' + w.es + ', then say ' + w.en + ', then back to the feel of ' + w.es + '.</p>' : '') +
+        actions('<button type="button" class="btn primary" data-act="step">Next</button>');
+    } else {
+      html += '<p class="meaning">It means <b>' + w.en + '</b>.</p>' +
+        '<p class="do" tabindex="-1">Now the reverse. ' + (first ? 'Bring up' : 'Hold') + ' the feel of ' + w.en + ', and say out loud: <span class="say" lang="es">“' + w.es + '.”</span></p>' +
+        (first ? '<p class="tip">Optional: if part of ' + w.es + ' sounds like a word you know, tie them together. Bring up the feel of that word, and notice the sound it shares with ' + w.es + '.</p>' : '') +
+        actions('<button type="button" class="btn primary" data-act="step">' + (last ? 'Finish' : 'Next word') + '</button>');
+    }
+    html += '<p class="note"><button type="button" class="linkish" data-act="' + (s > 0 || learning.i > 0 ? 'step-back' : 'intro') + '">Back</button></p>';
+    show(html, '.do');
+    if (s === 0) speak(w.es);
+  }
+
+  function finishLearning() {
+    var now = Date.now();
+    state = { v: 1, learnedAt: now, minutes: Math.max(1, Math.round((now - learning.startedAt) / 60000)) };
+    learning = null;
+    save();
+    renderWaiting(true);
+    tfTrack('words-learned');
+  }
+
+  /* ---------- Waiting for tomorrow ---------- */
+  function testLink() { return SHARE_URL + '?t=' + Math.floor(state.learnedAt / 1000) + (state.minutes ? '&m=' + state.minutes : ''); }
+  function stamp(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+  function reminderTimes() { var start = new Date(state.learnedAt + 24 * 3600e3); return [start, new Date(start.getTime() + 10 * 60e3)]; }
+  function gcalUrl() {
+    var t = reminderTimes();
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Test my ten Spanish words') +
+      '&dates=' + stamp(t[0]) + '/' + stamp(t[1]) +
+      '&details=' + encodeURIComponent('How many stuck? Take the two-minute test: ' + testLink());
+  }
+  function icsUrl() {
+    var t = reminderTimes();
+    var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//thoughtfeel//words//EN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
+      'UID:words-' + state.learnedAt + '@thoughtfeel.net', 'DTSTAMP:' + stamp(new Date()),
+      'DTSTART:' + stamp(t[0]), 'DTEND:' + stamp(t[1]), 'SUMMARY:Test my ten Spanish words',
+      'DESCRIPTION:How many stuck? Take the two-minute test: ' + testLink(), 'URL:' + testLink(),
+      'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:Test my ten Spanish words', 'TRIGGER:PT0M', 'END:VALARM',
+      'END:VEVENT', 'END:VCALENDAR'];
+    // Lines longer than 75 characters are folded, as calendar files require.
+    var text = lines.map(function (l) { var out = l.slice(0, 74); for (var i = 74; i < l.length; i += 73) out += '\r\n ' + l.slice(i, i + 73); return out; }).join('\r\n') + '\r\n';
+    return 'data:text/calendar;charset=utf-8,' + encodeURIComponent(text);
+  }
+  function remindBlock() {
+    return '<div class="remind"><p class="remind-title">Remind me tomorrow</p>' +
+      actions('<a class="btn" href="' + esc(gcalUrl()) + '" target="_blank" rel="noopener" data-track="words-remind-google">Google Calendar</a>' +
+        '<a class="btn" href="' + esc(icsUrl()) + '" download="thoughtfeel-words-test.ics" data-track="words-remind-ics">Apple or Outlook</a>') +
+      '<p class="note">This page remembers your words on this device. To take the test on another one, <button type="button" class="linkish" data-act="copy-test">copy your test link</button>.</p></div>';
+  }
+
+  function renderWaiting(justDone) {
+    var now = Date.now(), opens = state.learnedAt + WAIT;
+    if (!justDone && now >= opens) { renderReady(); return; }
+    var html = justDone
+      ? '<p class="eyebrow" data-waiting>Done for today</p>' +
+        '<h1 tabindex="-1">That’s all ten' + (state.minutes ? ', in ' + plural(state.minutes, 'minute') : '') + '.</h1>' +
+        '<p class="lede">Now the real test. Come back tomorrow and find out how many stuck. Try not to review the words before then.</p>' +
+        '<p class="note">The test opens ' + when(opens) + ', but tomorrow is best.</p>'
+      : '<p class="eyebrow" data-waiting>Your ten words</p>' +
+        '<h1 tabindex="-1">Your test opens ' + when(opens) + '.</h1>' +
+        '<p class="lede">You learned your words ' + agoText(now - state.learnedAt) + ' ago. Come back then, or better, tomorrow.</p>';
+    html += remindBlock() +
+      '<p class="note"><button type="button" class="linkish" data-act="restart">Start over</button> · <a href="/">Back to thoughtfeel.net</a></p>';
+    show(html, 'h1');
+  }
+
+  function renderReady() {
+    show('<p class="eyebrow">Learned ' + agoText(Date.now() - state.learnedAt) + ' ago</p>' +
+      '<h1 tabindex="-1">Welcome back. How many stuck?</h1>' +
+      '<p class="lede">Two parts, about two minutes. First, say each Spanish word from its meaning. Then say what each word means.</p>' +
+      '<p class="note">No looking anything up. If a word doesn’t come, skip it.</p>' +
+      actions('<button type="button" class="btn primary" data-act="test">Start the test</button>') +
+      '<p class="note"><button type="button" class="linkish" data-act="restart">Start over</button></p>', 'h1');
+  }
+
+  // A page left open overnight (or restored by a phone) shows the test once it's open.
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden || !state || state.test || !box.querySelector('[data-waiting]')) return;
+    if (Date.now() >= state.learnedAt + WAIT) renderReady();
+  });
+
+  /* ---------- The test: the word from its meaning, then the meaning from the word ---------- */
+  function startTest() {
+    state.test = { a: shuffle(range(N)), b: shuffle(range(N)), typed: [], marks: [], had: [], startedAt: Date.now() };
+    save();
+    renderSay();
+    tfTrack('words-test-start');
+  }
+
+  // Part 1 shows nothing back until the end, so it doesn't give away part 2.
+  function renderSay() {
+    var t = state.test, k = t.typed.length, w = WORDS[t.a[k]];
+    show(progress(k) +
+      '<p class="eyebrow">The Spanish word · ' + (k + 1) + ' of ' + N + '</p>' +
+      '<p class="prompt">' + w.en + '</p>' +
+      '<p class="do">' + (k === 0
+        ? 'Bring up the feel of ' + w.en + ', and let the Spanish word come. Say it out loud, then type it. Spelling doesn’t matter; the sounds do.'
+        : 'Say the Spanish word out loud, then type it.') + '</p>' +
+      '<form id="say-form" novalidate><div class="answer-row">' +
+        '<input type="text" id="say-input" lang="es" aria-label="The Spanish word for ' + w.en + '" placeholder="Type what you said" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next">' +
+        '<button class="btn primary" type="submit">Next</button></div></form>' +
+      '<p class="note"><button type="button" class="linkish" data-act="skip">It didn’t come</button></p>', '#say-input');
+  }
+
+  function answerSay(text) {
+    var t = state.test;
+    t.typed.push(String(text || '').trim().slice(0, 60));
+    save();
+    if (t.typed.length < N) renderSay(); else renderMean(false);
+  }
+
+  function renderMean(revealed) {
+    var t = state.test, k = t.had.length, w = WORDS[t.b[k]];
+    var html = progress(k) +
+      '<p class="eyebrow">The meaning · ' + (k + 1) + ' of ' + N + '</p>' +
+      wordBlock(w);
+    html += revealed
+      ? '<p class="meaning" tabindex="-1">It means <b>' + w.en + '</b>.</p>' +
+        '<p class="ask">Did you have it?</p>' +
+        actions('<button type="button" class="btn primary" data-act="had">I had it</button><button type="button" class="btn" data-act="not">I didn’t</button>')
+      : '<p class="do" tabindex="-1">' + (k === 0 ? 'Now the other direction. ' : '') + 'What does it mean? Say it out loud, then check.</p>' +
+        actions('<button type="button" class="btn primary" data-act="reveal">Show the meaning</button>');
+    show(html, revealed ? '.meaning' : '.do');
+    if (!revealed) speak(w.es);
+  }
+
+  function answerMean(had) {
+    var t = state.test;
+    t.had.push(!!had);
+    if (t.had.length < N) { save(); renderMean(false); return; }
+    t.doneAt = Date.now();
+    t.marks = t.a.map(function (wi, k) { return grade(t.typed[k], WORDS[wi].es); });
+    save();
+    renderResult();
+    var n = counts();
+    tfTrack('words-test-done');
+    tfTrack('words-meaning-' + n.r);
+    tfTrack('words-said-' + n.e);
+  }
+
+  // Typed answers are compared by how they sound, so spelling slips still count:
+  // b and v, s and z, h and j, y and ll, a soft c, and so on. Close means a sound or two off.
+  function soundKey(s) {
+    s = String(s || '').toLowerCase().normalize('NFC').replace(/ñ/g, 'ny')
+      .normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+    return s.replace(/ch/g, 'C').replace(/ll/g, 'y').replace(/qu/g, 'k')
+      .replace(/c(?=[ei])/g, 's').replace(/c/g, 'k').replace(/z/g, 's').replace(/v/g, 'b')
+      .replace(/g(?=[ei])/g, 'h').replace(/j/g, 'h').replace(/ee/g, 'i').replace(/oo/g, 'u').replace(/w/g, 'u')
+      .replace(/(.)\1+/g, '$1');
+  }
+  function distance(a, b) {
+    var row = range(b.length + 1);
+    for (var i = 1; i <= a.length; i++) {
+      var prev = row[0]; row[0] = i;
+      for (var j = 1; j <= b.length; j++) {
+        var cur = row[j];
+        row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
+        prev = cur;
+      }
+    }
+    return row[b.length];
+  }
+  function grade(typed, word) {
+    var a = soundKey(typed), b = soundKey(word);
+    if (!a) return 'missed';
+    if (a === b) return 'exact';
+    return distance(a, b) <= Math.max(1, Math.floor(b.length / 4)) ? 'close' : 'missed';
+  }
+
+  /* ---------- The result ---------- */
+  function counts() {
+    var t = state.test, n = { r: 0, e: 0, c: 0 };
+    t.had.forEach(function (h) { if (h) n.r++; });
+    t.marks.forEach(function (m) { if (m === 'exact') n.e++; else if (m === 'close') n.c++; });
+    return n;
+  }
+  function later() { return laterText(state.test.startedAt - state.learnedAt); }
+  function meter(id, label, on, near, value) {
+    return '<div class="meter" id="' + id + '"><p class="meter-label"><span>' + label + '</span><strong>' + value + '</strong></p>' +
+      '<div class="pills" aria-hidden="true">' + range(N).map(function (k) {
+        return '<span class="' + (k < on ? 'on' : k < on + near ? 'near' : '') + '"></span>';
+      }).join('') + '</div></div>';
+  }
+  function sayMeter(n) { return meter('m-say', 'The word, from its meaning', n.e, n.c, n.e + ' of ' + N + (n.c ? ', plus ' + n.c + ' close' : '')); }
+  function resultText(n) {
+    if (n.r <= 3) return 'Fewer stuck this time. If the feel of a word’s sounds didn’t come up while you learned it, there was nothing for the meaning to bind to. Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a>.';
+    if (n.e + n.c / 2 >= n.r) return 'You produced the words about as well as you recognized them. Producing is usually the harder direction.';
+    return 'Producing a word is usually harder than recognizing it.' +
+      (n.c ? ' A close answer means the feel of its sounds came back, but not every sound.' : '') +
+      ' To make the sounds easier to bring back, tie them to a word you know: bring up the feel of both, and notice the sound they share.';
+  }
+  function chips(k, mark) {
+    return '<span class="chips" role="group" aria-label="Mark for this answer">' + ['exact', 'close', 'missed'].map(function (m) {
+      return '<button type="button" class="m-' + m + '" data-mark="' + m + '" data-k="' + k + '" aria-pressed="' + (mark === m) + '">' + m.charAt(0).toUpperCase() + m.slice(1) + '</button>';
+    }).join('') + '</span>';
+  }
+
+  function renderResult() {
+    var t = state.test, n = counts();
+    var rows = range(N).map(function (wi) {
+      var w = WORDS[wi], ka = t.a.indexOf(wi), typed = t.typed[ka], had = t.had[t.b.indexOf(wi)];
+      return '<li><div class="rv-head"><span class="rv-word" lang="es">' + w.es + '</span><span class="rv-mean">' + w.en + '</span>' + hearButton(w) + '</div>' +
+        '<p class="rv-line">' + (had ? '<span class="ok">✓ You had the meaning.</span>' : '<span class="miss">✗ The meaning didn’t come.</span>') + '</p>' +
+        '<p class="rv-line">' + (typed
+          ? '<span>You typed <span class="typed" lang="es">' + esc(typed) + '</span></span>' + chips(ka, t.marks[ka])
+          : '<span class="miss">✗ The word didn’t come.</span>') + '</p></li>';
+    }).join('');
+    show('<p class="eyebrow">Your result</p>' +
+      '<h1 tabindex="-1">' + later() + ', you remembered ' + n.r + ' of ' + N + ' words.</h1>' +
+      '<div class="meters">' + meter('m-mean', 'The meaning, from the word', n.r, 0, n.r + ' of ' + N) + sayMeter(n) + '</div>' +
+      '<p class="text" id="result-text">' + resultText(n) + '</p>' +
+      actions('<button type="button" class="btn primary" data-act="share">Share your result</button>' +
+        '<a class="btn" href="' + LESSONS_URL + '" data-track="words-to-lessons">Watch the lessons</a>') +
+      '<p class="note">Send it to a friend and find out how many they’d remember.</p>' +
+      '<div class="share-panel" hidden>' +
+        '<img class="card-preview" alt="Result card: ' + n.r + ' of ' + N + ' Spanish words remembered">' +
+        actions('<a class="btn primary" download="my-thoughtfeel-words.png" data-act="download">Download the image</a>' +
+          '<button type="button" class="btn" data-act="copy">Copy the link</button>') +
+      '</div>' +
+      '<h2 class="review-title">Your words</h2>' +
+      '<p class="note">Typed answers are marked by how they sound, so spelling doesn’t count against you. Tap a mark to change it.</p>' +
+      '<ol class="review">' + rows + '</ol>' +
+      '<form class="signup" id="words-signup" novalidate>' +
+        '<p class="signup-title">Get new lessons by email</p>' +
+        '<div class="signup-row"><input type="email" id="words-email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">' +
+        '<button class="btn primary" type="submit" id="words-submit">Send me new lessons</button></div>' +
+        '<input type="text" name="_honey" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+        '<p class="status" id="words-status" role="status" aria-live="polite"></p>' +
+      '</form>' +
+      '<p class="note"><a href="https://www.reddit.com/r/ThoughtFeel/" target="_blank" rel="noopener" data-track="words-to-reddit">Post which words stuck on r/ThoughtFeel</a> · <button type="button" class="linkish" data-act="restart">Start over</button></p>', 'h1');
+    cardReady = prepareCard();
+  }
+
+  function markAnswer(b) {
+    var k = Number(b.getAttribute('data-k'));
+    state.test.marks[k] = b.getAttribute('data-mark');
+    save();
+    b.parentNode.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    var n = counts(), m = document.getElementById('m-say'), text = document.getElementById('result-text');
+    if (m) m.outerHTML = sayMeter(n);
+    if (text) text.innerHTML = resultText(n);
+  }
+
+  function summary() {
+    var t = state.test, n = counts();
+    return 'meanings ' + n.r + '/' + N + ', words ' + n.e + '/' + N + ' exact + ' + n.c + ' close, tested ' +
+      Math.round((t.startedAt - state.learnedAt) / 3600e3) + ' h after learning' + (state.minutes ? ', learned in ' + state.minutes + ' min' : '') + ' | ' +
+      range(N).map(function (wi) {
+        var ka = t.a.indexOf(wi);
+        return WORDS[wi].es + ': meaning ' + (t.had[t.b.indexOf(wi)] ? 'yes' : 'no') + ', typed "' + (t.typed[ka] || '') + '" (' + t.marks[ka] + ')';
+      }).join('; ');
+  }
+
+  /* ---------- The result card (1080 × 1350, the brand's dark weave) ---------- */
+  var cardFile = null, cardUrl = '', cardReady = null;
+  var CARD_FONTS = ['700 96px "Schibsted Grotesk"', '500 46px "Schibsted Grotesk"', '400 60px Literata', 'italic 400 50px Literata', '400 38px "IBM Plex Mono"'];
+
+  function wrapText(g, text, x, y, maxW, lineH) {
+    var words = text.split(' '), line = '';
+    words.forEach(function (w) {
+      var test = line ? line + ' ' + w : w;
+      if (g.measureText(test).width > maxW && line) { g.fillText(line, x, y); y += lineH; line = w; } else line = test;
+    });
+    if (line) g.fillText(line, x, y);
+  }
+  function pill(g, x, y, w, h) { g.beginPath(); if (g.roundRect) g.roundRect(x, y, w, h, h / 2); else g.rect(x, y, w, h); g.fill(); }
+
+  function drawCard() {
+    var n = counts(), W = 1080, H = 1350, c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    var g = c.getContext('2d');
+    var INK = '#151b30', INDIGO = '#3a4fa8', WELD = '#e2a84a', PAPER = '#eef0f6', MUTED = '#a4aabb', DIM = '#2c3243';
+    g.fillStyle = INK; g.fillRect(0, 0, W, H);
+    // The weave along the bottom: indigo warp, faint weft, one gold weft stripe.
+    var top = 1238, cell = 18, gap = 3;
+    function thread(x, y, w, h, color, alpha) {
+      g.globalAlpha = alpha; g.fillStyle = color; g.beginPath();
+      if (g.roundRect) g.roundRect(x, y, w, h, 3); else g.rect(x, y, w, h);
+      g.fill();
+    }
+    for (var row = 0; top + row * cell < H; row++) {
+      for (var col = 0; col * cell < W; col++) {
+        var gold = row === 2, x = col * cell, y = top + row * cell;
+        var warp = function () { thread(x + gap / 2, y - 1, cell - gap, cell + 2, INDIGO, 0.75 + ((col * 7) % 5) * 0.05); };
+        var weft = function () { thread(x - 1, y + gap / 2, cell + 2, cell - gap, gold ? WELD : PAPER, gold ? 0.95 : 0.12); };
+        if ((row + col) % 2 === 0) { weft(); warp(); } else { warp(); weft(); }
+      }
+    }
+    g.globalAlpha = 1;
+    var x0 = 88, maxW = W - 2 * x0;
+    g.textBaseline = 'alphabetic';
+    g.font = '700 96px "Schibsted Grotesk", Arial, sans-serif';
+    g.fillStyle = PAPER; g.fillText('thought', x0, 176);
+    var tw = g.measureText('thought').width;
+    g.fillStyle = WELD; g.fillText('feel', x0 + tw, 176);
+
+    var lead = later() + ', I remembered', size = 60;
+    do { g.font = '400 ' + size + 'px Literata, Georgia, serif'; size -= 2; } while (g.measureText(lead).width > maxW && size > 40);
+    g.fillStyle = PAPER; g.fillText(lead, x0, 420);
+    var big = n.r + ' of ' + N;
+    size = 250;
+    do { g.font = '700 ' + size + 'px "Schibsted Grotesk", Arial, sans-serif'; size -= 6; } while (g.measureText(big).width > maxW && size > 120);
+    g.fillStyle = WELD; g.fillText(big, x0 - 6, 650);
+    g.font = '400 60px Literata, Georgia, serif'; g.fillStyle = PAPER;
+    g.fillText('Spanish words', x0, 752);
+
+    var pg = 14, pw = (maxW - pg * (N - 1)) / N;
+    for (var k = 0; k < N; k++) { g.fillStyle = k < n.r ? WELD : DIM; pill(g, x0 + k * (pw + pg), 812, pw, 22); }
+
+    g.font = 'italic 400 50px Literata, Georgia, serif'; g.fillStyle = PAPER;
+    wrapText(g, 'I learned them' + (state.minutes ? ' in ' + plural(state.minutes, 'minute') : '') + ' with thoughtfeel.', x0, 956, maxW, 66);
+
+    g.font = '500 46px "Schibsted Grotesk", Arial, sans-serif'; g.fillStyle = WELD;
+    g.fillText('How many would you remember?', x0, 1110);
+    g.font = '400 38px "IBM Plex Mono", Menlo, monospace'; g.fillStyle = MUTED;
+    g.fillText('thoughtfeel.net/words', x0, 1166);
+    return c;
+  }
+
+  // Drawn as soon as the result shows, so a tap on Share can open the share sheet right away
+  // (phones only allow it during the tap itself).
+  function prepareCard() {
+    cardFile = null;
+    if (cardUrl) URL.revokeObjectURL(cardUrl);
+    cardUrl = '';
+    var fontsReady = document.fonts && document.fonts.load
+      ? Promise.all(CARD_FONTS.map(function (f) { return document.fonts.load(f).catch(function () {}); }))
+      : Promise.resolve();
+    return fontsReady.then(function () {
+      var c = drawCard();
+      return new Promise(function (resolve) { c.toBlob(resolve, 'image/png'); });
+    }).then(function (blob) {
+      if (!blob) return;
+      cardUrl = URL.createObjectURL(blob);
+      try { cardFile = new File([blob], 'my-thoughtfeel-words.png', { type: 'image/png' }); } catch (e) { cardFile = null; }
+    }).catch(function () {});
+  }
+
+  function shareText() {
+    return later() + ', I remembered ' + counts().r + ' of ' + N + ' Spanish words I learned' +
+      (state.minutes ? ' in ' + plural(state.minutes, 'minute') : '') + ' with thoughtfeel. How many would you remember?';
+  }
+
+  function shareResult() {
+    // Phones (and some desktops) can share the image itself.
+    if (cardFile && navigator.canShare && navigator.canShare({ files: [cardFile] })) {
+      tfTrack('words-share-open');
+      navigator.share({ files: [cardFile], text: shareText() + ' ' + SHARE_URL })
+        .then(function () { tfTrack('words-share-image'); })
+        .catch(function () {});
+      return;
+    }
+    // Elsewhere, show the card to save, with the link to copy.
+    var panel = box.querySelector('.share-panel');
+    if (!panel) return;
+    (cardReady || Promise.resolve()).then(function () {
+      if (cardUrl) {
+        panel.querySelector('.card-preview').src = cardUrl;
+        panel.querySelector('[data-act="download"]').href = cardUrl;
+      }
+      panel.hidden = false;
+      tfTrack('words-share-panel');
+    });
+  }
+
+  function copyText(value, button, event) {
+    var label = button.getAttribute('data-label') || button.textContent;
+    button.setAttribute('data-label', label);
+    var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = label; }, 1800); tfTrack(event); };
+    var fallback = function () {
+      var ta = document.createElement('textarea'); ta.value = value;
+      ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(value).then(done, fallback);
+    else fallback();
+  }
+
+  function restart() {
+    if (!window.confirm('Start over? This clears your ten words and your result on this device.')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    state = null; learning = null;
+    show(INTRO, 'h1');
+    tfTrack('words-restart');
+  }
+
+  box.addEventListener('click', function (e) {
+    var b = e.target.closest('button, a[data-act], a[data-track]');
+    if (!b || !box.contains(b)) return;
+    if (b.hasAttribute('data-track')) { tfTrack(b.getAttribute('data-track')); return; }
+    if (b.hasAttribute('data-mark')) { markAnswer(b); return; }
+    var act = b.getAttribute('data-act');
+    if (act === 'start') startLearning();
+    else if (act === 'intro') { learning = null; show(INTRO, 'h1'); }
+    else if (act === 'hear') speak(b.getAttribute('data-word'));
+    else if (act === 'step') {
+      if (learning.step < 2) learning.step++;
+      else if (learning.i < N - 1) { learning.i++; learning.step = 0; }
+      else { finishLearning(); return; }
+      renderLearn();
+    }
+    else if (act === 'step-back') {
+      if (learning.step > 0) learning.step--; else { learning.i--; learning.step = 2; }
+      renderLearn();
+    }
+    else if (act === 'copy-test') copyText(testLink(), b, 'words-copy-test-link');
+    else if (act === 'test') startTest();
+    else if (act === 'skip') answerSay('');
+    else if (act === 'reveal') renderMean(true);
+    else if (act === 'had') answerMean(true);
+    else if (act === 'not') answerMean(false);
+    else if (act === 'share') shareResult();
+    else if (act === 'copy') copyText(shareText() + ' ' + SHARE_URL, b, 'words-copy-link');
+    else if (act === 'download') tfTrack('words-download-image');
+    else if (act === 'restart') restart();
+  });
+
+  box.addEventListener('submit', function (e) {
+    if (e.target.id === 'say-form') { e.preventDefault(); answerSay(document.getElementById('say-input').value); return; }
+    if (e.target.id !== 'words-signup') return;
+    // Email signup from the result. FormSubmit forwards it to Ted, with the result.
+    e.preventDefault();
+    var form = e.target, emailEl = document.getElementById('words-email'), status = document.getElementById('words-status');
+    var button = document.getElementById('words-submit');
+    var setStatus = function (t, cls) { status.textContent = t; status.className = 'status' + (cls ? ' ' + cls : ''); };
+    var email = emailEl.value.trim();
+    if (!emailEl.checkValidity() || !email) { setStatus('Enter an email address like you@example.com.', 'miss'); emailEl.focus(); return; }
+    if (form.querySelector('.trap').value) { setStatus('Thanks! You’re on the list.', 'ok'); return; }
+    button.disabled = true;
+    setStatus('Signing you up…');
+    fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        words_result: summary(),
+        _subject: 'New thoughtfeel signup (words)',
+        _template: 'table'
+      })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (String(data && data.success) !== 'true') throw new Error('not accepted');
+        setStatus('Thanks! You’re on the list.', 'ok');
+        emailEl.value = '';
+        tfTrack('signup-words');
+      })
+      .catch(function () { setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss'); })
+      .then(function () { button.disabled = false; });
+  });
+
+  // Coming back: pick up wherever this device left off.
+  if (state && state.test && state.test.doneAt) renderResult();
+  else if (state && state.test) { if (state.test.typed.length < N) renderSay(); else renderMean(false); }
+  else if (state) {
+    tfTrack(Date.now() >= state.learnedAt + WAIT ? 'words-return-ready' : 'words-return-early');
+    renderWaiting(false);
+  }
+  booted = true;
+})();
+</script>
+
+</body>
+</html>
