@@ -308,7 +308,7 @@ window.tfTrack = function (path, title) {
   var KEY = 'thoughtfeel.words';
   var WAIT = 8 * 3600e3; // the test opens 8 hours after learning, but the next day is the real test
   var SHARE_URL = 'https://thoughtfeel.net/words/';
-  var LESSONS_URL = '/#videos'; // point this at the vocabulary lesson once it's published
+  var LESSON_URL = 'https://www.youtube.com/watch?v=Hfb_A-hkyfk'; // the vocabulary lesson
   var STEPS = ['Hear it', 'Bind it', 'The reverse'];
   var box = document.getElementById('words');
   var card = document.getElementById('words-card');
@@ -662,7 +662,7 @@ window.tfTrack = function (path, title) {
       '<div class="meters">' + meter('m-mean', 'The meaning, from the word', n.r, 0, n.r + ' of ' + N) + sayMeter(n) + '</div>' +
       '<p class="text" id="result-text">' + resultText(n) + '</p>' +
       actions('<button type="button" class="btn primary" data-act="share">Share your result</button>' +
-        '<a class="btn" href="' + LESSONS_URL + '" data-track="words-to-lessons">Watch the lessons</a>') +
+        '<a class="btn" href="' + LESSON_URL + '" target="_blank" rel="noopener" data-track="words-to-lesson">Watch the vocabulary lesson</a>') +
       '<p class="note">Send it to a friend and find out how many they’d remember.</p>' +
       '<div class="share-panel" hidden>' +
         '<img class="card-preview" alt="Result card: ' + n.r + ' of ' + N + ' Spanish words remembered">' +

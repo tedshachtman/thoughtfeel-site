@@ -401,6 +401,10 @@ window.tfTrack = function (path, title) {
   .video-title { font-family: var(--sans); font-weight: 700; font-size: 20px; line-height: 1.3; text-wrap: balance; }
   .video:hover .video-title { color: var(--indigo); text-decoration: underline; text-underline-offset: 3px; }
   .video-desc { font-size: 16px; color: var(--ink-2); line-height: 1.55; }
+  /* A lesson card with something to try under it (the card is a link, so the extra link sits beside it). */
+  .video-item { display: flex; flex-direction: column; gap: 12px; }
+  .video-try { font-size: 16px; line-height: 1.5; color: var(--indigo); text-underline-offset: 3px; }
+  .video-try strong { font-family: var(--sans); font-weight: 700; }
   .visually-hidden {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
     clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -650,6 +654,15 @@ window.tfTrack = function (path, title) {
         <span class="video-title">How to Build an Analogy</span>
         <span class="video-desc">Build an analogy piece by piece, and catch the near misses a list of words would let through.</span>
       </a>
+      <div class="video-item">
+        <a class="video" href="https://www.youtube.com/watch?v=Hfb_A-hkyfk" target="_blank" rel="noopener">
+          <span class="thumb"><img src="https://i.ytimg.com/vi/Hfb_A-hkyfk/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+          <span class="video-label">Video 8 · Vocabulary</span>
+          <span class="video-title">How to Memorize Vocabulary by Imagining in Concepts</span>
+          <span class="video-desc">Bind the feel of a word’s sounds to its meaning, for words in a new language and big words in your own, like medical terms.</span>
+        </a>
+        <a class="video-try" href="/words/"><strong>Try it:</strong> learn ten Spanish words, then test yourself tomorrow.</a>
+      </div>
     </div>
     <div class="updates" id="updates">
       <div class="updates-text">
@@ -745,6 +758,7 @@ window.tfTrack = function (path, title) {
       <li><a href="https://www.youtube.com/watch?v=PIZ0G-A8uy4" target="_blank" rel="noopener">Video 5: Pictures and ideas</a><span>What a Picture Does to an Idea</span></li>
       <li><a href="https://www.youtube.com/watch?v=2lMqpiP8Clo" target="_blank" rel="noopener">Video 6: At the right moment</a><span>You Didn’t Forget. You Missed the Moment.</span></li>
       <li><a href="https://www.youtube.com/watch?v=fWasdNcap88" target="_blank" rel="noopener">Video 7: Analogies</a><span>How to Build an Analogy</span></li>
+      <li><a href="https://www.youtube.com/watch?v=Hfb_A-hkyfk" target="_blank" rel="noopener">Video 8: Vocabulary</a><span>How to Memorize Vocabulary by Imagining in Concepts</span></li>
       <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The Thought Feel YouTube channel</a><span>New lessons as they’re published.</span></li>
       <li><a href="#updates">Get new lessons by email</a><span>New videos and exercises when they’re out.</span></li>
       <li><a href="#about">Email Ted</a><span>Questions, or a free tutoring session: teddyshachtman@gmail.com</span></li>
@@ -1115,6 +1129,8 @@ window.tfTrack = function (path, title) {
       tfTrack('lesson-' + (num ? num[1] : v[1]), (label || a.textContent || '').trim());
     } else if ((a.getAttribute('href') || '').indexOf('/quiz/') === 0) {
       tfTrack(a.closest('#test') ? 'test-to-quiz' : 'home-to-quiz');
+    } else if ((a.getAttribute('href') || '').indexOf('/words/') === 0) {
+      tfTrack('home-to-words');
     }
   });
 
