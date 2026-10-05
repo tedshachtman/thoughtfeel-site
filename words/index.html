@@ -212,6 +212,7 @@ window.tfTrack = function (path, title) {
   .card-preview { width: 100%; max-width: 300px; border-radius: 10px; box-shadow: 0 12px 30px -18px rgba(0, 0, 0, .7); }
 
   .foot { margin: 28px 0 0; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); text-align: center; }
+  .foot.credits { margin-top: 10px; font-size: 11px; line-height: 1.6; }
 </style>
 
 <div class="page">
@@ -241,6 +242,7 @@ window.tfTrack = function (path, title) {
   </main>
 
   <p class="foot">thoughtfeel · a practical guide by Ted Shachtman · <a href="/">thoughtfeel.net</a></p>
+  <p class="foot credits">Pronunciations recorded by native speakers for <a href="https://lingualibre.org/">Lingua Libre</a>, via Wikimedia Commons, trimmed and volume-matched: <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-AdrianAbdulBaha-ardilla.wav">ardilla</a>, <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-AdrianAbdulBaha-rel%C3%A1mpago.wav">relámpago</a>, <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-AdrianAbdulBaha-charco.wav">charco</a>, <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-AdrianAbdulBaha-madrugada.wav">madrugada</a> (AdrianAbdulBaha); <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-Marreromarco-caj%C3%B3n.wav">cajón</a>, <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-Marreromarco-anzuelo.wav">anzuelo</a>, <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-Marreromarco-pereza.wav">pereza</a>, <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-Marreromarco-buz%C3%B3n.wav">buzón</a> (Marreromarco); <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-Eavqwiki-ceja.wav">ceja</a> (Eavqwiki), <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; <a href="https://commons.wikimedia.org/wiki/File:LL-Q1321_(spa)-Emanuelps27-embudo.wav">embudo</a> (Emanuelps27), <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
 
 <script>
@@ -383,44 +385,27 @@ window.tfTrack = function (path, title) {
     return 'on ' + d.toLocaleDateString([], { weekday: 'long' }) + ' at ' + time;
   }
 
-  /* ---------- Hearing a word (the browser's own Spanish voice, when it has one) ---------- */
-  var voice = null;
-  var canSpeak = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  /* ---------- Hearing a word (recordings by native speakers, from Lingua Libre; credits in the footer) ---------- */
+  // The browser's own text-to-speech varied by device and sometimes mispronounced the words, so each word
+  // plays a short recording instead: /audio/words/<word without accents>.mp3.
   var SPEAKER = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 9.5v5h4l5 4.5v-14L7 9.5H3z"/><path d="M15.5 8.8a4.5 4.5 0 0 1 0 6.4M18.2 6.2a8.2 8.2 0 0 1 0 11.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
-  function pickVoice() {
-    if (!canSpeak) return;
-    // Natural-sounding voices first (Apple's novelty voices like Eddy and Grandma last), then Latin American Spanish,
-    // which matches the pronunciation guides.
-    var tier = function (v) {
-      if (/^(eddy|flo|grandma|grandpa|reed|rocko|sandy|shelley)\b/i.test(v.name)) return 3;
-      if (/premium|enhanced|natural|neural/i.test(v.name)) return 0;
-      if (/paulina|m[oó]nica|juan|jorge|diego|marisol|ang[eé]lica|francisca|google|microsoft|siri/i.test(v.name)) return 1;
-      return 2;
-    };
-    var order = ['es-mx', 'es-us', 'es-419', 'es-co', 'es-ar', 'es-cl', 'es-es'];
-    var rank = function (v) { var i = order.indexOf(v.lang.replace('_', '-').toLowerCase()); return i < 0 ? order.length : i; };
-    var es = (speechSynthesis.getVoices() || []).filter(function (v) { return /^es([-_]|$)/i.test(v.lang); });
-    es.sort(function (a, b) { return tier(a) - tier(b) || rank(a) - rank(b) || Number(b.localService) - Number(a.localService); });
-    var had = !!voice;
-    voice = es[0] || null;
-    if (voice && !had) box.querySelectorAll('.hear').forEach(function (b) { b.hidden = false; });
-  }
-  if (canSpeak) {
-    pickVoice();
-    if (speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged', pickVoice);
-    else speechSynthesis.onvoiceschanged = pickVoice;
+  var clips = {};
+  function clip(text) {
+    var key = text.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    if (!clips[key]) { clips[key] = new Audio('/audio/words/' + key + '.mp3'); clips[key].preload = 'auto'; }
+    return clips[key];
   }
   function speak(text) {
-    if (!voice) return;
     try {
-      speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
-      u.voice = voice; u.lang = voice.lang; u.rate = 0.8;
-      speechSynthesis.speak(u);
+      Object.keys(clips).forEach(function (k) { clips[k].pause(); });
+      var a = clip(text);
+      a.currentTime = 0;
+      var p = a.play();
+      if (p && p.catch) p.catch(function () {});
     } catch (e) {}
   }
   function hearButton(w) {
-    return '<button type="button" class="hear" data-act="hear" data-word="' + w.es + '" aria-label="Hear ' + w.es + '"' + (voice ? '' : ' hidden') + '>' + SPEAKER + 'Hear it</button>';
+    return '<button type="button" class="hear" data-act="hear" data-word="' + w.es + '" aria-label="Hear ' + w.es + '">' + SPEAKER + 'Hear it</button>';
   }
   function wordBlock(w) {
     return '<div class="word-box"><p class="word" lang="es">' + w.es + '</p>' +
