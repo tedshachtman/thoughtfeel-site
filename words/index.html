@@ -117,6 +117,9 @@ window.tfTrack = function (path, title) {
   .lede { margin: 0; font-size: clamp(18px, 2vw, 19.5px); }
   .text { margin: 0; }
   .note { margin: 0; color: var(--ink-2); font-size: 16px; }
+  .first { margin: 2px 0 0; padding: 14px 16px; border: 1px solid var(--weld); border-left-width: 4px; border-radius: 12px; background: var(--surface-2); }
+  .first p { margin: 0; }
+  .first p + p { margin-top: 6px; color: var(--ink-2); font-size: 16px; }
   .how { margin: 0; padding-left: 1.4em; display: grid; gap: 4px; }
   .how-head { border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 4px; }
 
@@ -229,7 +232,14 @@ window.tfTrack = function (path, title) {
       <h1 tabindex="-1">How many will stick?</h1>
       <p class="lede">Learn ten Spanish words with thoughtfeel, a sense for concepts. Tomorrow, take a two-minute test and find out how many stuck.</p>
       <noscript><p class="note">This page needs JavaScript turned on.</p></noscript>
-      <div class="actions"><button class="btn primary" type="button" data-act="start">Start</button></div>
+      <div class="first">
+        <p><strong>Watch the vocabulary lesson first.</strong></p>
+        <p>This exercise uses the technique from the 10-minute lesson. Without it, you won’t know what to do with each word, and they won’t stick.</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="https://www.youtube.com/watch?v=Hfb_A-hkyfk" target="_blank" rel="noopener" data-track="words-intro-lesson">Watch the lesson (10 min)</a>
+        <button class="btn" type="button" data-act="start">I’ve watched it: start</button>
+      </div>
       <p class="note">Turn your sound on, and find a spot where you can speak out loud.</p>
       <p class="text how-head">People with thoughtfeel report that a word’s sounds have a feel of their own. For each word, you’ll:</p>
       <ol class="how">
