@@ -691,40 +691,6 @@ window.tfTrack = function (path, title) {
     </div>
   </section>
 
-  <!-- ================= Exercise ================= -->
-  <section class="try" id="try" aria-labelledby="try-title">
-    <p class="eyebrow">Use it · about 5 minutes</p>
-    <h2 id="try-title">Test if you can use it to think</h2>
-    <p class="lede">If you can imagine in concepts, see whether you can think with it. This exercise has you hold five everyday words in order by imagining them in concepts, then checks what you kept.</p>
-
-    <div class="try-grid" id="ex-grid">
-      <div id="ex-steps">
-        <ol class="steps">
-          <li>Bring the first word, <strong>car</strong>, to mind and imagine it in concepts: attend to what a car feels like as an idea, not to a picture of one.</li>
-          <li>Give it its position. Say aloud <span class="say">“Car is first,”</span> attending to car as you say <em>car</em> and giving it that place as you say <em>first</em>. If “first” feels vague, think of the first person in a queue and the first song on an album, and attend to what they share.</li>
-          <li>Do the same for the other four words, giving each one its position.</li>
-          <li>Go back through the list. Aim for each word’s position to come with it, so that the feel of a word also carries its place.</li>
-        </ol>
-        <p class="hint">Talking aloud helps direct what you are doing in thoughtfeel.</p>
-      </div>
-
-      <div class="panel" id="ex" aria-live="polite">
-        <!-- rendered by script; this is the no-script / initial state -->
-        <div class="panel-head">
-          <p class="panel-title">Five words</p>
-          <span class="timer" id="ex-timer">study 0:00</span>
-        </div>
-        <ol class="cobalt" id="ex-list">
-          <li><span class="pos">1</span><span class="word">Car</span></li>
-          <li><span class="pos">2</span><span class="word">Door</span></li>
-          <li><span class="pos">3</span><span class="word">Bear</span></li>
-          <li><span class="pos">4</span><span class="word">Shoe</span></li>
-          <li><span class="pos">5</span><span class="word">Tree</span></li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
   <section class="about" id="about" aria-labelledby="about-title">
     <div class="about-text">
       <p class="eyebrow">About the author</p>
@@ -747,7 +713,7 @@ window.tfTrack = function (path, title) {
   <footer class="join">
     <div>
       <h2>Compare notes on r/ThoughtFeel</h2>
-      <p>Tried an exercise? Post what you compared, what you noticed and your recall score. Concrete reports (which examples, which textures, what came back the next day) are what help most, including reports that it didn’t work for you.</p>
+      <p>Tried a lesson? Post what you noticed and what came back the next day. Concrete reports help most, including reports that it didn’t work for you.</p>
       <a class="btn primary" href="https://www.reddit.com/r/ThoughtFeel/" target="_blank" rel="noopener">Open r/ThoughtFeel</a>
     </div>
     <ul>
@@ -821,171 +787,6 @@ window.tfTrack = function (path, title) {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
 
-  /* ---------- Five-word exercise ---------- */
-  // New key for the everyday-word list, so a saved study time from the old list isn't tested against these words.
-  var WORDS = ['car', 'door', 'bear', 'shoe', 'tree'];
-  var KEY = 'thoughtfeel.fivewords';
-  var DELAY_HOURS = 8;
-  var ex = document.getElementById('ex');
-  var state = { step: 'intro', studyStart: 0, studySeconds: 0, mode: 'same-day', hoursSince: 0 };
-  var tick;
-
-  function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
-  function save(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
-  function clear() { try { localStorage.removeItem(KEY); } catch (e) {} }
-  function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
-  function cap(w) { return w.charAt(0).toUpperCase() + w.slice(1); }
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-
-  function listHTML(covered) {
-    // A covered list renders blank placeholders, so the words can't be selected or read aloud.
-    return '<ol class="cobalt' + (covered ? ' covered' : '') + '">' + WORDS.map(function (w, i) {
-      var word = covered ? '<span class="word" aria-label="hidden word"></span>' : '<span class="word">' + cap(w) + '</span>';
-      return '<li><span class="pos">' + (i + 1) + '</span>' + word + '</li>';
-    }).join('') + '</ol>';
-  }
-
-  // The instructions name the words, so they stay hidden whenever the viewer is recalling
-  // or has a next-day test waiting.
-  var stepsEl = document.getElementById('ex-steps');
-  var gridEl = document.getElementById('ex-grid');
-  function showSteps(show) {
-    if (stepsEl) stepsEl.hidden = !show;
-    if (gridEl) gridEl.classList.toggle('solo', !show);
-  }
-
-  function renderIntro() {
-    var saved = load(), banner = '';
-    showSteps(true);
-    if (saved && saved.studiedAt && !saved.delayedDone) {
-      var hrs = (Date.now() - saved.studiedAt) / 36e5;
-      if (hrs >= DELAY_HOURS) {
-        showSteps(false);
-        banner = '<div class="banner"><span>You studied this list <strong>' + Math.round(hrs) + ' hours ago</strong>. Test your next-day recall before looking.</span>' +
-          '<button class="btn primary" type="button" data-act="delayed">Test next-day recall</button></div>';
-      } else {
-        banner = '<div class="banner"><span>Studied ' + (hrs < 1 ? 'less than an hour' : Math.round(hrs) + ' hours') + ' ago. Come back tomorrow for a next-day test.</span></div>';
-      }
-    }
-    ex.innerHTML = banner +
-      '<div class="panel-head"><p class="panel-title">Five words</p><span class="timer">covered</span></div>' +
-      listHTML(true) +
-      '<p class="hint">Show the list, then work through the steps while it’s showing. A few minutes is enough; the timer records how long you studied.</p>' +
-      '<div class="row"><button class="btn primary" type="button" data-act="study">Show the list and start studying</button></div>';
-  }
-
-  function renderStudy() {
-    showSteps(true);
-    ex.innerHTML =
-      '<div class="panel-head"><p class="panel-title">Five words</p><span class="timer" id="ex-timer">study 0:00</span></div>' +
-      listHTML(false) +
-      '<p class="hint">Say each one aloud: <em>“Door is second.”</em> Attend to each word’s meaning as you give it its place.</p>' +
-      '<div class="row"><button class="btn primary" type="button" data-act="hide">Hide the list and test me</button></div>';
-    state.studyStart = Date.now();
-    clearInterval(tick);
-    tick = setInterval(function () {
-      var t = document.getElementById('ex-timer');
-      if (t) t.textContent = 'study ' + fmt(Math.floor((Date.now() - state.studyStart) / 1000));
-    }, 1000);
-  }
-
-  function renderRecall() {
-    var title = state.mode === 'delayed' ? 'Next-day recall' : 'Recall';
-    var items = WORDS.map(function (w, i) {
-      return '<li><span class="pos">' + (i + 1) + '</span><input type="text" id="recall-' + (i + 1) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Entry ' + (i + 1) + '"></li>';
-    }).join('');
-    showSteps(false);
-    ex.innerHTML =
-      '<div class="panel-head"><p class="panel-title">' + title + '</p><span class="timer">list hidden</span></div>' +
-      '<p class="hint">Without looking back, return to each entry through its feel and write it in its position. The instructions come back when you check your answers.</p>' +
-      '<ol class="recall-list">' + items + '</ol>' +
-      '<div class="q"><label for="q-light">Which position holds the animal?</label>' +
-      '<select id="q-light"><option value="">Choose…</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>' +
-      '<div class="row"><button class="btn primary" type="button" data-act="check">Check my answers</button></div>';
-    if (ex.getBoundingClientRect().top < 0) ex.scrollIntoView({ block: 'start' });
-    var first = document.getElementById('recall-1'); if (first) first.focus({ preventScroll: true });
-  }
-
-  function renderResult() {
-    var hits = 0, rows = WORDS.map(function (w, i) {
-      var el = document.getElementById('recall-' + (i + 1));
-      var got = (el ? el.value : '').trim().toLowerCase();
-      var ok = got === w; if (ok) hits++;
-      return { pos: i + 1, got: got, want: w, ok: ok };
-    });
-    var lightEl = document.getElementById('q-light');
-    var light = lightEl ? lightEl.value : '';
-    var lightOk = light === '3';
-
-    showSteps(true);
-    var saved = load() || {};
-    if (state.mode === 'delayed') { saved.delayedDone = true; saved.delayedScore = hits; save(saved); }
-
-    var when = state.mode === 'delayed' ? 'next day (' + state.hoursSince + 'h later)' : 'same session';
-    var line = 'thoughtfeel five-word list, ' + when + ': ' + hits + '/5 in order, animal question ' + (lightOk ? 'right' : 'wrong') +
-      (state.studySeconds ? ', studied ' + fmt(state.studySeconds) : '') + '.';
-
-    var list = rows.map(function (r) {
-      return '<li><span class="pos">' + r.pos + '</span><input type="text" readonly class="' + (r.ok ? 'is-ok' : 'is-miss') + '" value="' + esc(r.got || '—') + '" aria-label="Entry ' + r.pos + ', you wrote ' + esc(r.got || 'nothing') + '">' +
-        (r.ok ? '' : '<span class="answer miss">was ' + cap(r.want) + '</span>') + '</li>';
-    }).join('');
-
-    var next = state.mode === 'delayed'
-      ? '<p class="hint">Compare this with your same-day score. If you have used a memory palace or rote repetition before, try the same test with one of them on a fresh list and compare.</p>'
-      : '<p class="hint">The more telling test is tomorrow. Come back to this page after at least ' + DELAY_HOURS + ' hours, without reviewing the list, and it will offer a next-day test.</p>';
-
-    ex.innerHTML =
-      '<div class="panel-head"><p class="panel-title">' + (state.mode === 'delayed' ? 'Next-day result' : 'Your result') + '</p><span class="timer">' + (state.studySeconds ? 'studied ' + fmt(state.studySeconds) : '') + '</span></div>' +
-      '<p class="score">' + hits + '/5 <small>in order · animal question <span class="' + (lightOk ? 'ok">right' : 'miss">wrong, it was position 3 (Bear)') + '</span></small></p>' +
-      '<ol class="recall-list">' + list + '</ol>' +
-      '<p class="hint">Also try: say the five words in reverse order, and ask yourself what the third entry is. Check against the list.</p>' +
-      '<p class="hint">Want the next lesson? <a href="#updates">Get new lessons by email</a>.</p>' +
-      next +
-      '<p class="result-line" id="ex-line">' + esc(line) + '</p>' +
-      '<div class="row"><button class="btn" type="button" data-act="copy" id="ex-copy">Copy result</button>' +
-      '<a class="btn primary" href="https://www.reddit.com/r/ThoughtFeel/" target="_blank" rel="noopener">Share on r/ThoughtFeel</a></div>' +
-      '<div class="row"><button class="linkish" type="button" data-act="reset">Start over</button></div>';
-  }
-
-  ex.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-act]'); if (!b) return;
-    var act = b.getAttribute('data-act');
-    if (act === 'study') { state.mode = 'same-day'; renderStudy(); tfTrack('exercise-start'); }
-    else if (act === 'hide') {
-      clearInterval(tick);
-      state.studySeconds = Math.floor((Date.now() - state.studyStart) / 1000);
-      save({ studiedAt: Date.now(), studySeconds: state.studySeconds });
-      renderRecall();
-    }
-    else if (act === 'delayed') {
-      var s = load() || {};
-      state.mode = 'delayed';
-      state.studySeconds = s.studySeconds || 0;
-      state.hoursSince = Math.round((Date.now() - (s.studiedAt || Date.now())) / 36e5);
-      renderRecall();
-    }
-    else if (act === 'check') { renderResult(); tfTrack('exercise-result'); }
-    else if (act === 'copy') {
-      var text = document.getElementById('ex-line').textContent;
-      var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy result'; }, 1800); };
-      var fallback = function () {
-        var r = document.createRange(); r.selectNodeContents(document.getElementById('ex-line'));
-        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-        b.textContent = 'Selected, press copy';
-      };
-      try { navigator.clipboard.writeText(text).then(done, fallback); } catch (err) { fallback(); }
-    }
-    else if (act === 'reset') { clear(); state = { step: 'intro', studyStart: 0, studySeconds: 0, mode: 'same-day', hoursSince: 0 }; renderIntro(); }
-  });
-  ex.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter' || e.target.tagName !== 'INPUT' || e.target.readOnly) return;
-    var m = /^recall-(\d)$/.exec(e.target.id); if (!m) return;
-    e.preventDefault();
-    var n = document.getElementById(+m[1] < 5 ? 'recall-' + (+m[1] + 1) : 'q-light'); if (n) n.focus();
-  });
-
-  renderIntro();
-
   /* ---------- The test: can you imagine in concepts? ---------- */
   // The answers go along with an email signup (as test_answers), so each signup says how the person imagines.
   var imtSummary = '', imtOutcome = '';
@@ -1006,7 +807,8 @@ window.tfTrack = function (path, title) {
     var STRENGTH = [2, 1, 0];                 // answer position → 2 yes, 1 partly, 0 no
     var WORD = ['no', 'sort of', 'yes'];      // strength → word for the summary
     var FIRST_LESSON = 'https://www.youtube.com/watch?v=gTu22urSWAc';
-    var SHARE_URL = 'https://thoughtfeel.net/#test';
+    // Tagged so GoatCounter shows visits that came from a shared test.
+    var SHARE_URL = 'https://thoughtfeel.net/?ref=test-share#test';
     var answers = [];
 
     function focusFirst(sel) { var el = imt.querySelector(sel); if (el) el.focus({ preventScroll: true }); }
@@ -1042,7 +844,7 @@ window.tfTrack = function (path, title) {
         text = 'That means you have thoughtfeel, an extra sense for concepts. For people who have it, imagining in concepts is vivid, and distinct from both the picture and the words. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
       } else if (imtOutcome === 'faint') {
         head = 'You may be able to imagine in concepts, a little.';
-        text = 'It may get clearer once you know what to attend to. The first lesson describes what imagining in concepts is like for people who have it, and the five-word exercise further down lets you try using it.';
+        text = 'It may get clearer once you know what to attend to. The first lesson describes what imagining in concepts is like for people who have it, and the other lessons show how to use it.';
       } else {
         var modes = [];
         if (A.images >= 1) modes.push('images');
@@ -1065,18 +867,19 @@ window.tfTrack = function (path, title) {
         '<p class="imt-text">' + text + '</p>' +
         '<div class="imt-actions">' +
           '<a class="btn primary" href="' + FIRST_LESSON + '" target="_blank" rel="noopener">Watch the first lesson</a>' +
-          '<a class="btn" href="/quiz/">Take the full quiz</a>' +
-          '<a class="btn" href="#updates" data-act="join">Get new lessons</a>' +
-          '<button type="button" class="btn quiet" data-act="share">Share the test</button>' +
+          // People who can imagine in concepts get something concrete to try today and a reason to come back tomorrow.
+          (imtOutcome === 'none' ? '' : '<a class="btn" href="/words/?ref=test-result" data-act="to-words">Try it: learn 10 Spanish words</a>') +
+          '<button type="button" class="btn" data-act="share">Send it to a friend</button>' +
         '</div>' +
-        '<p class="imt-text"><button type="button" class="linkish" data-act="again">Take it again</button></p>';
+        '<p class="imt-text">Most people assume everyone imagines the way they do. Send the test to a friend and compare your answers.</p>' +
+        '<p class="imt-text"><a class="linkish" href="#videos">See all the lessons</a> · <a class="linkish" href="#updates" data-act="join">Get new lessons by email</a> · <button type="button" class="linkish" data-act="again">Take it again</button></p>';
       focusFirst('.imt-head');
       tfTrack('test-result-' + imtOutcome);
     }
 
     function share(button) {
       var text = 'Can you imagine in concepts, not just words or images? A 1-minute test:';
-      var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = 'Share the test'; }, 1800); };
+      var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = 'Send it to a friend'; }, 1800); };
       if (navigator.share) { navigator.share({ title: 'Can you imagine in concepts?', text: text, url: SHARE_URL }).catch(function () {}); return; }
       var fallback = function () {
         var ta = document.createElement('textarea'); ta.value = text + ' ' + SHARE_URL;
@@ -1103,6 +906,7 @@ window.tfTrack = function (path, title) {
       else if (act === 'back') { answers.pop(); renderStep(answers.length, true); }
       else if (act === 'again') { answers = []; imtSummary = ''; imtOutcome = ''; renderStep(0, true); }
       else if (act === 'share') { share(b); tfTrack('test-share'); }
+      else if (act === 'to-words') tfTrack('test-to-words');
       else if (act === 'join') {
         // Pre-answer the signup's "do you recognize it?" question from the result, unless it's already answered.
         var form = document.getElementById('signup');

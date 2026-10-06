@@ -310,6 +310,7 @@ window.tfTrack = function (path, title) {
   var KEY = 'thoughtfeel.words';
   var WAIT = 8 * 3600e3; // the test opens 8 hours after learning, but the next day is the real test
   var SHARE_URL = 'https://thoughtfeel.net/words/';
+  var SHARED_URL = SHARE_URL + '?ref=words-share'; // what friends get; tagged so GoatCounter shows visits from shares
   var LESSON_URL = 'https://www.youtube.com/watch?v=Hfb_A-hkyfk'; // the vocabulary lesson
   var STEPS = ['Hear it', 'Bind it', 'The reverse'];
   var box = document.getElementById('words');
@@ -782,7 +783,7 @@ window.tfTrack = function (path, title) {
     // Phones (and some desktops) can share the image itself.
     if (cardFile && navigator.canShare && navigator.canShare({ files: [cardFile] })) {
       tfTrack('words-share-open');
-      navigator.share({ files: [cardFile], text: shareText() + ' ' + SHARE_URL })
+      navigator.share({ files: [cardFile], text: shareText() + ' ' + SHARED_URL })
         .then(function () { tfTrack('words-share-image'); })
         .catch(function () {});
       return;
@@ -849,7 +850,7 @@ window.tfTrack = function (path, title) {
     else if (act === 'had') answerMean(true);
     else if (act === 'not') answerMean(false);
     else if (act === 'share') shareResult();
-    else if (act === 'copy') copyText(shareText() + ' ' + SHARE_URL, b, 'words-copy-link');
+    else if (act === 'copy') copyText(shareText() + ' ' + SHARED_URL, b, 'words-copy-link');
     else if (act === 'download') tfTrack('words-download-image');
     else if (act === 'restart') restart();
   });
