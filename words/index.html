@@ -584,6 +584,14 @@ window.tfTrack = function (path, title) {
     tfTrack('words-test-done');
     tfTrack('words-meaning-' + n.r);
     tfTrack('words-said-' + n.e);
+    // Took quiz v2 on this device before learning the words? Count both results together, to check the quiz against the test.
+    try {
+      var q2 = JSON.parse(localStorage.getItem('thoughtfeel.quiz2') || 'null');
+      if (q2 && q2.ok && q2.t < state.learnedAt) {
+        tfTrack('words-q2-' + q2.band + '-meaning-' + n.r);
+        tfTrack('words-q2sig-' + q2.sig + '-m' + n.r + '-s' + n.e);
+      }
+    } catch (e) {}
   }
 
   // Typed answers are compared by how they sound, so spelling slips still count:

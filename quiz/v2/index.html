@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ten quick questions about how you recall lyrics, put ideas into words and imagine in concepts. See how many signs of thoughtfeel you match.">
-<link rel="canonical" href="https://thoughtfeel.net/quiz/">
+<meta name="description" content="Ten short statements about how you think in words, pictures and concepts. See your mix, and how vivid your thoughtfeel is.">
+<link rel="canonical" href="https://thoughtfeel.net/quiz/v2/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
 <meta property="og:title" content="How vivid is your thoughtfeel? Take the quiz">
-<meta property="og:description" content="Ten quick questions about how you recall lyrics, put ideas into words and imagine in concepts. See how many signs of thoughtfeel you match.">
-<meta property="og:url" content="https://thoughtfeel.net/quiz/">
+<meta property="og:description" content="Ten short statements about how you think in words, pictures and concepts. See your mix, and how vivid your thoughtfeel is.">
+<meta property="og:url" content="https://thoughtfeel.net/quiz/v2/">
 <meta property="og:image" content="https://thoughtfeel.net/og-quiz.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="How vivid is yours? The 4-minute thoughtfeel quiz.">
+<meta property="og:image:alt" content="How vivid is yours? The thoughtfeel quiz.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="How vivid is your thoughtfeel? Take the quiz">
-<meta name="twitter:description" content="Ten quick questions about how you recall lyrics, put ideas into words and imagine in concepts. See how many signs of thoughtfeel you match.">
+<meta name="twitter:description" content="Ten short statements about how you think in words, pictures and concepts. See your mix, and how vivid your thoughtfeel is.">
 <meta name="twitter:image" content="https://thoughtfeel.net/og-quiz.png">
 <script>
 window.tfTrack = function (path, title) {
@@ -129,29 +129,46 @@ window.tfTrack = function (path, title) {
   .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
   .linkish { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
-  /* Questions */
+  /* Statements */
   .progress { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
   .progress span { height: 4px; border-radius: 2px; background: var(--rule); }
   .progress .done { background: var(--indigo); }
   .progress .now { background: var(--weld); }
-  .situation { margin: 0; font-size: clamp(20px, 2.4vw, 23px); line-height: 1.45; outline: none; text-wrap: pretty; }
+  .statement { margin: 0; font-size: clamp(20px, 2.4vw, 23px); line-height: 1.45; outline: none; text-wrap: pretty; }
+  .hint { margin: -4px 0 0; color: var(--ink-2); font-size: 16px; font-style: italic; }
   .ask { margin: 0; font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.4; }
-  .options { display: grid; gap: 10px; }
+  .options { display: grid; gap: 8px; }
   .option {
-    display: block; width: 100%; text-align: left; font: inherit; font-size: 17px; line-height: 1.45; color: var(--ink);
-    background: var(--surface-2); border: 1.5px solid transparent; border-radius: 12px; padding: 14px 16px; cursor: pointer;
+    display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+    font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.3; color: var(--ink);
+    background: var(--surface-2); border: 1.5px solid transparent; border-radius: 12px; padding: 13px 16px; cursor: pointer;
   }
   .option:hover { border-color: var(--indigo); }
   .option.picked { border-color: var(--indigo); background: var(--indigo-soft); }
+  /* How much: five rising ticks, filled up to the answer. */
+  .lvl { display: inline-flex; align-items: flex-end; gap: 3px; height: 18px; flex: none; }
+  .lvl i { width: 6px; border-radius: 2px; background: var(--rule); }
+  .lvl i:nth-child(1) { height: 6px; }
+  .lvl i:nth-child(2) { height: 9px; }
+  .lvl i:nth-child(3) { height: 12px; }
+  .lvl i:nth-child(4) { height: 15px; }
+  .lvl i:nth-child(5) { height: 18px; }
+  .lvl i.on { background: var(--indigo); }
+  .option.picked .lvl i.on { background: var(--weld); }
 
   /* Result */
-  .signs { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; max-width: 360px; }
-  .signs span { height: 10px; border-radius: 5px; background: var(--rule); }
-  .signs .on { background: var(--weld); }
-  .signs-label { margin: 0; font-family: var(--sans); font-weight: 500; font-size: 17px; }
+  .profile { display: grid; gap: 12px; max-width: 520px; }
+  .prow { display: grid; gap: 6px; }
+  .prow-top { margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-family: var(--sans); font-size: 16px; color: var(--ink-2); }
+  .prow-top b { color: var(--ink); font-weight: 700; }
+  .prow-top strong { color: var(--ink); font-weight: 500; }
+  .bar { height: 12px; border-radius: 6px; background: var(--rule); overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 6px; background: var(--indigo); }
+  .prow.main .bar i { background: var(--weld); }
   .text { margin: 0; }
-  .signup { display: grid; gap: 10px; background: var(--surface-2); border-radius: 12px; padding: 16px; margin-top: 6px; }
-  .signup-title { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 18px; }
+  .check-note { margin: 0; font-family: var(--sans); font-size: 16px; color: var(--miss); }
+  .box { display: grid; gap: 10px; background: var(--surface-2); border-radius: 12px; padding: 16px; margin-top: 6px; }
+  .box-title { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 18px; }
   .signup-row { display: flex; flex-wrap: wrap; gap: 10px; }
   .signup input[type="email"] {
     flex: 1 1 220px; min-width: 0; font: 500 17px/1.2 var(--sans); color: var(--ink); background: var(--surface);
@@ -170,7 +187,6 @@ window.tfTrack = function (path, title) {
   .r-title { margin: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--term); }
   .r-tf { margin: 0; font-size: 17px; }
   .r-you { margin: 0; font-family: var(--sans); font-size: 15px; color: var(--ink-2); }
-  .r-you.ok { color: var(--ok); }
 
   .foot { margin: 28px 0 0; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); text-align: center; }
 </style>
@@ -185,10 +201,10 @@ window.tfTrack = function (path, title) {
     <canvas id="swatch" aria-hidden="true"></canvas>
     <div class="card-body" id="quiz" aria-live="polite">
       <!-- rendered by script; this is the intro and the no-script state -->
-      <p class="eyebrow">The thoughtfeel quiz · about 4 minutes</p>
+      <p class="eyebrow">The thoughtfeel quiz · version 2 · about 2 minutes</p>
       <h1>How vivid is your thoughtfeel?</h1>
-      <p class="lede">Ten quick questions about everyday things: how lyrics come back to you, what an idea is like before you put it into words, how two numbers feel. Some of the answers are how people with thoughtfeel describe these things. Pick the one that sounds most like you.</p>
-      <p class="note">There are no right answers. At the end, you’ll see which answers people with thoughtfeel give.</p>
+      <p class="lede">Ten short statements about how your thinking works. For each one, choose how much it sounds like you.</p>
+      <p class="note">Most people think in a mix of words, pictures and concepts, so it’s fine to agree with more than one kind. At the end, you’ll see your mix.</p>
       <noscript><p class="note">The quiz needs JavaScript turned on.</p></noscript>
       <div class="actions"><button class="btn primary" type="button" data-act="start">Start the quiz</button></div>
     </div>
@@ -244,225 +260,195 @@ window.tfTrack = function (path, title) {
   schedule();
 
   /* ---------- The quiz ---------- */
-  // tf marks the answer people with thoughtfeel give; it's never shown until the result.
-  // The two core questions decide the headline: imagining in concepts, and recognizing a thought by its feel alone.
-  var QUESTIONS = [
-    { id: 'lyrics', title: 'Lyrics',
-      situation: 'Think of a song you know well. When the lyrics come back to you, what is it like?',
-      options: [
-        { t: 'I hear them, usually with the tune.' },
-        { t: 'I see the words, as if they were written down.' },
-        { t: 'I sense something, and the words are in what I’m sensing. I just know them.', tf: true },
-        { t: 'I sing from the start until the line comes.' }
-      ] },
-    { id: 'whole', title: 'An idea before words',
-      situation: 'You have an idea you want to explain to someone, and you haven’t started talking yet.',
-      options: [
-        { t: 'The words come as I think it. Until I say it to myself, there’s nothing there yet.' },
-        { t: 'I see a picture of it, then describe the picture.' },
-        { t: 'The whole idea is already there, before any words, and I can pay attention to it while I find them. Putting it into words feels like translating.', tf: true },
-        { t: 'I don’t really know what I think until I start talking.' }
-      ] },
-    { id: 'numbers', title: 'Numbers',
-      situation: 'Think of the number 72. Now think of 86.',
-      ask: 'Apart from how they look and sound, which is closest?',
-      options: [
-        { t: 'Each one has a specific feel of its own that I can pay attention to, and they feel as different as blue and red.', tf: true },
-        { t: 'They feel like more and less of the same thing, like a louder and a quieter sound.' },
-        { t: 'They’re different amounts, but neither one feels like anything.' },
-        { t: 'I mostly see the digits, or hear the words.' }
-      ] },
-    { id: 'liken', title: 'Two words, two meanings',
-      situation: 'Here are two versions of a line: “Shall I compare thee to a summer’s day?” and “Shall I liken thee to a summer’s day?”',
-      ask: 'Apart from how the words sound, which is closest?',
-      options: [
-        { t: 'The two meanings feel slightly different, and if I pay attention to both, I can notice what the difference is.', tf: true },
-        { t: 'They mean the same thing, so there’s nothing to notice.' },
-        { t: 'I can hear that a word changed, but not a difference in meaning.' },
-        { t: 'I’d have to look up both words to say.' }
-      ] },
-    { id: 'economy', title: 'All at once',
-      situation: 'Think of the economy, as a whole.',
-      options: [
-        { t: 'It’s all there at once: the people, the trading, the booms and slumps. I can pay attention to any part of it without going through a list.', tf: true },
-        { t: 'I think of a definition, or a few words about it.' },
-        { t: 'I picture something, like a chart or a busy street.' },
-        { t: 'I know what it means, but nothing more comes to mind.' }
-      ] },
-    { id: 'stream', title: 'What’s in your head',
-      situation: 'Think about how you know what you’re thinking, from one moment to the next.',
-      options: [
-        { t: 'I feel like I get a constant stream of information that I can pay attention to, and it tells me exactly what’s in my head.', tf: true },
-        { t: 'I hear my thoughts as words, like a voice in my head.' },
-        { t: 'I see pictures, and they show me what I’m thinking.' },
-        { t: 'I just know what I’m thinking. There’s nothing to pay attention to.' }
-      ] },
-    { id: 'detail', title: 'Holding an idea',
-      situation: 'Think of something you understand well, like how a bicycle works. While you hold that idea in mind…',
-      options: [
-        { t: 'I know what it is, but there’s nothing more to it than that.' },
-        { t: 'I talk it through in words.' },
-        { t: 'I picture the parts.' },
-        { t: 'I can pay attention to the idea itself and notice more detail in it, the way I can look closer at something I picture.', tf: true }
-      ] },
-    { id: 'unclear', title: 'An idea you couldn’t place',
-      situation: 'Sometimes a picture takes a moment to make sense, like a photo of a cat turned upside down. You study it, and then you realize what it is.',
-      ask: 'Has that ever happened with an idea instead of a picture?',
-      options: [
-        { t: 'Yes. I’ve had a thought whose feel I couldn’t place at first, and after paying attention to it, I realized what it was.', tf: true },
-        { t: 'No. If I’m thinking something, I already know what it is.' },
-        { t: 'Only with pictures, never with ideas.' }
-      ] },
-    { id: 'concepts', title: 'Imagining in concepts', core: true, fixed: true,
-      situation: 'Imagine walking into a surprise party your friends secretly planned for you. Now imagine it in concepts, with no picture and no words. Pay attention to the concepts you’re imagining, and try noticing detail in them.',
-      ask: 'Does noticing detail in the concepts feel like something, the way noticing the exact color of something you picture does?',
-      options: [
-        { t: 'Yes, clearly.', tf: true },
-        { t: 'Sort of.', partial: true },
-        { t: 'Not sure what you mean.' }
-      ] },
-    { id: 'bear', title: 'A bottled thought', core: true,
-      situation: 'Think of a bear, as a concept. Now suppose someone could bottle the sensation of thinking it, and days later put that sensation back into your head without telling you what it was.',
-      ask: 'Could you tell it was the thought of a bear?',
-      options: [
-        { t: 'Yes. I’d recognize it: that’s what thinking of a bear feels like.', tf: true },
-        { t: 'Only if a picture of a bear, or the word, came with it.' },
-        { t: 'No. On its own, there’d be nothing to recognize.' },
-        { t: 'I’m not sure what that would even mean.', last: true }
-      ] }
+  // Version 2 (2026-10-10), from Ted's rating-scale draft: each statement is rated 1–5 by how much it sounds like you.
+  // n is the statement's number in the draft, and its digit in the answer signature.
+  // kind: 'concepts' statements add up to the score (rev: counted in reverse); 'words' and 'pictures' are reported
+  // on their own, since thinking in them doesn't rule out thoughtfeel; 'check' is an attention check.
+  // The check sits mid-quiz rather than last.
+  var SCALE = ['Not at all like me', 'A little like me', 'Somewhat like me', 'Mostly like me', 'Exactly like me'];
+  var CHECK = 2; // the check asks for “A little like me”
+  var STATEMENTS = [
+    { n: 1, kind: 'concepts',
+      t: 'When I think about an idea, I can notice specific details in it without using words or pictures.',
+      hint: 'The way people notice the exact color of something they picture, but in the idea itself.' },
+    { n: 2, kind: 'words',
+      t: 'My thoughts usually come as words in my head.' },
+    { n: 3, kind: 'concepts',
+      t: 'When two ideas are similar, I can pay attention to each one and notice exactly how they differ, before I’ve put it into words.' },
+    { n: 4, kind: 'concepts',
+      t: 'When I recall a line I’ve learned, its meaning comes back first, and the exact words come out of it.',
+      hint: 'Like a line from a song, a poem or a script.' },
+    { n: 5, kind: 'concepts',
+      t: 'Numbers like 72 and 86 each have a feel of their own, and it isn’t a color, an emotion or just which one is bigger.' },
+    { n: 6, kind: 'pictures',
+      t: 'When I imagine something, I usually see a picture of it.' },
+    { n: 10, kind: 'check',
+      t: 'To show you’re reading carefully, choose “A little like me” for this one.' },
+    { n: 7, kind: 'concepts',
+      t: 'If I set aside the pictures and words, a thought still has detail I can pay attention to, beyond just knowing what it’s about.' },
+    { n: 8, kind: 'concepts',
+      t: 'I can hold a complicated idea as one whole, then look at its parts one by one.' },
+    { n: 9, kind: 'concepts', rev: true,
+      t: 'Descriptions of “thinking without words or pictures” sound unfamiliar to me.' }
   ];
-  var N = QUESTIONS.length;
+  var N = STATEMENTS.length;
+  // Where each band begins, on the 0–100 concepts score. A first guess, to be checked against the ten-word test.
+  var BANDS = [
+    { id: 'vivid', min: 75, word: 'vivid', label: 'Vivid' },
+    { id: 'clear', min: 50, word: 'clear', label: 'Clear' },
+    { id: 'faint', min: 25, word: 'faint', label: 'Faint' },
+    { id: 'none', min: 0, word: 'faint or absent', label: 'Little or none' }
+  ];
+  var HOW_OFTEN = ['Rarely', 'A little', 'Sometimes', 'Often', 'Mostly'];
+  var KIND_NAMES = { concepts: 'Concepts', words: 'Words', pictures: 'Pictures', check: 'Attention check' };
+  var KEY = 'thoughtfeel.quiz2'; // the last result on this device; the ten-word test reads it
   var FIRST_LESSON = 'https://www.youtube.com/watch?v=gTu22urSWAc';
-  var SHARE_URL = 'https://thoughtfeel.net/quiz/?ref=quiz-share'; // tagged so GoatCounter shows visits from shared results
+  var WORDS_URL = '/words/?ref=quiz2';
+  var SHARE_URL = 'https://thoughtfeel.net/quiz/v2/?ref=quiz2-share'; // tagged so GoatCounter shows visits from shared results
   var quiz = document.getElementById('quiz');
   var card = document.getElementById('quiz-card');
-  var answers = [], order = [], result = null;
+  var answers = [], cur = 0, result = null;
   var INTRO = quiz.innerHTML;
 
-  function shuffle(a) {
-    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
-    return a;
-  }
-  // Answer order is shuffled once per attempt, so going back shows the same order.
-  function newOrders() {
-    order = QUESTIONS.map(function (q) {
-      var idx = q.options.map(function (_, i) { return i; });
-      if (q.fixed) return idx;
-      var last = idx.filter(function (i) { return q.options[i].last; });
-      return shuffle(idx.filter(function (i) { return !q.options[i].last; })).concat(last);
-    });
-  }
   function bringIntoView() {
     var top = card.getBoundingClientRect().top;
     if (top < 0) card.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   }
   function focusIn(sel) { var el = quiz.querySelector(sel); if (el) el.focus({ preventScroll: true }); }
 
-  function renderQuestion(i) {
-    var q = QUESTIONS[i];
+  function renderStatement(i) {
+    cur = i;
+    var s = STATEMENTS[i], picked = answers[i];
     quiz.innerHTML =
-      '<div class="progress" aria-hidden="true">' + QUESTIONS.map(function (_, k) {
+      '<div class="progress" aria-hidden="true">' + STATEMENTS.map(function (_, k) {
         return '<span class="' + (k < i ? 'done' : k === i ? 'now' : '') + '"></span>';
       }).join('') + '</div>' +
-      '<p class="eyebrow">Question ' + (i + 1) + ' of ' + N + ' · ' + q.title + '</p>' +
-      '<p class="situation" tabindex="-1">' + q.situation + '</p>' +
-      '<p class="ask">' + (q.ask || 'Which sounds most like you?') + '</p>' +
-      '<div class="options" role="group" aria-label="Answers">' + order[i].map(function (k) {
-        return '<button type="button" class="option' + (answers[i] === k ? ' picked' : '') + '" data-k="' + k + '">' + q.options[k].t + '</button>';
+      '<p class="eyebrow">Statement ' + (i + 1) + ' of ' + N + '</p>' +
+      '<p class="statement" tabindex="-1">' + s.t + '</p>' +
+      (s.hint ? '<p class="hint">' + s.hint + '</p>' : '') +
+      '<p class="ask">How much is this like you?</p>' +
+      '<div class="options" role="group" aria-label="How much is this like you?">' + SCALE.map(function (label, k) {
+        var v = k + 1;
+        return '<button type="button" class="option' + (picked === v ? ' picked' : '') + '" data-v="' + v + '" aria-pressed="' + (picked === v) + '">' +
+          '<span class="lvl" aria-hidden="true">' + [1, 2, 3, 4, 5].map(function (m) { return '<i' + (m <= v ? ' class="on"' : '') + '></i>'; }).join('') + '</span>' +
+          label + '</button>';
       }).join('') + '</div>' +
-      '<p class="note"><button type="button" class="linkish" data-act="' + (i > 0 ? 'back' : 'intro') + '">Back</button></p>';
+      '<p class="note"><button type="button" class="linkish" data-act="' + (i > 0 ? 'back' : 'intro') + '">Back</button>' +
+      (picked ? ' · <button type="button" class="linkish" data-act="next">Next</button>' : '') + '</p>';
     bringIntoView();
-    focusIn('.situation');
+    focusIn('.statement');
   }
 
   function score() {
-    var signs = 0, core = 0, partial = false;
-    QUESTIONS.forEach(function (q, i) {
-      var o = q.options[answers[i]];
-      if (o && o.tf) { signs++; if (q.core) core++; }
-      if (o && o.partial && q.core) partial = true;
+    var sum = 0, count = 0, r = { words: 0, pictures: 0, ok: true, checked: 0 };
+    STATEMENTS.forEach(function (s, i) {
+      var v = answers[i];
+      if (s.kind === 'concepts') { sum += s.rev ? 6 - v : v; count++; }
+      else if (s.kind === 'check') { r.checked = v; r.ok = v === CHECK; }
+      else r[s.kind] = v;
     });
-    var outcome = core === 2 ? 'strong' : (core === 1 || partial || signs >= 4) ? 'maybe' : 'none';
-    return { signs: signs, core: core, outcome: outcome };
+    r.pct = Math.round((sum - count) / (4 * count) * 100); // 7–35 → 0–100
+    r.band = BANDS.filter(function (b) { return r.pct >= b.min; })[0];
+    r.sig = STATEMENTS.map(function (s, i) { return { n: s.n, v: answers[i] }; })
+      .sort(function (a, b) { return a.n - b.n; })
+      .map(function (x) { return x.v; }).join('');
+    return r;
+  }
+
+  var HEADS = {
+    vivid: ['Your thoughtfeel sounds vivid.',
+      'You describe noticing detail in ideas themselves, apart from words and pictures. That’s the heart of thoughtfeel. The lessons show how to use it to remember exact wording, learn vocabulary, and notice when two situations are the same idea.'],
+    clear: ['Your answers sound like thoughtfeel.',
+      'You describe noticing detail in ideas themselves, apart from words and pictures, at least some of the time. Like the mind’s eye, it may get clearer once you know what to attend to. The lessons show how to use it.'],
+    faint: ['You may have a faint version.',
+      'Like a dim mind’s eye, thoughtfeel can be faint. Some of your answers describe it, and it may get clearer once you know what to attend to. The first lesson describes what people with thoughtfeel notice.'],
+    none: ['Your answers don’t point to thoughtfeel.',
+      'For you, it may be faint or not there at all. Like the mind’s eye, it seems to range from absent to vivid. If you’re curious what the other way is like, the first lesson describes it.']
+  };
+
+  function mixText(r) {
+    var w = r.words >= 4, p = r.pictures >= 4, also = r.band.id === 'none' ? '' : ' also';
+    if (w && p) return 'You' + also + ' think a lot in words and pictures' + (also ? ', and thoughtfeel works alongside them.' : '.');
+    if (w) return 'You' + also + ' think a lot in words, with an inner voice.';
+    if (p) return 'You' + also + ' think a lot in pictures, with a mind’s eye.';
+    return 'Words and pictures play a smaller part in how you think.';
+  }
+
+  function profileHtml(r) {
+    function row(cls, name, sub, value, frac) {
+      return '<div class="prow' + cls + '"><p class="prow-top"><span><b>' + name + '</b> · ' + sub + '</span><strong>' + value + '</strong></p>' +
+        '<div class="bar"><i style="width:' + Math.max(3, Math.round(frac * 100)) + '%"></i></div></div>';
+    }
+    return '<div class="profile">' +
+      row(' main', 'Concepts', 'thoughtfeel', r.band.label, r.pct / 100) +
+      row('', 'Words', 'inner voice', HOW_OFTEN[r.words - 1], (r.words - 1) / 4) +
+      row('', 'Pictures', 'mind’s eye', HOW_OFTEN[r.pictures - 1], (r.pictures - 1) / 4) +
+      '</div>';
   }
 
   function renderResult() {
     result = score();
-    var head, text, n = result.signs;
-    if (result.outcome === 'strong') {
-      head = 'Your answers sound like thoughtfeel.';
-      text = 'That includes the two that matter most: imagining in concepts, and recognizing a thought by its feel alone. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
-    } else if (result.outcome === 'maybe') {
-      head = 'You may have a quieter version.';
-      text = 'Like a dim mind’s eye, thoughtfeel can be faint. It may get clearer once you know what to attend to. The first lesson describes what it’s like for people who have it.';
-    } else {
-      head = 'Your answers don’t point to thoughtfeel.';
-      text = 'For you, it may be faint or not there at all. Like the mind’s eye, it seems to range from absent to vivid. Most of your answers describe pictures, words and knowing, which is how a lot of people think. If you’re curious what the other way is like, the first lesson describes it.';
-    }
+    var head = HEADS[result.band.id];
     quiz.innerHTML =
       '<p class="eyebrow">Your result</p>' +
-      '<h1 tabindex="-1">' + head + '</h1>' +
-      '<div class="signs" aria-hidden="true">' + QUESTIONS.map(function (_, k) { return '<span class="' + (k < n ? 'on' : '') + '"></span>'; }).join('') + '</div>' +
-      '<p class="signs-label">You matched ' + n + ' of ' + N + ' signs.</p>' +
-      '<p class="text">' + text + '</p>' +
+      '<h1 tabindex="-1">' + head[0] + '</h1>' +
+      profileHtml(result) +
+      '<p class="note">' + mixText(result) + '</p>' +
+      '<p class="text">' + head[1] + '</p>' +
+      (result.ok ? '' : '<p class="check-note">One statement asked you to choose “A little like me,” and you chose “' + SCALE[result.checked - 1] + ',” so this result may be off. ' +
+        '<button type="button" class="linkish" data-act="again">Take it again</button></p>') +
       '<div class="actions">' +
         '<button type="button" class="btn primary" data-act="share">Share your result</button>' +
-        '<a class="btn" href="' + FIRST_LESSON + '" target="_blank" rel="noopener" data-track="quiz-to-lesson">Watch the first lesson</a>' +
+        '<a class="btn" href="' + FIRST_LESSON + '" target="_blank" rel="noopener" data-track="quiz2-to-lesson">Watch the first lesson</a>' +
       '</div>' +
-      '<p class="note">Send it to a friend and compare your answers.</p>' +
       '<div class="share-panel" hidden>' +
-        '<img class="card-preview" alt="Result card: ' + n + ' of ' + N + ' signs of thoughtfeel">' +
+        '<img class="card-preview" alt="Result card: my thoughtfeel is ' + result.band.word + '">' +
         '<div class="actions">' +
           '<a class="btn primary" download="my-thoughtfeel-result.png" data-act="download">Download the image</a>' +
           '<button type="button" class="btn" data-act="copy">Copy the link</button>' +
         '</div>' +
       '</div>' +
-      '<form class="signup" id="quiz-signup" novalidate>' +
-        '<p class="signup-title">Get new lessons by email</p>' +
+      '<div class="box">' +
+        '<p class="box-title">Put your result to a real test</p>' +
+        '<p class="note">Learn ten Spanish words in about five minutes, then see tomorrow how many stuck. If the quiz works, higher scores should go with more words remembered. Your answers stay on this device; the site only counts the two results together, anonymously.</p>' +
+        '<div class="actions"><a class="btn primary" href="' + WORDS_URL + '" data-track="quiz2-to-words">Learn the ten words</a></div>' +
+      '</div>' +
+      '<form class="box signup" id="quiz-signup" novalidate>' +
+        '<p class="box-title">Get new lessons by email</p>' +
         '<div class="signup-row"><input type="email" id="quiz-email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">' +
         '<button class="btn primary" type="submit" id="quiz-submit">Send me new lessons</button></div>' +
         '<input type="text" name="_honey" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true">' +
         '<p class="status" id="quiz-status" role="status" aria-live="polite"></p>' +
       '</form>' +
-      '<h2 class="reveal-title">What people with thoughtfeel say</h2>' +
-      '<ol class="reveal">' + QUESTIONS.map(function (q, i) {
-        var tf = q.options.filter(function (o) { return o.tf; })[0];
-        var mine = q.options[answers[i]];
-        var you = mine && mine.tf
-          ? '<p class="r-you ok">✓ You said this too.</p>'
-          : '<p class="r-you">You said: “' + (mine ? mine.t : '') + '”</p>';
-        return '<li><p class="r-title">' + q.title + '</p><p class="r-tf">“' + tf.t + '”</p>' + you + '</li>';
+      '<h2 class="reveal-title">Your answers</h2>' +
+      '<p class="note">Seven statements make up the concepts score, and the one about unfamiliar descriptions counts in reverse. Words and pictures are scored on their own: thinking in them doesn’t rule out thoughtfeel.</p>' +
+      '<ol class="reveal">' + STATEMENTS.map(function (s, i) {
+        return '<li><p class="r-title">' + KIND_NAMES[s.kind] + (s.rev ? ', in reverse' : '') + '</p>' +
+          '<p class="r-tf">' + s.t + '</p><p class="r-you">You said: ' + SCALE[answers[i] - 1] + '</p></li>';
       }).join('') + '</ol>' +
+      '<p class="note">This is a new version of the quiz. Where faint, clear and vivid begin is a first guess, and the ten-word test is how it gets checked.</p>' +
       '<p class="note"><button type="button" class="linkish" data-act="again">Take it again</button> · <a href="/">Back to thoughtfeel.net</a></p>';
     bringIntoView();
     focusIn('h1');
-    tfTrack('quiz-result-' + result.outcome);
-    tfTrack('quiz-signs-' + n);
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 1, t: Date.now(), band: result.band.id, pct: result.pct, sig: result.sig, ok: result.ok })); } catch (e) {}
+    // A failed attention check is left out of the counts.
+    if (result.ok) { tfTrack('quiz2-result-' + result.band.id); tfTrack('quiz2-sig-' + result.sig); }
+    else tfTrack('quiz2-attention-fail');
     cardReady = prepareCard(result);
   }
 
   function summary() {
-    return QUESTIONS.map(function (q, i) {
-      var o = q.options[answers[i]];
-      return q.id + ':' + (o && o.tf ? 'yes' : o && o.partial ? 'partly' : 'no');
-    }).join(' ') + ' | ' + result.signs + '/' + N + ' signs, core ' + result.core + '/2 (' + result.outcome + ')';
+    return 'v2 · concepts ' + result.pct + '/100 (' + result.band.id + '), words ' + result.words + '/5, pictures ' + result.pictures + '/5' +
+      ' · answers to statements 1–10: ' + result.sig + (result.ok ? '' : ' · missed the attention check');
   }
 
   /* ---------- The result card (1080 × 1350, the brand's dark weave) ---------- */
   var cardFile = null, cardUrl = '', cardReady = null;
-  var CARD_FONTS = ['700 96px "Schibsted Grotesk"', '500 46px "Schibsted Grotesk"', '400 60px Literata', 'italic 400 50px Literata', '400 38px "IBM Plex Mono"'];
+  var CARD_FONTS = ['700 96px "Schibsted Grotesk"', '500 46px "Schibsted Grotesk"', '400 60px Literata', '400 36px "IBM Plex Mono"'];
 
-  function wrapText(g, text, x, y, maxW, lineH) {
-    var words = text.split(' '), line = '';
-    words.forEach(function (w) {
-      var test = line ? line + ' ' + w : w;
-      if (g.measureText(test).width > maxW && line) { g.fillText(line, x, y); y += lineH; line = w; } else line = test;
-    });
-    if (line) g.fillText(line, x, y);
-  }
   function pill(g, x, y, w, h) { g.beginPath(); if (g.roundRect) g.roundRect(x, y, w, h, h / 2); else g.rect(x, y, w, h); g.fill(); }
 
-  function drawCard(res) {
+  function drawCard(r) {
     var W = 1080, H = 1350, c = document.createElement('canvas');
     c.width = W; c.height = H;
     var g = c.getContext('2d');
@@ -492,23 +478,27 @@ window.tfTrack = function (path, title) {
     g.fillStyle = WELD; g.fillText('feel', x0 + tw, 176);
 
     g.font = '400 60px Literata, Georgia, serif'; g.fillStyle = PAPER;
-    g.fillText('I matched', x0, 420);
-    var big = res.signs + ' of ' + N, size = 250;
-    do { g.font = '700 ' + size + 'px "Schibsted Grotesk", Arial, sans-serif'; size -= 6; } while (g.measureText(big).width > maxW && size > 120);
-    g.fillStyle = WELD; g.fillText(big, x0 - 6, 650);
-    g.font = '400 60px Literata, Georgia, serif'; g.fillStyle = PAPER;
-    g.fillText('signs of thoughtfeel', x0, 752);
+    g.fillText('My thoughtfeel is', x0, 392);
+    var big = r.band.word, size = 230;
+    do { g.font = '700 ' + size + 'px "Schibsted Grotesk", Arial, sans-serif'; size -= 6; } while (g.measureText(big).width > maxW && size > 90);
+    g.fillStyle = WELD; g.fillText(big, x0 - 6, 600);
 
-    var pg = 14, pw = (maxW - pg * (N - 1)) / N;
-    for (var k = 0; k < N; k++) { g.fillStyle = k < res.signs ? WELD : DIM; pill(g, x0 + k * (pw + pg), 812, pw, 22); }
-
-    var verdict = { strong: 'My answers sound like thoughtfeel.', maybe: 'I may have a quieter version.', none: 'Faint or absent for me. What about you?' }[res.outcome];
-    g.font = 'italic 400 50px Literata, Georgia, serif'; g.fillStyle = PAPER;
-    wrapText(g, verdict, x0, 956, maxW, 66);
+    // The mix, as on the result page.
+    [['Concepts', r.band.label, r.pct / 100, WELD],
+     ['Words', HOW_OFTEN[r.words - 1], (r.words - 1) / 4, PAPER],
+     ['Pictures', HOW_OFTEN[r.pictures - 1], (r.pictures - 1) / 4, PAPER]].forEach(function (m, k) {
+      var y = 712 + k * 112;
+      g.font = '400 36px "IBM Plex Mono", Menlo, monospace'; g.fillStyle = MUTED;
+      g.textAlign = 'left'; g.fillText(m[0].toUpperCase(), x0, y);
+      g.textAlign = 'right'; g.fillText(m[1], x0 + maxW, y);
+      g.textAlign = 'left';
+      g.fillStyle = DIM; pill(g, x0, y + 22, maxW, 26);
+      g.fillStyle = m[3]; pill(g, x0, y + 22, Math.max(26, maxW * m[2]), 26);
+    });
 
     g.font = '500 46px "Schibsted Grotesk", Arial, sans-serif'; g.fillStyle = WELD;
     g.fillText('How vivid is yours?', x0, 1110);
-    g.font = '400 38px "IBM Plex Mono", Menlo, monospace'; g.fillStyle = MUTED;
+    g.font = '400 36px "IBM Plex Mono", Menlo, monospace'; g.fillStyle = MUTED;
     g.fillText('thoughtfeel.net/quiz', x0, 1166);
     return c;
   }
@@ -532,14 +522,14 @@ window.tfTrack = function (path, title) {
     }).catch(function () {});
   }
 
-  function shareText() { return 'I matched ' + result.signs + ' of ' + N + ' signs of thoughtfeel. How vivid is yours?'; }
+  function shareText() { return 'My thoughtfeel came out ' + result.band.word + ' on the quiz. How vivid is yours?'; }
 
   function shareResult() {
     // Phones (and some desktops) can share the image itself.
     if (cardFile && navigator.canShare && navigator.canShare({ files: [cardFile] })) {
-      tfTrack('quiz-share-open');
+      tfTrack('quiz2-share-open');
       navigator.share({ files: [cardFile], text: shareText() + ' ' + SHARE_URL })
-        .then(function () { tfTrack('quiz-share-image'); })
+        .then(function () { tfTrack('quiz2-share-image'); })
         .catch(function () {});
       return;
     }
@@ -552,13 +542,13 @@ window.tfTrack = function (path, title) {
         panel.querySelector('[data-act="download"]').href = cardUrl;
       }
       panel.hidden = false;
-      tfTrack('quiz-share-panel');
+      tfTrack('quiz2-share-panel');
     });
   }
 
   function copyLink(button) {
     var value = shareText() + ' ' + SHARE_URL;
-    var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = 'Copy the link'; }, 1800); tfTrack('quiz-copy-link'); };
+    var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = 'Copy the link'; }, 1800); tfTrack('quiz2-copy-link'); };
     var fallback = function () {
       var ta = document.createElement('textarea'); ta.value = value;
       ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
@@ -570,32 +560,29 @@ window.tfTrack = function (path, title) {
     else fallback();
   }
 
+  function restart(event) { answers = []; renderStatement(0); tfTrack(event); }
+  function next() { if (cur + 1 < N) renderStatement(cur + 1); else renderResult(); }
+
   quiz.addEventListener('click', function (e) {
     var b = e.target.closest('button, a[data-act], a[data-track]');
     if (!b || !quiz.contains(b)) return;
     if (b.hasAttribute('data-track')) { tfTrack(b.getAttribute('data-track')); return; }
     if (b.classList.contains('option')) {
-      var i = currentIndex();
-      if (i === 4 && answers[i] === undefined) tfTrack('quiz-halfway');
-      answers[i] = Number(b.getAttribute('data-k'));
-      answers.length = i + 1; // answering again after going back drops the later answers
-      if (i + 1 < N) renderQuestion(i + 1); else renderResult();
+      if (cur === 4 && answers[cur] === undefined) tfTrack('quiz2-halfway');
+      answers[cur] = Number(b.getAttribute('data-v'));
+      next();
       return;
     }
     var act = b.getAttribute('data-act');
-    if (act === 'start') { answers = []; newOrders(); renderQuestion(0); tfTrack('quiz-start'); }
-    else if (act === 'back') { renderQuestion(currentIndex() - 1); }
+    if (act === 'start') restart('quiz2-start');
+    else if (act === 'again') restart('quiz2-again');
+    else if (act === 'back') renderStatement(cur - 1);
+    else if (act === 'next') next();
     else if (act === 'intro') { answers = []; quiz.innerHTML = INTRO; bringIntoView(); }
-    else if (act === 'again') { answers = []; newOrders(); renderQuestion(0); tfTrack('quiz-again'); }
     else if (act === 'share') shareResult();
     else if (act === 'copy') copyLink(b);
-    else if (act === 'download') tfTrack('quiz-download-image');
+    else if (act === 'download') tfTrack('quiz2-download-image');
   });
-  // The question on screen is the one whose number the eyebrow shows.
-  function currentIndex() {
-    var m = /Question (\d+)/.exec((quiz.querySelector('.eyebrow') || {}).textContent || '');
-    return m ? Number(m[1]) - 1 : 0;
-  }
 
   // Email signup from the result. FormSubmit forwards it to Ted, with the answers.
   quiz.addEventListener('submit', function (e) {
@@ -614,9 +601,9 @@ window.tfTrack = function (path, title) {
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
         email: email,
-        recognizes_thoughtfeel: { strong: 'yes', maybe: 'not sure', none: 'no' }[result.outcome],
+        thoughtfeel: result.band.word + ' (' + result.pct + '/100)',
         quiz_answers: summary(),
-        _subject: 'New thoughtfeel signup (quiz)',
+        _subject: 'New thoughtfeel signup (quiz v2)',
         _template: 'table'
       })
     })
@@ -625,7 +612,7 @@ window.tfTrack = function (path, title) {
         if (String(data && data.success) !== 'true') throw new Error('not accepted');
         setStatus('Thanks! You’re on the list.', 'ok');
         emailEl.value = '';
-        tfTrack('signup-quiz');
+        tfTrack('signup-quiz2');
       })
       .catch(function () { setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss'); })
       .then(function () { button.disabled = false; });
