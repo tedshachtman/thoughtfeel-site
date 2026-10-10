@@ -532,8 +532,8 @@ window.tfTrack = function (path, title) {
   <header class="hero">
     <div class="hero-text">
       <h1 class="wordmark">thought<span>feel</span></h1>
-      <p class="tagline">An extra sense for concepts</p>
-      <p class="hero-copy">Some people have it and some don’t. It’s like the mind’s eye: some people can picture things vividly, and some, with aphantasia, see nothing at all. If you have thoughtfeel, you can imagine in concepts, not just words or images.</p>
+      <p class="tagline">A sense for concepts</p>
+      <p class="hero-copy">It seems to work like the mind’s eye. Most people likely have some of it, and some have none, the way people with aphantasia see nothing at all. Among those who have it, it ranges from faint to vivid, like the difference between picturing an apple in full color and seeing a dim or cartoon-like one. With thoughtfeel, you can imagine in concepts, not just words or images.</p>
       <p class="hero-guide">This is a practical guide to harnessing that ability to learn faster and remember more.</p>
       <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · <a href="#videos">WATCH THE VIDEOS</a></p>
     </div>
@@ -542,7 +542,7 @@ window.tfTrack = function (path, title) {
       <canvas id="swatch" aria-hidden="true"></canvas>
       <div class="imt-card-body">
         <p class="eyebrow">The 1-minute test</p>
-        <h2 id="test-title">Do you have it?</h2>
+        <h2 id="test-title">How clearly can you imagine in concepts?</h2>
         <p class="imt-intro">Imagine one thing in a few ways.<span class="imt-intro-more"> There are no wrong answers.</span></p>
         <div class="panel imt-panel" id="imt" aria-live="polite">
           <!-- rendered by script; this is the no-script version -->
@@ -566,7 +566,7 @@ window.tfTrack = function (path, title) {
     <p class="what-body">You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
     <p class="what-body">Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
     <p class="what-body">That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
-    <p class="what-body">Like vision and hearing, it differs from person to person. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
+    <p class="what-body">Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
 
     <div class="what-text what-solo">
       <h3>Is it really all at once?</h3>
@@ -856,25 +856,25 @@ window.tfTrack = function (path, title) {
     function renderResult() {
       var A = {};
       STEPS.forEach(function (s, k) { if (!s.info) A[s.key] = answers[k]; });
-      // Whether someone has thoughtfeel is just whether they can imagine in concepts.
+      // How clearly someone can imagine in concepts decides the result: clearly, a little, or not at all.
       imtOutcome = A.concepts === 2 ? 'strong' : A.concepts === 1 ? 'faint' : 'none';
       imtSummary = STEPS.filter(function (s) { return !s.info; }).map(function (s) { return s.key + ': ' + WORD[A[s.key]]; }).join(', ') + ' (' + imtOutcome + ')';
 
       var head, text;
       if (imtOutcome === 'strong') {
         head = 'You can imagine in concepts.';
-        text = 'That means you have thoughtfeel, an extra sense for concepts. For people who have it, imagining in concepts is vivid, and distinct from both the picture and the words. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
+        text = 'That’s thoughtfeel, a sense for concepts, and yours sounds clear: imagining in concepts is vivid for you, and distinct from both the picture and the words. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
       } else if (imtOutcome === 'faint') {
         head = 'You may be able to imagine in concepts, a little.';
-        text = 'It may get clearer once you know what to attend to. The first lesson describes what imagining in concepts is like for people who have it, and the other lessons show how to use it.';
+        text = 'Yours may be faint, the way some people’s mind’s eye is dim. It may get clearer once you know what to attend to. The first lesson describes what imagining in concepts is like, and the other lessons show how to use it.';
       } else {
         var modes = [];
         if (A.images >= 1) modes.push('images');
         if (A.sounds >= 1) modes.push('sounds');
         head = modes.length ? 'You imagine in ' + modes.join(' and ') + '.' : 'You mostly know what you’re imagining.';
         text = modes.length
-          ? 'Those are the usual ways to imagine. Some people can also imagine in concepts; the rest of this page is about how they can use it. If you’re curious what it’s like, the first lesson describes it.'
-          : 'Some people imagine in pictures, sounds or concepts. If you’re curious what imagining in concepts is like, the first lesson describes it.';
+          ? 'Those are the usual ways to imagine. Many people can also imagine in concepts, some faintly and some vividly; for you it may be very faint, or not there at all. The rest of this page is about how people use it. If you’re curious what it’s like, the first lesson describes it.'
+          : 'People imagine in pictures, sounds and concepts, and each one is faint for some people and vivid for others. If you’re curious what imagining in concepts is like, the first lesson describes it.';
       }
 
       var rows = [['In images', A.images, ''], ['In sounds', A.sounds, ''], ['In concepts', A.concepts, 'gold']];

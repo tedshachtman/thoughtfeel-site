@@ -8,15 +8,15 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
-<meta property="og:title" content="Do you have thoughtfeel? Take the quiz">
+<meta property="og:title" content="How vivid is your thoughtfeel? Take the quiz">
 <meta property="og:description" content="Ten quick questions about how you recall lyrics, put ideas into words and imagine in concepts. See how many signs of thoughtfeel you match.">
 <meta property="og:url" content="https://thoughtfeel.net/quiz/">
 <meta property="og:image" content="https://thoughtfeel.net/og-quiz.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Do you have it? The 4-minute thoughtfeel quiz.">
+<meta property="og:image:alt" content="How vivid is yours? The 4-minute thoughtfeel quiz.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Do you have thoughtfeel? Take the quiz">
+<meta name="twitter:title" content="How vivid is your thoughtfeel? Take the quiz">
 <meta name="twitter:description" content="Ten quick questions about how you recall lyrics, put ideas into words and imagine in concepts. See how many signs of thoughtfeel you match.">
 <meta name="twitter:image" content="https://thoughtfeel.net/og-quiz.png">
 <script>
@@ -186,7 +186,7 @@ window.tfTrack = function (path, title) {
     <div class="card-body" id="quiz" aria-live="polite">
       <!-- rendered by script; this is the intro and the no-script state -->
       <p class="eyebrow">The thoughtfeel quiz · about 4 minutes</p>
-      <h1>Do you have it?</h1>
+      <h1>How vivid is your thoughtfeel?</h1>
       <p class="lede">Ten quick questions about everyday things: how lyrics come back to you, what an idea is like before you put it into words, how two numbers feel. Some of the answers are how people with thoughtfeel describe these things. Pick the one that sounds most like you.</p>
       <p class="note">There are no right answers. At the end, you’ll see which answers people with thoughtfeel give.</p>
       <noscript><p class="note">The quiz needs JavaScript turned on.</p></noscript>
@@ -394,10 +394,10 @@ window.tfTrack = function (path, title) {
       text = 'That includes the two that matter most: imagining in concepts, and recognizing a thought by its feel alone. The lessons show how to use it to remember exact wording, notice when two situations are the same idea, and remember things at the right moment.';
     } else if (result.outcome === 'maybe') {
       head = 'You may have a quieter version.';
-      text = 'It may get clearer once you know what to attend to. The first lesson describes what it’s like for people who have it.';
+      text = 'Like a dim mind’s eye, thoughtfeel can be faint. It may get clearer once you know what to attend to. The first lesson describes what it’s like for people who have it.';
     } else {
-      head = 'You probably don’t have thoughtfeel, or it’s very quiet.';
-      text = 'Most of your answers describe pictures, words and knowing, which is how a lot of people think. If you’re curious what the other way is like, the first lesson describes it.';
+      head = 'Your answers don’t point to thoughtfeel.';
+      text = 'For you, it may be faint or not there at all. Like the mind’s eye, it seems to range from absent to vivid. Most of your answers describe pictures, words and knowing, which is how a lot of people think. If you’re curious what the other way is like, the first lesson describes it.';
     }
     quiz.innerHTML =
       '<p class="eyebrow">Your result</p>' +
@@ -502,12 +502,12 @@ window.tfTrack = function (path, title) {
     var pg = 14, pw = (maxW - pg * (N - 1)) / N;
     for (var k = 0; k < N; k++) { g.fillStyle = k < res.signs ? WELD : DIM; pill(g, x0 + k * (pw + pg), 812, pw, 22); }
 
-    var verdict = { strong: 'My answers sound like thoughtfeel.', maybe: 'I may have a quieter version.', none: 'Probably not me. What about you?' }[res.outcome];
+    var verdict = { strong: 'My answers sound like thoughtfeel.', maybe: 'I may have a quieter version.', none: 'Faint or absent for me. What about you?' }[res.outcome];
     g.font = 'italic 400 50px Literata, Georgia, serif'; g.fillStyle = PAPER;
     wrapText(g, verdict, x0, 956, maxW, 66);
 
     g.font = '500 46px "Schibsted Grotesk", Arial, sans-serif'; g.fillStyle = WELD;
-    g.fillText('Do you have it?', x0, 1110);
+    g.fillText('How vivid is yours?', x0, 1110);
     g.font = '400 38px "IBM Plex Mono", Menlo, monospace'; g.fillStyle = MUTED;
     g.fillText('thoughtfeel.net/quiz', x0, 1166);
     return c;
@@ -532,7 +532,7 @@ window.tfTrack = function (path, title) {
     }).catch(function () {});
   }
 
-  function shareText() { return 'I matched ' + result.signs + ' of ' + N + ' signs of thoughtfeel. Do you have it?'; }
+  function shareText() { return 'I matched ' + result.signs + ' of ' + N + ' signs of thoughtfeel. How vivid is yours?'; }
 
   function shareResult() {
     // Phones (and some desktops) can share the image itself.
