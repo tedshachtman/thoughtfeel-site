@@ -488,7 +488,7 @@ window.tfTrack = function (path, title) {
   .note { color: var(--ink-2); font-size: 16px; }
 
   /* ---------- About ---------- */
-  .byline a { color: inherit; }
+  .byline a { color: inherit; white-space: nowrap; }
   .about {
     margin-top: 80px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; align-items: start;
   }
@@ -535,7 +535,7 @@ window.tfTrack = function (path, title) {
       <p class="tagline">A sense for concepts</p>
       <p class="hero-copy">It seems to work like the mind’s eye. Most people likely have some of it, and some have none, the way people with aphantasia see nothing at all. Among those who have it, it ranges from faint to vivid, like the difference between picturing an apple in full color and seeing a dim or cartoon-like one. With thoughtfeel, you can imagine in concepts, not just words or images.</p>
       <p class="hero-guide">This is a practical guide to harnessing that ability to learn faster and remember more.</p>
-      <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · <a href="#videos">WATCH THE VIDEOS</a></p>
+      <p class="byline">BY <a href="#about">TED SHACHTMAN AND DR. DAVID LO</a> · <a href="#videos">WATCH THE VIDEOS</a> · <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">READ THE ESSAYS</a></p>
     </div>
 
     <section class="imt-card imt" id="test" aria-labelledby="test-title">
@@ -613,6 +613,7 @@ window.tfTrack = function (path, title) {
       <p class="videos-argument">thoughtfeel is a sense, like your mind’s eye or your inner voice. Those senses come with well-known techniques you can learn to remember and learn better. The memory palace uses your mind’s eye to pull off remarkable feats of memory, like memorizing a 1,000-digit number in an hour. Your inner voice remembers more when you put the words to a song, which is why the alphabet song works.</p>
       <p class="videos-argument">thoughtfeel has techniques of its own, and learning them can improve how you think and learn. Each lesson below teaches one.</p>
       <p>Not sure you have it? Take the <a href="#test">one-minute test</a> or the <a href="/quiz/v2/">full quiz</a>.</p>
+      <p>Prefer reading? Several of the techniques are also written up as <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">essays on Substack</a>.</p>
     </div>
     <div class="video-grid">
       <a class="video" href="https://www.youtube.com/watch?v=gTu22urSWAc" target="_blank" rel="noopener">
@@ -706,9 +707,10 @@ window.tfTrack = function (path, title) {
       <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
       <p>I’m a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and I’m finishing a master’s in computer science at the University of Colorado Boulder in November 2026.</p>
       <p>I developed thoughtfeel as a technique for learning and memory. I use it to remember lists, numbers, song lyrics and what people said, to learn board games, and to play chess in my head. I made the animated lessons and started r/ThoughtFeel so people can compare notes.</p>
-      <p>This is still a personal investigation. I keep my own observations separate from established research, and I’d like to hear how it works for you, or doesn’t.</p>
+      <p>thoughtfeel is a collaboration between me and Dr. David Lo, and we write up the techniques as essays on <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">Substack</a>.</p>
+      <p>This is still an early investigation. I keep my own observations separate from established research, and I’d like to hear how it works for you, or doesn’t.</p>
       <div class="cofounder">
-        <h3><span>Co-founder</span>David Lo</h3>
+        <h3><span>Co-founder</span>Dr. David Lo</h3>
         <p>David is a resident physician who trained at Touro College of Osteopathic Medicine, where he now also teaches osteopathic medical students as an adjunct professor. He has spent about ten years teaching math and science: at Rutgers University he taught calculus and research statistics, and coordinated tutoring and course materials in organic chemistry, biochemistry and physics for students headed into the health professions.</p>
         <p>He co-founded two community health programs in New Brunswick, New Jersey, one that trains students to run health screenings and one that teaches high school students to educate their neighbors about diabetes. He holds a master’s in business and science from Rutgers. <a href="https://www.linkedin.com/in/drdavidlo/" target="_blank" rel="noopener">David on LinkedIn</a></p>
       </div>
@@ -741,10 +743,11 @@ window.tfTrack = function (path, title) {
       <li><a href="https://www.youtube.com/watch?v=f8YMcrpDIas" target="_blank" rel="noopener">Video 8: Complicated ideas</a><span>How to Learn Complicated Ideas by Imagining in Concepts</span></li>
       <li><a href="https://www.youtube.com/watch?v=TUWSnA1KVrE" target="_blank" rel="noopener">Video 9: The research</a><span>How Many People Can Imagine in Concepts?</span></li>
       <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The Thought Feel YouTube channel</a><span>New lessons as they’re published.</span></li>
+      <li><a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">The thoughtfeel Substack</a><span>The techniques, written up as essays.</span></li>
       <li><a href="#updates">Get new lessons by email</a><span>New videos and exercises when they’re out.</span></li>
       <li><a href="#about">Email Ted</a><span>Questions, or a free tutoring session: teddyshachtman@gmail.com</span></li>
     </ul>
-    <p class="colophon">thoughtfeel · a practical guide by Ted Shachtman</p>
+    <p class="colophon">thoughtfeel · a practical guide by Ted Shachtman and Dr. David Lo</p>
   </footer>
 </div>
 
@@ -952,6 +955,8 @@ window.tfTrack = function (path, title) {
       tfTrack((a.closest('#test') ? 'test-to-' : 'home-to-') + dest);
     } else if ((a.getAttribute('href') || '').indexOf('/words/') === 0) {
       tfTrack('home-to-words');
+    } else if ((a.getAttribute('href') || '').indexOf('thoughtfeel.substack.com') !== -1) {
+      tfTrack(a.closest('.byline') ? 'byline-to-substack' : 'home-to-substack');
     }
   });
 
