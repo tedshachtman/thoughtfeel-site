@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Learn ten Spanish words in about five minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
+<meta name="description" content="Learn ten Spanish words in about ten minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
 <link rel="canonical" href="https://thoughtfeel.net/words/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
 <meta property="og:title" content="Ten Spanish words: how many will stick?">
-<meta property="og:description" content="Learn ten Spanish words in about five minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
+<meta property="og:description" content="Learn ten Spanish words in about ten minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
 <meta property="og:url" content="https://thoughtfeel.net/words/">
 <meta property="og:image" content="https://thoughtfeel.net/og-words.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Learn ten Spanish words in about five minutes. Tomorrow, find out how many stuck.">
+<meta property="og:image:alt" content="Learn ten Spanish words in about ten minutes. Tomorrow, find out how many stuck.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ten Spanish words: how many will stick?">
-<meta name="twitter:description" content="Learn ten Spanish words in about five minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
+<meta name="twitter:description" content="Learn ten Spanish words in about ten minutes with thoughtfeel. Tomorrow, take a two-minute test and find out how many stuck.">
 <meta name="twitter:image" content="https://thoughtfeel.net/og-words.png">
 <script>
 window.tfTrack = function (path, title) {
@@ -228,25 +228,26 @@ window.tfTrack = function (path, title) {
     <canvas id="swatch" aria-hidden="true"></canvas>
     <div class="card-body" id="words" aria-live="polite">
       <!-- rendered by script; this is the intro and the no-script state -->
-      <p class="eyebrow">Ten Spanish words · 5 minutes</p>
+      <p class="eyebrow">Ten Spanish words · 10 minutes</p>
       <h1 tabindex="-1">How many will stick?</h1>
       <p class="lede">Learn ten Spanish words with thoughtfeel, a sense for concepts. Tomorrow, take a two-minute test and find out how many stuck.</p>
       <noscript><p class="note">This page needs JavaScript turned on.</p></noscript>
       <div class="first">
         <p><strong>Watch the vocabulary lesson first.</strong></p>
-        <p>This exercise uses the technique from the 10-minute lesson. Without it, you won’t know what to do with each word, and they won’t stick.</p>
+        <p>This exercise uses the technique from the 6-minute lesson. Without it, you won’t know what to do with each word, and they won’t stick.</p>
       </div>
       <div class="actions">
-        <a class="btn primary" href="https://www.youtube.com/watch?v=Hfb_A-hkyfk" target="_blank" rel="noopener" data-track="words-intro-lesson">Watch the lesson (10 min)</a>
+        <a class="btn primary" href="https://www.youtube.com/watch?v=VDHt3z8Babo" target="_blank" rel="noopener" data-track="words-intro-lesson">Watch the lesson (6 min)</a>
         <button class="btn" type="button" data-act="start">I’ve watched it: start</button>
       </div>
       <p class="note">Turn your sound on, and find a spot where you can speak out loud.</p>
-      <p class="text how-head">People with thoughtfeel report that a word’s sounds have a feel of their own. For each word, you’ll:</p>
+      <p class="text how-head">For each word, you’ll:</p>
       <ol class="how">
-        <li>Hear it, and notice the feel of its sounds.</li>
-        <li>Hold that feel while you say out loud what the word means.</li>
-        <li>Then the reverse: hold the feel of the meaning, and say the Spanish word.</li>
+        <li>Hear it, and see what it means.</li>
+        <li>Find a part of it that sounds like something you know.</li>
+        <li>Bring up that part and the meaning as concepts, and say out loud how they connect.</li>
       </ol>
+      <p class="note">Then you’ll see one way to link it.</p>
       <p class="note">Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a> first.</p>
     </div>
   </main>
@@ -303,26 +304,28 @@ window.tfTrack = function (path, title) {
 
   /* ---------- The words ---------- */
   // Words an English speaker is unlikely to know or to guess from English. The vocabulary lesson's
-  // own examples (hazaña, bisagra) are left out, so they stay fresh for people who come from the video.
+  // own examples (tobillo, espalda, pierna) are left out, so they stay fresh for people who come from the video.
+  // part: a sound in the word that sounds like something an English speaker knows; link: one way to say how
+  // that thing connects to the meaning. Shown after people try their own.
   var WORDS = [
-    { es: 'ardilla', say: 'ar-DEE-yah', en: 'squirrel' },
-    { es: 'embudo', say: 'em-BOO-doh', en: 'funnel' },
-    { es: 'relámpago', say: 'reh-LAHM-pah-goh', en: 'lightning' },
-    { es: 'cajón', say: 'kah-HOHN', en: 'drawer' },
-    { es: 'charco', say: 'CHAR-koh', en: 'puddle' },
-    { es: 'anzuelo', say: 'ahn-SWEH-loh', en: 'fishhook' },
-    { es: 'pereza', say: 'peh-REH-sah', en: 'laziness' },
-    { es: 'madrugada', say: 'mah-droo-GAH-dah', en: 'the hours before dawn' },
-    { es: 'buzón', say: 'boo-SOHN', en: 'mailbox' },
-    { es: 'ceja', say: 'SEH-hah', en: 'eyebrow' }
+    { es: 'ardilla', say: 'ar-DEE-yah', en: 'squirrel', part: 'ardilla sounds a bit like armadillo.', link: 'A squirrel is a small wild animal, like an armadillo.' },
+    { es: 'embudo', say: 'em-BOO-doh', en: 'funnel', part: 'embudo sounds a bit like bamboo.', link: 'A funnel is hollow, like bamboo, so things pour through it.' },
+    { es: 'relámpago', say: 'reh-LAHM-pah-goh', en: 'lightning', part: 'relámpago has lamp in it.', link: 'Lightning lights everything up, like a lamp.' },
+    { es: 'cajón', say: 'kah-HOHN', en: 'drawer', part: 'cajón ends a bit like home.', link: 'A drawer is a home for your socks.' },
+    { es: 'charco', say: 'CHAR-koh', en: 'puddle', part: 'charco starts like jar.', link: 'A puddle holds water on the ground, like a jar.' },
+    { es: 'anzuelo', say: 'ahn-SWEH-loh', en: 'fishhook', part: 'anzuelo has swell in it.', link: 'A fishhook dangles in the swell of the sea.' },
+    { es: 'pereza', say: 'peh-REH-sah', en: 'laziness', part: 'pereza sounds like it has rest in it.', link: 'Laziness is wanting to rest.' },
+    { es: 'madrugada', say: 'mah-droo-GAH-dah', en: 'the hours before dawn', part: 'madrugada has dru, like dew.', link: 'Dew forms in the hours before dawn.' },
+    { es: 'buzón', say: 'boo-SOHN', en: 'mailbox', part: 'buzón ends a bit like zone.', link: 'A mailbox is a drop zone for letters.' },
+    { es: 'ceja', say: 'SEH-hah', en: 'eyebrow', part: 'ceja sounds like “say ha!”', link: 'Your eyebrows go up when you say ha!' }
   ];
   var N = WORDS.length;
   var KEY = 'thoughtfeel.words';
   var WAIT = 8 * 3600e3; // the test opens 8 hours after learning, but the next day is the real test
   var SHARE_URL = 'https://thoughtfeel.net/words/';
   var SHARED_URL = SHARE_URL + '?ref=words-share'; // what friends get; tagged so GoatCounter shows visits from shares
-  var LESSON_URL = 'https://www.youtube.com/watch?v=Hfb_A-hkyfk'; // the vocabulary lesson
-  var STEPS = ['Hear it', 'Bind it', 'The reverse'];
+  var LESSON_URL = 'https://www.youtube.com/watch?v=VDHt3z8Babo'; // the vocabulary lesson
+  var STEPS = ['Hear it', 'Link it', 'One way'];
   var box = document.getElementById('words');
   var card = document.getElementById('words-card');
   var INTRO = box.innerHTML;
@@ -423,7 +426,7 @@ window.tfTrack = function (path, title) {
       '<div class="word-meta"><span class="say-it">' + w.say + '</span>' + hearButton(w) + '</div></div>';
   }
 
-  /* ---------- Learning: hear it, bind it, the reverse ---------- */
+  /* ---------- Learning: hear it, link it, then one way to link it ---------- */
   function startLearning() {
     learning = { startedAt: Date.now(), i: 0, step: 0 };
     renderLearn();
@@ -434,23 +437,23 @@ window.tfTrack = function (path, title) {
     var w = WORDS[learning.i], s = learning.step, first = learning.i === 0, last = learning.i === N - 1;
     var html = progress(learning.i) +
       '<p class="eyebrow">Word ' + (learning.i + 1) + ' of ' + N + ' · ' + STEPS[s] + '</p>' +
-      wordBlock(w);
+      wordBlock(w) +
+      '<p class="meaning">It means <b>' + w.en + '</b>.</p>';
     if (s === 0) {
       html += '<p class="do" tabindex="-1">' + (first
-        ? 'Say it to yourself: <span class="say" lang="es">' + w.es + '</span>. Then notice the feel of its sounds.'
-        : 'Say it to yourself, and notice the feel of its sounds.') + '</p>' +
+        ? 'Say it to yourself: <span class="say" lang="es">' + w.es + '</span>. Listen for sounds in it that connect to ' + w.en + '.'
+        : 'Say it to yourself, and listen for sounds that connect to ' + w.en + '.') + '</p>' +
         actions('<button type="button" class="btn primary" data-act="step">Next</button>');
     } else if (s === 1) {
-      html += '<p class="meaning">It means <b>' + w.en + '</b>.</p>' +
-        '<p class="do" tabindex="-1">' + (first
-          ? 'Bring up the feel of the sounds of ' + w.es + '. While you hold that feel, say out loud: <span class="say">“this means ' + w.en + '.”</span>'
-          : 'Hold the feel of its sounds, and say out loud: <span class="say">“this means ' + w.en + '.”</span>') + '</p>' +
-        (first ? '<p class="tip">If the feel switches to ' + w.en + ' as you say it, that’s okay. Switch between them: the feel of ' + w.es + ', then say ' + w.en + ', then back to the feel of ' + w.es + '.</p>' : '') +
+      html += '<p class="do" tabindex="-1">' + (first
+          ? 'Find a sound in ' + w.es + ' that connects to ' + w.en + '. If nothing in the whole word does, break it into parts that sound like something you know. ' +
+            'Bring up that part as a concept, the way you’d bring up the economy: not a picture, and not the sound of it. Bring up ' + w.en + ' too, and while both are up in thoughtfeel, <span class="say">say out loud how they connect.</span>'
+          : 'Find a part that sounds like something you know. Bring it up with ' + w.en + ', and while both are up, <span class="say">say out loud how they connect.</span>') + '</p>' +
+        (first ? '<p class="tip">If you found two parts, link them to each other as well, so the sounds of the word hold together.</p>' : '') +
         actions('<button type="button" class="btn primary" data-act="step">Next</button>');
     } else {
-      html += '<p class="meaning">It means <b>' + w.en + '</b>.</p>' +
-        '<p class="do" tabindex="-1">Now the reverse. ' + (first ? 'Bring up' : 'Hold') + ' the feel of ' + w.en + ', and say out loud: <span class="say" lang="es">“' + w.es + '.”</span></p>' +
-        (first ? '<p class="tip">Optional: if part of ' + w.es + ' sounds like a word you know, tie them together. Bring up the feel of that word, and notice the sound it shares with ' + w.es + '.</p>' : '') +
+      html += '<p class="do" tabindex="-1">One way: ' + w.part + ' <span class="say">“' + w.link + '”</span></p>' +
+        (first ? '<p class="tip">If you found your own link, use yours. Say ' + w.es + ' once more: you may get a sense of something like ' + w.en + ' right away, before the word itself. Stay with that.</p>' : '') +
         actions('<button type="button" class="btn primary" data-act="step">' + (last ? 'Finish' : 'Next word') + '</button>');
     }
     html += '<p class="note"><button type="button" class="linkish" data-act="' + (s > 0 || learning.i > 0 ? 'step-back' : 'intro') + '">Back</button></p>';
@@ -542,7 +545,7 @@ window.tfTrack = function (path, title) {
       '<p class="eyebrow">The Spanish word · ' + (k + 1) + ' of ' + N + '</p>' +
       '<p class="prompt">' + w.en + '</p>' +
       '<p class="do">' + (k === 0
-        ? 'Bring up the feel of ' + w.en + ', and let the Spanish word come. Say it out loud, then type it. Spelling doesn’t matter; the sounds do.'
+        ? 'Bring up ' + w.en + ', and the part you linked to it, and let the Spanish word come. Say it out loud, then type it. Spelling doesn’t matter; the sounds do.'
         : 'Say the Spanish word out loud, then type it.') + '</p>' +
       '<form id="say-form" novalidate><div class="answer-row">' +
         '<input type="text" id="say-input" lang="es" aria-label="The Spanish word for ' + w.en + '" placeholder="Type what you said" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next">' +
@@ -639,11 +642,11 @@ window.tfTrack = function (path, title) {
   }
   function sayMeter(n) { return meter('m-say', 'The word, from its meaning', n.e, n.c, n.e + ' of ' + N + (n.c ? ', plus ' + n.c + ' close' : '')); }
   function resultText(n) {
-    if (n.r <= 3) return 'Fewer stuck this time. If the feel of a word’s sounds didn’t come up while you learned it, there was nothing for the meaning to bind to. Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a>.';
+    if (n.r <= 3) return 'Fewer stuck this time. A link holds when both things are up in thoughtfeel, as concepts, while you say how they connect. Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a>.';
     if (n.e + n.c / 2 >= n.r) return 'You produced the words about as well as you recognized them. Producing is usually the harder direction.';
     return 'Producing a word is usually harder than recognizing it.' +
-      (n.c ? ' A close answer means the feel of its sounds came back, but not every sound.' : '') +
-      ' To make the sounds easier to bring back, tie them to a word you know: bring up the feel of both, and notice the sound they share.';
+      (n.c ? ' A close answer means the part you linked came back, but not the whole word.' : '') +
+      ' To bring the whole word back, link its parts to each other as well, so the sounds of the word hold together.';
   }
   function chips(k, mark) {
     return '<span class="chips" role="group" aria-label="Mark for this answer">' + ['exact', 'close', 'missed'].map(function (m) {
