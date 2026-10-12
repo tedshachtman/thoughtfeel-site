@@ -29,6 +29,41 @@ window.tfTrack = function (path, title) {
 </script>
 <script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
   onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
+<script>
+(function () {
+  var KIT = {"lessons":"","waitlist":""};
+  // Keep the visit's first ?ref, so a signup on a later page still says where the visitor came from.
+  var ref = '';
+  try {
+    ref = new URLSearchParams(location.search).get('ref') || sessionStorage.getItem('tf.ref') || '';
+    if (ref && !sessionStorage.getItem('tf.ref')) sessionStorage.setItem('tf.ref', ref);
+  } catch (e) {}
+  window.tfSignup = function (d) {
+    var list = d.list === 'waitlist' ? 'waitlist' : 'lessons', fields = {};
+    Object.keys(d.fields || {}).forEach(function (k) { if (d.fields[k] !== '' && d.fields[k] != null) fields[k] = String(d.fields[k]); });
+    fields.waitlist = list === 'waitlist' ? 'yes' : 'no';
+    fields.signup_page = location.pathname;
+    if (ref) fields.ref = ref;
+    if (KIT[list]) {
+      var body = new URLSearchParams();
+      body.append('email_address', d.email);
+      Object.keys(fields).forEach(function (k) { body.append('fields[' + k + ']', fields[k]); });
+      return fetch('https://app.kit.com/forms/' + KIT[list] + '/subscriptions', { method: 'POST', headers: { 'Accept': 'application/json' }, body: body })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j || j.status !== 'success') throw new Error('not accepted'); return j; });
+    }
+    var payload = { email: d.email, list: list, _subject: d.subject || 'New thoughtfeel signup', _template: 'table' };
+    Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
+    return fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (String(j && j.success) !== 'true') throw new Error('not accepted'); return j; });
+  };
+})();
+</script>
 </head>
 <body>
 <title>thoughtfeel guide</title>
@@ -416,6 +451,7 @@ window.tfTrack = function (path, title) {
   @media (min-width: 900px) { .updates { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
   .updates h3 { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 8px; }
   .updates-text p { margin: 0; color: var(--ink-2); font-size: 16.5px; }
+  .updates-text p + p { margin-top: 10px; }
   .signup { display: grid; gap: 12px; }
   .signup-row { display: flex; flex-wrap: wrap; gap: 10px; }
   .signup-row input { flex: 1 1 220px; }
@@ -429,6 +465,8 @@ window.tfTrack = function (path, title) {
   .signup-q legend span { color: var(--ink-2); }
   .signup-q label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
   .signup-q input { accent-color: var(--indigo); }
+  .signup-wait { display: flex; align-items: flex-start; gap: 8px; font-family: var(--sans); font-size: 15px; line-height: 1.4; cursor: pointer; }
+  .signup-wait input { accent-color: var(--indigo); margin: 3px 0 0; flex: none; }
   .signup-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
   .signup-status { margin: 0; font-family: var(--sans); font-size: 15px; min-height: 1.2em; }
   .signup-status.ok { color: var(--ok); }
@@ -690,6 +728,7 @@ window.tfTrack = function (path, title) {
       <div class="updates-text">
         <h3>Get new lessons by email</h3>
         <p>More videos and exercises are on the way. Leave your email to get them when they’re out. You can also <a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">subscribe on YouTube</a>.</p>
+        <p>We’re also building guided training: short, step-by-step practice in imagining in concepts, and in using it to learn faster. Tick the box to join the waitlist for early access.</p>
       </div>
       <form class="signup" id="signup" action="https://formsubmit.co/teddyshachtman@gmail.com" method="POST">
         <label class="visually-hidden" for="signup-email">Email address</label>
@@ -703,12 +742,13 @@ window.tfTrack = function (path, title) {
           <label for="signup-unsure"><input type="radio" id="signup-unsure" name="recognizes_thoughtfeel" value="not sure"> Not sure</label>
           <label for="signup-no"><input type="radio" id="signup-no" name="recognizes_thoughtfeel" value="no"> No</label>
         </fieldset>
+        <label class="signup-wait" for="signup-waitlist"><input type="checkbox" id="signup-waitlist" name="waitlist" value="yes"> Also put me on the waitlist for guided training, with early access when it opens</label>
         <input type="hidden" name="_subject" value="New thoughtfeel signup">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_next" value="https://thoughtfeel.net/#updates">
         <input type="text" name="_honey" class="signup-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
-        <p class="signup-note">Only thoughtfeel lessons and guides. Reply to any email to come off the list.</p>
+        <p class="signup-note">Only thoughtfeel lessons and guides, plus early access if you join the waitlist. Every email has an unsubscribe link.</p>
       </form>
     </div>
   </section>
@@ -974,7 +1014,9 @@ window.tfTrack = function (path, title) {
     }
   });
 
-  /* ---------- Email signup (FormSubmit forwards each signup to Ted's inbox) ---------- */
+  /* ---------- Email signup (tfSignup, from build.mjs, sends it to the email list) ---------- */
+  // Looked up when it's used, since build.mjs defines it in the page head.
+  function tfSignup(d) { return window.tfSignup ? window.tfSignup(d) : Promise.reject(new Error('no signup')); }
   var signup = document.getElementById('signup');
   if (signup) signup.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -984,28 +1026,28 @@ window.tfTrack = function (path, title) {
     var email = emailEl.value.trim();
     var setStatus = function (text, cls) { status.textContent = text; status.className = 'signup-status' + (cls ? ' ' + cls : ''); };
     if (!emailEl.checkValidity() || !email) { setStatus('Enter an email address like you@example.com.', 'miss'); emailEl.focus(); return; }
-    if (signup.elements._honey.value) { setStatus('Thanks! You’re on the list.', 'ok'); return; }
     var picked = signup.querySelector('input[name="recognizes_thoughtfeel"]:checked');
-    var payload = {
-      email: email,
-      recognizes_thoughtfeel: picked ? picked.value : 'not answered',
-      test_answers: imtSummary || 'not taken',
-      _subject: 'New thoughtfeel signup',
-      _template: 'table'
-    };
+    var waitlist = document.getElementById('signup-waitlist').checked;
+    var done = waitlist ? 'Thanks! You’re on the list, and on the waitlist for guided training.' : 'Thanks! You’re on the list.';
+    if (signup.elements._honey.value) { setStatus(done, 'ok'); return; }
     button.disabled = true;
     setStatus('Signing you up…');
-    fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload)
+    tfSignup({
+      email: email,
+      list: waitlist ? 'waitlist' : 'lessons',
+      subject: waitlist ? 'New thoughtfeel waitlist signup (home)' : 'New thoughtfeel signup',
+      fields: {
+        signup_source: 'home',
+        recognizes_thoughtfeel: picked ? picked.value : '',
+        test_result: imtOutcome,
+        test_answers: imtSummary
+      }
     })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (String(data && data.success) !== 'true') throw new Error((data && data.message) || 'not accepted');
-        setStatus('Thanks! You’re on the list.', 'ok');
+      .then(function () {
+        setStatus(done, 'ok');
         signup.reset();
         tfTrack('signup-home');
+        if (waitlist) tfTrack('waitlist-home');
       })
       .catch(function () {
         setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss');

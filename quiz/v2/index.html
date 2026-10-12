@@ -29,6 +29,41 @@ window.tfTrack = function (path, title) {
 </script>
 <script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
   onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
+<script>
+(function () {
+  var KIT = {"lessons":"","waitlist":""};
+  // Keep the visit's first ?ref, so a signup on a later page still says where the visitor came from.
+  var ref = '';
+  try {
+    ref = new URLSearchParams(location.search).get('ref') || sessionStorage.getItem('tf.ref') || '';
+    if (ref && !sessionStorage.getItem('tf.ref')) sessionStorage.setItem('tf.ref', ref);
+  } catch (e) {}
+  window.tfSignup = function (d) {
+    var list = d.list === 'waitlist' ? 'waitlist' : 'lessons', fields = {};
+    Object.keys(d.fields || {}).forEach(function (k) { if (d.fields[k] !== '' && d.fields[k] != null) fields[k] = String(d.fields[k]); });
+    fields.waitlist = list === 'waitlist' ? 'yes' : 'no';
+    fields.signup_page = location.pathname;
+    if (ref) fields.ref = ref;
+    if (KIT[list]) {
+      var body = new URLSearchParams();
+      body.append('email_address', d.email);
+      Object.keys(fields).forEach(function (k) { body.append('fields[' + k + ']', fields[k]); });
+      return fetch('https://app.kit.com/forms/' + KIT[list] + '/subscriptions', { method: 'POST', headers: { 'Accept': 'application/json' }, body: body })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j || j.status !== 'success') throw new Error('not accepted'); return j; });
+    }
+    var payload = { email: d.email, list: list, _subject: d.subject || 'New thoughtfeel signup', _template: 'table' };
+    Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
+    return fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (String(j && j.success) !== 'true') throw new Error('not accepted'); return j; });
+  };
+})();
+</script>
 </head>
 <body>
 <title>How vivid is your thoughtfeel? · the quiz</title>
@@ -179,6 +214,21 @@ window.tfTrack = function (path, title) {
   .status { margin: 0; font-family: var(--sans); font-size: 15px; min-height: 1.2em; }
   .status.ok { color: var(--ok); }
   .status.miss { color: var(--miss); }
+  /* The waitlist: the next step after the result. */
+  .box.waitlist { border: 1.5px solid var(--weld); }
+  .use { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .use legend { width: 100%; padding: 0; margin-bottom: 6px; font-family: var(--sans); font-size: 15px; color: var(--ink); }
+  .use legend span { color: var(--ink-2); }
+  .chip { position: relative; display: inline-flex; }
+  .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .chip span {
+    font-family: var(--sans); font-size: 15px; line-height: 1.2; padding: 8px 13px; border-radius: 999px;
+    border: 1.5px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer;
+  }
+  .chip span:hover { border-color: var(--indigo); }
+  .chip input:checked + span { border-color: var(--indigo); background: var(--indigo-soft); }
+  .chip input:focus-visible + span { outline: 2px solid var(--weld); outline-offset: 2px; }
+  .fine { margin: 0; font-family: var(--sans); font-size: 13.5px; color: var(--ink-2); }
   .share-panel { display: grid; gap: 12px; justify-items: start; }
   .card-preview { width: 100%; max-width: 300px; border-radius: 10px; box-shadow: 0 12px 30px -18px rgba(0, 0, 0, .7); }
   .reveal-title { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 14px 0 0; }
@@ -216,6 +266,8 @@ window.tfTrack = function (path, title) {
 <script>
 (function () {
   var tfTrack = window.tfTrack || function () {};
+  // Looked up when it's used, since build.mjs defines it in the page head.
+  function tfSignup(d) { return window.tfSignup ? window.tfSignup(d) : Promise.reject(new Error('no signup')); }
   /* ---------- Woven strip (same weave as the home page) ---------- */
   var canvas = document.getElementById('swatch');
   function drawSwatch() {
@@ -309,6 +361,9 @@ window.tfTrack = function (path, title) {
   var FIRST_LESSON = 'https://www.youtube.com/watch?v=gTu22urSWAc';
   var WORDS_URL = '/words/?ref=quiz2';
   var SHARE_URL = 'https://thoughtfeel.net/quiz/v2/?ref=quiz2-share'; // tagged so GoatCounter shows visits from shared results
+  // The waitlist's one question: what people would use the training for (counted in GoatCounter as waitlist-use-<id>).
+  var USES = [['language', 'Learning a language'], ['school', 'School or exams'], ['reading', 'Remembering what I read'],
+    ['work', 'Learning for work'], ['memorizing', 'Memorizing lists and numbers'], ['curious', 'Just curious']];
   var quiz = document.getElementById('quiz');
   var card = document.getElementById('quiz-card');
   var answers = [], cur = 0, result = null;
@@ -412,18 +467,24 @@ window.tfTrack = function (path, title) {
           '<button type="button" class="btn" data-act="copy">Copy the link</button>' +
         '</div>' +
       '</div>' +
+      // The next step: the waitlist for guided training, which also signs people up for the free lessons by email.
+      '<form class="box signup waitlist" id="quiz-signup" novalidate>' +
+        '<p class="box-title">What’s next: guided training</p>' +
+        '<p class="note">We’re building guided training: short, step-by-step practice in imagining in concepts, and in using it to learn faster. Join the waitlist for early access. While you wait, we’ll email you the free lessons.</p>' +
+        '<fieldset class="use"><legend>What would you use it for most? <span>(optional)</span></legend>' +
+          USES.map(function (u) { return '<label class="chip"><input type="radio" name="use_for" value="' + u[0] + '"><span>' + u[1] + '</span></label>'; }).join('') +
+        '</fieldset>' +
+        '<div class="signup-row"><input type="email" id="quiz-email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">' +
+        '<button class="btn primary" type="submit" id="quiz-submit">Join the waitlist</button></div>' +
+        '<input type="text" name="_honey" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+        '<p class="status" id="quiz-status" role="status" aria-live="polite"></p>' +
+        '<p class="fine">Free lessons by email, then early access when the training opens. Every email has an unsubscribe link.</p>' +
+      '</form>' +
       '<div class="box">' +
         '<p class="box-title">Put your result to a real test</p>' +
         '<p class="note">Learn ten Spanish words in about five minutes, then see tomorrow how many stuck. If the quiz works, higher scores should go with more words remembered. Your answers stay on this device; the site only counts the two results together, anonymously.</p>' +
         '<div class="actions"><a class="btn primary" href="' + WORDS_URL + '" data-track="quiz2-to-words">Learn the ten words</a></div>' +
       '</div>' +
-      '<form class="box signup" id="quiz-signup" novalidate>' +
-        '<p class="box-title">Get new lessons by email</p>' +
-        '<div class="signup-row"><input type="email" id="quiz-email" placeholder="you@example.com" autocomplete="email" required aria-label="Email address">' +
-        '<button class="btn primary" type="submit" id="quiz-submit">Send me new lessons</button></div>' +
-        '<input type="text" name="_honey" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true">' +
-        '<p class="status" id="quiz-status" role="status" aria-live="polite"></p>' +
-      '</form>' +
       '<h2 class="reveal-title">Your answers</h2>' +
       '<p class="note">Seven statements make up the concepts score, and the one about unfamiliar descriptions counts in reverse. Words and pictures are scored on their own: thinking in them doesn’t rule out thoughtfeel.</p>' +
       '<ol class="reveal">' + STATEMENTS.map(function (s, i) {
@@ -588,7 +649,7 @@ window.tfTrack = function (path, title) {
     else if (act === 'download') tfTrack('quiz2-download-image');
   });
 
-  // Email signup from the result. FormSubmit forwards it to Ted, with the answers.
+  // The waitlist, from the result. tfSignup (build.mjs) sends the email with the result to the email list.
   quiz.addEventListener('submit', function (e) {
     if (e.target.id !== 'quiz-signup') return;
     e.preventDefault();
@@ -597,28 +658,30 @@ window.tfTrack = function (path, title) {
     var setStatus = function (t, cls) { status.textContent = t; status.className = 'status' + (cls ? ' ' + cls : ''); };
     var email = emailEl.value.trim();
     if (!emailEl.checkValidity() || !email) { setStatus('Enter an email address like you@example.com.', 'miss'); emailEl.focus(); return; }
-    if (form.querySelector('.trap').value) { setStatus('Thanks! You’re on the list.', 'ok'); return; }
+    var use = form.querySelector('input[name="use_for"]:checked');
+    var done = 'You’re on the waitlist. We’ll email you the free lessons, and early access when the training opens.';
+    if (form.querySelector('.trap').value) { setStatus(done, 'ok'); return; }
     button.disabled = true;
-    setStatus('Signing you up…');
-    fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        thoughtfeel: result.band.word + ' (' + result.pct + '/100)',
-        quiz_answers: summary(),
-        _subject: 'New thoughtfeel signup (quiz v2)',
-        _template: 'table'
-      })
+    setStatus('Adding you to the waitlist…');
+    tfSignup({
+      email: email,
+      list: 'waitlist',
+      subject: 'New thoughtfeel waitlist signup (quiz v2)',
+      fields: {
+        signup_source: 'quiz',
+        use_for: use ? use.value : '',
+        thoughtfeel_band: result.band.id,
+        thoughtfeel_score: result.pct,
+        quiz_answers: summary()
+      }
     })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (String(data && data.success) !== 'true') throw new Error('not accepted');
-        setStatus('Thanks! You’re on the list.', 'ok');
+      .then(function () {
+        setStatus(done, 'ok');
         emailEl.value = '';
-        tfTrack('signup-quiz2');
+        tfTrack('waitlist-quiz2');
+        if (use) tfTrack('waitlist-use-' + use.value);
       })
-      .catch(function () { setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss'); })
+      .catch(function () { setStatus('That didn’t go through. Email teddyshachtman@gmail.com to join instead.', 'miss'); })
       .then(function () { button.disabled = false; });
   });
 })();
