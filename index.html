@@ -440,6 +440,18 @@ window.tfTrack = function (path, title) {
   .video-item { display: flex; flex-direction: column; gap: 12px; }
   .video-try { font-size: 16px; line-height: 1.5; color: var(--indigo); text-underline-offset: 3px; }
   .video-try strong { font-family: var(--sans); font-weight: 700; }
+  /* The essay highlighted as the place to start for people who'd rather read. */
+  .read-first {
+    display: grid; gap: 6px; margin: 20px 0 0; padding: clamp(18px, 3vw, 24px);
+    background: var(--indigo-soft); border: 1px solid var(--rule); border-left: 4px solid var(--indigo); border-radius: 14px;
+    color: var(--ink); text-decoration: none;
+  }
+  .read-first-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--term); }
+  .read-first-title { font-family: var(--sans); font-weight: 700; font-size: clamp(21px, 2.3vw, 25px); line-height: 1.25; text-wrap: balance; }
+  .read-first-desc { font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+  .read-first-cta { font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--indigo); }
+  .read-first:hover .read-first-title, .read-first:focus-visible .read-first-title { color: var(--indigo); text-decoration: underline; text-underline-offset: 3px; }
+  .videos-head .read-more { margin: 12px 0 0; }
   .visually-hidden {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
     clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -651,7 +663,13 @@ window.tfTrack = function (path, title) {
       <p class="videos-argument">thoughtfeel is a sense, like your mind’s eye or your inner voice. Those senses come with well-known techniques you can learn to remember and learn better. The memory palace uses your mind’s eye to pull off remarkable feats of memory, like memorizing a 1,000-digit number in an hour. Your inner voice remembers more when you put the words to a song, which is why the alphabet song works.</p>
       <p class="videos-argument">thoughtfeel has techniques of its own, and learning them can improve how you think and learn. Each lesson below teaches one.</p>
       <p>Not sure you have it? Take the <a href="#test">one-minute test</a> or the <a href="/quiz/v2/">full quiz</a>.</p>
-      <p>Prefer reading? Several of the techniques are also written up as <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">essays on Substack</a>.</p>
+      <a class="read-first" href="https://thoughtfeel.substack.com/p/ctrlf-for-your-memory" target="_blank" rel="noopener">
+        <span class="read-first-label">If you’d rather read than watch, start here</span>
+        <span class="read-first-title">Ctrl+F for your memory</span>
+        <span class="read-first-desc">It starts from the beginning: what thoughtfeel is, whether you have it, how to link ideas in concepts, and a technique for recalling everything that shares a property, tried on medical diagnosis.</span>
+        <span class="read-first-cta">Read it on Substack →</span>
+      </a>
+      <p class="read-more">The other techniques are written up as <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">essays on Substack</a> too.</p>
     </div>
     <div class="video-grid">
       <a class="video" href="https://www.youtube.com/watch?v=gTu22urSWAc" target="_blank" rel="noopener">
@@ -1010,7 +1028,7 @@ window.tfTrack = function (path, title) {
     } else if ((a.getAttribute('href') || '').indexOf('/words/') === 0) {
       tfTrack('home-to-words');
     } else if ((a.getAttribute('href') || '').indexOf('thoughtfeel.substack.com') !== -1) {
-      tfTrack(a.closest('.byline') ? 'byline-to-substack' : 'home-to-substack');
+      tfTrack(a.closest('.byline') ? 'byline-to-substack' : a.closest('.read-first') ? 'read-start-here' : 'home-to-substack');
     }
   });
 
