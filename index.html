@@ -400,6 +400,41 @@ window.tfTrack = function (path, title) {
   .imt .imt-rows .val { font-family: var(--mono); font-size: 13px; color: var(--ink-2); text-align: right; }
   .imt .imt-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
+  /* ---------- Testimonials ---------- */
+  .voices-head { max-width: 62ch; }
+  .voices-head h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
+    line-height: 1.15; letter-spacing: -0.015em; margin: 0; text-wrap: balance;
+  }
+  .voice {
+    margin: 24px 0 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px 56px; align-items: start;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(20px, 4vw, 40px);
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
+  }
+  /* On wide screens: who it is and the line that sums it up on the left, the whole message on the right. */
+  @media (min-width: 900px) {
+    .voice {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr);
+      grid-template-areas: "who text" "pull text" ". text"; grid-template-rows: auto auto 1fr;
+    }
+    .voice-who { grid-area: who; }
+    .voice-pull { grid-area: pull; }
+    .voice-text { grid-area: text; }
+  }
+  .voice-who { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin: 0; }
+  .voice-photo { width: 88px; height: 88px; border-radius: 12px; object-fit: cover; background: var(--surface-2); }
+  .voice-meta { display: grid; gap: 2px; }
+  .voice-name { font-family: var(--sans); font-weight: 700; font-size: 20px; line-height: 1.25; }
+  .voice-role { font-size: 15.5px; line-height: 1.4; color: var(--ink-2); }
+  .voice-link { font-family: var(--sans); font-size: 15px; line-height: 1.4; margin-top: 4px; justify-self: start; }
+  .voice-pull {
+    margin: 0; padding-left: 16px; border-left: 3px solid var(--weld);
+    font-size: clamp(21px, 2.2vw, 25px); line-height: 1.4; text-wrap: balance;
+  }
+  .voice-text { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; font-size: 17px; line-height: 1.65; max-width: 64ch; }
+  .voice-text p { margin: 0 0 14px; }
+  .voice-text p:last-child { margin-bottom: 0; }
+
   /* ---------- Videos ---------- */
   .videos { margin-top: 72px; }
   .what + .videos { margin-top: 0; }
@@ -653,6 +688,34 @@ window.tfTrack = function (path, title) {
     </ul>
 
     <p class="vocab"><span class="vocab-label">Three words you’ll hear in the videos</span> A <dfn>texture</dfn> is one part of a thought’s feel, like the <em>animal</em> in the thought of a giraffe. The <dfn>fabric</dfn> is the whole felt thought. <dfn>Weaving</dfn> is combining textures to form a new thought.</p>
+  </section>
+
+  <!-- ================= Testimonials ================= -->
+  <section class="voices" id="testimonials" aria-labelledby="voices-title">
+    <div class="voices-head">
+      <p class="eyebrow">Testimonials</p>
+      <h2 id="voices-title">In their own words</h2>
+    </div>
+    <figure class="voice">
+      <figcaption class="voice-who">
+        <img class="voice-photo" src="/img/max-gurkalov.jpg" width="88" height="88" alt="" loading="lazy">
+        <span class="voice-meta">
+          <span class="voice-name">Max Gurkalov</span>
+          <span class="voice-role">Learning Japanese and QA engineering</span>
+          <a class="voice-link" href="https://www.youtube.com/@Weiming_YT" target="_blank" rel="noopener">You can find him on YouTube</a>
+        </span>
+      </figcaption>
+      <p class="voice-pull" aria-hidden="true">“30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention.”</p>
+      <blockquote class="voice-text">
+        <p>Hello! I’ve been learning to use thoughtfeel ever since you started talking about it, and I want to share my results, because they’re kind of insane to me.</p>
+        <p>I’m learning Japanese, and I’ve been using thoughtfeel for kanji. I break a character into parts that each produce a thoughtfeel, connect them together, then connect that to the reading and the meaning. Take <span lang="ja">富</span>. On its own, it didn’t produce any thoughtfeel. But split into elements (4 boxes that look like a drawer, a rectangle on top, a line on top and a thing that looks like a lid), each part produced its own thoughtfeel – so I connected them. Then I attached the reading, “tomi”, and the meaning, “wealth”. The whole thing took about 30 seconds.</p>
+        <p>The crazy part is that it got ingrained right away and I can remember very clearly all of the ones I learned. I recognize them in text, I can write them out from memory, and the written form, sound and meaning feel as connected as any word in English or in my native language (Russian).</p>
+        <p>For comparison, I used to study Chinese in the past (without success) with the currently recommended method: take words in context, put them into Anki, do active recall on reading and meaning of the characters. I “learned” around 200 characters that way, and I couldn’t recognize them while reading, let alone write them. I remember exactly 2 of them: <span lang="zh">一</span> (yī) and <span lang="zh">了</span> (le). I think my brain relied on the context of the flashcard instead of actually memorizing the characters.</p>
+        <p>So it’s 30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention. It’s just insane how efficient thoughtfeel is.</p>
+        <p>And it’s not only kanji. Right now, I’m using it to study for QA engineering from scratch. TF makes it much easier to understand the lessons and I can now recite them forwards and backwards without any rehearsal. I also use it to create reminders for myself throughout the day, to learn lessons from books and videos, to memorize useful discussions in conversations, to remember some insights and ideas that I came up with and for general thinking.</p>
+        <p>It’s basically the endgame for studying and mnemonic techniques. Thank you!</p>
+      </blockquote>
+    </figure>
   </section>
 
   <!-- ================= Videos ================= -->
@@ -1029,6 +1092,10 @@ window.tfTrack = function (path, title) {
       tfTrack('home-to-words');
     } else if ((a.getAttribute('href') || '').indexOf('thoughtfeel.substack.com') !== -1) {
       tfTrack(a.closest('.byline') ? 'byline-to-substack' : a.closest('.read-first') ? 'read-start-here' : 'home-to-substack');
+    } else if (a.closest('.voice')) {
+      // A link in a testimonial (where to find that person), counted per person.
+      var who = ((a.closest('.voice').querySelector('.voice-name') || {}).textContent || '').trim();
+      tfTrack('testimonial-' + (who.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'link'), who);
     }
   });
 
