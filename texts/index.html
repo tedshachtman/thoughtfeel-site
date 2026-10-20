@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="The full texts built in the concept-story video: Dijkstra’s algorithm, glycolysis, and why Europe pulled ahead of China.">
+<link rel="canonical" href="https://thoughtfeel.net/texts/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="thoughtfeel">
+<meta property="og:title" content="The three texts from the video">
+<meta property="og:description" content="The full texts built in the concept-story video: Dijkstra’s algorithm, glycolysis, and why Europe pulled ahead of China.">
+<meta property="og:url" content="https://thoughtfeel.net/texts/">
+<meta property="og:image" content="https://thoughtfeel.net/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="thoughtfeel: the mnemonic technique for people who can imagine in concepts, not just words or images.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The three texts from the video">
+<meta name="twitter:description" content="The full texts built in the concept-story video: Dijkstra’s algorithm, glycolysis, and why Europe pulled ahead of China.">
+<meta name="twitter:image" content="https://thoughtfeel.net/og.png">
+<script>
+window.tfTrack = function (path, title) {
+  try {
+    var send = function () { window.goatcounter.count({ path: path, title: title || path, event: true }); };
+    if (window.goatcounter && window.goatcounter.count) send(); else (window.tfQueue = window.tfQueue || []).push(send);
+  } catch (e) {}
+};
+</script>
+<script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+  onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
+<script>
+(function () {
+  var KIT = {"lessons":"","waitlist":""};
+  // Keep the visit's first ?ref, so a signup on a later page still says where the visitor came from.
+  var ref = '';
+  try {
+    ref = new URLSearchParams(location.search).get('ref') || sessionStorage.getItem('tf.ref') || '';
+    if (ref && !sessionStorage.getItem('tf.ref')) sessionStorage.setItem('tf.ref', ref);
+  } catch (e) {}
+  window.tfSignup = function (d) {
+    var list = d.list === 'waitlist' ? 'waitlist' : 'lessons', fields = {};
+    Object.keys(d.fields || {}).forEach(function (k) { if (d.fields[k] !== '' && d.fields[k] != null) fields[k] = String(d.fields[k]); });
+    fields.waitlist = list === 'waitlist' ? 'yes' : 'no';
+    fields.signup_page = location.pathname;
+    if (ref) fields.ref = ref;
+    if (KIT[list]) {
+      var body = new URLSearchParams();
+      body.append('email_address', d.email);
+      Object.keys(fields).forEach(function (k) { body.append('fields[' + k + ']', fields[k]); });
+      return fetch('https://app.kit.com/forms/' + KIT[list] + '/subscriptions', { method: 'POST', headers: { 'Accept': 'application/json' }, body: body })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j || j.status !== 'success') throw new Error('not accepted'); return j; });
+    }
+    var payload = { email: d.email, list: list, _subject: d.subject || 'New thoughtfeel signup', _template: 'table' };
+    Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
+    return fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (String(j && j.success) !== 'true') throw new Error('not accepted'); return j; });
+  };
+})();
+</script>
+</head>
+<body>
+<title>The three texts from the video · thoughtfeel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
+<style>
+  /* Same tokens as the home page (thoughtfeel-guide.html), the quiz and the words page. */
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-2: #e6e9f0;
+    --ink: #19213a;
+    --ink-2: #4b5369;
+    --rule: #d3d8e2;
+    --indigo: #2c3f8f;
+    --weld: #b87a1c;
+    --term: #7f5210;
+    --serif: "Literata", Georgia, "Times New Roman", serif;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #10131b; --surface: #181c27; --surface-2: #212634; --ink: #e5e8ef; --ink-2: #a4aabb;
+      --rule: #2c3243; --indigo: #a5b5ff; --weld: #e2a84a; --term: #eab964;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #10131b; --surface: #181c27; --surface-2: #212634; --ink: #e5e8ef; --ink-2: #a4aabb;
+    --rule: #2c3243; --indigo: #a5b5ff; --weld: #e2a84a; --term: #eab964;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--indigo); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--weld); outline-offset: 3px; border-radius: 3px; }
+  .page { max-width: 760px; margin: 0 auto; padding: 20px 16px 56px; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 4px 0 20px; }
+  .mark { font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
+  .mark span { color: var(--weld); }
+  .home { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: clamp(28px, 6vw, 40px); line-height: 1.15; letter-spacing: -0.02em; margin: 8px 0 12px; }
+  .lede { color: var(--ink-2); margin: 0 0 20px; }
+  nav.jump { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--mono); font-size: 13px; letter-spacing: .04em; margin-bottom: 28px; }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(20px, 4vw, 36px); margin: 0 0 24px;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35); }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0 0 6px; }
+  h2 { font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 4.5vw, 28px); line-height: 1.2; margin: 0 0 10px; }
+  h3 { font-family: var(--sans); font-weight: 700; font-size: 19px; margin: 22px 0 6px; }
+  .note { font-size: 15.5px; color: var(--ink-2); margin: 0 0 16px; }
+  .lines p { margin: 0 0 6px; }
+  .stop { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--weld);
+    border-top: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); padding: 8px 0; margin: 16px 0; }
+  ol, ul { padding-left: 1.3em; }
+  li { margin: 0 0 6px; }
+  .foot { font-size: 15.5px; color: var(--ink-2); }
+</style>
+
+<main class="page">
+  <header class="top">
+    <a class="mark" href="/">thought<span>feel</span></a>
+    <a class="home" href="/">all lessons</a>
+  </header>
+
+  <h1>The three texts from the video</h1>
+  <p class="lede">The video stops each think-aloud partway, for the sake of time. Here are the full texts. Pick up where it stopped, and build the rest the same way: one line at a time, bringing up each new concept as a bubble, and saying each relation out loud while you hold both ends.</p>
+  <nav class="jump" aria-label="The texts">
+    <a href="#dijkstra">1 · Dijkstra’s algorithm</a>
+    <a href="#glycolysis">2 · Glycolysis</a>
+    <a href="#economics">3 · Why Europe pulled ahead of China</a>
+  </nav>
+
+  <section class="card" id="dijkstra">
+    <p class="eyebrow">Think-aloud 1</p>
+    <h2>Dijkstra’s algorithm</h2>
+    <p class="note">The video builds up to “It never goes up.” Then come the status, the steps, and a worked example.</p>
+    <div class="lines">
+      <p>You have some places and some roads.</p>
+      <p>Each road connects two places directly.</p>
+      <p>Each road has a length, which is just a number: miles, minutes, dollars, whatever.</p>
+      <p>Roads can be traveled in either direction.</p>
+      <p>Two places are neighbors if one road connects them directly.</p>
+      <p>A route is a chain of roads where each road starts where the previous one ended.</p>
+      <p>A route can pass through other places on the way.</p>
+      <p>The length of a route is all its roads’ lengths added together.</p>
+      <p>Pick one place to be the start.</p>
+      <p>For every other place, you want the shortest route from the start to it.</p>
+      <p>The length of that shortest route is the place’s distance.</p>
+      <p>With five places you can eyeball it. With five thousand, there are far too many routes to check one by one.</p>
+      <p>While the algorithm runs, every place has two pieces of information attached to it.</p>
+      <p>If you’re doing it by hand, you write them next to each place.</p>
+      <p>Best-so-far. This is either a number or blank. A number means the shortest route to this place that you’ve found so far has this length.</p>
+      <p>Blank means you haven’t found any route to this place yet.</p>
+      <p>It’s only the best so far. If you find a shorter route later, you replace the number with the smaller one. It can go down. It never goes up.</p>
+      <p class="stop">The video stops here</p>
+      <p>Status. Each place is either done or not done.</p>
+      <p>Done means the place’s best-so-far is its distance: no route to it is shorter, so its number will never change again.</p>
+      <p>At the beginning, no place is done.</p>
+    </div>
+    <h3>The steps</h3>
+    <ol>
+      <li>Give the start a best-so-far of 0. Every other place is blank.</li>
+      <li>Of the places that aren’t done and have a number, pick the one with the smallest number. Mark it done.</li>
+      <li>Look at each neighbor of that place that isn’t done yet. Add the length of the road between them to the done place’s number. If the neighbor is blank, or the total is smaller than its number, the total becomes its new best-so-far.</li>
+      <li>Go back to step 2. Stop when every place is done, or when every place that’s left is blank. Those can’t be reached from the start.</li>
+    </ol>
+    <p>When it stops, every place’s best-so-far is its distance.</p>
+    <p>Why step 2 is safe: any route to the place you pick has to leave the done places at some first place that isn’t done. Getting that far already costs at least that place’s number, which is at least as big as the one you picked. And the rest of the route can only add length, because no road has a negative length.</p>
+    <h3>A worked example</h3>
+    <p>Four places, A, B, C and D, and five roads: A–B 4, A–C 1, C–B 2, B–D 1, C–D 5. The start is A.</p>
+    <ul>
+      <li>Step 1: A is 0. B, C and D are blank.</li>
+      <li>Step 2: A is the only place with a number, so A is done.</li>
+      <li>Step 3: A’s neighbors. B gets 0 + 4 = 4, and C gets 0 + 1 = 1.</li>
+      <li>Step 2: of B (4) and C (1), C is smallest, so C is done.</li>
+      <li>Step 3: C’s neighbors that aren’t done. B: 1 + 2 = 3, smaller than 4, so B becomes 3. D was blank, so D gets 1 + 5 = 6.</li>
+      <li>Step 2: of B (3) and D (6), B is smallest, so B is done.</li>
+      <li>Step 3: B’s neighbor D: 3 + 1 = 4, smaller than 6, so D becomes 4.</li>
+      <li>Step 2: D is the only one left, so D is done. Every place is done.</li>
+    </ul>
+    <p>The distances: A 0, C 1, B 3, D 4. The shortest route to D goes A → C → B → D: 1 + 2 + 1 = 4.</p>
+  </section>
+
+  <section class="card" id="glycolysis">
+    <p class="eyebrow">Think-aloud 2</p>
+    <h2>Glycolysis</h2>
+    <p class="note">Written for the video. The video stops right before the split.</p>
+    <p>Your cells run on ATP, a small molecule that carries usable energy. Glycolysis is the first stage of getting ATP out of glucose, a sugar with six carbon atoms. It happens in the fluid of the cell, outside the mitochondria, and it doesn’t need oxygen.</p>
+    <p>Glycolysis turns one glucose into two molecules of pyruvate, which have three carbons each. It does this in ten steps, catalyzed by ten enzymes, and the steps fall into two phases.</p>
+    <p><strong>The investment phase.</strong> The cell starts by spending energy. First, it attaches a phosphate group, taken from ATP, to glucose. The phosphate gives glucose a negative charge, so it can’t slip back out of the cell, and it makes the molecule less stable, easier to break apart. After rearranging glucose into a closely related sugar, fructose, the cell spends a second ATP to attach a second phosphate. This step, run by an enzyme called phosphofructokinase, is the point of no return: after it, the sugar is committed to glycolysis.</p>
+    <p class="stop">The video stops here</p>
+    <p>The six-carbon sugar, now with a phosphate on each end, then splits into two three-carbon halves. The two halves start out slightly different, but one is quickly converted into the other, so from here on there are two identical copies.</p>
+    <p><strong>The payoff phase.</strong> Everything in this phase happens twice, once for each half. Each half is oxidized: it gives up two electrons and a hydrogen to a carrier molecule called NAD+, turning it into NADH. At the same time, the half picks up a free phosphate from the cell. Then each half hands its two phosphates, one at a time, to ADP, making two ATP. What’s left of each half is pyruvate.</p>
+    <p><strong>The bottom line.</strong> Per glucose, the payoff phase makes four ATP, but the investment phase spent two, so the net gain is two ATP. Glycolysis also produces two NADH and two pyruvate.</p>
+    <p><strong>The catch.</strong> A cell has a limited supply of NAD+. If its NADH can’t be turned back into NAD+, the oxidation step stops, and glycolysis stops with it. With oxygen, the mitochondria do this, and get much more ATP out of the pyruvate. Without oxygen, cells use fermentation instead: in your muscles, pyruvate takes the electrons back from NADH and becomes lactate, which frees up NAD+ so glycolysis can keep going.</p>
+  </section>
+
+  <section class="card" id="economics">
+    <p class="eyebrow">Think-aloud 3</p>
+    <h2>Why did Europe pull ahead of China?</h2>
+    <p class="note">Our summary, in our own words, of Avner Greif, Joel Mokyr and Guido Tabellini, <a href="https://cepr.org/voxeu/columns/great-divergence-and-great-reversal-new-approach-global-economic-history">“The Great Divergence and the Great Reversal: A new approach to global economic history”</a>, VoxEU, 14 October 2025, which draws on their book <em>Two Paths to Prosperity: Culture and Institutions in Europe and China, 1000–2000</em> (Princeton University Press, 2025). The video stops after point 5, the clans.</p>
+    <ol>
+      <li>A thousand years ago, China was richer and more sophisticated than Europe. Yet Europe became the home of democracy and the Industrial Revolution, while China fell behind until the late twentieth century. Why?</li>
+      <li>The best-known answer, from the historian Kenneth Pomeranz, is that the split came late, around 1750, with the Industrial Revolution, and that Europe was mostly lucky: it had coal close by, and access to the Americas.</li>
+      <li>Greif, Mokyr and Tabellini argue that the split started much earlier, and that the key difference was how ordinary people organized cooperation.</li>
+      <li>Before modern states, governments couldn’t reach most people. So local groups supplied the basics: protection, settling disputes, schooling, and insurance against bad times.</li>
+      <li>In China, from about the Song dynasty on, that local group was usually the clan: an extended family, bound by shared ancestry, loyalty to kin, and the authority of elders. The emperor relied on clans to keep order and collect taxes.</li>
+      <li>In Europe, after about the year 1000, it was more often a corporation: a guild, a monastery, a university, a self-governing city. These were held together by a shared purpose, not shared blood. They were open to strangers, they could grow, they let members leave, they ran on written rules, and a person could belong to several at once.</li>
+      <li>By 1500, the authors say, the two societies had settled into these patterns, and each pattern shaped what came next.</li>
+      <li>In Europe, law grew from the bottom up, out of the contracts and rules of corporations and merchants. Rulers who needed money granted corporations rights of self-government, which became early forms of rights and representation. And the way corporations ran themselves became a model for constitutions.</li>
+      <li>In China, law came from the top down, and focused on keeping order. Disputes were mostly settled inside clans, and education trained men for the imperial exams, not for new discoveries.</li>
+      <li>Corporations also fed growth: universities and scientific societies built up knowledge, trade could run between strangers, and businesses could grow beyond the family.</li>
+      <li>Finally, the authors argue that China’s recent rise didn’t come from erasing clan culture. Instead, family and local networks filled in where formal law and finance were weak.</li>
+    </ol>
+  </section>
+
+  <p class="foot">New to thoughtfeel? <a href="/quiz/">Take the 2-minute quiz</a>, or start with <a href="/">the lessons</a>.</p>
+</main>
+
+</body>
+</html>
