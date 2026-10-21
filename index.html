@@ -146,12 +146,12 @@ window.tfTrack = function (path, title) {
 
   .page { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; }
 
-  /* ---------- Hero: the pitch, and the test beside it ---------- */
+  /* ---------- Hero: the pitch, and the video to start with beside it ---------- */
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
-    align-items: start; /* the test card changes height as you answer; keep the pitch still */
+    align-items: start;
     padding-block: 24px 48px;
   }
   @media (min-width: 900px) {
@@ -177,7 +177,7 @@ window.tfTrack = function (path, title) {
   .hero-copy { font-size: clamp(18px, 1.9vw, 20px); line-height: 1.55; margin: 18px 0 0; max-width: 34ch; }
   .hero-guide { font-size: 17px; line-height: 1.55; color: var(--ink-2); margin: 14px 0 0; max-width: 38ch; }
   .byline { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); margin: 22px 0 0; }
-  /* On phones, keep the pitch short so the first question reaches the first screen. */
+  /* On phones, keep the pitch short so the video reaches the first screen. */
   @media (max-width: 600px) {
     .hero { gap: 20px; padding-top: 12px; }
     .hero-copy { line-height: 1.5; margin-top: 14px; }
@@ -185,6 +185,25 @@ window.tfTrack = function (path, title) {
     .byline { margin-top: 14px; }
     .imt-intro-more { display: none; }
   }
+  /* The video to start with: its thumbnail until it's played, then YouTube's player in the same place. */
+  .start { display: grid; gap: 10px; }
+  .start .eyebrow { margin: 0; }
+  .start-player {
+    position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px;
+    background: var(--indigo-soft); box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
+  }
+  .start-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* The play button sits between the thumbnail's three linked bubbles, clear of its words, light in both themes. */
+  .start-player .play { left: 69%; background: #f4f1ea; }
+  .start-player .play::after { border-left-color: #2c3f8f; }
+  .start-player:hover .play, .start-player:focus-visible .play { transform: scale(1.08); }
+  .start-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; background: #000; }
+  .start h2 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 2.4vw, 27px);
+    line-height: 1.2; letter-spacing: -0.015em; margin: 6px 0 0; text-wrap: balance;
+  }
+  .start-desc { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
+  .start-meta { margin: 0; font-family: var(--sans); font-size: 15.5px; color: var(--ink-2); }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-family: var(--sans); font-weight: 500; font-size: 16px;
@@ -218,7 +237,14 @@ window.tfTrack = function (path, title) {
 
   /* ---------- Definition ---------- */
   .what { padding-block: 8px 72px; }
-  .what h2 {
+  /* The 1-minute test: right after the video on phones, beside the definition on wide screens. */
+  .what > .imt-card { margin-bottom: 56px; }
+  @media (min-width: 900px) {
+    .what { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+    .what > .imt-card { grid-column: 2; grid-row: 1; margin-bottom: 0; }
+    .what-main { grid-column: 1; grid-row: 1; }
+  }
+  .what-main h2 {
     font-family: var(--sans); font-weight: 700; font-size: clamp(30px, 4vw, 44px);
     line-height: 1.1; letter-spacing: -0.02em; margin: 0; text-wrap: balance;
   }
@@ -623,6 +649,20 @@ window.tfTrack = function (path, title) {
       <p class="byline">BY <a href="#about">TED SHACHTMAN AND DR. DAVID LO</a> · <a href="#videos">WATCH THE VIDEOS</a> · <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">READ THE ESSAYS</a></p>
     </div>
 
+    <section class="start" id="start" aria-labelledby="start-title">
+      <p class="eyebrow">Start here</p>
+      <a class="start-player" href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener" aria-label="Play the video: How to Learn Anything Complicated by Building a Concept Story">
+        <img src="https://i.ytimg.com/vi/dV8fNY311W4/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/dV8fNY311W4/hqdefault.jpg'">
+        <span class="play" aria-hidden="true"></span>
+      </a>
+      <h2 id="start-title">How to Learn Anything Complicated by Building a Concept Story</h2>
+      <p class="start-desc">What thoughtfeel is, how to tell whether you have it, and how to build what you read into a concept story. Then three complete walkthroughs, step by step: a computer science algorithm for finding the shortest path, the biological process of glycolysis, and an economics argument in prose.</p>
+      <p class="start-meta">58 minutes · <a href="/texts/">The full texts from the video</a></p>
+    </section>
+  </header>
+
+  <!-- ================= Definition, with the test beside it ================= -->
+  <section class="what" id="what" aria-labelledby="what-title">
     <section class="imt-card imt" id="test" aria-labelledby="test-title">
       <canvas id="swatch" aria-hidden="true"></canvas>
       <div class="imt-card-body">
@@ -641,30 +681,29 @@ window.tfTrack = function (path, title) {
         <p class="imt-more">Want to be sure? <a href="/quiz/v2/">Take the 2-minute quiz</a>.</p>
       </div>
     </section>
-  </header>
 
-  <!-- ================= Definition ================= -->
-  <section class="what" id="what" aria-labelledby="what-title">
-    <p class="eyebrow">The sense</p>
-    <h2 id="what-title">What is thoughtfeel?</h2>
-    <p class="what-lead">thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
-    <p class="what-body">You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
-    <p class="what-body">Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
-    <p class="what-body">That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
-    <p class="what-body">Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
+    <div class="what-main">
+      <p class="eyebrow">The sense</p>
+      <h2 id="what-title">What is thoughtfeel?</h2>
+      <p class="what-lead">thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
+      <p class="what-body">You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
+      <p class="what-body">Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
+      <p class="what-body">That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
+      <p class="what-body">Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
 
-    <div class="what-text what-solo">
-      <h3>Is it really all at once?</h3>
-      <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
-      <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
-    </div>
+      <div class="what-text what-solo">
+        <h3>Is it really all at once?</h3>
+        <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
+        <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
+      </div>
 
-    <div class="what-text what-solo" id="why-it-works">
-      <h3>Why thoughtfeel works: follow a conceptual story the way your mind’s eye helps you follow a fairy tale</h3>
-      <p>If I tell you, “A boy and a girl went to the well. The boy pumped water, and water came out of the well. The girl took a bucket and poured the water on a patch of green grass,” you can understand and remember that story better by using your mind’s eye to imagine it.</p>
-      <p>But if I tell you, “The mother of the regent of the land is intrigued by the prospect of discovery,” you can’t use your mind’s eye to follow along, because the story is conceptual, not visual.</p>
-      <p>With thoughtfeel, though, you can use your ability to imagine in concepts to build that story in your imagination. That helps you understand the conceptual story the same way your mind’s eye helps you understand the visual one.</p>
-      <p>thoughtfeel also helps with mental simulation of concepts, the same way that your mind’s eye helps with mental simulation of objects. If you want to figure out what happens when you turn a gear in a gearbox, you can use your mind’s eye to run the simulation. In thoughtfeel, when you’ve built a conceptual machine like an algorithm or a biological process, you can simulate how the system would behave if you changed a conceptual property.</p>
+      <div class="what-text what-solo" id="why-it-works">
+        <h3>Why thoughtfeel works: follow a conceptual story the way your mind’s eye helps you follow a fairy tale</h3>
+        <p>If I tell you, “A boy and a girl went to the well. The boy pumped water, and water came out of the well. The girl took a bucket and poured the water on a patch of green grass,” you can understand and remember that story better by using your mind’s eye to imagine it.</p>
+        <p>But if I tell you, “The mother of the regent of the land is intrigued by the prospect of discovery,” you can’t use your mind’s eye to follow along, because the story is conceptual, not visual.</p>
+        <p>With thoughtfeel, though, you can use your ability to imagine in concepts to build that story in your imagination. That helps you understand the conceptual story the same way your mind’s eye helps you understand the visual one.</p>
+        <p>thoughtfeel also helps with mental simulation of concepts, the same way that your mind’s eye helps with mental simulation of objects. If you want to figure out what happens when you turn a gear in a gearbox, you can use your mind’s eye to run the simulation. In thoughtfeel, when you’ve built a conceptual machine like an algorithm or a biological process, you can simulate how the system would behave if you changed a conceptual property.</p>
+      </div>
     </div>
   </section>
 
@@ -817,9 +856,8 @@ window.tfTrack = function (path, title) {
       <p class="eyebrow">About us</p>
       <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
       <p>I’m a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and I’m finishing a master’s in computer science at the University of Colorado Boulder in November 2026.</p>
-      <p>I developed thoughtfeel as a technique for learning and memory. I use it to remember lists, numbers, song lyrics and what people said, to learn board games, and to play chess in my head. I made the animated lessons and started r/ThoughtFeel so people can compare notes.</p>
+      <p>I developed thoughtfeel as a technique for learning and memory. I use it to remember lists, numbers, song lyrics and what people said, to learn board games, complex math and computer science, to play chess in my head, and to think through complex strategic problems. I made the animated lessons and started <a href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">r/MentalAtlas</a> so people can compare notes.</p>
       <p>thoughtfeel is a collaboration between me and Dr. David Lo, and we write up the techniques as essays on <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">Substack</a>.</p>
-      <p>This is still an early investigation. I keep my own observations separate from established research, and I’d like to hear how it works for you, or doesn’t.</p>
       <div class="cofounder">
         <h3><span>Co-founder</span>Dr. David Lo</h3>
         <p>David is a resident physician who trained at Touro College of Osteopathic Medicine, where he now also teaches osteopathic medical students as an adjunct professor. He has spent about ten years teaching math and science: at Rutgers University he taught calculus and research statistics, and coordinated tutoring and course materials in organic chemistry, biochemistry and physics for students headed into the health professions.</p>
@@ -839,11 +877,12 @@ window.tfTrack = function (path, title) {
 
   <footer class="join">
     <div>
-      <h2>Compare notes on r/ThoughtFeel</h2>
+      <h2>Compare notes on r/MentalAtlas</h2>
       <p>Tried a lesson? Post what you noticed and what came back the next day. Concrete reports help most, including reports that it didn’t work for you.</p>
-      <a class="btn primary" href="https://www.reddit.com/r/ThoughtFeel/" target="_blank" rel="noopener">Open r/ThoughtFeel</a>
+      <a class="btn primary" href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">Open r/MentalAtlas</a>
     </div>
     <ul>
+      <li><a href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener">Start here: Concept stories</a><span>How to Learn Anything Complicated by Building a Concept Story</span></li>
       <li><a href="https://www.youtube.com/watch?v=gTu22urSWAc" target="_blank" rel="noopener">Video 1: What it is</a><span>What Is thoughtfeel? A Sense for Concepts</span></li>
       <li><a href="https://www.youtube.com/watch?v=bQvnFz86URY" target="_blank" rel="noopener">Video 2: Learning a texture</a><span>Why You Miss Ideas You Already Know</span></li>
       <li><a href="https://www.youtube.com/watch?v=mFIThyF5Y0E" target="_blank" rel="noopener">Video 3: Memorizing a list</a><span>How to Memorize Any List by Imagining in Concepts</span></li>
@@ -1052,12 +1091,33 @@ window.tfTrack = function (path, title) {
     renderStep(0, false);
   })();
 
+  /* ---------- The video to start with: play it in place, in YouTube's privacy-enhanced player ---------- */
+  (function () {
+    var link = document.querySelector('.start-player');
+    if (!link) return;
+    link.addEventListener('click', function (e) {
+      // A middle click or a modifier key still opens it on YouTube.
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      var frame = document.createElement('iframe');
+      frame.className = 'start-frame';
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + /[?&]v=([\w-]+)/.exec(link.getAttribute('href'))[1] + '?autoplay=1&rel=0&playsinline=1';
+      frame.title = document.getElementById('start-title').textContent;
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      link.replaceWith(frame);
+      frame.focus();
+    });
+  })();
+
   /* ---------- Which lessons people open, and who goes on to the full quiz ---------- */
   document.addEventListener('click', function (e) {
     var a = e.target.closest('a');
     if (!a) return;
     var v = /[?&]v=([\w-]+)/.exec(a.getAttribute('href') || '');
-    if (v) {
+    if (a.classList.contains('start-player')) {
+      tfTrack('start-video', 'Start here: concept stories');
+    } else if (v) {
       var card = a.closest('.video');
       var label = card ? (card.querySelector('.video-label') || {}).textContent : '';
       var num = /Video (\d+)/.exec(label || a.textContent || '');
@@ -1068,6 +1128,8 @@ window.tfTrack = function (path, title) {
       tfTrack((a.closest('#test') ? 'test-to-' : 'home-to-') + dest);
     } else if ((a.getAttribute('href') || '').indexOf('/words/') === 0) {
       tfTrack('home-to-words');
+    } else if ((a.getAttribute('href') || '').indexOf('/texts/') === 0) {
+      tfTrack('home-to-texts');
     } else if ((a.getAttribute('href') || '').indexOf('thoughtfeel.substack.com') !== -1) {
       tfTrack(a.closest('.byline') ? 'byline-to-substack' : a.closest('.read-first') ? 'read-start-here' : 'home-to-substack');
     } else if (a.closest('.voice')) {
