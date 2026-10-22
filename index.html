@@ -193,8 +193,8 @@ window.tfTrack = function (path, title) {
     background: var(--indigo-soft); box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
   }
   .start-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  /* The play button sits between the thumbnail's three linked bubbles, clear of its words, light in both themes. */
-  .start-player .play { left: 69%; background: #f4f1ea; }
+  /* The play button sits on the dark wall below the cliff's shadow, clear of the thumbnail's words and the glowing idea, light in both themes. */
+  .start-player .play { left: 80%; top: 70%; background: #f4f1ea; }
   .start-player .play::after { border-left-color: #2c3f8f; }
   .start-player:hover .play, .start-player:focus-visible .play { transform: scale(1.08); }
   .start-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; background: #000; }
@@ -651,13 +651,13 @@ window.tfTrack = function (path, title) {
 
     <section class="start" id="start" aria-labelledby="start-title">
       <p class="eyebrow">Start here</p>
-      <a class="start-player" href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener" aria-label="Play the video: How to Learn Anything Complicated by Building a Concept Story">
-        <img src="https://i.ytimg.com/vi/dV8fNY311W4/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/dV8fNY311W4/hqdefault.jpg'">
+      <a class="start-player" href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener" aria-label="Play the video: Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)">
+        <img src="https://i.ytimg.com/vi/g3Z8VnARbQg/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/g3Z8VnARbQg/hqdefault.jpg'">
         <span class="play" aria-hidden="true"></span>
       </a>
-      <h2 id="start-title">How to Learn Anything Complicated by Building a Concept Story</h2>
-      <p class="start-desc">What thoughtfeel is, how to tell whether you have it, and how to build what you read into a concept story. Then three complete walkthroughs, step by step: a computer science algorithm for finding the shortest path, the biological process of glycolysis, and an economics argument in prose.</p>
-      <p class="start-meta">58 minutes · <a href="/texts/">The full texts from the video</a></p>
+      <h2 id="start-title">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</h2>
+      <p class="start-desc">Visual analogies are the best tool we have for remembering complex concepts, but the picture is only the idea’s shadow: you forget what it meant, reason from the picture instead of the idea, can’t tell a wrong idea from a right one, and have to rebuild the idea every time. Imagining in concepts fixes all four.</p>
+      <p class="start-meta">7 minutes · Next: <a href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener">the full walkthrough on concept stories</a> (58 minutes)</p>
     </section>
   </header>
 
@@ -882,7 +882,8 @@ window.tfTrack = function (path, title) {
       <a class="btn primary" href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">Open r/MentalAtlas</a>
     </div>
     <ul>
-      <li><a href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener">Start here: Concept stories</a><span>How to Learn Anything Complicated by Building a Concept Story</span></li>
+      <li><a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Start here: Visual analogies</a><span>Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span></li>
+      <li><a href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener">The full walkthrough: Concept stories</a><span>How to Learn Anything Complicated by Building a Concept Story · <a href="/texts/">The full texts</a></span></li>
       <li><a href="https://www.youtube.com/watch?v=gTu22urSWAc" target="_blank" rel="noopener">Video 1: What it is</a><span>What Is thoughtfeel? A Sense for Concepts</span></li>
       <li><a href="https://www.youtube.com/watch?v=bQvnFz86URY" target="_blank" rel="noopener">Video 2: Learning a texture</a><span>Why You Miss Ideas You Already Know</span></li>
       <li><a href="https://www.youtube.com/watch?v=mFIThyF5Y0E" target="_blank" rel="noopener">Video 3: Memorizing a list</a><span>How to Memorize Any List by Imagining in Concepts</span></li>
@@ -1116,7 +1117,7 @@ window.tfTrack = function (path, title) {
     if (!a) return;
     var v = /[?&]v=([\w-]+)/.exec(a.getAttribute('href') || '');
     if (a.classList.contains('start-player')) {
-      tfTrack('start-video', 'Start here: concept stories');
+      tfTrack('start-video', 'Start here: visual analogies');
     } else if (v) {
       var card = a.closest('.video');
       var label = card ? (card.querySelector('.video-label') || {}).textContent : '';
