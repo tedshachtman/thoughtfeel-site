@@ -449,6 +449,8 @@ window.tfTrack = function (path, title) {
   }
   .voice-who { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin: 0; }
   .voice-photo { width: 88px; height: 88px; border-radius: 12px; object-fit: cover; background: var(--surface-2); }
+  /* No photo: the first letter of the name sits in the photo's place. */
+  .voice-initial { display: grid; place-items: center; font-family: var(--sans); font-weight: 700; font-size: 38px; line-height: 1; color: var(--indigo); }
   .voice-meta { display: grid; gap: 2px; }
   .voice-name { font-family: var(--sans); font-weight: 700; font-size: 20px; line-height: 1.25; }
   .voice-role { font-size: 15.5px; line-height: 1.4; color: var(--ink-2); }
@@ -731,6 +733,22 @@ window.tfTrack = function (path, title) {
         <p>So it’s 30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention. It’s just insane how efficient thoughtfeel is.</p>
         <p>And it’s not only kanji. Right now, I’m using it to study for QA engineering from scratch. TF makes it much easier to understand the lessons and I can now recite them forwards and backwards without any rehearsal. I also use it to create reminders for myself throughout the day, to learn lessons from books and videos, to memorize useful discussions in conversations, to remember some insights and ideas that I came up with and for general thinking.</p>
         <p>It’s basically the endgame for studying and mnemonic techniques. Thank you!</p>
+      </blockquote>
+    </figure>
+    <figure class="voice">
+      <figcaption class="voice-who">
+        <span class="voice-photo voice-initial" aria-hidden="true">F</span>
+        <span class="voice-meta">
+          <span class="voice-name">Fred</span>
+          <span class="voice-role">Co-founder of a health tech startup, learning Dutch</span>
+        </span>
+      </figcaption>
+      <p class="voice-pull" aria-hidden="true">“I didn’t have to force an image into my mind. I could just grasp the concept and understand what it meant.”</p>
+      <blockquote class="voice-text">
+        <p>When I first spoke with Ted about ThoughtFeel, I realised how much I had been relying on visualisation to learn and remember things. I was used to having to picture things in my head, and that could get tiring, especially when learning something new.</p>
+        <p>Trying ThoughtFeel felt different. I didn’t have to force an image into my mind. I could just grasp the concept and understand what it meant.</p>
+        <p>I’ve been using it to learn Dutch because I need the language for my startup in the Netherlands, and honestly, learning feels less stressful and more natural. I find it easier to grasp things and recall what I’ve learned. It’s been a really interesting experience because I never thought I could learn this way.</p>
+        <p>Thank you for introducing me to ThoughtFeel Ted! Forever grateful</p>
       </blockquote>
     </figure>
   </section>
