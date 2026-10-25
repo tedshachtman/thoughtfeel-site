@@ -1,0 +1,5 @@
+# Search engines and AI assistants are welcome to read and quote this site.
+User-agent: *
+Allow: /
+
+Sitemap: https://thoughtfeel.net/sitemap.xml

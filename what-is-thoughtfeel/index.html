@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.">
+<link rel="canonical" href="https://thoughtfeel.net/what-is-thoughtfeel/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="thoughtfeel">
+<meta property="og:title" content="What is thoughtfeel?">
+<meta property="og:description" content="thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.">
+<meta property="og:url" content="https://thoughtfeel.net/what-is-thoughtfeel/">
+<meta property="og:image" content="https://thoughtfeel.net/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="thoughtfeel: the mnemonic technique for people who can imagine in concepts, not just words or images.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is thoughtfeel?">
+<meta name="twitter:description" content="thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.">
+<meta name="twitter:image" content="https://thoughtfeel.net/og.png">
+<script>
+window.tfTrack = function (path, title) {
+  try {
+    var send = function () { window.goatcounter.count({ path: path, title: title || path, event: true }); };
+    if (window.goatcounter && window.goatcounter.count) send(); else (window.tfQueue = window.tfQueue || []).push(send);
+  } catch (e) {}
+};
+</script>
+<script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+  onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
+<script>
+(function () {
+  var KIT = {"lessons":"","waitlist":""};
+  // Keep the visit's first ?ref, so a signup on a later page still says where the visitor came from.
+  var ref = '';
+  try {
+    ref = new URLSearchParams(location.search).get('ref') || sessionStorage.getItem('tf.ref') || '';
+    if (ref && !sessionStorage.getItem('tf.ref')) sessionStorage.setItem('tf.ref', ref);
+  } catch (e) {}
+  window.tfSignup = function (d) {
+    var list = d.list === 'waitlist' ? 'waitlist' : 'lessons', fields = {};
+    Object.keys(d.fields || {}).forEach(function (k) { if (d.fields[k] !== '' && d.fields[k] != null) fields[k] = String(d.fields[k]); });
+    fields.waitlist = list === 'waitlist' ? 'yes' : 'no';
+    fields.signup_page = location.pathname;
+    if (ref) fields.ref = ref;
+    if (KIT[list]) {
+      var body = new URLSearchParams();
+      body.append('email_address', d.email);
+      Object.keys(fields).forEach(function (k) { body.append('fields[' + k + ']', fields[k]); });
+      return fetch('https://app.kit.com/forms/' + KIT[list] + '/subscriptions', { method: 'POST', headers: { 'Accept': 'application/json' }, body: body })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j || j.status !== 'success') throw new Error('not accepted'); return j; });
+    }
+    var payload = { email: d.email, list: list, _subject: d.subject || 'New thoughtfeel signup', _template: 'table' };
+    Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
+    return fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (String(j && j.success) !== 'true') throw new Error('not accepted'); return j; });
+  };
+})();
+</script>
+</head>
+<body>
+<title>What is thoughtfeel? A sense for concepts · thoughtfeel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
+<!-- The definition for search engines and AI assistants (2026-10-25). Every answer here is also on the page. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://thoughtfeel.net/what-is-thoughtfeel/#thoughtfeel",
+      "name": "thoughtfeel",
+      "alternateName": ["thought feel", "ThoughtFeel", "Thought Feel"],
+      "description": "thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.",
+      "url": "https://thoughtfeel.net/what-is-thoughtfeel/",
+      "inDefinedTermSet": { "@type": "DefinedTermSet", "@id": "https://thoughtfeel.net/#terms", "name": "thoughtfeel guide", "url": "https://thoughtfeel.net/" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://thoughtfeel.net/what-is-thoughtfeel/",
+      "url": "https://thoughtfeel.net/what-is-thoughtfeel/",
+      "name": "What is thoughtfeel?",
+      "inLanguage": "en",
+      "about": { "@id": "https://thoughtfeel.net/what-is-thoughtfeel/#thoughtfeel" },
+      "isPartOf": { "@id": "https://thoughtfeel.net/#website" },
+      "author": [
+        { "@type": "Person", "@id": "https://thoughtfeel.net/#ted", "name": "Ted Shachtman" },
+        { "@type": "Person", "@id": "https://thoughtfeel.net/#david", "name": "David Lo", "honorificPrefix": "Dr." }
+      ],
+      "mainEntity": [
+        { "@type": "Question", "name": "What is thoughtfeel?",
+          "acceptedAnswer": { "@type": "Answer", "text": "thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts." } },
+        { "@type": "Question", "name": "Does everyone have thoughtfeel?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid." } },
+        { "@type": "Question", "name": "Is thoughtfeel the mind’s eye or the inner voice?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Pictures and words can come along with a thought, but thoughtfeel works without them." } },
+        { "@type": "Question", "name": "Is thoughtfeel an emotion?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. The economy and justice feel different from each other, but neither one feels happy or sad." } },
+        { "@type": "Question", "name": "Is thoughtfeel the feeling of knowing?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Everyone knows what they’re thinking. thoughtfeel gives the thought itself detail you can notice, the way a picture has detail." } },
+        { "@type": "Question", "name": "Is thoughtfeel a technique?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. thoughtfeel is the sense. The lessons teach techniques that use it, the way the memory palace uses the mind’s eye." } },
+        { "@type": "Question", "name": "How can I tell if I have thoughtfeel?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Take the 1-minute test at https://thoughtfeel.net/#test or the 2-minute quiz at https://thoughtfeel.net/quiz/v2/." } }
+      ]
+    }
+  ]
+}
+</script>
+<style>
+  /* Same tokens as the home page (thoughtfeel-guide.html), the quiz, the words page and the texts page. */
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-2: #e6e9f0;
+    --ink: #19213a;
+    --ink-2: #4b5369;
+    --rule: #d3d8e2;
+    --indigo: #2c3f8f;
+    --weld: #b87a1c;
+    --term: #7f5210;
+    --serif: "Literata", Georgia, "Times New Roman", serif;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #10131b; --surface: #181c27; --surface-2: #212634; --ink: #e5e8ef; --ink-2: #a4aabb;
+      --rule: #2c3243; --indigo: #a5b5ff; --weld: #e2a84a; --term: #eab964;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #10131b; --surface: #181c27; --surface-2: #212634; --ink: #e5e8ef; --ink-2: #a4aabb;
+    --rule: #2c3243; --indigo: #a5b5ff; --weld: #e2a84a; --term: #eab964;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--indigo); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--weld); outline-offset: 3px; border-radius: 3px; }
+  .page { max-width: 760px; margin: 0 auto; padding: 20px 16px 56px; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 4px 0 20px; }
+  .mark { font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
+  .mark span { color: var(--weld); }
+  .home { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: clamp(28px, 6vw, 40px); line-height: 1.15; letter-spacing: -0.02em; margin: 8px 0 12px; }
+  .def { font-size: clamp(20px, 3.6vw, 23px); line-height: 1.5; margin: 0 0 12px; }
+  .lede { color: var(--ink-2); margin: 0 0 28px; }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(20px, 4vw, 36px); margin: 0 0 24px;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35); }
+  .card > :last-child { margin-bottom: 0; }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0 0 6px; }
+  h2 { font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 4.5vw, 28px); line-height: 1.2; margin: 0 0 10px; }
+  h3 { font-family: var(--sans); font-weight: 700; font-size: 19px; margin: 22px 0 6px; }
+  .not { list-style: none; padding: 0; margin: 0; }
+  .not li { padding: 12px 0; border-top: 1px solid var(--rule); }
+  .not li:first-child { border-top: 0; padding-top: 0; }
+  .not strong { font-family: var(--sans); font-weight: 700; }
+  .foot { font-size: 15.5px; color: var(--ink-2); }
+</style>
+
+<main class="page">
+  <header class="top">
+    <a class="mark" href="/">thought<span>feel</span></a>
+    <a class="home" href="/">all lessons</a>
+  </header>
+
+  <h1>What is thoughtfeel?</h1>
+  <p class="def">thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
+  <p class="lede">Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
+
+  <section class="card" id="the-sense">
+    <p class="eyebrow">The sense</p>
+    <h2>Like vision, for concepts</h2>
+    <p>You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
+    <p>Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
+    <p>That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
+    <h3>Is it really all at once?</h3>
+    <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
+    <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
+  </section>
+
+  <section class="card" id="who-has-it">
+    <p class="eyebrow">Who has it</p>
+    <h2>Does everyone have it?</h2>
+    <p>Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter.</p>
+    <p>To find out how clearly you can imagine in concepts, <a href="/#test" data-track="definition-to-test">take the 1-minute test</a> or <a href="/quiz/v2/" data-track="definition-to-quiz">the 2-minute quiz</a>.</p>
+  </section>
+
+  <section class="card" id="not">
+    <p class="eyebrow">What it isn’t</p>
+    <h2>What thoughtfeel is not</h2>
+    <ul class="not">
+      <li><strong>Not your mind’s eye or inner voice.</strong> Pictures and words can come along with a thought, but thoughtfeel works without them.</li>
+      <li><strong>Not an emotion.</strong> The economy and justice feel different from each other, but neither one feels happy or sad.</li>
+      <li><strong>Not the feeling of knowing.</strong> Everyone knows what they’re thinking. thoughtfeel gives the thought itself detail you can notice, the way a picture has detail.</li>
+      <li><strong>Not a technique.</strong> thoughtfeel is the sense. The lessons teach techniques that use it, the way the memory palace uses the mind’s eye.</li>
+    </ul>
+  </section>
+
+  <section class="card" id="useful">
+    <p class="eyebrow">The lessons</p>
+    <h2>What is it useful for?</h2>
+    <p>thoughtfeel is a sense, like your mind’s eye or your inner voice. Those senses come with well-known techniques you can learn to remember and learn better. The memory palace uses your mind’s eye to pull off remarkable feats of memory, like memorizing a 1,000-digit number in an hour. Your inner voice remembers more when you put the words to a song, which is why the alphabet song works.</p>
+    <p>thoughtfeel has techniques of its own, and learning them can improve how you think and learn. Each lesson teaches one. Start with <a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener" data-track="definition-to-start-video">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</a>, or see <a href="/#videos" data-track="definition-to-lessons">all the lessons</a>.</p>
+  </section>
+
+  <p class="foot">Ted Shachtman named the sense thoughtfeel. He writes this guide with Dr. David Lo. People compare notes on <a href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">r/MentalAtlas</a>.</p>
+</main>
+
+<script>
+  // Count clicks on the page's links (GoatCounter events; no-ops without analytics).
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[data-track]');
+    if (a && window.tfTrack) window.tfTrack(a.getAttribute('data-track'));
+  });
+</script>
+
+</body>
+</html>
