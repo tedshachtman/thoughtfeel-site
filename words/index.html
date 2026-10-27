@@ -285,7 +285,7 @@ window.tfTrack = function (path, title) {
         <li>Bring up that part and the meaning as concepts, and say out loud how they connect.</li>
       </ol>
       <p class="note">Then you’ll see one way to link it.</p>
-      <p class="note">Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a> first.</p>
+      <p class="note">Not sure you have thoughtfeel? <a href="/quiz/">Answer one question</a> first.</p>
     </div>
   </main>
 
@@ -679,7 +679,7 @@ window.tfTrack = function (path, title) {
   }
   function sayMeter(n) { return meter('m-say', 'The word, from its meaning', n.e, n.c, n.e + ' of ' + N + (n.c ? ', plus ' + n.c + ' close' : '')); }
   function resultText(n) {
-    if (n.r <= 3) return 'Fewer stuck this time. A link holds when both things are up in thoughtfeel, as concepts, while you say how they connect. Not sure you have thoughtfeel? <a href="/#test">Take the 1-minute test</a>.';
+    if (n.r <= 3) return 'Fewer stuck this time. A link holds when both things are up in thoughtfeel, as concepts, while you say how they connect. Not sure you have thoughtfeel? <a href="/quiz/">Answer one question</a>.';
     if (n.e + n.c / 2 >= n.r) return 'You produced the words about as well as you recognized them. Producing is usually the harder direction.';
     return 'Producing a word is usually harder than recognizing it.' +
       (n.c ? ' A close answer means the part you linked came back, but not the whole word.' : '') +
