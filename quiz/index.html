@@ -3,42 +3,354 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Ten short statements about how you think in words, pictures and concepts. See your mix, and how vivid your thoughtfeel is.">
-<link rel="canonical" href="https://thoughtfeel.net/quiz/v2/">
+<meta name="description" content="Think about your mom. There are four ways people do it: a picture, her voice, just knowing, or a concept bubble. Can you do the fourth one?">
+<link rel="canonical" href="https://thoughtfeel.net/quiz/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
-<meta property="og:title" content="How vivid is your thoughtfeel? Take the quiz">
-<meta property="og:description" content="Ten short statements about how you think in words, pictures and concepts. See your mix, and how vivid your thoughtfeel is.">
-<meta property="og:url" content="https://thoughtfeel.net/quiz/v2/">
-<meta property="og:image" content="https://thoughtfeel.net/og-quiz.png">
+<meta property="og:title" content="Do you have thoughtfeel? One question">
+<meta property="og:description" content="Think about your mom. There are four ways people do it: a picture, her voice, just knowing, or a concept bubble. Can you do the fourth one?">
+<meta property="og:url" content="https://thoughtfeel.net/quiz/">
+<meta property="og:image" content="https://thoughtfeel.net/og-quiz-mom.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="How vivid is yours? Take the 2-minute quiz.">
+<meta property="og:image:alt" content="Think about your mom. There are four ways people do it. Can you do the fourth one?">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="How vivid is your thoughtfeel? Take the quiz">
-<meta name="twitter:description" content="Ten short statements about how you think in words, pictures and concepts. See your mix, and how vivid your thoughtfeel is.">
-<meta name="twitter:image" content="https://thoughtfeel.net/og-quiz.png">
-
-</head>
-<body>
-<title>How vivid is your thoughtfeel? · the quiz</title>
-<style>:root { color-scheme: light dark; } body { font-family: Georgia, serif; margin: 40px 20px; }</style>
+<meta name="twitter:title" content="Do you have thoughtfeel? One question">
+<meta name="twitter:description" content="Think about your mom. There are four ways people do it: a picture, her voice, just knowing, or a concept bubble. Can you do the fourth one?">
+<meta name="twitter:image" content="https://thoughtfeel.net/og-quiz-mom.png">
 <script>
-// The first quiz was retired on 2026-10-10. Old links to /quiz/ (YouTube descriptions, outreach, shared results)
-// forward to the new one. The ?ref= tag goes along, or, without one, the site the visit came from,
-// so GoatCounter still credits the link that brought them.
-(function () {
-  var q = location.search;
+window.tfTrack = function (path, title) {
   try {
-    var from = document.referrer ? new URL(document.referrer).hostname : '';
-    if (from && from !== location.hostname && !/[?&](ref|utm_source|src)=/.test(q)) q += (q ? '&' : '?') + 'ref=' + encodeURIComponent(from);
+    var send = function () { window.goatcounter.count({ path: path, title: title || path, event: true }); };
+    if (window.goatcounter && window.goatcounter.count) send(); else (window.tfQueue = window.tfQueue || []).push(send);
   } catch (e) {}
-  location.replace('/quiz/v2/' + q + location.hash);
+};
+</script>
+<script data-goatcounter="https://thoughtfeel.goatcounter.com/count" async src="//gc.zgo.at/count.js"
+  onload="(window.tfQueue || []).forEach(function (f) { try { f(); } catch (e) {} }); window.tfQueue = [];"></script>
+<script>
+(function () {
+  var KIT = {"lessons":"","waitlist":""};
+  // Keep the visit's first ?ref, so a signup on a later page still says where the visitor came from.
+  var ref = '';
+  try {
+    ref = new URLSearchParams(location.search).get('ref') || sessionStorage.getItem('tf.ref') || '';
+    if (ref && !sessionStorage.getItem('tf.ref')) sessionStorage.setItem('tf.ref', ref);
+  } catch (e) {}
+  window.tfSignup = function (d) {
+    var list = d.list === 'waitlist' ? 'waitlist' : 'lessons', fields = {};
+    Object.keys(d.fields || {}).forEach(function (k) { if (d.fields[k] !== '' && d.fields[k] != null) fields[k] = String(d.fields[k]); });
+    fields.waitlist = list === 'waitlist' ? 'yes' : 'no';
+    fields.signup_page = location.pathname;
+    if (ref) fields.ref = ref;
+    if (KIT[list]) {
+      var body = new URLSearchParams();
+      body.append('email_address', d.email);
+      Object.keys(fields).forEach(function (k) { body.append('fields[' + k + ']', fields[k]); });
+      return fetch('https://app.kit.com/forms/' + KIT[list] + '/subscriptions', { method: 'POST', headers: { 'Accept': 'application/json' }, body: body })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { if (!j || j.status !== 'success') throw new Error('not accepted'); return j; });
+    }
+    var payload = { email: d.email, list: list, _subject: d.subject || 'New thoughtfeel signup', _template: 'table' };
+    Object.keys(fields).forEach(function (k) { payload[k] = fields[k]; });
+    return fetch('https://formsubmit.co/ajax/teddyshachtman@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (String(j && j.success) !== 'true') throw new Error('not accepted'); return j; });
+  };
 })();
 </script>
-<noscript><meta http-equiv="refresh" content="0; url=/quiz/v2/"></noscript>
-<p>The quiz has moved. <a href="/quiz/v2/">Take the quiz</a>.</p>
+</head>
+<body>
+<title>Do you have thoughtfeel? · one question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
+<style>
+  /* The one-question quiz (2026-10-27): the four ways to think about your mom, from the live lessons, replaces the
+     ten-statement quiz v2 (archived). Same tokens as the home page (thoughtfeel-guide.html). */
+  :root {
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-2: #e6e9f0;
+    --ink: #19213a;
+    --ink-2: #4b5369;
+    --rule: #d3d8e2;
+    --indigo: #2c3f8f;
+    --indigo-soft: #dfe4f5;
+    --weld: #b87a1c;
+    --term: #7f5210;
+    --ok: #2b7451;
+    --miss: #a9412e;
+    --serif: "Literata", Georgia, "Times New Roman", serif;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #10131b;
+      --surface: #181c27;
+      --surface-2: #212634;
+      --ink: #e5e8ef;
+      --ink-2: #a4aabb;
+      --rule: #2c3243;
+      --indigo: #a5b5ff;
+      --indigo-soft: #232b4a;
+      --weld: #e2a84a;
+      --term: #eab964;
+      --ok: #7fd1a3;
+      --miss: #f09a86;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #10131b;
+    --surface: #181c27;
+    --surface-2: #212634;
+    --ink: #e5e8ef;
+    --ink-2: #a4aabb;
+    --rule: #2c3243;
+    --indigo: #a5b5ff;
+    --indigo-soft: #232b4a;
+    --weld: #e2a84a;
+    --term: #eab964;
+    --ok: #7fd1a3;
+    --miss: #f09a86;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--serif); font-size: 18px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--indigo); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--weld); outline-offset: 3px; border-radius: 3px; }
+
+  .page { max-width: 880px; margin: 0 auto; padding: 20px 16px 56px; }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; padding: 4px 4px 20px; }
+  @media (max-width: 360px) { .mark { font-size: 24px; } }
+  .mark { font-family: var(--sans); font-weight: 700; font-size: 28px; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
+  .mark span { color: var(--weld); }
+  .home { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
+    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
+    padding: clamp(20px, 4vw, 40px);
+  }
+  .eyebrow { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0 0 8px; }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: clamp(32px, 6vw, 48px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 10px; }
+  .lede { font-size: 19px; color: var(--ink-2); margin: 0 0 26px; }
+
+  .ways { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  @media (max-width: 640px) { .ways { grid-template-columns: 1fr; } }
+  .way { border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; background: var(--surface); display: flex; flex-direction: column; }
+  .way img, .way .words { display: block; width: 100%; aspect-ratio: 3 / 2; }
+  .way img { height: auto; object-fit: cover; }
+  .way .words {
+    display: grid; place-content: center; text-align: center; padding: 18px;
+    background: var(--indigo-soft); font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 3.4vw, 30px); line-height: 1.25; color: var(--indigo);
+  }
+  .way .text { padding: 14px 18px 18px; }
+  .way .num { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--term); margin: 0 0 4px; }
+  .way h2 { font-family: var(--sans); font-weight: 700; font-size: 22px; line-height: 1.2; margin: 0 0 6px; }
+  .way p { margin: 0; font-size: 17px; }
+  .way-4 { border: 2px solid var(--indigo); }
+
+  .ask { margin: 34px 0 0; text-align: center; }
+  .ask h2 { font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 4.4vw, 34px); margin: 0 0 16px; }
+  .answers { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .btn {
+    font-family: var(--sans); font-weight: 500; font-size: 17px; cursor: pointer;
+    padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--indigo); background: var(--surface); color: var(--indigo);
+  }
+  .btn:hover { background: var(--indigo-soft); }
+  .btn[aria-pressed="true"] { background: var(--indigo); color: var(--surface); }
+
+  .result { margin: 28px auto 0; max-width: 640px; border-top: 1px solid var(--rule); padding-top: 24px; }
+  .result h3 { font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 4vw, 30px); line-height: 1.15; margin: 0 0 8px; }
+  .result p { margin: 0 0 14px; }
+  .next { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+  .next a { display: block; padding: 12px 16px; border: 1px solid var(--rule); border-radius: 10px; text-decoration: none; background: var(--bg); }
+  .next a:hover { border-color: var(--indigo); }
+  .next b { font-family: var(--sans); font-weight: 700; }
+  .signup { margin-top: 18px; display: grid; gap: 8px; }
+  .signup label { font-family: var(--sans); font-weight: 500; font-size: 16px; }
+  .signup-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .signup input[type="email"] {
+    flex: 1 1 220px; min-width: 0; font: inherit; font-size: 17px; padding: 10px 14px;
+    border: 1.5px solid var(--rule); border-radius: 10px; background: var(--surface); color: var(--ink);
+  }
+  .signup input[type="email"]:focus { border-color: var(--indigo); outline: none; box-shadow: 0 0 0 3px var(--indigo-soft); }
+  .status { font-size: 15px; color: var(--ink-2); min-height: 1.4em; margin: 0; }
+  .status.ok { color: var(--ok); } .status.miss { color: var(--miss); }
+  .row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; font-size: 16px; }
+  .link-btn { font: inherit; background: none; border: 0; padding: 0; color: var(--indigo); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+  .foot { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); text-align: center; margin: 26px 0 0; }
+</style>
+
+<div class="page">
+  <header class="top">
+    <a class="mark" href="/">thought<span>feel</span></a>
+    <a class="home" href="/">← THOUGHTFEEL.NET</a>
+  </header>
+
+  <main class="card">
+    <p class="eyebrow">The thoughtfeel quiz · one question</p>
+    <h1>Think about your mom.</h1>
+    <p class="lede">There are four ways people do it. Read all four, then answer one question.</p>
+
+    <ol class="ways">
+      <li class="way">
+        <img src="/img/quiz/picture.png" width="600" height="400" alt="A picture: a woman’s portrait in a gilt frame on a wall.">
+        <div class="text">
+          <p class="num">1</p>
+          <h2>A picture of her</h2>
+          <p>It has shape, size and color, and it feels like looking at something.</p>
+        </div>
+      </li>
+      <li class="way">
+        <img src="/img/quiz/voice.png" width="600" height="400" alt="A sound wave.">
+        <div class="text">
+          <p class="num">2</p>
+          <h2>Her voice</h2>
+          <p>You hear her voice in your head.</p>
+        </div>
+      </li>
+      <li class="way">
+        <img src="/img/quiz/knowing.png" width="600" height="400" alt="Someone looking at a blue vase, with a check mark in their thought bubble.">
+        <div class="text">
+          <p class="num">3</p>
+          <h2>Just knowing</h2>
+          <p>You just know you’re thinking about her. To feel this one, stare at something near you and pay attention to its color. You still know you’re thinking about your mom.</p>
+        </div>
+      </li>
+      <li class="way way-4">
+        <div class="words" aria-hidden="true">No shape.<br>No size.<br>No color.</div>
+        <div class="text">
+          <p class="num">4</p>
+          <h2>A concept bubble of her</h2>
+          <p>It feels like looking at something, but it has no shape, size or color, and it’s obviously your mom.</p>
+        </div>
+      </li>
+    </ol>
+
+    <section class="ask" aria-labelledby="ask-title">
+      <h2 id="ask-title">Can you do the fourth one?</h2>
+      <div class="answers" role="group" aria-label="Your answer">
+        <button class="btn" type="button" data-answer="yes" aria-pressed="false">Yes</button>
+        <button class="btn" type="button" data-answer="kindof" aria-pressed="false">I kind of get what you mean</button>
+        <button class="btn" type="button" data-answer="no" aria-pressed="false">What are you talking about?</button>
+      </div>
+    </section>
+
+    <section class="result" id="result" hidden aria-live="polite"></section>
+    <noscript><p class="lede" style="margin-top:24px">If you can get a sense of what the fourth one is asking you to do, you have thoughtfeel. If it sounds like nothing, you probably don’t.</p></noscript>
+  </main>
+
+  <p class="foot">thoughtfeel · a practical guide by Ted Shachtman · <a href="/">thoughtfeel.net</a></p>
+</div>
+
+<script>
+(function () {
+  var tfTrack = window.tfTrack || function () {};
+  // Looked up when it's used, since the page head defines it.
+  function tfSignup(d) { return window.tfSignup ? window.tfSignup(d) : Promise.reject(new Error('no signup')); }
+  var result = document.getElementById('result');
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-answer]'));
+  var RESULTS = {
+    yes: {
+      title: 'You have thoughtfeel.',
+      body: 'The fourth way is a sense for concepts. The techniques on this site are built on it: people who have it use it to learn complex material and keep it.'
+    },
+    kindof: {
+      title: 'You almost certainly have thoughtfeel.',
+      body: 'If you can get a sense of what the words are asking you to do, you have it. The question is unusual, so a hedge is normal: people who answer “I kind of get what you mean” have turned out to have it.'
+    },
+    no: {
+      title: 'You probably don’t have thoughtfeel.',
+      body: 'If the fourth way sounds like nothing, or you can’t tell what it’s asking you to do, that’s the sign. Most people think in pictures, words or both, and that’s fine.'
+    }
+  };
+  var NEXT = [
+    ['/#videos', 'quiz3-to-lessons', 'Start with the lessons', 'short videos on using it to learn and remember'],
+    ['https://stories.thoughtfeel.net', 'quiz3-to-app', 'Try a concept story', 'the free app reads one aloud, a part at a time'],
+    ['https://www.reddit.com/r/MentalAtlas/', 'quiz3-to-community', 'Compare notes on r/MentalAtlas', 'the community using these techniques']
+  ];
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  function show(answer) {
+    var r = RESULTS[answer], has = answer !== 'no', html = '<h3>' + esc(r.title) + '</h3><p>' + esc(r.body) + '</p>';
+    if (has) {
+      html += '<ul class="next">' + NEXT.map(function (n) {
+        var ext = n[0].indexOf('http') === 0 ? ' target="_blank" rel="noopener"' : '';
+        return '<li><a href="' + n[0] + '"' + ext + ' data-track="' + n[1] + '"><b>' + esc(n[2]) + '</b> · ' + esc(n[3]) + '</a></li>';
+      }).join('') + '</ul>' +
+        '<form class="signup" id="quiz-signup" novalidate>' +
+          '<label for="quiz-email">Get new lessons by email</label>' +
+          '<div class="signup-row"><input type="email" id="quiz-email" placeholder="you@example.com" autocomplete="email" required>' +
+          '<button class="btn" type="submit">Sign up</button></div>' +
+          '<p class="status" id="quiz-status" role="status"></p>' +
+        '</form>';
+    } else {
+      html += '<p>Curious anyway? <a href="/what-is-thoughtfeel/" data-track="quiz3-to-definition">Read what thoughtfeel is</a>.</p>';
+    }
+    html += '<div class="row"><button class="link-btn" type="button" data-act="share">Ask a friend the same question</button>' +
+      '<span class="status" id="share-status" role="status"></span></div>';
+    result.innerHTML = html;
+    result.hidden = false;
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-answer') === answer)); });
+    try { localStorage.setItem('thoughtfeel.quiz3', JSON.stringify({ answer: answer, at: Date.now() })); } catch (e) {}
+    tfTrack('quiz3-answer-' + answer);
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function share() {
+    var url = 'https://thoughtfeel.net/quiz/', status = document.getElementById('share-status');
+    var text = 'Think about your mom. There are four ways people do it. Can you do the fourth one?';
+    tfTrack('quiz3-share');
+    if (navigator.share) { navigator.share({ title: 'Do you have thoughtfeel?', text: text, url: url }).catch(function () {}); return; }
+    var done = function () { if (status) status.textContent = 'Link copied'; };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { if (status) status.textContent = url; });
+    else if (status) status.textContent = url;
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-answer]');
+    if (b) { show(b.getAttribute('data-answer')); return; }
+    var a = e.target.closest('[data-track]');
+    if (a) tfTrack(a.getAttribute('data-track'));
+    if (e.target.closest('[data-act="share"]')) share();
+  });
+
+  document.addEventListener('submit', function (e) {
+    if (e.target.id !== 'quiz-signup') return;
+    e.preventDefault();
+    var input = document.getElementById('quiz-email'), status = document.getElementById('quiz-status');
+    var email = (input.value || '').trim(), pressed = document.querySelector('[data-answer][aria-pressed="true"]');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { status.textContent = 'Please enter a valid email address.'; status.className = 'status miss'; return; }
+    status.textContent = 'Signing you up…'; status.className = 'status';
+    tfSignup({
+      email: email, list: 'lessons',
+      subject: 'New thoughtfeel signup (one-question quiz)',
+      fields: { signup_source: 'quiz3', quiz3_answer: pressed ? pressed.getAttribute('data-answer') : '' }
+    }).then(function () {
+      status.textContent = 'You’re signed up. Thanks!'; status.className = 'status ok'; input.value = '';
+      tfTrack('signup-quiz3');
+    }, function (err) {
+      if (window.tfSignupFailed && window.tfSignupFailed(status, err)) return;
+      status.textContent = 'That didn’t go through. Please try again, or email teddyshachtman@gmail.com.'; status.className = 'status miss';
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

@@ -20,7 +20,7 @@ What thoughtfeel is not:
 ## Do you have it?
 
 - [The 1-minute test](https://thoughtfeel.net/#test): imagine one thing in a picture, in sounds and in concepts
-- [The 2-minute quiz](https://thoughtfeel.net/quiz/v2/): ten short statements; shows your mix of words, pictures and concepts
+- [The one-question quiz](https://thoughtfeel.net/quiz/): the four ways to think about your mom (a picture, her voice, just knowing, a concept bubble); if you can get a sense of the fourth, you have thoughtfeel
 
 ## Lessons
 
