@@ -208,8 +208,8 @@ window.tfTrack = function (path, title) {
     margin: 16px 0 0;
     text-wrap: balance;
   }
-  .hero-copy { font-size: clamp(18px, 1.9vw, 20px); line-height: 1.55; margin: 18px 0 0; max-width: 34ch; }
-  .hero-guide { font-size: 17px; line-height: 1.55; color: var(--ink-2); margin: 14px 0 0; max-width: 38ch; }
+  .hero-copy { font-size: clamp(19px, 2.1vw, 23px); line-height: 1.5; margin: 22px 0 0; max-width: 36ch; }
+  .hero-guide { font-size: 18px; line-height: 1.55; color: var(--ink-2); margin: 16px 0 0; max-width: 44ch; }
   .byline { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); margin: 22px 0 0; }
   /* On phones, keep the pitch short so the video reaches the first screen. */
   @media (max-width: 600px) {
@@ -227,8 +227,14 @@ window.tfTrack = function (path, title) {
     background: var(--indigo-soft); box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
   }
   .start-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  /* The play button sits on the dark wall below the cliff's shadow, clear of the thumbnail's words and the glowing idea, light in both themes. */
-  .start-player .play { left: 80%; top: 70%; background: #f4f1ea; }
+  /* The play button sits in the thumbnail's empty bottom-left corner, clear of the title and Julian's face, light in both themes. */
+  .start-player .play { left: 20%; top: 82%; background: #f4f1ea; }
+  .thumb .play-corner { left: 20%; top: 80%; }
+  /* On phones the thumbnail is small: a smaller button, lower, so it stays off the title. */
+  @media (max-width: 600px) {
+    .start-player .play, .thumb .play-corner { width: 48px; height: 48px; margin: -24px 0 0 -24px; top: 86%; }
+    .start-player .play::after, .thumb .play-corner::after { left: 19px; top: 14px; border-width: 10px 0 10px 15px; }
+  }
   .start-player .play::after { border-left-color: #2c3f8f; }
   .start-player:hover .play, .start-player:focus-visible .play { transform: scale(1.08); }
   .start-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; background: #000; }
@@ -442,7 +448,7 @@ window.tfTrack = function (path, title) {
   .imt .imt-steps .now::before { background: var(--weld); }
   .imt .imt-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0; }
   .imt .imt-prompt { font-size: clamp(20px, 2.2vw, 23px); line-height: 1.45; margin: 0; outline: none; text-wrap: pretty; }
-  .imt .imt-q { font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.4; margin: 0; }
+  .imt .imt-q { font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.4; margin: 0 0 14px; }
   .imt .imt-choices { display: flex; flex-wrap: wrap; gap: 10px; }
   .imt .imt-choice { background: var(--surface); }
   .imt .imt-choice:hover { background: var(--indigo-soft); }
@@ -469,43 +475,68 @@ window.tfTrack = function (path, title) {
   }
   .imt .imt-ways b { font-family: var(--sans); font-weight: 700; }
 
-  /* ---------- Testimonials ---------- */
+  /* ---------- Testimonials: cards side by side (four across on wide screens), each with a + for the whole message ---------- */
   .voices-head { max-width: 62ch; }
   .voices-head h2 {
     font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
     line-height: 1.15; letter-spacing: -0.015em; margin: 0; text-wrap: balance;
   }
+  .voices { position: relative; }
+  .voices-track {
+    display: flex; gap: 16px; align-items: flex-start; margin-top: 22px; padding: 2px 2px 16px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 2px; overscroll-behavior-x: contain;
+  }
+  .voices-track:focus-visible { outline: 2px solid var(--indigo); outline-offset: 4px; border-radius: 14px; }
   .voice {
-    margin: 24px 0 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px 56px; align-items: start;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(20px, 4vw, 40px);
+    flex: 0 0 86%; scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 16px;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 22px 18px;
     box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
+    transition: flex-basis .25s ease;
   }
-  /* On wide screens: who it is and the line that sums it up on the left, the whole message on the right. */
-  @media (min-width: 900px) {
-    .voice {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr);
-      grid-template-areas: "who text" "pull text" ". text"; grid-template-rows: auto auto 1fr;
-    }
-    .voice-who { grid-area: who; }
-    .voice-pull { grid-area: pull; }
-    .voice-text { grid-area: text; }
-  }
-  .voice-who { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin: 0; }
-  .voice-photo { width: 88px; height: 88px; border-radius: 12px; object-fit: cover; background: var(--surface-2); }
+  @media (min-width: 720px) { .voice { flex-basis: calc((100% - 16px) / 2); } }
+  @media (min-width: 1080px) { .voice { flex-basis: calc((100% - 48px) / 4); } }
+  /* An open card widens so the whole message is easy to read. */
+  .voice:has(.voice-more[open]) { flex-basis: min(100%, 640px); }
+  .voice-who { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; margin: 0; }
+  .voice-photo { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; background: var(--surface-2); }
   /* No photo: the first letter of the name sits in the photo's place. */
-  .voice-initial { display: grid; place-items: center; font-family: var(--sans); font-weight: 700; font-size: 38px; line-height: 1; color: var(--indigo); }
+  .voice-initial { display: grid; place-items: center; font-family: var(--sans); font-weight: 700; font-size: 28px; line-height: 1; color: var(--indigo); }
   .voice-meta { display: grid; gap: 2px; }
-  .voice-name { font-family: var(--sans); font-weight: 700; font-size: 20px; line-height: 1.25; }
-  .voice-role { font-size: 15.5px; line-height: 1.4; color: var(--ink-2); }
-  .voice-link { font-family: var(--sans); font-size: 15px; line-height: 1.4; margin-top: 4px; justify-self: start; }
+  .voice-name { font-family: var(--sans); font-weight: 700; font-size: 18px; line-height: 1.25; }
+  .voice-role { font-size: 14.5px; line-height: 1.4; color: var(--ink-2); }
+  .voice-link { font-family: var(--sans); font-size: 14px; line-height: 1.4; margin-top: 2px; justify-self: start; }
   .voice-pull {
-    margin: 0; padding-left: 16px; border-left: 3px solid var(--weld);
-    font-size: clamp(21px, 2.2vw, 25px); line-height: 1.4; text-wrap: balance;
+    margin: 0; padding-left: 14px; border-left: 3px solid var(--weld);
+    font-size: 18.5px; line-height: 1.45; text-wrap: pretty;
   }
-  .voice-text { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; font-size: 17px; line-height: 1.65; max-width: 64ch; }
-  .voice-text p { margin: 0 0 14px; }
+  .voice-more { margin-top: auto; }
+  .voice-more summary {
+    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; padding: 4px 0;
+    font-family: var(--sans); font-weight: 600; font-size: 15px; color: var(--indigo);
+  }
+  .voice-more summary::-webkit-details-marker { display: none; }
+  .voice-more summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 6px; }
+  .voice-plus { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--indigo); }
+  .voice-plus::before, .voice-plus::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.5px; background: var(--indigo);
+    transform: translate(-50%, -50%); transition: transform .2s ease;
+  }
+  .voice-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .voice-more[open] .voice-plus::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .voice-open, .voice-more[open] .voice-closed { display: none; }
+  .voice-more[open] .voice-open { display: inline; }
+  .voice-text { margin: 12px 0 0; padding: 0; border: 0; border-radius: 0; background: none; font-size: 16.5px; line-height: 1.6; }
+  .voice-text p { margin: 0 0 12px; }
   .voice-text p:last-child { margin-bottom: 0; }
-
+  /* The arrows show only when the row is wider than the screen. */
+  .voices-nav { position: absolute; right: 0; top: 0; display: flex; gap: 8px; }
+  .voices-nav[hidden] { display: none; }
+  .voices-arrow {
+    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--indigo); background: var(--surface);
+    color: var(--indigo); font-family: var(--sans); font-size: 22px; line-height: 1; cursor: pointer;
+  }
+  .voices-arrow:disabled { opacity: .35; cursor: default; }
+  .voices-arrow:not(:disabled):hover { background: var(--indigo-soft); }
   /* ---------- Videos ---------- */
   .videos { margin-top: 72px; }
   .what + .videos { margin-top: 0; }
@@ -685,21 +716,20 @@ window.tfTrack = function (path, title) {
   <header class="hero">
     <div class="hero-text">
       <h1 class="wordmark">thought<span>feel</span></h1>
-      <p class="tagline">A sense for concepts</p>
-      <p class="hero-copy">It seems to work like the mind’s eye. Most people likely have some of it, and some have none, the way people with aphantasia see nothing at all. Among those who have it, it ranges from faint to vivid, like the difference between picturing an apple in full color and seeing a dim or cartoon-like one. With thoughtfeel, you can imagine in concepts, not just words or images.</p>
-      <p class="hero-guide">This is a practical guide to harnessing that ability to learn faster and remember more.</p>
+      <p class="hero-copy">thoughtfeel is a sense for concepts that some people have. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
+      <p class="hero-guide">This site teaches you mnemonic techniques that will help you comprehend complex material and improve your learning.</p>
       <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · <a href="#videos">WATCH THE VIDEOS</a> · <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">READ THE ESSAYS</a></p>
     </div>
 
     <section class="start" id="start" aria-labelledby="start-title">
       <p class="eyebrow">Start here</p>
-      <a class="start-player" href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener" aria-label="Play the video: Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)">
-        <img src="https://i.ytimg.com/vi/g3Z8VnARbQg/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/g3Z8VnARbQg/hqdefault.jpg'">
+      <a class="start-player" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener" aria-label="Play the video: Julian’s first thoughtfeel lesson">
+        <img src="https://i.ytimg.com/vi/I3WgK8cPa0A/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg'">
         <span class="play" aria-hidden="true"></span>
       </a>
-      <h2 id="start-title">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</h2>
-      <p class="start-desc">Visual analogies are the best tool we have for remembering complex concepts, but the picture is only the idea’s shadow: you forget what it meant, reason from the picture instead of the idea, can’t tell a wrong idea from a right one, and have to rebuild the idea every time. Imagining in concepts fixes all four.</p>
-      <p class="start-meta">7 minutes · Next: <a href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener">the full walkthrough on concept stories</a> (58 minutes)</p>
+      <h2 id="start-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</h2>
+      <p class="start-desc">Julian Putnam had never used thoughtfeel. In one recorded session, Julian builds temporal difference learning, how a brain learns to predict rewards, as a concept story, one line at a time, then explains it back from memory.</p>
+      <p class="start-meta">51 minutes · Short on time? Watch <a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</a> (7 minutes)</p>
     </section>
   </header>
 
@@ -763,7 +793,12 @@ window.tfTrack = function (path, title) {
       <p class="eyebrow">Testimonials</p>
       <h2 id="voices-title">In their own words</h2>
     </div>
-    <figure class="voice">
+    <div class="voices-nav" hidden>
+      <button type="button" class="voices-arrow" data-dir="-1" aria-label="Earlier testimonials">‹</button>
+      <button type="button" class="voices-arrow" data-dir="1" aria-label="More testimonials">›</button>
+    </div>
+    <div class="voices-track" tabindex="0" role="region" aria-label="Testimonials, side by side">
+      <figure class="voice">
       <figcaption class="voice-who">
         <img class="voice-photo" src="/img/max-gurkalov.jpg" width="88" height="88" alt="" loading="lazy">
         <span class="voice-meta">
@@ -772,18 +807,21 @@ window.tfTrack = function (path, title) {
           <a class="voice-link" href="https://www.youtube.com/@Weiming_YT" target="_blank" rel="noopener">You can find him on YouTube</a>
         </span>
       </figcaption>
-      <p class="voice-pull" aria-hidden="true">“30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention.”</p>
-      <blockquote class="voice-text">
-        <p>Hello! I’ve been learning to use thoughtfeel ever since you started talking about it, and I want to share my results, because they’re kind of insane to me.</p>
-        <p>I’m learning Japanese, and I’ve been using thoughtfeel for kanji. I break a character into parts that each produce a thoughtfeel, connect them together, then connect that to the reading and the meaning. Take <span lang="ja">富</span>. On its own, it didn’t produce any thoughtfeel. But split into elements (4 boxes that look like a drawer, a rectangle on top, a line on top and a thing that looks like a lid), each part produced its own thoughtfeel – so I connected them. Then I attached the reading, “tomi”, and the meaning, “wealth”. The whole thing took about 30 seconds.</p>
-        <p>The crazy part is that it got ingrained right away and I can remember very clearly all of the ones I learned. I recognize them in text, I can write them out from memory, and the written form, sound and meaning feel as connected as any word in English or in my native language (Russian).</p>
-        <p>For comparison, I used to study Chinese in the past (without success) with the currently recommended method: take words in context, put them into Anki, do active recall on reading and meaning of the characters. I “learned” around 200 characters that way, and I couldn’t recognize them while reading, let alone write them. I remember exactly 2 of them: <span lang="zh">一</span> (yī) and <span lang="zh">了</span> (le). I think my brain relied on the context of the flashcard instead of actually memorizing the characters.</p>
-        <p>So it’s 30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention. It’s just insane how efficient thoughtfeel is.</p>
-        <p>And it’s not only kanji. Right now, I’m using it to study for QA engineering from scratch. TF makes it much easier to understand the lessons and I can now recite them forwards and backwards without any rehearsal. I also use it to create reminders for myself throughout the day, to learn lessons from books and videos, to memorize useful discussions in conversations, to remember some insights and ideas that I came up with and for general thinking.</p>
-        <p>It’s basically the endgame for studying and mnemonic techniques. Thank you!</p>
-      </blockquote>
+      <p class="voice-pull">“30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention.”</p>
+      <details class="voice-more">
+        <summary><span class="voice-plus" aria-hidden="true"></span><span class="voice-closed">Read the whole message</span><span class="voice-open">Show less</span></summary>
+        <blockquote class="voice-text">
+          <p>Hello! I’ve been learning to use thoughtfeel ever since you started talking about it, and I want to share my results, because they’re kind of insane to me.</p>
+          <p>I’m learning Japanese, and I’ve been using thoughtfeel for kanji. I break a character into parts that each produce a thoughtfeel, connect them together, then connect that to the reading and the meaning. Take <span lang="ja">富</span>. On its own, it didn’t produce any thoughtfeel. But split into elements (4 boxes that look like a drawer, a rectangle on top, a line on top and a thing that looks like a lid), each part produced its own thoughtfeel – so I connected them. Then I attached the reading, “tomi”, and the meaning, “wealth”. The whole thing took about 30 seconds.</p>
+          <p>The crazy part is that it got ingrained right away and I can remember very clearly all of the ones I learned. I recognize them in text, I can write them out from memory, and the written form, sound and meaning feel as connected as any word in English or in my native language (Russian).</p>
+          <p>For comparison, I used to study Chinese in the past (without success) with the currently recommended method: take words in context, put them into Anki, do active recall on reading and meaning of the characters. I “learned” around 200 characters that way, and I couldn’t recognize them while reading, let alone write them. I remember exactly 2 of them: <span lang="zh">一</span> (yī) and <span lang="zh">了</span> (le). I think my brain relied on the context of the flashcard instead of actually memorizing the characters.</p>
+          <p>So it’s 30 seconds per character, once, versus ~30 minutes of daily Anki reviews with low retention. It’s just insane how efficient thoughtfeel is.</p>
+          <p>And it’s not only kanji. Right now, I’m using it to study for QA engineering from scratch. TF makes it much easier to understand the lessons and I can now recite them forwards and backwards without any rehearsal. I also use it to create reminders for myself throughout the day, to learn lessons from books and videos, to memorize useful discussions in conversations, to remember some insights and ideas that I came up with and for general thinking.</p>
+          <p>It’s basically the endgame for studying and mnemonic techniques. Thank you!</p>
+        </blockquote>
+      </details>
     </figure>
-    <figure class="voice">
+      <figure class="voice">
       <figcaption class="voice-who">
         <img class="voice-photo" src="/img/matthew-sinclair.jpg" width="88" height="88" alt="" loading="lazy">
         <span class="voice-meta">
@@ -792,15 +830,18 @@ window.tfTrack = function (path, title) {
           <a class="voice-link" href="https://matthewsinclair.com/" target="_blank" rel="noopener">matthewsinclair.com</a>
         </span>
       </figcaption>
-      <p class="voice-pull" aria-hidden="true">“It works with the way my mind already works, instead of asking it to do something it can’t.”</p>
-      <blockquote class="voice-text">
-        <p>I have aphantasia: I can’t form mental images, and I have no inner voice. When I think of something, say a chair, I don’t see a chair. I get the concept of a chair, which is hard to describe to anyone who thinks in pictures. The best I can do is that my thinking is made of clumps of concepts, linked to one another in a kind of graph of relationships. It’s elusive, like something at the corner of your eye that disappears when you turn to look at it.</p>
-        <p>That has always made rote memory hard for me. I can’t call up a picture of what I’ve learned, so I have to understand something well enough to build an intuition for it. Visual techniques like the memory palace just don’t work for me: there’s no palace to walk through. The closest I came was mind maps, through my computer science degree and my MBA, and even those I was trying to remember as an image.</p>
-        <p>What drew me to ThoughtFeel was the language in Ted’s videos. He described thinking in words very close to the ones I’ve used for years to explain how I think about my own thinking. So I tried it on his list, Anchor, Saffron, Bicycle, Grumble. Normally I’d never remember a list like that. With ThoughtFeel it stuck, and 24 hours later I could still run the chain of concepts easily, forwards and backwards.</p>
-        <p>For me the difference from visual mnemonics is that I’m not translating anything into a picture. I’m linking the concepts themselves, and saying each word out loud seems to tie the sound to the concept. It works with the way my mind already works, instead of asking it to do something it can’t.</p>
-      </blockquote>
+      <p class="voice-pull">“It works with the way my mind already works, instead of asking it to do something it can’t.”</p>
+      <details class="voice-more">
+        <summary><span class="voice-plus" aria-hidden="true"></span><span class="voice-closed">Read the whole message</span><span class="voice-open">Show less</span></summary>
+        <blockquote class="voice-text">
+          <p>I have aphantasia: I can’t form mental images, and I have no inner voice. When I think of something, say a chair, I don’t see a chair. I get the concept of a chair, which is hard to describe to anyone who thinks in pictures. The best I can do is that my thinking is made of clumps of concepts, linked to one another in a kind of graph of relationships. It’s elusive, like something at the corner of your eye that disappears when you turn to look at it.</p>
+          <p>That has always made rote memory hard for me. I can’t call up a picture of what I’ve learned, so I have to understand something well enough to build an intuition for it. Visual techniques like the memory palace just don’t work for me: there’s no palace to walk through. The closest I came was mind maps, through my computer science degree and my MBA, and even those I was trying to remember as an image.</p>
+          <p>What drew me to ThoughtFeel was the language in Ted’s videos. He described thinking in words very close to the ones I’ve used for years to explain how I think about my own thinking. So I tried it on his list, Anchor, Saffron, Bicycle, Grumble. Normally I’d never remember a list like that. With ThoughtFeel it stuck, and 24 hours later I could still run the chain of concepts easily, forwards and backwards.</p>
+          <p>For me the difference from visual mnemonics is that I’m not translating anything into a picture. I’m linking the concepts themselves, and saying each word out loud seems to tie the sound to the concept. It works with the way my mind already works, instead of asking it to do something it can’t.</p>
+        </blockquote>
+      </details>
     </figure>
-    <figure class="voice">
+      <figure class="voice">
       <figcaption class="voice-who">
         <span class="voice-photo voice-initial" aria-hidden="true">F</span>
         <span class="voice-meta">
@@ -808,15 +849,18 @@ window.tfTrack = function (path, title) {
           <span class="voice-role">Co-founder of a health tech startup, learning Dutch</span>
         </span>
       </figcaption>
-      <p class="voice-pull" aria-hidden="true">“I didn’t have to force an image into my mind. I could just grasp the concept and understand what it meant.”</p>
-      <blockquote class="voice-text">
-        <p>When I first spoke with Ted about ThoughtFeel, I realised how much I had been relying on visualisation to learn and remember things. I was used to having to picture things in my head, and that could get tiring, especially when learning something new.</p>
-        <p>Trying ThoughtFeel felt different. I didn’t have to force an image into my mind. I could just grasp the concept and understand what it meant.</p>
-        <p>I’ve been using it to learn Dutch because I need the language for my startup in the Netherlands, and honestly, learning feels less stressful and more natural. I find it easier to grasp things and recall what I’ve learned. It’s been a really interesting experience because I never thought I could learn this way.</p>
-        <p>Thank you for introducing me to ThoughtFeel Ted! Forever grateful</p>
-      </blockquote>
+      <p class="voice-pull">“I didn’t have to force an image into my mind. I could just grasp the concept and understand what it meant.”</p>
+      <details class="voice-more">
+        <summary><span class="voice-plus" aria-hidden="true"></span><span class="voice-closed">Read the whole message</span><span class="voice-open">Show less</span></summary>
+        <blockquote class="voice-text">
+          <p>When I first spoke with Ted about ThoughtFeel, I realised how much I had been relying on visualisation to learn and remember things. I was used to having to picture things in my head, and that could get tiring, especially when learning something new.</p>
+          <p>Trying ThoughtFeel felt different. I didn’t have to force an image into my mind. I could just grasp the concept and understand what it meant.</p>
+          <p>I’ve been using it to learn Dutch because I need the language for my startup in the Netherlands, and honestly, learning feels less stressful and more natural. I find it easier to grasp things and recall what I’ve learned. It’s been a really interesting experience because I never thought I could learn this way.</p>
+          <p>Thank you for introducing me to ThoughtFeel Ted! Forever grateful</p>
+        </blockquote>
+      </details>
     </figure>
-    <figure class="voice">
+      <figure class="voice">
       <figcaption class="voice-who">
         <span class="voice-photo voice-initial" aria-hidden="true">H</span>
         <span class="voice-meta">
@@ -824,11 +868,15 @@ window.tfTrack = function (path, title) {
           <span class="voice-role">Montclair, NJ</span>
         </span>
       </figcaption>
-      <p class="voice-pull" aria-hidden="true">“Having the language to describe this kind of thinking is completely revolutionary, and I hope it can help a lot of other people.”</p>
-      <blockquote class="voice-text">
-        <p>I have always felt that most of my thoughts have a significant portion that are not tied to the five senses. The technique isn’t completely new to me, but I’ve never had the words to describe it before. In the past I would make oblique connections between things. It helps a lot with understanding things, like the underlying machinery behind some math concepts, and also makes picking up new games easier. The downside is that it makes explaining things difficult, which is where the idea of thoughtfeel comes in handy. Having the language to describe this kind of thinking is completely revolutionary, and I hope it can help a lot of other people.</p>
-      </blockquote>
+      <p class="voice-pull">“Having the language to describe this kind of thinking is completely revolutionary, and I hope it can help a lot of other people.”</p>
+      <details class="voice-more">
+        <summary><span class="voice-plus" aria-hidden="true"></span><span class="voice-closed">Read the whole message</span><span class="voice-open">Show less</span></summary>
+        <blockquote class="voice-text">
+          <p>I have always felt that most of my thoughts have a significant portion that are not tied to the five senses. The technique isn’t completely new to me, but I’ve never had the words to describe it before. In the past I would make oblique connections between things. It helps a lot with understanding things, like the underlying machinery behind some math concepts, and also makes picking up new games easier. The downside is that it makes explaining things difficult, which is where the idea of thoughtfeel comes in handy. Having the language to describe this kind of thinking is completely revolutionary, and I hope it can help a lot of other people.</p>
+        </blockquote>
+      </details>
     </figure>
+    </div>
   </section>
 
   <!-- ================= Videos ================= -->
@@ -837,85 +885,21 @@ window.tfTrack = function (path, title) {
       <p class="eyebrow">The lessons</p>
       <h2 id="videos-title">What is it useful for?</h2>
       <p class="videos-argument">thoughtfeel is a sense, like your mind’s eye or your inner voice. Those senses come with well-known techniques you can learn to remember and learn better. The memory palace uses your mind’s eye to pull off remarkable feats of memory, like memorizing a 1,000-digit number in an hour. Your inner voice remembers more when you put the words to a song, which is why the alphabet song works.</p>
-      <p class="videos-argument">thoughtfeel has techniques of its own, and learning them can improve how you think and learn. Each lesson below teaches one.</p>
+      <p class="videos-argument">thoughtfeel has techniques of its own, and learning them can improve how you think and learn. Start with these two videos.</p>
       <p>Not sure you have it? <a href="#test">Answer one question</a>.</p>
-      <a class="read-first" href="https://thoughtfeel.substack.com/p/ctrlf-for-your-memory" target="_blank" rel="noopener">
-        <span class="read-first-label">If you’d rather read than watch, start here</span>
-        <span class="read-first-title">A mnemonic technique for people who think in concepts: for differential diagnoses and law exams</span>
-        <span class="read-first-desc">It starts from the beginning: what thoughtfeel is, whether you have it, how to link ideas in concepts, and a technique for recalling everything that shares a property, tried on medical diagnosis.</span>
-        <span class="read-first-cta">Read it on Substack →</span>
-      </a>
-      <p class="read-more">The other techniques are written up as <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">essays on Substack</a> too.</p>
     </div>
     <div class="video-grid">
-      <a class="video" href="https://www.youtube.com/watch?v=gTu22urSWAc" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/gTu22urSWAc/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 1 · What it is</span>
-        <span class="video-title">What Is thoughtfeel? A Sense for Concepts</span>
-        <span class="video-desc">What the sense takes in, what it isn’t, and how to tell whether you have it.</span>
+      <a class="video" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play play-corner" aria-hidden="true"></span></span>
+        <span class="video-label">A first lesson · 51 minutes</span>
+        <span class="video-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span>
+        <span class="video-desc">Julian had never used thoughtfeel. Watch a whole lesson: building a complicated idea as a concept story, one line at a time, then explaining it back from memory.</span>
       </a>
-      <a class="video" href="https://www.youtube.com/watch?v=bQvnFz86URY" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/bQvnFz86URY/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 2 · Learning a texture</span>
-        <span class="video-title">Why You Miss Ideas You Already Know</span>
-        <span class="video-desc">Learn an idea’s feel from two examples, then spot it when it turns up looking completely different.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=mFIThyF5Y0E" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/mFIThyF5Y0E/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 3 · Memorizing a list</span>
-        <span class="video-title">How to Memorize Any List by Imagining in Concepts</span>
-        <span class="video-desc">Link each item to the next while you hold both, so a list, a poem or a whole subject comes back as one thing.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=DpkQsCGBMIE" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/DpkQsCGBMIE/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 4 · Memorizing numbers</span>
-        <span class="video-title">How to Memorize Long Numbers by Imagining in Concepts</span>
-        <span class="video-desc">Hold each digit with its place as a concept and link each one inside the next, so a 20-digit number comes back as one thing.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=PIZ0G-A8uy4" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/PIZ0G-A8uy4/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 5 · Pictures and ideas</span>
-        <span class="video-title">What a Picture Does to an Idea</span>
-        <span class="video-desc">Catch when a mental picture is steering you wrong, and think with the idea itself.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=2lMqpiP8Clo" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/2lMqpiP8Clo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 6 · At the right moment</span>
-        <span class="video-title">You Didn’t Forget. You Missed the Moment.</span>
-        <span class="video-desc">Remember to do something at the right moment, even when the moment doesn’t look the way you pictured it.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=fWasdNcap88" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/fWasdNcap88/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 7 · Analogies</span>
-        <span class="video-title">How to Build an Analogy</span>
-        <span class="video-desc">Build an analogy piece by piece, and catch the near misses a list of words would let through.</span>
-      </a>
-      <div class="video-item">
-        <a class="video" href="https://www.youtube.com/watch?v=VDHt3z8Babo" target="_blank" rel="noopener">
-          <span class="thumb"><img src="https://i.ytimg.com/vi/VDHt3z8Babo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-          <span class="video-label">Video 8 · Vocabulary</span>
-          <span class="video-title">How to Memorize Vocabulary by Imagining in Concepts</span>
-          <span class="video-desc">Break a new word into sounds you already know, and link them to its meaning, in any language or for big words in your own.</span>
-        </a>
-        <a class="video-try" href="/words/"><strong>Try it:</strong> learn ten Spanish words, then test yourself tomorrow.</a>
-      </div>
-      <a class="video" href="https://www.youtube.com/watch?v=ABazBzZOmag" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/ABazBzZOmag/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 9 · Finding mistakes</span>
-        <span class="video-title">How to Find the Mistakes in Your Own Understanding</span>
-        <span class="video-desc">Take in a whole idea at once, as a concept, so the wrong part stands out where pictures and words would miss it.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=f8YMcrpDIas" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/f8YMcrpDIas/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 10 · Complicated ideas</span>
-        <span class="video-title">How to Learn Complicated Ideas by Imagining in Concepts</span>
-        <span class="video-desc">Store an algorithm in thoughtfeel as you read it, find exactly what you’ve misunderstood, and remember when to use it.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=TUWSnA1KVrE" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/TUWSnA1KVrE/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Video 11 · The research</span>
-        <span class="video-title">How Many People Can Imagine in Concepts?</span>
-        <span class="video-desc">Nobody has counted yet. The clues: Feynman and Tukey’s counting, Galton’s questions, the beeper studies, and what famous thinkers said about their own minds.</span>
+      <a class="video" href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/g3Z8VnARbQg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">Why it works · 7 minutes</span>
+        <span class="video-title">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span>
+        <span class="video-desc">The picture is only the idea’s shadow: you forget what it meant, reason from the picture instead of the idea, can’t tell a wrong idea from a right one, and have to rebuild the idea every time. Imagining in concepts fixes all four.</span>
       </a>
     </div>
     <div class="updates" id="updates">
@@ -1079,8 +1063,7 @@ window.tfTrack = function (path, title) {
         '<p class="imt-text">' + r[1] + '</p>' +
         '<div class="imt-actions">' +
           (has
-            ? '<a class="btn primary" href="#videos" data-act="to-lessons">Start with the lessons</a>' +
-              '<a class="btn" href="https://stories.thoughtfeel.net" target="_blank" rel="noopener" data-act="to-app">Try a concept story</a>'
+            ? '<a class="btn primary" href="#start" data-act="to-lessons">Start with the lessons</a>'
             : '<a class="btn primary" href="/what-is-thoughtfeel/" data-act="to-definition">Read what thoughtfeel is</a>') +
           '<button type="button" class="btn" data-act="share">Ask a friend</button>' +
         '</div>' +
@@ -1129,6 +1112,40 @@ window.tfTrack = function (path, title) {
     });
   })();
 
+  /* ---------- Testimonials: arrows that scroll the row of cards, shown only when it overflows ---------- */
+  (function () {
+    var track = document.querySelector('.voices-track'), nav = document.querySelector('.voices-nav');
+    if (!track || !nav) return;
+    var arrows = nav.querySelectorAll('.voices-arrow');
+    function update() {
+      var over = track.scrollWidth > track.clientWidth + 4;
+      nav.hidden = !over;
+      arrows[0].disabled = track.scrollLeft <= 4;
+      arrows[1].disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    }
+    nav.addEventListener('click', function (e) {
+      var b = e.target.closest('.voices-arrow'); if (!b) return;
+      var card = track.querySelector('.voice');
+      var step = card ? card.getBoundingClientRect().width + 16 : track.clientWidth * 0.9;
+      track.scrollBy({ left: step * Number(b.getAttribute('data-dir')), behavior: 'smooth' });
+    });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    if (window.ResizeObserver) new ResizeObserver(update).observe(track);
+    // An opened card widens; bring the whole card into view and count it.
+    track.addEventListener('toggle', function (e) {
+      var d = e.target; if (!d.classList || !d.classList.contains('voice-more')) return;
+      setTimeout(update, 300);
+      if (d.open) {
+        var card = d.closest('.voice');
+        setTimeout(function () { card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' }); }, 280);
+        var who = ((card.querySelector('.voice-name') || {}).textContent || '').trim();
+        tfTrack('testimonial-open-' + (who.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'card'), who);
+      }
+    }, true);
+    update();
+  })();
+
   /* ---------- The video to start with: play it in place, in YouTube's privacy-enhanced player ---------- */
   (function () {
     var link = document.querySelector('.start-player');
@@ -1154,7 +1171,7 @@ window.tfTrack = function (path, title) {
     if (!a) return;
     var v = /[?&]v=([\w-]+)/.exec(a.getAttribute('href') || '');
     if (a.classList.contains('start-player')) {
-      tfTrack('start-video', 'Start here: visual analogies');
+      tfTrack('start-video', 'Start here: Julian’s lesson');
     } else if (v) {
       var card = a.closest('.video');
       var label = card ? (card.querySelector('.video-label') || {}).textContent : '';
