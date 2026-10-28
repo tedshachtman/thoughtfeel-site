@@ -298,6 +298,29 @@ window.tfTrack = function (path, title) {
   .what-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px 56px; margin-top: 36px; align-items: start; }
   @media (min-width: 900px) { .what-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
   .what-solo { margin-top: 36px; }
+  /* The definition in short parts: a subheader and an icon that says what each part is about. */
+  .what-parts { display: grid; gap: 34px; margin-top: 36px; max-width: 66ch; }
+  .what-part { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 0 16px; align-items: start; }
+  .what-icon {
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px;
+    background: var(--indigo-soft); color: var(--indigo);
+  }
+  .what-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .what-part h3 {
+    font-family: var(--sans); font-weight: 700; font-size: clamp(19px, 2vw, 21px); line-height: 1.3;
+    letter-spacing: -0.01em; margin: 10px 0 8px; text-wrap: balance;
+  }
+  .what-part p { font-size: clamp(17px, 1.8vw, 18.5px); line-height: 1.6; margin: 0 0 12px; }
+  .what-part p:last-child { margin-bottom: 0; }
+  .what-figure { grid-column: 1 / -1; margin: 22px 0 0; }
+  .what-figure img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35); }
+  .what-figure figcaption { margin-top: 10px; font-family: var(--sans); font-size: 14.5px; line-height: 1.4; color: var(--ink-2); }
+  @media (max-width: 600px) {
+    .what-part { grid-template-columns: 36px minmax(0, 1fr); gap: 0 12px; }
+    .what-icon { width: 36px; height: 36px; border-radius: 10px; }
+    .what-icon svg { width: 20px; height: 20px; }
+    .what-part h3 { margin-top: 6px; }
+  }
   .what-text { max-width: 62ch; }
   .what-text h3 { font-family: var(--sans); font-weight: 500; font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
   .what-text h3:not(:first-child) { margin-top: 28px; }
@@ -686,6 +709,14 @@ window.tfTrack = function (path, title) {
     line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 14px;
   }
   .about-text p:not(.eyebrow) { margin: 0 0 12px; }
+  /* Ted's photo, round, beside the hello. */
+  .about-hello { display: flex; align-items: center; gap: 18px; margin: 0 0 16px; }
+  .about-hello h2 { margin: 0; }
+  .about-photo {
+    display: block; flex: none; width: 104px; height: 104px; border-radius: 50%; object-fit: cover;
+    box-shadow: 0 0 0 3px var(--surface), 0 0 0 4.5px var(--rule);
+  }
+  @media (min-width: 900px) { .about-photo { width: 128px; height: 128px; } }
   .contact {
     background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 24px;
     box-shadow: 0 18px 40px -30px rgba(20, 30, 70, .35);
@@ -766,23 +797,62 @@ window.tfTrack = function (path, title) {
       <p class="eyebrow">The sense</p>
       <h2 id="what-title">What is thoughtfeel?</h2>
       <p class="what-lead">thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
-      <p class="what-body">You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
-      <p class="what-body">Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
-      <p class="what-body">That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
-      <p class="what-body">Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
-
-      <div class="what-text what-solo">
-        <h3>Is it really all at once?</h3>
-        <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
-        <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
-      </div>
-
-      <div class="what-text what-solo" id="why-it-works">
-        <h3>Why thoughtfeel works: follow a conceptual story the way your mind’s eye helps you follow a fairy tale</h3>
-        <p>If I tell you, “A boy and a girl went to the well. The boy pumped water, and water came out of the well. The girl took a bucket and poured the water on a patch of green grass,” you can understand and remember that story better by using your mind’s eye to imagine it.</p>
-        <p>But if I tell you, “The mother of the regent of the land is intrigued by the prospect of discovery,” you can’t use your mind’s eye to follow along, because the story is conceptual, not visual.</p>
-        <p>With thoughtfeel, though, you can use your ability to imagine in concepts to build that story in your imagination. That helps you understand the conceptual story the same way your mind’s eye helps you understand the visual one.</p>
-        <p>thoughtfeel also helps with mental simulation of concepts, the same way that your mind’s eye helps with mental simulation of objects. If you want to figure out what happens when you turn a gear in a gearbox, you can use your mind’s eye to run the simulation. In thoughtfeel, when you’ve built a conceptual machine like an algorithm or a biological process, you can simulate how the system would behave if you changed a conceptual property.</p>
+      <div class="what-parts">
+        <div class="what-part">
+          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <div class="what-part-body">
+            <h3 id="what-sense">Like vision, but for concepts</h3>
+            <p>You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
+            <p>Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
+          </div>
+        </div>
+        <div class="what-part">
+          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></span>
+          <div class="what-part-body">
+            <h3 id="what-compare">Spotting what’s different</h3>
+            <p>That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
+          </div>
+        </div>
+        <div class="what-part">
+          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 19v-3M10 19v-7M15 19V9M20 19V5"/></svg></span>
+          <div class="what-part-body">
+            <h3 id="what-range">Faint, vivid, or not at all</h3>
+            <p>Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does: most people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
+          </div>
+        </div>
+        <div class="what-part">
+          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8z"/></svg></span>
+          <div class="what-part-body">
+            <h3 id="what-once">Is it really all at once?</h3>
+            <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
+            <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
+          </div>
+        </div>
+        <div class="what-part" id="why-it-works">
+          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19"/><path d="M9 7.5h6M9 11h4"/></svg></span>
+          <div class="what-part-body">
+            <h3 id="what-why">Why thoughtfeel works: follow a conceptual story the way your mind’s eye helps you follow a fairy tale</h3>
+            <p>If I tell you, “A boy and a girl went to the well. The boy pumped water, and water came out of the well. The girl took a bucket and poured the water on a patch of green grass,” you can understand and remember that story better by using your mind’s eye to imagine it.</p>
+            <p>But if I tell you, “The mother of the regent of the land is intrigued by the prospect of discovery,” you can’t use your mind’s eye to follow along, because the story is conceptual, not visual.</p>
+            <p>With thoughtfeel, though, you can use your ability to imagine in concepts to build that story in your imagination. That helps you understand the conceptual story the same way your mind’s eye helps you understand the visual one.</p>
+          </div>
+          <figure class="what-figure">
+            <a href="/img/two-stories.jpg" target="_blank" rel="noopener">
+              <picture>
+                <source srcset="/img/two-stories.webp" type="image/webp">
+                <img src="/img/two-stories.jpg" width="1456" height="1900" loading="lazy" alt="Two columns, the same four steps. A visual story about things you can see: read the words, choose your mind’s eye, picture each line, and end up with a movie in your head. A conceptual story about things you can’t see or touch: read the words, choose thoughtfeel, imagine each line in concepts, and end up with a concept movie. Both end the same way: you understand what happened, and you remember it long-term.">
+              </picture>
+            </a>
+            <figcaption>A visual story and a conceptual story, built the same way. <a href="/img/two-stories.jpg" target="_blank" rel="noopener">Open it full size</a></figcaption>
+          </figure>
+        </div>
+        <div class="what-part">
+          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span>
+          <div class="what-part-body">
+            <h3 id="what-machine">Running a concept like a machine</h3>
+            <p>thoughtfeel also helps with mental simulation of concepts, the same way that your mind’s eye helps with mental simulation of objects. If you want to figure out what happens when you turn a gear in a gearbox, you can use your mind’s eye to run the simulation. In thoughtfeel, when you’ve built a conceptual machine like an algorithm or a biological process, you can simulate how the system would behave if you changed a conceptual property.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -883,10 +953,7 @@ window.tfTrack = function (path, title) {
   <section class="videos" id="videos" aria-labelledby="videos-title">
     <div class="videos-head">
       <p class="eyebrow">The lessons</p>
-      <h2 id="videos-title">What is it useful for?</h2>
-      <p class="videos-argument">thoughtfeel is a sense, like your mind’s eye or your inner voice. Those senses come with well-known techniques you can learn to remember and learn better. The memory palace uses your mind’s eye to pull off remarkable feats of memory, like memorizing a 1,000-digit number in an hour. Your inner voice remembers more when you put the words to a song, which is why the alphabet song works.</p>
-      <p class="videos-argument">thoughtfeel has techniques of its own, and learning them can improve how you think and learn. Start with these two videos.</p>
-      <p>Not sure you have it? <a href="#test">Answer one question</a>.</p>
+      <h2 id="videos-title">Start with these two videos</h2>
     </div>
     <div class="video-grid">
       <a class="video" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">
@@ -934,7 +1001,13 @@ window.tfTrack = function (path, title) {
   <section class="about" id="about" aria-labelledby="about-title">
     <div class="about-text">
       <p class="eyebrow">About the author</p>
-      <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
+      <div class="about-hello">
+        <picture>
+          <source srcset="/img/ted.webp" type="image/webp">
+          <img class="about-photo" src="/img/ted.jpg" width="600" height="600" alt="Ted Shachtman" loading="lazy">
+        </picture>
+        <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
+      </div>
       <p>I’m a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and I’m finishing a master’s in computer science at the University of Colorado Boulder in November 2026.</p>
       <p>I developed thoughtfeel as a technique for learning and memory. I use it to remember lists, numbers, song lyrics and what people said, to learn board games, complex math and computer science, to play chess in my head, and to think through complex strategic problems. I made the animated lessons and started <a href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">r/MentalAtlas</a> so people can compare notes.</p>
       <p>I write up the techniques as essays on <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">Substack</a>.</p>
@@ -957,19 +1030,8 @@ window.tfTrack = function (path, title) {
       <a class="btn primary" href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">Open r/MentalAtlas</a>
     </div>
     <ul>
-      <li><a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Start here: Visual analogies</a><span>Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span></li>
-      <li><a href="https://www.youtube.com/watch?v=dV8fNY311W4" target="_blank" rel="noopener">The full walkthrough: Concept stories</a><span>How to Learn Anything Complicated by Building a Concept Story · <a href="/texts/">The full texts</a></span></li>
-      <li><a href="https://www.youtube.com/watch?v=gTu22urSWAc" target="_blank" rel="noopener">Video 1: What it is</a><span>What Is thoughtfeel? A Sense for Concepts</span></li>
-      <li><a href="https://www.youtube.com/watch?v=bQvnFz86URY" target="_blank" rel="noopener">Video 2: Learning a texture</a><span>Why You Miss Ideas You Already Know</span></li>
-      <li><a href="https://www.youtube.com/watch?v=mFIThyF5Y0E" target="_blank" rel="noopener">Video 3: Memorizing a list</a><span>How to Memorize Any List by Imagining in Concepts</span></li>
-      <li><a href="https://www.youtube.com/watch?v=DpkQsCGBMIE" target="_blank" rel="noopener">Video 4: Memorizing numbers</a><span>How to Memorize Long Numbers by Imagining in Concepts</span></li>
-      <li><a href="https://www.youtube.com/watch?v=PIZ0G-A8uy4" target="_blank" rel="noopener">Video 5: Pictures and ideas</a><span>What a Picture Does to an Idea</span></li>
-      <li><a href="https://www.youtube.com/watch?v=2lMqpiP8Clo" target="_blank" rel="noopener">Video 6: At the right moment</a><span>You Didn’t Forget. You Missed the Moment.</span></li>
-      <li><a href="https://www.youtube.com/watch?v=fWasdNcap88" target="_blank" rel="noopener">Video 7: Analogies</a><span>How to Build an Analogy</span></li>
-      <li><a href="https://www.youtube.com/watch?v=VDHt3z8Babo" target="_blank" rel="noopener">Video 8: Vocabulary</a><span>How to Memorize Vocabulary by Imagining in Concepts</span></li>
-      <li><a href="https://www.youtube.com/watch?v=ABazBzZOmag" target="_blank" rel="noopener">Video 9: Finding mistakes</a><span>How to Find the Mistakes in Your Own Understanding</span></li>
-      <li><a href="https://www.youtube.com/watch?v=f8YMcrpDIas" target="_blank" rel="noopener">Video 10: Complicated ideas</a><span>How to Learn Complicated Ideas by Imagining in Concepts</span></li>
-      <li><a href="https://www.youtube.com/watch?v=TUWSnA1KVrE" target="_blank" rel="noopener">Video 11: The research</a><span>How Many People Can Imagine in Concepts?</span></li>
+      <li><a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">Start here: Julian’s first lesson</a><span>Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span></li>
+      <li><a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why visual analogies fail</a><span>Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span></li>
       <li><a href="/what-is-thoughtfeel/">What is thoughtfeel?</a><span>The definition, and what thoughtfeel is not.</span></li>
       <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The thoughtfeel YouTube channel</a><span>New lessons as they’re published.</span></li>
       <li><a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">The thoughtfeel Substack</a><span>The techniques, written up as essays.</span></li>
