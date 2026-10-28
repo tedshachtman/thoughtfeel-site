@@ -784,13 +784,13 @@ window.tfTrack = function (path, title) {
       <div class="imt-card-body">
         <p class="eyebrow">The one-question test</p>
         <h2 id="test-title">Do you have it?</h2>
-        <p class="imt-intro">Think about your mom. There are four ways people do it. Read all four, then answer one question.</p>
+        <p class="imt-intro">Think about your best friend. There are four ways people do it. Read all four, then answer one question.</p>
         <div class="panel imt-panel" id="imt" aria-live="polite">
           <ol class="imt-ways">
-            <li><img src="/img/quiz/picture.png" width="600" height="400" alt=""><div><b>1 · A picture of her.</b> It has shape, size and color, and it feels like looking at something.</div></li>
-            <li><img src="/img/quiz/voice.png" width="600" height="400" alt=""><div><b>2 · Her voice.</b> You hear her voice in your head.</div></li>
-            <li><img src="/img/quiz/knowing.png" width="600" height="400" alt=""><div><b>3 · Just knowing.</b> You just know you’re thinking about her. To feel this one, stare at something near you and pay attention to its color. You still know you’re thinking about your mom.</div></li>
-            <li class="four"><span class="imt-words" aria-hidden="true">No shape.<br>No size.<br>No color.</span><div><b>4 · A concept bubble of her.</b> It feels like looking at something, but it has no shape, size or color, and it’s obviously your mom.</div></li>
+            <li><img src="/img/quiz/picture.png" width="600" height="400" alt=""><div><b>1 · A picture of your friend.</b> It has shape, size and color, and it feels like looking at something.</div></li>
+            <li><img src="/img/quiz/voice.png" width="600" height="400" alt=""><div><b>2 · Your friend’s voice.</b> You hear their voice in your head.</div></li>
+            <li><img src="/img/quiz/knowing.png" width="600" height="400" alt=""><div><b>3 · Just knowing.</b> You just know you’re thinking about your friend. To feel this one, stare at something near you and pay attention to its color. You still know you’re thinking about your best friend.</div></li>
+            <li class="four"><span class="imt-words" aria-hidden="true">No shape.<br>No size.<br>No color.</span><div><b>4 · A concept bubble of your friend.</b> It feels like looking at something, but it has no shape, size or color, and it’s obviously your best friend.</div></li>
           </ol>
           <div id="imt-ask">
             <p class="imt-q">Can you do the fourth one?</p>
@@ -1109,7 +1109,7 @@ window.tfTrack = function (path, title) {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
   schedule();
 
-  /* ---------- The test: the four ways to think about your mom; can you do the fourth? ---------- */
+  /* ---------- The test: the four ways to think about your best friend; can you do the fourth? ---------- */
   // Since 2026-10-27 the test is the question from the live lessons (it replaced the four-step "surprise party"
   // test, and the quiz at /quiz/ asks the same). The answer goes along with an email signup (as test_result and
   // test_answers), so each signup says whether the person has thoughtfeel.
@@ -1149,7 +1149,7 @@ window.tfTrack = function (path, title) {
     }
 
     function share(button) {
-      var text = 'Think about your mom. There are four ways people do it. Can you do the fourth one?';
+      var text = 'Think about your best friend. There are four ways people do it. Can you do the fourth one?';
       var done = function () { button.textContent = 'Link copied'; setTimeout(function () { button.textContent = 'Ask a friend'; }, 1800); };
       if (navigator.share) { navigator.share({ title: 'Do you have thoughtfeel?', text: text, url: SHARE_URL }).catch(function () {}); return; }
       var fallback = function () {

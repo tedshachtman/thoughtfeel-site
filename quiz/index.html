@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Think about your mom. There are four ways people do it: a picture, her voice, just knowing, or a concept bubble. Can you do the fourth one?">
+<meta name="description" content="Think about your best friend. There are four ways people do it: a picture, their voice, just knowing, or a concept bubble. Can you do the fourth one?">
 <link rel="canonical" href="https://thoughtfeel.net/quiz/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="thoughtfeel">
 <meta property="og:title" content="Do you have thoughtfeel? One question">
-<meta property="og:description" content="Think about your mom. There are four ways people do it: a picture, her voice, just knowing, or a concept bubble. Can you do the fourth one?">
+<meta property="og:description" content="Think about your best friend. There are four ways people do it: a picture, their voice, just knowing, or a concept bubble. Can you do the fourth one?">
 <meta property="og:url" content="https://thoughtfeel.net/quiz/">
-<meta property="og:image" content="https://thoughtfeel.net/og-quiz-mom.png">
+<meta property="og:image" content="https://thoughtfeel.net/og-quiz-friend.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Think about your mom. There are four ways people do it. Can you do the fourth one?">
+<meta property="og:image:alt" content="Think about your best friend. There are four ways people do it. Can you do the fourth one?">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Do you have thoughtfeel? One question">
-<meta name="twitter:description" content="Think about your mom. There are four ways people do it: a picture, her voice, just knowing, or a concept bubble. Can you do the fourth one?">
-<meta name="twitter:image" content="https://thoughtfeel.net/og-quiz-mom.png">
+<meta name="twitter:description" content="Think about your best friend. There are four ways people do it: a picture, their voice, just knowing, or a concept bubble. Can you do the fourth one?">
+<meta name="twitter:image" content="https://thoughtfeel.net/og-quiz-friend.png">
 <script>
 window.tfTrack = function (path, title) {
   try {
@@ -71,7 +71,7 @@ window.tfTrack = function (path, title) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
 <style>
-  /* The one-question quiz (2026-10-27): the four ways to think about your mom, from the live lessons, replaces the
+  /* The one-question quiz (2026-10-27): the four ways to think about your best friend (your mom until 10/28), from the live lessons, replaces the
      ten-statement quiz v2 (archived). Same tokens as the home page (thoughtfeel-guide.html). */
   :root {
     --bg: #f0f2f5;
@@ -204,15 +204,15 @@ window.tfTrack = function (path, title) {
 
   <main class="card">
     <p class="eyebrow">The thoughtfeel quiz · one question</p>
-    <h1>Think about your mom.</h1>
+    <h1>Think about your best friend.</h1>
     <p class="lede">There are four ways people do it. Read all four, then answer one question.</p>
 
     <ol class="ways">
       <li class="way">
-        <img src="/img/quiz/picture.png" width="600" height="400" alt="A picture: a woman’s portrait in a gilt frame on a wall.">
+        <img src="/img/quiz/picture.png" width="600" height="400" alt="A picture: a snapshot of a smiling friend, taped to a wall.">
         <div class="text">
           <p class="num">1</p>
-          <h2>A picture of her</h2>
+          <h2>A picture of your friend</h2>
           <p>It has shape, size and color, and it feels like looking at something.</p>
         </div>
       </li>
@@ -220,8 +220,8 @@ window.tfTrack = function (path, title) {
         <img src="/img/quiz/voice.png" width="600" height="400" alt="A sound wave.">
         <div class="text">
           <p class="num">2</p>
-          <h2>Her voice</h2>
-          <p>You hear her voice in your head.</p>
+          <h2>Your friend’s voice</h2>
+          <p>You hear their voice in your head.</p>
         </div>
       </li>
       <li class="way">
@@ -229,15 +229,15 @@ window.tfTrack = function (path, title) {
         <div class="text">
           <p class="num">3</p>
           <h2>Just knowing</h2>
-          <p>You just know you’re thinking about her. To feel this one, stare at something near you and pay attention to its color. You still know you’re thinking about your mom.</p>
+          <p>You just know you’re thinking about your friend. To feel this one, stare at something near you and pay attention to its color. You still know you’re thinking about your best friend.</p>
         </div>
       </li>
       <li class="way way-4">
         <div class="words" aria-hidden="true">No shape.<br>No size.<br>No color.</div>
         <div class="text">
           <p class="num">4</p>
-          <h2>A concept bubble of her</h2>
-          <p>It feels like looking at something, but it has no shape, size or color, and it’s obviously your mom.</p>
+          <h2>A concept bubble of your friend</h2>
+          <p>It feels like looking at something, but it has no shape, size or color, and it’s obviously your best friend.</p>
         </div>
       </li>
     </ol>
@@ -313,7 +313,7 @@ window.tfTrack = function (path, title) {
 
   function share() {
     var url = 'https://thoughtfeel.net/quiz/', status = document.getElementById('share-status');
-    var text = 'Think about your mom. There are four ways people do it. Can you do the fourth one?';
+    var text = 'Think about your best friend. There are four ways people do it. Can you do the fourth one?';
     tfTrack('quiz3-share');
     if (navigator.share) { navigator.share({ title: 'Do you have thoughtfeel?', text: text, url: url }).catch(function () {}); return; }
     var done = function () { if (status) status.textContent = 'Link copied'; };
