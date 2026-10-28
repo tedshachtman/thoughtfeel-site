@@ -244,6 +244,15 @@ window.tfTrack = function (path, title) {
   }
   .start-desc { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
   .start-meta { margin: 0; font-family: var(--sans); font-size: 15.5px; color: var(--ink-2); }
+  /* After Julian's lesson: the app that reads concept stories aloud. */
+  .start-app {
+    display: grid; gap: 4px; margin-top: 8px; padding: 14px 18px; border-radius: 12px; text-decoration: none;
+    background: var(--indigo-soft); border: 1.5px solid var(--indigo); color: var(--ink);
+  }
+  .start-app:hover, .start-app:focus-visible { background: var(--surface); }
+  .start-app-q { font-family: var(--sans); font-weight: 700; font-size: 17px; line-height: 1.3; }
+  .start-app-cta { font-size: 16px; line-height: 1.45; color: var(--ink-2); }
+  .start-app-cta b { font-family: var(--sans); font-weight: 600; color: var(--indigo); }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-family: var(--sans); font-weight: 500; font-size: 16px;
@@ -761,6 +770,10 @@ window.tfTrack = function (path, title) {
       <h2 id="start-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</h2>
       <p class="start-desc">Julian Putnam had never used thoughtfeel. In one recorded session, Julian builds temporal difference learning, how a brain learns to predict rewards, as a concept story, one line at a time, then explains it back from memory.</p>
       <p class="start-meta">51 minutes · Short on time? Watch <a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</a> (7 minutes)</p>
+      <a class="start-app" href="https://stories.thoughtfeel.net" target="_blank" rel="noopener">
+        <span class="start-app-q">Want to learn like Julian did in the video?</span>
+        <span class="start-app-cta">Check out <b>stories.thoughtfeel.net</b> to listen to concept stories using thoughtfeel →</span>
+      </a>
     </section>
   </header>
 
@@ -1232,7 +1245,9 @@ window.tfTrack = function (path, title) {
     var a = e.target.closest('a');
     if (!a) return;
     var v = /[?&]v=([\w-]+)/.exec(a.getAttribute('href') || '');
-    if (a.classList.contains('start-player')) {
+    if (a.classList.contains('start-app')) {
+      tfTrack('start-to-app', 'After Julian’s lesson: stories.thoughtfeel.net');
+    } else if (a.classList.contains('start-player')) {
       tfTrack('start-video', 'Start here: Julian’s lesson');
     } else if (v) {
       var card = a.closest('.video');
