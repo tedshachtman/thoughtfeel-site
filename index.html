@@ -244,6 +244,10 @@ window.tfTrack = function (path, title) {
   }
   .start-desc { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
   .start-meta { margin: 0; font-family: var(--sans); font-size: 15.5px; color: var(--ink-2); }
+  /* What you'll see Julian do in the lesson (Ted, 10/28). */
+  .start-list { display: grid; gap: 3px; margin: -4px 0 0; padding-left: 1.5em; font-size: 16.5px; line-height: 1.5; color: var(--ink-2); }
+  .start-list li { padding-left: 2px; }
+  .start-list li::marker { font-family: var(--sans); font-weight: 700; color: var(--weld); }
   /* After Julian's lesson: the app that reads concept stories aloud. */
   .start-app {
     display: grid; gap: 4px; margin-top: 8px; padding: 14px 18px; border-radius: 12px; text-decoration: none;
@@ -768,7 +772,15 @@ window.tfTrack = function (path, title) {
         <span class="play" aria-hidden="true"></span>
       </a>
       <h2 id="start-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</h2>
-      <p class="start-desc">Julian Putnam had never used thoughtfeel. In one recorded session, Julian builds temporal difference learning, how a brain learns to predict rewards, as a concept story, one line at a time, then explains it back from memory.</p>
+      <p class="start-desc">In one recorded session, you’ll see Julian:</p>
+      <ol class="start-list">
+        <li>find out he has thoughtfeel</li>
+        <li>learn the basics of thoughtfeel</li>
+        <li>use thoughtfeel to understand a complicated algorithm</li>
+        <li>ask great questions along the way</li>
+        <li>explain the algorithm back from memory</li>
+        <li>compare it with other methods, like the Feynman technique and visual analogies</li>
+      </ol>
       <p class="start-meta">51 minutes · Short on time? Watch <a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</a> (7 minutes)</p>
       <a class="start-app" href="https://stories.thoughtfeel.net" target="_blank" rel="noopener">
         <span class="start-app-q">Want to learn like Julian did in the video?</span>
