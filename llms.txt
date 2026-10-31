@@ -23,7 +23,9 @@ What thoughtfeel is not:
 
 ## Lessons
 
-- [Start here: Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)](https://www.youtube.com/watch?v=g3Z8VnARbQg)
+- [Start here: Learn a Bloom Filter in Your Head: The Interactive thoughtfeel Lesson](https://www.youtube.com/watch?v=tgLRhlMjVkI); the activity is at https://stories.thoughtfeel.net/#/lesson
+- [See it live: Julian's first thoughtfeel lesson](https://www.youtube.com/watch?v=I3WgK8cPa0A): a whole lesson, recorded live
+- [Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)](https://www.youtube.com/watch?v=g3Z8VnARbQg)
 - [How to Learn Anything Complicated by Building a Concept Story](https://www.youtube.com/watch?v=dV8fNY311W4): the full walkthrough; [the full texts](https://thoughtfeel.net/texts/)
 - [What Is thoughtfeel? A Sense for Concepts](https://www.youtube.com/watch?v=gTu22urSWAc)
 - [How to Memorize Any List by Imagining in Concepts](https://www.youtube.com/watch?v=mFIThyF5Y0E)

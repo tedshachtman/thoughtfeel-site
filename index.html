@@ -227,12 +227,12 @@ window.tfTrack = function (path, title) {
     background: var(--indigo-soft); box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
   }
   .start-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  /* The play button sits in the thumbnail's empty bottom-left corner, clear of the title and Julian's face, light in both themes. */
-  .start-player .play { left: 20%; top: 82%; background: #f4f1ea; }
-  .thumb .play-corner { left: 20%; top: 80%; }
-  /* On phones the thumbnail is small: a smaller button, lower, so it stays off the title. */
+  /* The play button sits on the learner's sweater, clear of the thumbnail's title, light in both themes. */
+  .start-player .play { left: 71%; top: 70%; background: #f4f1ea; }
+  .thumb .play-corner { left: 71%; top: 70%; }
+  /* On phones the thumbnail is small: a smaller button. */
   @media (max-width: 600px) {
-    .start-player .play, .thumb .play-corner { width: 48px; height: 48px; margin: -24px 0 0 -24px; top: 86%; }
+    .start-player .play, .thumb .play-corner { width: 48px; height: 48px; margin: -24px 0 0 -24px; }
     .start-player .play::after, .thumb .play-corner::after { left: 19px; top: 14px; border-width: 10px 0 10px 15px; }
   }
   .start-player .play::after { border-left-color: #2c3f8f; }
@@ -768,24 +768,23 @@ window.tfTrack = function (path, title) {
 
     <section class="start" id="start" aria-labelledby="start-title">
       <p class="eyebrow">Start here</p>
-      <a class="start-player" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener" aria-label="Play the video: Julian’s first thoughtfeel lesson">
-        <img src="https://i.ytimg.com/vi/I3WgK8cPa0A/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg'">
+      <a class="start-player" href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener" aria-label="Play the video: Learn a Bloom filter in your head: the interactive thoughtfeel lesson">
+        <img src="https://i.ytimg.com/vi/tgLRhlMjVkI/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/tgLRhlMjVkI/hqdefault.jpg'">
         <span class="play" aria-hidden="true"></span>
       </a>
-      <h2 id="start-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</h2>
-      <p class="start-desc">In one recorded session, you’ll see Julian:</p>
+      <h2 id="start-title">Learn a Bloom filter in your head: the interactive thoughtfeel lesson</h2>
+      <p class="start-desc">In one interactive lesson, you’ll:</p>
       <ol class="start-list">
-        <li>find out he has thoughtfeel</li>
-        <li>learn the basics of thoughtfeel</li>
-        <li>use thoughtfeel to understand a complicated algorithm</li>
-        <li>ask great questions along the way</li>
-        <li>explain the algorithm back from memory</li>
-        <li>compare it with other methods, like the Feynman technique and visual analogies</li>
+        <li>find out if you have thoughtfeel</li>
+        <li>learn what a concept bubble is</li>
+        <li>build a complicated idea, how a Bloom filter works, as a concept story, one line at a time</li>
+        <li>explain it back from memory</li>
+        <li>compare it with a visual analogy</li>
       </ol>
-      <p class="start-meta">51 minutes · Short on time? Watch <a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</a> (7 minutes)</p>
-      <a class="start-app" href="https://stories.thoughtfeel.net" target="_blank" rel="noopener">
-        <span class="start-app-q">Want to learn like Julian did in the video?</span>
-        <span class="start-app-cta">Check out <b>stories.thoughtfeel.net</b> to listen to concept stories using thoughtfeel →</span>
+      <p class="start-meta">14 minutes, plus the story on stories.thoughtfeel.net · See it live: <a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">Julian’s first thoughtfeel lesson</a> (51 minutes)</p>
+      <a class="start-app" href="https://stories.thoughtfeel.net/#/lesson" target="_blank" rel="noopener">
+        <span class="start-app-q">Rather do it all in one place?</span>
+        <span class="start-app-cta">Take the whole lesson at <b>stories.thoughtfeel.net</b>, where the story plays one line at a time →</span>
       </a>
     </section>
   </header>
@@ -983,17 +982,17 @@ window.tfTrack = function (path, title) {
       <h2 id="videos-title">Start with these two videos</h2>
     </div>
     <div class="video-grid">
+      <a class="video" href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/tgLRhlMjVkI/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play play-corner" aria-hidden="true"></span></span>
+        <span class="video-label">Start here · 14 minutes, interactive</span>
+        <span class="video-title">Learn a Bloom filter in your head: the interactive thoughtfeel lesson</span>
+        <span class="video-desc">An animated lesson: find out if you have thoughtfeel, then build how a Bloom filter works as a concept story, one line at a time, and explain it back from memory. You do the story on stories.thoughtfeel.net.</span>
+      </a>
       <a class="video" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play play-corner" aria-hidden="true"></span></span>
-        <span class="video-label">A first lesson · 51 minutes</span>
+        <span class="thumb"><img src="https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="video-label">See it live · 51 minutes</span>
         <span class="video-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span>
         <span class="video-desc">Julian had never used thoughtfeel. Watch a whole lesson: building a complicated idea as a concept story, one line at a time, then explaining it back from memory.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/g3Z8VnARbQg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">Why it works · 7 minutes</span>
-        <span class="video-title">Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span>
-        <span class="video-desc">The picture is only the idea’s shadow: you forget what it meant, reason from the picture instead of the idea, can’t tell a wrong idea from a right one, and have to rebuild the idea every time. Imagining in concepts fixes all four.</span>
       </a>
     </div>
     <div class="updates" id="updates">
@@ -1057,7 +1056,8 @@ window.tfTrack = function (path, title) {
       <a class="btn primary" href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">Open r/MentalAtlas</a>
     </div>
     <ul>
-      <li><a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">Start here: Julian’s first lesson</a><span>Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span></li>
+      <li><a href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener">Start here: the interactive lesson</a><span>Learn a Bloom filter in your head: the interactive thoughtfeel lesson</span></li>
+      <li><a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">See it live: Julian’s first lesson</a><span>Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span></li>
       <li><a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why visual analogies fail</a><span>Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span></li>
       <li><a href="/what-is-thoughtfeel/">What is thoughtfeel?</a><span>The definition, and what thoughtfeel is not.</span></li>
       <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The thoughtfeel YouTube channel</a><span>New lessons as they’re published.</span></li>
@@ -1260,9 +1260,9 @@ window.tfTrack = function (path, title) {
     if (!a) return;
     var v = /[?&]v=([\w-]+)/.exec(a.getAttribute('href') || '');
     if (a.classList.contains('start-app')) {
-      tfTrack('start-to-app', 'After Julian’s lesson: stories.thoughtfeel.net');
+      tfTrack('start-to-app', 'Start here: the whole lesson at stories.thoughtfeel.net');
     } else if (a.classList.contains('start-player')) {
-      tfTrack('start-video', 'Start here: Julian’s lesson');
+      tfTrack('start-video', 'Start here: the interactive lesson');
     } else if (v) {
       var card = a.closest('.video');
       var label = card ? (card.querySelector('.video-label') || {}).textContent : '';
