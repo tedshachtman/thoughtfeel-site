@@ -66,7 +66,7 @@ window.tfTrack = function (path, title) {
 </script>
 </head>
 <body>
-<title>thoughtfeel: a sense for concepts · a practical guide</title>
+<title>thoughtfeel: a sense for concepts</title>
 <!-- Who and what this site is, for search engines and AI assistants (2026-10-25). The definition page has the rest. -->
 <script type="application/ld+json">
 {
@@ -103,422 +103,177 @@ window.tfTrack = function (path, title) {
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;1,7..72,400&family=Schibsted+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Manrope:wght@400..800&display=swap">
 <style>
+  /* The home page, reworked 2026-11-10: one night theme (the lessons' own colours), a hero that shows the idea before
+     any reading, and the long definition folded into parts that open. The page before this is in
+     archive/2026-11-10 before the Fable redesign/. */
   :root {
-    --bg: #f0f2f5;
-    --surface: #ffffff;
-    --surface-2: #e6e9f0;
-    --ink: #19213a;
-    --ink-2: #4b5369;
-    --rule: #d3d8e2;
-    --indigo: #2c3f8f;
-    --indigo-soft: #dfe4f5;
-    --weld: #b87a1c;
-    --term: #7f5210;
-    --ok: #2b7451;
-    --ok-soft: #dcefe4;
-    --miss: #a9412e;
-    --miss-soft: #f6e0db;
-    --serif: "Literata", Georgia, "Times New Roman", serif;
-    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      color-scheme: dark;
-      --bg: #10131b;
-      --surface: #181c27;
-      --surface-2: #212634;
-      --ink: #e5e8ef;
-      --ink-2: #a4aabb;
-      --rule: #2c3243;
-      --indigo: #a5b5ff;
-      --indigo-soft: #232b4a;
-      --weld: #e2a84a;
-      --term: #eab964;
-      --ok: #7fd1a3;
-      --ok-soft: #173326;
-      --miss: #f09a86;
-      --miss-soft: #3a1f1a;
-    }
-  }
-  :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #10131b;
-    --surface: #181c27;
-    --surface-2: #212634;
-    --ink: #e5e8ef;
-    --ink-2: #a4aabb;
-    --rule: #2c3243;
-    --indigo: #a5b5ff;
-    --indigo-soft: #232b4a;
-    --weld: #e2a84a;
-    --term: #eab964;
+    --bg: #0c0a1d;
+    --surface: #16122e;
+    --surface-2: #1e193c;
+    --rule: #2c2752;
+    --rule-2: #3d3670;
+    --ink: #f4f1ea;
+    --ink-2: #bcb6d2;
+    --ink-3: #918baf;
+    --gold: #f3cb76;
+    --gold-2: #e2a84a;
+    --blue: #a9b9ff;
+    --blue-soft: #232652;
+    --night: #150d33;
+    /* Names the test, the testimonials and the signup still use. */
+    --indigo: var(--blue);
+    --indigo-soft: var(--blue-soft);
+    --weld: var(--gold);
+    --term: var(--gold);
     --ok: #7fd1a3;
     --ok-soft: #173326;
     --miss: #f09a86;
     --miss-soft: #3a1f1a;
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+    --serif: var(--sans);
+    --mono: var(--sans);
   }
 
   *, *::before, *::after { box-sizing: border-box; }
   [hidden] { display: none !important; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--serif);
-    font-size: 18px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  a { color: var(--indigo); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a { color: var(--blue); text-underline-offset: 3px; text-decoration-thickness: 1px; }
   a:hover { text-decoration-thickness: 2px; }
-  :focus-visible { outline: 2px solid var(--weld); outline-offset: 3px; border-radius: 3px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+  img { max-width: 100%; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-  .page { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 32px 64px; }
+  /* The night behind the top of the page: violet from the left, a little of the horizon's rose from the right. */
+  .page { position: relative; }
+  .page::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1100px; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(900px 560px at 12% -8%, rgba(116, 72, 214, .34), transparent 62%),
+      radial-gradient(760px 520px at 96% 4%, rgba(210, 76, 120, .2), transparent 62%),
+      radial-gradient(1100px 700px at 50% 46%, rgba(64, 52, 150, .2), transparent 66%);
+  }
+  .wrap { max-width: 1168px; margin: 0 auto; padding-inline: clamp(18px, 4vw, 32px); }
+  .sec { padding-block: clamp(56px, 8vw, 104px); scroll-margin-top: 8px; }
+  .eyebrow { font-weight: 700; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 12px; }
+  h2 { font-family: var(--display); font-weight: 500; font-size: clamp(31px, 4.2vw, 46px); line-height: 1.08; letter-spacing: -0.018em; margin: 0; text-wrap: balance; }
+  .sec-head { max-width: 46rem; }
+  .sec-sub { margin: 14px 0 0; font-size: clamp(17px, 1.8vw, 19px); line-height: 1.55; color: var(--ink-2); max-width: 40rem; text-wrap: pretty; }
 
-  /* ---------- Hero: the pitch, and the video to start with beside it ---------- */
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-    align-items: start;
-    padding-block: 24px 48px;
-  }
-  @media (min-width: 900px) {
-    .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; padding-block: 56px 72px; }
-    .hero-text { padding-top: 20px; }
-  }
-  .wordmark {
-    font-family: var(--sans);
-    font-weight: 700;
-    font-size: clamp(48px, 9vw, 92px);
-    line-height: .95;
-    letter-spacing: -0.035em;
-    margin: 0;
-  }
-  .wordmark span { color: var(--weld); }
-  .tagline {
-    font-size: clamp(25px, 3vw, 34px);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    margin: 16px 0 0;
-    text-wrap: balance;
-  }
-  .hero-copy { font-size: clamp(19px, 2.1vw, 23px); line-height: 1.5; margin: 22px 0 0; max-width: 36ch; }
-  .hero-guide { font-size: 18px; line-height: 1.55; color: var(--ink-2); margin: 16px 0 0; max-width: 44ch; }
-  .byline { font-family: var(--mono); font-size: 12.5px; letter-spacing: .05em; color: var(--ink-2); margin: 22px 0 0; }
-  /* On phones, keep the pitch short so the video reaches the first screen. */
-  @media (max-width: 600px) {
-    .hero { gap: 20px; padding-top: 12px; }
-    .hero-copy { line-height: 1.5; margin-top: 14px; }
-    .hero-guide { font-size: 16px; margin-top: 10px; }
-    .byline { margin-top: 14px; }
-    .imt-intro-more { display: none; }
-  }
-  /* The video to start with: its thumbnail until it's played, then YouTube's player in the same place. */
-  .start { display: grid; gap: 10px; }
-  .start .eyebrow { margin: 0; }
-  .start-player {
-    position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 14px;
-    background: var(--indigo-soft); box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
-  }
-  .start-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  /* The play button sits on the learner's sweater, clear of the thumbnail's title, light in both themes. */
-  .start-player .play { left: 71%; top: 70%; background: #f4f1ea; }
-  .thumb .play-corner { left: 71%; top: 70%; }
-  /* On phones the thumbnail is small: a smaller button. */
-  @media (max-width: 600px) {
-    .start-player .play, .thumb .play-corner { width: 48px; height: 48px; margin: -24px 0 0 -24px; }
-    .start-player .play::after, .thumb .play-corner::after { left: 19px; top: 14px; border-width: 10px 0 10px 15px; }
-  }
-  .start-player .play::after { border-left-color: #2c3f8f; }
-  .start-player:hover .play, .start-player:focus-visible .play { transform: scale(1.08); }
-  .start-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 14px; background: #000; }
-  .start h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 2.4vw, 27px);
-    line-height: 1.2; letter-spacing: -0.015em; margin: 6px 0 0; text-wrap: balance;
-  }
-  .start-desc { margin: 0; font-size: 16.5px; line-height: 1.55; color: var(--ink-2); }
-  .start-meta { margin: 0; font-family: var(--sans); font-size: 15.5px; color: var(--ink-2); }
-  /* What you'll do in the lesson. */
-  .start-list { display: grid; gap: 3px; margin: -4px 0 0; padding-left: 1.5em; font-size: 16.5px; line-height: 1.5; color: var(--ink-2); }
-  .start-list li { padding-left: 2px; }
-  .start-list li::marker { font-family: var(--sans); font-weight: 700; color: var(--weld); }
-  /* Under the lesson: the whole lesson in the app, where the story plays one line at a time. */
-  .start-app {
-    display: grid; gap: 4px; margin-top: 8px; padding: 14px 18px; border-radius: 12px; text-decoration: none;
-    background: var(--indigo-soft); border: 1.5px solid var(--indigo); color: var(--ink);
-  }
-  .start-app:hover, .start-app:focus-visible { background: var(--surface); }
-  .start-app-q { font-family: var(--sans); font-weight: 700; font-size: 17px; line-height: 1.3; }
-  .start-app-cta { font-size: 16px; line-height: 1.45; color: var(--ink-2); }
-  .start-app-cta b { font-family: var(--sans); font-weight: 600; color: var(--indigo); }
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-family: var(--sans); font-weight: 500; font-size: 16px;
-    padding: 12px 20px; border-radius: 999px; border: 1.5px solid var(--indigo);
-    text-decoration: none; cursor: pointer; line-height: 1.2;
-    background: transparent; color: var(--indigo);
+    font-family: var(--sans); font-weight: 700; font-size: 16px; line-height: 1.2;
+    padding: 14px 22px; border-radius: 999px; border: 1.5px solid var(--rule-2);
+    background: rgba(255, 255, 255, .03); color: var(--ink); text-decoration: none; cursor: pointer;
+    transition: background .2s, border-color .2s, transform .2s;
   }
-  .btn:hover { background: var(--indigo-soft); }
-  .btn.primary { background: var(--indigo); color: var(--bg); }
-  .btn.primary:hover { filter: brightness(1.1); }
-  .btn.quiet { border-color: var(--rule); color: var(--ink-2); }
-
-  /* The test card: a strip of the weave on top, then the questions. */
-  .imt-card {
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px;
-    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
-  }
-  /* The card doesn't clip (its stage stays in view while the list scrolls under it), so the weave rounds its own corners. */
-  #swatch { display: block; width: 100%; aspect-ratio: 10 / 1; border-radius: 13px 13px 0 0; }
-  .imt-card-body { padding: clamp(18px, 3vw, 28px); display: grid; gap: 10px; }
-  .imt-card .eyebrow { margin: 0; }
-  .imt-card h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(24px, 2.6vw, 30px);
-    line-height: 1.15; letter-spacing: -0.015em; margin: 0;
-  }
-  .imt .imt-intro { margin: 0 0 8px; color: var(--ink-2); font-size: 16.5px; line-height: 1.5; }
-  .imt .imt-more { margin: 4px 0 0; font-family: var(--sans); font-size: 15.5px; color: var(--ink-2); }
-  @media (max-width: 600px) {
-    #swatch { aspect-ratio: 14 / 1; }
-    .imt-card-body { gap: 8px; }
-  }
-
-  /* ---------- Definition ---------- */
-  .what { padding-block: 8px 72px; }
-  /* The test (one question): right after the video on phones, beside the definition on wide screens. */
-  .what > .imt-card { margin-bottom: 56px; }
-  @media (min-width: 900px) {
-    .what { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; align-items: start; }
-    .what > .imt-card { grid-column: 2; grid-row: 1; margin-bottom: 0; }
-    .what-main { grid-column: 1; grid-row: 1; }
-  }
-  .what-main h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(30px, 4vw, 44px);
-    line-height: 1.1; letter-spacing: -0.02em; margin: 0; text-wrap: balance;
-  }
-  .what-lead {
-    font-size: clamp(21px, 2.5vw, 27px); line-height: 1.45; max-width: 48ch;
-    margin: 16px 0 0; text-wrap: balance;
-  }
-  .what-lead em { color: var(--term); }
-  .what-body { font-size: clamp(18px, 1.9vw, 19.5px); line-height: 1.6; max-width: 58ch; margin: 14px 0 0; }
-  .what-body em { color: var(--term); }
-  .what-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px 56px; margin-top: 36px; align-items: start; }
-  @media (min-width: 900px) { .what-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
-  .what-solo { margin-top: 36px; }
-  /* The definition in short parts: a subheader and an icon that says what each part is about. */
-  .what-parts { display: grid; gap: 34px; margin-top: 36px; max-width: 66ch; }
-  .what-part { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 0 16px; align-items: start; }
-  .what-icon {
-    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px;
-    background: var(--indigo-soft); color: var(--indigo);
-  }
-  .what-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .what-part h3 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(19px, 2vw, 21px); line-height: 1.3;
-    letter-spacing: -0.01em; margin: 10px 0 8px; text-wrap: balance;
-  }
-  .what-part p { font-size: clamp(17px, 1.8vw, 18.5px); line-height: 1.6; margin: 0 0 12px; }
-  .what-part p:last-child { margin-bottom: 0; }
-  .what-part p.what-cite { font-family: var(--sans); font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
-  .what-figure { grid-column: 1 / -1; margin: 22px 0 0; }
-  .what-figure img { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35); }
-  .what-figure figcaption { margin-top: 10px; font-family: var(--sans); font-size: 14.5px; line-height: 1.4; color: var(--ink-2); }
-  @media (max-width: 600px) {
-    .what-part { grid-template-columns: 36px minmax(0, 1fr); gap: 0 12px; }
-    .what-icon { width: 36px; height: 36px; border-radius: 10px; }
-    .what-icon svg { width: 20px; height: 20px; }
-    .what-part h3 { margin-top: 6px; }
-  }
-  .what-text { max-width: 62ch; }
-  .what-text h3 { font-family: var(--sans); font-weight: 500; font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
-  .what-text h3:not(:first-child) { margin-top: 28px; }
-  .what-text p { margin: 0 0 12px; }
-  .what-text strong { font-family: var(--sans); font-weight: 500; color: var(--term); }
-  .ingredients {
-    margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 20px;
-  }
-  .thought-card { background: var(--surface-2); border-radius: 10px; padding: 16px; }
-  .thought-name { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 12px; }
-  .thought-card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .thought-card li {
-    font-family: var(--mono); font-size: 14px; padding: 6px 10px; border-radius: 6px;
-    border: 1px solid var(--rule); color: var(--ink-2); background: var(--surface);
-  }
-  .thought-card li.shared { border-color: var(--weld); color: var(--term); font-weight: 500; background: transparent; box-shadow: inset 3px 0 0 var(--weld); }
-  .ingredients figcaption { grid-column: 1 / -1; font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
-  .shared-word { font-family: var(--mono); color: var(--term); font-weight: 500; }
-  .what-sub { font-size: 17px; color: var(--ink-2); max-width: 60ch; margin: 14px 0 0; }
-  .lyric {
-    display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; align-items: start;
-    margin-top: 44px; padding-top: 32px; border-top: 1px solid var(--rule);
-  }
-  @media (min-width: 900px) { .lyric { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
-  .lyric-text { max-width: 62ch; }
-  .lyric-text h3 { font-family: var(--sans); font-weight: 500; font-size: 20px; line-height: 1.3; margin: 0 0 8px; }
-  .lyric-text p { margin: 0 0 12px; }
-  .lyric-line {
-    margin: 4px 0 18px; padding: 14px 20px; border-left: 3px solid var(--weld); background: var(--surface);
-    border-radius: 0 8px 8px 0; font-size: 20px; font-style: italic;
-  }
-  .modes-title { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 12px; }
-  .modes { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  .modes li {
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px;
-    font-size: 16px; line-height: 1.5; color: var(--ink-2);
-  }
-  .modes .mode { display: block; font-family: var(--sans); font-weight: 500; font-size: 16px; color: var(--ink); margin-bottom: 2px; }
-  .modes li.key { border-color: var(--weld); box-shadow: inset 4px 0 0 var(--weld); color: var(--ink); }
-  .modes li.key .mode { color: var(--term); font-weight: 700; }
-  .not-list {
-    list-style: none; margin: 36px 0 0; padding: 20px 0 0; border-top: 1px solid var(--rule);
-    display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px 40px; font-size: 16.5px; color: var(--ink-2);
-  }
-  @media (min-width: 820px) { .not-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .vocab {
-    margin: 28px 0 0; padding: 16px 20px; max-width: 76ch; background: var(--surface);
-    border: 1px solid var(--rule); border-radius: 10px; font-size: 16.5px; line-height: 1.6;
-  }
-  .vocab-label {
-    display: block; font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--ink-2); margin-bottom: 4px;
-  }
-  .not-list strong { display: block; font-family: var(--sans); font-weight: 500; color: var(--ink); margin-bottom: 2px; }
-
-  /* ---------- Exercise ---------- */
-  .try {
-    background: var(--surface);
-    border: 1px solid var(--rule);
-    border-radius: 14px;
-    padding: clamp(20px, 4vw, 44px);
-    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
-  }
-  .eyebrow {
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--term); margin: 0 0 10px;
-  }
-  .try h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
-    line-height: 1.15; letter-spacing: -0.015em; margin: 0; text-wrap: balance;
-  }
-  .try-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 48px; margin-top: 24px; }
-  @media (min-width: 900px) { .try-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
-  .try p { margin: 0 0 14px; }
-  .try .lede { color: var(--ink-2); max-width: 60ch; margin-top: 12px; }
-  .check {
-    border-left: 3px solid var(--weld); padding: 4px 0 4px 16px; margin: 0 0 18px;
-  }
-  .check strong { font-family: var(--sans); font-weight: 500; }
-  .check-list { margin: 0 0 12px; padding-left: 1.2em; }
-  .check-list li { margin-bottom: 6px; }
-  .check-list li::marker { color: var(--term); }
-  .check p:last-child { margin-bottom: 0; }
-  /* While recalling, the instructions are hidden and the panel takes the whole row. */
-  .try-grid.solo { grid-template-columns: minmax(0, 1fr); }
-  .try-grid.solo .panel { max-width: 560px; }
-  .steps { margin: 0 0 18px; padding-left: 1.3em; }
-  .steps li { margin-bottom: 8px; padding-left: 4px; }
-  .steps li::marker { font-family: var(--mono); color: var(--term); font-size: .85em; }
-  .say { font-style: italic; }
-
-  .panel {
-    background: var(--surface-2); border-radius: 10px; padding: 20px;
-    display: flex; flex-direction: column; gap: 16px;
-  }
-  .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .panel-title { font-family: var(--sans); font-weight: 700; font-size: 18px; margin: 0; }
-  .timer { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 14px; color: var(--ink-2); }
-  .cobalt { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .cobalt li {
-    display: grid; grid-template-columns: 3ch 1fr; gap: 14px; align-items: baseline;
-    background: var(--surface); border-radius: 8px; padding: 10px 14px;
-  }
-  .pos { font-family: var(--mono); font-size: 14px; color: var(--term); font-variant-numeric: tabular-nums; }
-  .word { font-family: var(--sans); font-weight: 500; font-size: 20px; letter-spacing: .01em; }
-  .covered .word { display: inline-block; width: 9ch; max-width: 100%; height: 1.1em; background: var(--rule); border-radius: 4px; }
-  .hint { font-size: 15px; color: var(--ink-2); margin: 0; }
-  .recall-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-  .recall-list li { display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: 14px; align-items: center; }
-  .recall-list .answer { grid-column: 2; font-family: var(--mono); font-size: 13px; margin-top: -2px; }
-  input[type="text"], select {
-    font: 500 18px/1.2 var(--sans); color: var(--ink); background: var(--surface);
-    border: 1.5px solid var(--rule); border-radius: 8px; padding: 10px 12px; width: 100%; min-width: 0;
-  }
-  input[type="text"]:focus, select:focus { border-color: var(--indigo); outline: none; box-shadow: 0 0 0 3px var(--indigo-soft); }
-  input.is-ok { border-color: var(--ok); background: var(--ok-soft); }
-  input.is-miss { border-color: var(--miss); background: var(--miss-soft); }
-  .q { display: grid; gap: 8px; }
-  .q label { font-size: 16px; }
-  .q select { max-width: 12ch; }
+  .btn:hover { background: var(--surface-2); border-color: var(--blue); }
+  .btn.primary { background: var(--gold); border-color: var(--gold); color: #1b1232; }
+  .btn.primary:hover { background: #f8d98f; border-color: #f8d98f; transform: translateY(-1px); }
+  .btn.small { padding: 10px 16px; font-size: 14.5px; }
+  .btn .arrow { transition: transform .2s; }
+  .btn:hover .arrow { transform: translateX(3px); }
   .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .score {
-    font-family: var(--sans); font-weight: 700; font-size: 30px; letter-spacing: -0.01em; margin: 0;
-  }
-  .score small { font-weight: 500; font-size: 16px; color: var(--ink-2); letter-spacing: 0; }
-  .result-line {
-    font-family: var(--mono); font-size: 13.5px; line-height: 1.5; background: var(--surface);
-    border: 1px dashed var(--rule); border-radius: 8px; padding: 12px 14px; margin: 0; white-space: pre-wrap; word-break: break-word;
-  }
-  .banner {
-    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
-    background: var(--indigo-soft); border-radius: 8px; padding: 12px 16px; font-size: 16px;
-  }
-  .ok { color: var(--ok); }
-  .miss { color: var(--miss); }
   .linkish { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) { .btn, .btn .arrow { transition: none; } }
 
-  /* ---------- The test (imagine in concepts) ---------- */
-  .imt .imt-steps {
-    list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2);
+  /* ---------- The top bar ---------- */
+  .top { display: flex; align-items: center; gap: 20px; padding-block: 20px; }
+  .mark { font-weight: 800; font-size: 23px; letter-spacing: -0.035em; color: var(--ink); text-decoration: none; }
+  .mark span { color: var(--gold); }
+  .top-links { display: none; gap: 26px; margin-left: auto; font-weight: 600; font-size: 15px; }
+  .top-links a { color: var(--ink-2); text-decoration: none; }
+  .top-links a:hover { color: var(--ink); }
+  .top .btn { margin-left: auto; }
+  @media (min-width: 860px) { .top-links { display: flex; } .top .btn { margin-left: 0; } }
+
+  /* ---------- The hero: the promise, then the idea shown as two stories built the same way ---------- */
+  .hero { padding-block: clamp(20px, 4vw, 44px) clamp(40px, 6vw, 72px); }
+  .hero-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-items: end; }
+  @media (min-width: 960px) { .hero-top { grid-template-columns: minmax(0, 1fr) auto; gap: 22px 56px; } .hero-top h1 { grid-column: 1 / -1; } }
+  h1 {
+    font-family: var(--display); font-weight: 500; font-size: clamp(36px, 5.5vw, 68px); line-height: 1.03; letter-spacing: -0.025em;
+    margin: 0; text-wrap: balance;
   }
-  .imt .imt-steps li { display: grid; gap: 7px; min-width: 0; }
-  .imt .imt-steps li::before { content: ""; height: 4px; border-radius: 2px; background: var(--rule); }
-  .imt .imt-steps .done::before { background: var(--indigo); }
-  .imt .imt-steps .now { color: var(--term); }
-  .imt .imt-steps .now::before { background: var(--weld); }
-  .imt .imt-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--term); margin: 0; }
-  .imt .imt-prompt { font-size: clamp(20px, 2.2vw, 23px); line-height: 1.45; margin: 0; outline: none; text-wrap: pretty; }
-  .imt .imt-q { font-family: var(--sans); font-weight: 500; font-size: 17px; line-height: 1.4; margin: 0 0 14px; }
-  .imt .imt-choices { display: flex; flex-wrap: wrap; gap: 10px; }
-  .imt .imt-choice { background: var(--surface); }
-  .imt .imt-choice:hover { background: var(--indigo-soft); }
-  .imt .imt-head { font-family: var(--sans); font-weight: 700; font-size: clamp(22px, 2.6vw, 28px); line-height: 1.2; letter-spacing: -0.01em; margin: 0; text-wrap: balance; outline: none; }
-  .imt .imt-text { margin: 0; }
-  .imt .imt-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-  .imt .imt-rows li {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto 7ch; gap: 12px; align-items: center;
-    background: var(--surface); border-radius: 8px; padding: 9px 14px; font-family: var(--sans); font-size: 15.5px;
+  h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub { margin: 0; font-size: clamp(17px, 1.9vw, 20px); line-height: 1.5; color: var(--ink-2); max-width: 35rem; text-wrap: pretty; }
+  .hero-sub b { color: var(--ink); font-weight: 700; }
+  .hero-go { display: grid; gap: 14px; justify-items: start; }
+  .hero-go .row { flex-wrap: nowrap; }
+  @media (max-width: 520px) { .hero-go .row { flex-wrap: wrap; } .hero-go .btn { width: 100%; } }
+  .hero-go-after { display: none; margin-top: 22px; }
+  @media (max-width: 759px) {
+    .hero-top .hero-go .btn:not(.primary), .hero-top .hero-go .proof { display: none; }
+    .hero-go-after { display: grid; }
+    .hero-sub { font-size: 16.5px; }
   }
-  .imt .imt-meter { display: inline-grid; grid-template-columns: 18px 18px; gap: 4px; }
-  .imt .imt-meter i { height: 8px; border-radius: 4px; background: var(--rule); }
-  .imt .imt-meter[data-v="1"] i:first-child, .imt .imt-meter[data-v="2"] i { background: var(--indigo); }
-  .imt .gold .imt-meter[data-v="1"] i:first-child, .imt .gold .imt-meter[data-v="2"] i { background: var(--weld); }
-  .imt .imt-rows .val { font-family: var(--mono); font-size: 13px; color: var(--ink-2); text-align: right; }
-  .imt .imt-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-  /* The four ways, animated (2026-10-31): each way is a loop from video 21, the illustrated lesson. A stage at the top of
-     the panel plays the way being read; it stays in view while the list scrolls under it, steps through the four (9 s,
-     9 s, 12 s, then it stays on the fourth) and shows the one tapped. Videos load near the screen, play only while on
-     screen, and never with prefers-reduced-motion (the posters show instead). The answer plays on the concept bubble.
-     /quiz/ has the same stage. */
-  .imt .imt-panel { padding-top: 0; }
-  .fw-stage-wrap { position: sticky; top: 0; z-index: 3; margin: 0 -20px; padding-bottom: 6px; background: var(--surface-2); border-radius: 10px 10px 0 0; }
-  /* Text sliding under the pinned stage fades out instead of being cut. */
-  .fw-stage-wrap::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; background: linear-gradient(var(--surface-2), transparent); pointer-events: none; }
-  @media (max-width: 600px) {
-    .imt .imt-panel { padding: 0 14px 16px; }
-    .imt .fw-stage-wrap { margin: 0 -14px; }
+  .proof { display: inline-flex; align-items: center; gap: 12px; font-size: 14.5px; line-height: 1.35; color: var(--ink-2); text-decoration: none; }
+  .proof:hover { color: var(--ink); }
+  .proof-faces { display: inline-flex; flex: none; }
+  .proof-faces img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); margin-left: -9px; background: var(--surface-2); }
+  .proof-faces img:first-child { margin-left: 0; }
+
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; margin-top: clamp(28px, 4vw, 44px); }
+  @media (min-width: 760px) { .duo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+  .duo-card { margin: 0; display: grid; grid-template-rows: auto auto auto; gap: 12px; align-content: start; }
+  .duo-kind { display: flex; align-items: center; gap: 10px; margin: 0; font-weight: 800; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  .duo-kind::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #ffe6b0; box-shadow: 0 0 12px rgba(255, 230, 176, .7); }
+  .duo-feel .duo-kind::before { background: var(--blue); box-shadow: 0 0 12px rgba(169, 185, 255, .8); }
+  /* The words being read. Each sentence lights as it's read, and its picture or its bubble arrives with it. */
+  .duo-line { margin: 0; font-family: var(--display); font-style: italic; font-weight: 400; font-size: clamp(17.5px, 1.75vw, 21px); line-height: 1.4; color: var(--ink); text-wrap: pretty; }
+  @media (min-width: 760px) { .duo-line { min-height: 2.8em; } }
+  .duo-line span { transition: color .5s ease, opacity .5s ease; }
+  .duo.live .duo-line span { color: var(--ink-3); opacity: .62; }
+  .duo.live .duo-line span.is-said { color: var(--ink); opacity: 1; }
+  .duo.live .duo-see .duo-line span.is-now { color: #ffe6b0; }
+  .duo.live .duo-feel .duo-line span.is-said { color: var(--gold); }
+  .duo.live .duo-feel .duo-line span.is-said:nth-child(2) { color: var(--blue); }
+  .duo-frame {
+    position: relative; aspect-ratio: 2 / 1; overflow: hidden; isolation: isolate; border-radius: 18px; background: #191430;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 30px 60px -34px rgba(0, 0, 0, .9);
   }
-  .fw-stage {
-    position: relative; aspect-ratio: 3 / 2; overflow: hidden; isolation: isolate; border-radius: 10px 10px 0 0;
-    background: #150d33; -webkit-user-select: none; user-select: none; touch-action: pan-y;
+  .duo-see .duo-frame { box-shadow: 0 0 0 1px rgba(255, 230, 176, .22), 0 30px 60px -34px rgba(0, 0, 0, .9), 0 0 70px -30px rgba(255, 214, 140, .5); }
+  .duo-feel .duo-frame { background: var(--night); box-shadow: 0 0 0 1px rgba(169, 185, 255, .22), 0 30px 60px -34px rgba(0, 0, 0, .9), 0 0 70px -30px rgba(140, 150, 255, .55); }
+  .duo-shot { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+  .duo-shot img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.001); transition: transform 7s linear; }
+  .duo-shot:last-of-type { opacity: 1; }
+  .duo.live .duo-shot { opacity: 0; }
+  .duo.live .duo-shot.is-on { opacity: 1; }
+  .duo.live .duo-shot.is-on img { transform: scale(1.055); }
+  /* Before the first sentence: nothing pictured yet. */
+  .duo-empty { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(closest-side, #231c44, #171230); }
+  .duo-empty i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 230, 176, .5); animation: duo-wait 1.4s ease-in-out infinite; }
+  @keyframes duo-wait { 50% { transform: scale(1.7); opacity: .35; } }
+  .duo-sky { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+  .duo-card figcaption { font-size: 15.5px; line-height: 1.4; color: var(--ink-2); }
+  .duo-card figcaption b { color: var(--ink); font-weight: 700; }
+  .duo-same { margin: clamp(22px, 3vw, 34px) 0 0; text-align: center; font-family: var(--display); font-style: italic; font-size: clamp(19px, 2.3vw, 26px); line-height: 1.3; color: var(--gold); text-wrap: balance; }
+  @media (prefers-reduced-motion: reduce) { .duo-shot, .duo-shot img, .duo-line span { transition: none !important; } .duo-empty i { animation: none; } }
+
+  /* ---------- The test: the four ways on a stage, the question beside it ---------- */
+  .test .sec-head { margin-bottom: clamp(22px, 3vw, 34px); }
+  .imt-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 22px; box-shadow: 0 40px 80px -50px rgba(0, 0, 0, .9); }
+  .panel { display: flex; flex-direction: column; gap: 16px; }
+  .imt .imt-panel { padding: 0 14px 18px; border-radius: 22px; }
+  .fw-stage-wrap { position: sticky; top: 0; z-index: 3; margin: 0 -14px; padding-bottom: 6px; background: var(--surface); border-radius: 22px 22px 0 0; }
+  .fw-stage-wrap::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; background: linear-gradient(var(--surface), transparent); pointer-events: none; }
+  .fw-stage { position: relative; aspect-ratio: 3 / 2; overflow: hidden; isolation: isolate; border-radius: 21px 21px 0 0; background: var(--night); -webkit-user-select: none; user-select: none; touch-action: pan-y; }
+  @media (min-width: 900px) {
+    .imt .imt-panel { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 0 clamp(24px, 3vw, 40px); align-items: start; padding: 22px; }
+    .fw-stage-wrap { grid-column: 1; grid-row: 1 / span 3; top: 22px; margin: 0; padding: 0; background: none; border-radius: 0; }
+    .fw-stage-wrap::after { display: none; }
+    .fw-stage { border-radius: 16px; }
+    .imt .fw-rows, #imt-ask, #imt-result { grid-column: 2; }
+    .imt .fw-rows { margin-top: 0; }
   }
   .fw-media { position: absolute; inset: 0; transition: transform 1.8s cubic-bezier(.2, .7, .2, 1); }
   .fw-media.push { transform: scale(1.04); }
@@ -529,10 +284,9 @@ window.tfTrack = function (path, title) {
   .fw-layer video { opacity: 0; transition: opacity .3s linear; }
   .fw-layer.is-playing video { opacity: 1; }
   .fw-fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  /* Way 4's words, over the lake: they come in one by one. */
   .fw-words {
     position: absolute; left: 0; right: 0; bottom: 13%; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 .85em;
-    font-family: var(--sans); font-weight: 700; font-size: clamp(14px, 3.4vw, 17px); letter-spacing: .01em; line-height: 1.4; color: #eef0ff; text-shadow: 0 1px 14px rgba(8, 4, 28, .85);
+    font-weight: 700; font-size: clamp(14px, 3.4vw, 17px); letter-spacing: .01em; line-height: 1.4; color: #eef0ff; text-shadow: 0 1px 14px rgba(8, 4, 28, .85);
     z-index: 1; pointer-events: none;
   }
   .fw-words span { opacity: 0; transform: translateY(5px); transition: opacity .9s ease, transform .9s ease; }
@@ -540,10 +294,9 @@ window.tfTrack = function (path, title) {
   .fw-layer.is-on .fw-words span:nth-child(2) { transition-delay: 1.1s; }
   .fw-layer.is-on .fw-words span:nth-child(3) { transition-delay: 1.7s; }
   .fw.answered .fw-layer .fw-words span { opacity: 0; transition-delay: 0s; }
-  /* Which of the four is on the stage: four marks at its foot, the current one long and gold. */
   .fw-dots { position: absolute; left: 50%; bottom: 8px; z-index: 2; display: flex; gap: 5px; transform: translateX(-50%); pointer-events: none; }
   .fw-dots i { width: 6px; height: 6px; border-radius: 3px; background: rgba(240, 236, 255, .5); box-shadow: 0 0 6px rgba(8, 4, 28, .6); transition: width .4s ease, background .4s ease; }
-  .fw-dots i.is-on { width: 18px; background: #f3cb76; }
+  .fw-dots i.is-on { width: 18px; background: var(--gold); }
   .fw-toggle {
     position: absolute; right: 10px; top: 10px; z-index: 2; width: 32px; height: 32px; padding: 0; border-radius: 50%; cursor: pointer;
     background: rgba(12, 8, 32, .52); border: 1px solid rgba(255, 255, 255, .22); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
@@ -555,318 +308,295 @@ window.tfTrack = function (path, title) {
   .fw-toggle[aria-pressed="true"]::after { display: none; }
   .fw-toggle:focus-visible { outline-offset: 2px; border-radius: 50%; }
   .imt .fw-rows { list-style: none; margin: 4px 0 2px; padding: 0; display: grid; gap: 6px; }
-  .imt .fw-rows li {
-    position: relative; border-radius: 9px; font-size: 15.5px; line-height: 1.45;
-    transition: background .4s, box-shadow .4s, opacity .7s ease, transform .7s ease;
-  }
-  .imt .fw-rows li::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 2px 2px 0; background: var(--rule); transition: background .4s; }
-  .imt .fw-rows li.four::before { background: var(--indigo); }
-  .imt .fw-rows li:hover { background: color-mix(in srgb, var(--surface) 50%, transparent); }
-  .imt .fw-rows li.is-on { background: var(--surface); box-shadow: 0 1px 0 var(--rule), 0 12px 24px -20px rgba(20, 30, 70, .5); }
-  .imt .fw-rows li.is-on::before { background: var(--weld); }
-  .fw-pick {
-    display: block; width: 100%; margin: 0; padding: 10px 12px 13px 16px; border: 0; border-radius: 9px; background: none; cursor: pointer;
-    font: inherit; line-height: inherit; color: inherit; text-align: left;
-  }
-  .imt .fw-pick b { font-family: var(--sans); font-weight: 700; }
-  .fw-time { position: absolute; left: 16px; right: 12px; bottom: 5px; height: 2px; border-radius: 1px; background: var(--weld); transform: scaleX(0); transform-origin: left center; opacity: 0; pointer-events: none; }
+  .imt .fw-rows li { position: relative; border-radius: 12px; font-size: 16px; line-height: 1.45; color: var(--ink-2); transition: background .4s, box-shadow .4s, color .4s, opacity .7s ease, transform .7s ease; }
+  .imt .fw-rows li::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 2px 2px 0; background: var(--rule-2); transition: background .4s; }
+  .imt .fw-rows li.four::before { background: var(--blue); }
+  .imt .fw-rows li:hover { background: rgba(255, 255, 255, .03); }
+  .imt .fw-rows li.is-on { background: var(--surface-2); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+  .imt .fw-rows li.is-on::before { background: var(--gold); }
+  .fw-pick { display: block; width: 100%; margin: 0; padding: 12px 14px 15px 18px; border: 0; border-radius: 12px; background: none; cursor: pointer; font: inherit; line-height: inherit; color: inherit; text-align: left; }
+  .imt .fw-pick b { font-weight: 800; color: var(--ink); }
+  .fw-time { position: absolute; left: 18px; right: 14px; bottom: 6px; height: 2px; border-radius: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left center; opacity: 0; pointer-events: none; }
   .fw-rows li.is-on .fw-time { opacity: .75; }
-  /* The ways come in as the card reaches the screen. */
   .fw.js:not(.still) .fw-rows li { opacity: 0; transform: translateY(10px); }
   .fw.js.is-in .fw-rows li { opacity: 1; transform: none; }
-  .fw.js.is-in .fw-rows li:nth-child(2) { transition-delay: 0s, 0s, .12s, .12s; }
-  .fw.js.is-in .fw-rows li:nth-child(3) { transition-delay: 0s, 0s, .24s, .24s; }
-  .fw.js.is-in .fw-rows li:nth-child(4) { transition-delay: 0s, 0s, .36s, .36s; }
+  .fw.js.is-in .fw-rows li:nth-child(2) { transition-delay: 0s, 0s, 0s, .12s, .12s; }
+  .fw.js.is-in .fw-rows li:nth-child(3) { transition-delay: 0s, 0s, 0s, .24s, .24s; }
+  .fw.js.is-in .fw-rows li:nth-child(4) { transition-delay: 0s, 0s, 0s, .36s, .36s; }
   @media (prefers-reduced-motion: reduce) {
     .fw-media, .fw-layer, .fw-layer video, .fw-words span, .fw-rows li { transition: none !important; }
     .fw-media.push { transform: none; }
   }
+  #imt-ask, #imt-result { padding: 6px 4px 2px; }
+  #imt-result { display: grid; gap: 12px; }
+  .imt .imt-q { font-family: var(--display); font-weight: 500; font-size: clamp(23px, 2.5vw, 28px); line-height: 1.2; letter-spacing: -0.01em; margin: 6px 0 14px; }
+  .imt .imt-choices { display: flex; flex-wrap: wrap; gap: 10px; }
+  .imt .imt-choice { background: var(--surface-2); border-color: var(--rule-2); }
+  .imt .imt-choice:hover { border-color: var(--gold); background: var(--surface-2); }
+  .imt .imt-label { font-weight: 700; font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0; }
+  .imt .imt-head { font-family: var(--display); font-weight: 500; font-size: clamp(25px, 2.8vw, 32px); line-height: 1.15; letter-spacing: -0.012em; margin: 0; text-wrap: balance; outline: none; }
+  .imt .imt-text { margin: 0; color: var(--ink-2); }
+  .imt .imt-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 
-  /* ---------- Testimonials: cards side by side (four across on wide screens), each with a + for the whole message ---------- */
-  .voices-head { max-width: 62ch; }
-  .voices-head h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
-    line-height: 1.15; letter-spacing: -0.015em; margin: 0; text-wrap: balance;
+  /* ---------- Start here: the lesson ---------- */
+  .start-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px clamp(28px, 4vw, 56px); align-items: center; }
+  @media (min-width: 900px) { .start-grid { grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr); } }
+  .start-player {
+    position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 20px; background: var(--night);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .1), 0 40px 80px -44px rgba(0, 0, 0, .95), 0 0 90px -40px rgba(140, 110, 255, .6);
   }
+  .start-player img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+  .start-player:hover img { transform: scale(1.02); }
+  .start-frame { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 20px; background: #000; }
+  .play { position: absolute; left: 50%; top: 50%; width: 68px; height: 68px; margin: -34px 0 0 -34px; border-radius: 50%; background: var(--ink); box-shadow: 0 8px 26px rgba(8, 4, 28, .5); transition: transform .2s ease; }
+  .play::after { content: ""; position: absolute; left: 27px; top: 21px; border-style: solid; border-width: 13px 0 13px 20px; border-color: transparent transparent transparent #2b2370; }
+  /* The play button sits on the learner's sweater, clear of the thumbnail's title. */
+  .start-player .play { left: 71%; top: 70%; }
+  .start-player:hover .play, .start-player:focus-visible .play, .video:hover .play { transform: scale(1.08); }
+  @media (max-width: 600px) { .start-player .play { width: 50px; height: 50px; margin: -25px 0 0 -25px; } .start-player .play::after { left: 20px; top: 15px; border-width: 10px 0 10px 15px; } }
+  .start-steps { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; counter-reset: s; }
+  .start-steps li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 12px; align-items: start; font-size: 16.5px; line-height: 1.45; color: var(--ink-2); }
+  .start-steps li::before { content: counter(s); display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--blue-soft); color: var(--blue); font-weight: 800; font-size: 14px; }
+  .start-steps b { color: var(--ink); font-weight: 700; }
+  .start .row { margin-top: 24px; }
+  .start-meta { margin: 16px 0 0; font-size: 15px; line-height: 1.5; color: var(--ink-3); }
+
+  /* ---------- More to watch ---------- */
+  .videos { margin-top: clamp(40px, 6vw, 72px); }
+  .videos h3 { font-weight: 800; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 16px; }
+  .video-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  @media (min-width: 720px) { .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+  .video { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 16px; align-items: center; padding: 12px; border-radius: 18px; background: var(--surface); border: 1px solid var(--rule); color: var(--ink); text-decoration: none; transition: border-color .2s, background .2s; }
+  .video:hover { border-color: var(--rule-2); background: var(--surface-2); }
+  @media (min-width: 1000px) { .video { grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: 20px; } }
+  .thumb { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 11px; background: var(--night); }
+  .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .thumb .play { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
+  .thumb .play::after { left: 15px; top: 11px; border-width: 8px 0 8px 12px; }
+  .video-body { display: grid; gap: 3px; }
+  .video-label { font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+  .video-title { font-weight: 700; font-size: 16.5px; line-height: 1.3; text-wrap: balance; }
+  .video-desc { font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+  @media (max-width: 520px) { .video-desc { display: none; } }
+
+  /* ---------- Testimonials ---------- */
   .voices { position: relative; }
-  .voices-track {
-    display: flex; gap: 16px; align-items: flex-start; margin-top: 22px; padding: 2px 2px 16px;
-    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 2px; overscroll-behavior-x: contain;
-  }
-  .voices-track:focus-visible { outline: 2px solid var(--indigo); outline-offset: 4px; border-radius: 14px; }
-  .voice {
-    flex: 0 0 86%; scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 16px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 22px 22px 18px;
-    box-shadow: 0 1px 0 var(--rule), 0 18px 40px -28px rgba(20, 30, 70, .35);
-    transition: flex-basis .25s ease;
-  }
+  .voices-head { padding-right: 104px; }
+  .voices-track { display: flex; gap: 16px; align-items: flex-start; margin-top: 28px; padding: 2px 2px 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 2px; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule-2) transparent; }
+  .voices-track:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 18px; }
+  .voice { flex: 0 0 86%; scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 16px; background: var(--surface); border: 1px solid var(--rule); border-radius: 20px; padding: 22px 22px 18px; transition: flex-basis .25s ease; }
   @media (min-width: 720px) { .voice { flex-basis: calc((100% - 16px) / 2); } }
-  @media (min-width: 1080px) { .voice { flex-basis: calc((100% - 48px) / 4); } }
-  /* An open card widens so the whole message is easy to read. */
+  @media (min-width: 1080px) { .voice { flex-basis: calc((100% - 32px) / 3); } }
   .voice:has(.voice-more[open]) { flex-basis: min(100%, 640px); }
-  .voice-who { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; margin: 0; }
-  .voice-photo { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; background: var(--surface-2); }
-  /* No photo: the first letter of the name sits in the photo's place. */
-  .voice-initial { display: grid; place-items: center; font-family: var(--sans); font-weight: 700; font-size: 28px; line-height: 1; color: var(--indigo); }
-  .voice-meta { display: grid; gap: 2px; }
-  .voice-name { font-family: var(--sans); font-weight: 700; font-size: 18px; line-height: 1.25; }
-  .voice-role { font-size: 14.5px; line-height: 1.4; color: var(--ink-2); }
-  .voice-link { font-family: var(--sans); font-size: 14px; line-height: 1.4; margin-top: 2px; justify-self: start; }
-  .voice-pull {
-    margin: 0; padding-left: 14px; border-left: 3px solid var(--weld);
-    font-size: 18.5px; line-height: 1.45; text-wrap: pretty;
-  }
-  .voice-more { margin-top: auto; }
-  .voice-more summary {
-    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; padding: 4px 0;
-    font-family: var(--sans); font-weight: 600; font-size: 15px; color: var(--indigo);
-  }
+  .voice-who { order: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; margin: 0; }
+  .voice-photo { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; background: var(--surface-2); }
+  .voice-initial { display: grid; place-items: center; font-weight: 800; font-size: 20px; line-height: 1; color: var(--blue); }
+  .voice-meta { display: grid; gap: 1px; }
+  .voice-name { font-weight: 800; font-size: 16px; line-height: 1.25; }
+  .voice-role { font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+  .voice-link { font-size: 13.5px; line-height: 1.4; margin-top: 2px; justify-self: start; }
+  .voice-pull { order: 1; margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(19px, 1.9vw, 21.5px); line-height: 1.38; letter-spacing: -0.005em; text-wrap: pretty; }
+  .voice-more { order: 3; margin-top: auto; }
+  .voice-more summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; padding: 4px 0; font-weight: 700; font-size: 14.5px; color: var(--blue); }
   .voice-more summary::-webkit-details-marker { display: none; }
-  .voice-more summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 6px; }
-  .voice-plus { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--indigo); }
-  .voice-plus::before, .voice-plus::after {
-    content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.5px; background: var(--indigo);
-    transform: translate(-50%, -50%); transition: transform .2s ease;
-  }
+  .voice-more summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+  .voice-plus { position: relative; flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--blue); }
+  .voice-plus::before, .voice-plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: var(--blue); transform: translate(-50%, -50%); transition: transform .2s ease; }
   .voice-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
   .voice-more[open] .voice-plus::after { transform: translate(-50%, -50%) rotate(0deg); }
   .voice-open, .voice-more[open] .voice-closed { display: none; }
   .voice-more[open] .voice-open { display: inline; }
-  .voice-text { margin: 12px 0 0; padding: 0; border: 0; border-radius: 0; background: none; font-size: 16.5px; line-height: 1.6; }
+  .voice-text { margin: 12px 0 0; padding: 0; border: 0; background: none; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
   .voice-text p { margin: 0 0 12px; }
   .voice-text p:last-child { margin-bottom: 0; }
-  /* The arrows show only when the row is wider than the screen. */
-  .voices-nav { position: absolute; right: 0; top: 0; display: flex; gap: 8px; }
+  .voices-nav { position: absolute; right: 0; top: 10px; display: flex; gap: 8px; }
   .voices-nav[hidden] { display: none; }
-  .voices-arrow {
-    width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--indigo); background: var(--surface);
-    color: var(--indigo); font-family: var(--sans); font-size: 22px; line-height: 1; cursor: pointer;
-  }
+  .voices-arrow { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--rule-2); background: var(--surface); color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; }
   .voices-arrow:disabled { opacity: .35; cursor: default; }
-  .voices-arrow:not(:disabled):hover { background: var(--indigo-soft); }
-  /* ---------- Videos ---------- */
-  .videos { margin-top: 72px; }
-  .what + .videos { margin-top: 0; }
-  .videos + .try { margin-top: 64px; }
-  .videos-head .videos-argument { color: var(--ink); font-size: clamp(18px, 1.9vw, 19.5px); line-height: 1.6; margin: 0 0 12px; }
-  .videos-head { max-width: 62ch; }
-  .videos-head h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
-    line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 10px; text-wrap: balance;
+  .voices-arrow:not(:disabled):hover { border-color: var(--blue); }
+
+  /* ---------- What is thoughtfeel? The definition, then parts that open ---------- */
+  .what-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px clamp(32px, 5vw, 72px); align-items: start; }
+  @media (min-width: 960px) { .what-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); } .what-head { position: sticky; top: 32px; } }
+  .what-lead { margin: 18px 0 0; font-family: var(--display); font-weight: 400; font-size: clamp(21px, 2.4vw, 27px); line-height: 1.36; letter-spacing: -0.008em; color: var(--ink); text-wrap: pretty; }
+  .what-more { margin: 18px 0 0; font-size: 15px; color: var(--ink-3); }
+  .what-parts { display: grid; gap: 10px; }
+  .what-part { background: var(--surface); border: 1px solid var(--rule); border-radius: 18px; transition: border-color .2s, background .2s; scroll-margin-top: 16px; }
+  .what-part[open] { border-color: var(--rule-2); background: var(--surface-2); }
+  .what-part summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 44px minmax(0, 1fr) 28px; grid-template-areas: "i t p" "i g p"; gap: 3px 16px; align-items: center; padding: 16px 18px; border-radius: 18px; }
+  .what-part summary .what-icon { grid-area: i; } .what-part summary h3 { grid-area: t; align-self: end; } .what-part summary .what-gist { grid-area: g; align-self: start; } .what-part summary .what-plus { grid-area: p; }
+  .what-part[open] summary h3 { grid-row: 1 / span 2; align-self: center; }
+  .what-part summary::-webkit-details-marker { display: none; }
+  .what-part summary:hover h3 { color: var(--gold); }
+  .what-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; background: var(--blue-soft); color: var(--blue); }
+  .what-icon svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .what-sum { display: grid; gap: 3px; }
+  .what-part h3 { font-weight: 800; font-size: clamp(17px, 1.8vw, 19px); line-height: 1.3; letter-spacing: -0.01em; margin: 0; text-wrap: balance; transition: color .2s; scroll-margin-top: 90px; }
+  .what-gist { font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+  .what-part[open] .what-gist { display: none; }
+  .what-plus { position: relative; justify-self: end; width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--rule-2); }
+  .what-plus::before, .what-plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 11px; height: 1.5px; background: var(--ink-2); transform: translate(-50%, -50%); transition: transform .2s ease; }
+  .what-plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .what-part[open] .what-plus::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .what-part-body { padding: 0 20px 20px 78px; }
+  .what-part-body p { margin: 0 0 12px; font-size: 16.5px; line-height: 1.62; color: var(--ink-2); max-width: 36rem; }
+  .what-part-body p:last-child { margin-bottom: 0; }
+  .what-part-body p.what-cite { font-size: 14px; line-height: 1.45; color: var(--ink-3); }
+  .what-figure { margin: 18px 0 0; }
+  .what-figure img { display: block; width: 100%; max-width: 520px; height: auto; border-radius: 14px; box-shadow: 0 0 0 1px var(--rule); }
+  .what-figure figcaption { margin-top: 10px; font-size: 14px; line-height: 1.4; color: var(--ink-3); }
+  @media (max-width: 600px) {
+    .what-part summary { grid-template-columns: 38px minmax(0, 1fr) 26px; gap: 3px 12px; padding: 14px; }
+    .what-icon { width: 38px; height: 38px; border-radius: 11px; }
+    .what-icon svg { width: 20px; height: 20px; }
+    .what-part-body { padding: 0 16px 18px; }
   }
-  .videos-head p:last-child { color: var(--ink-2); margin: 0; }
-  .video-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 24px; }
-  @media (min-width: 720px) { .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; } }
-  .video { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--ink); }
-  .thumb {
-    position: relative; display: block; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden;
-    border-radius: 10px; margin-bottom: 8px;
-    background: repeating-linear-gradient(90deg, var(--indigo) 0 10px, transparent 10px 14px), var(--indigo-soft);
-    background-blend-mode: normal;
-  }
-  .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .play {
-    position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px;
-    border-radius: 50%; background: var(--surface); box-shadow: 0 6px 20px rgba(10, 16, 40, .35);
-    transition: transform .2s ease;
-  }
-  .play::after {
-    content: ""; position: absolute; left: 26px; top: 20px;
-    border-style: solid; border-width: 12px 0 12px 19px; border-color: transparent transparent transparent var(--indigo);
-  }
-  .video:hover .play { transform: scale(1.08); }
-  @media (prefers-reduced-motion: reduce) { .play { transition: none; } }
-  .video-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--term); }
-  .video-title { font-family: var(--sans); font-weight: 700; font-size: 20px; line-height: 1.3; text-wrap: balance; }
-  .video:hover .video-title { color: var(--indigo); text-decoration: underline; text-underline-offset: 3px; }
-  .video-desc { font-size: 16px; color: var(--ink-2); line-height: 1.55; }
-  /* A lesson card with something to try under it (the card is a link, so the extra link sits beside it). */
-  .video-item { display: flex; flex-direction: column; gap: 12px; }
-  .video-try { font-size: 16px; line-height: 1.5; color: var(--indigo); text-underline-offset: 3px; }
-  .video-try strong { font-family: var(--sans); font-weight: 700; }
-  /* The essay highlighted as the place to start for people who'd rather read. */
-  .read-first {
-    display: grid; gap: 6px; margin: 20px 0 0; padding: clamp(18px, 3vw, 24px);
-    background: var(--indigo-soft); border: 1px solid var(--rule); border-left: 4px solid var(--indigo); border-radius: 14px;
-    color: var(--ink); text-decoration: none;
-  }
-  .read-first-label { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--term); }
-  .read-first-title { font-family: var(--sans); font-weight: 700; font-size: clamp(21px, 2.3vw, 25px); line-height: 1.25; text-wrap: balance; }
-  .read-first-desc { font-size: 16px; line-height: 1.55; color: var(--ink-2); }
-  .read-first-cta { font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--indigo); }
-  .read-first:hover .read-first-title, .read-first:focus-visible .read-first-title { color: var(--indigo); text-decoration: underline; text-underline-offset: 3px; }
-  .videos-head .read-more { margin: 12px 0 0; }
-  .visually-hidden {
-    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
-    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-  }
-  .updates {
-    margin-top: 36px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px 40px; align-items: start;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(20px, 3vw, 28px);
-  }
-  @media (min-width: 900px) { .updates { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
-  .updates h3 { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 8px; }
-  .updates-text p { margin: 0; color: var(--ink-2); font-size: 16.5px; }
-  .updates-text p + p { margin-top: 10px; }
+
+  /* ---------- Email ---------- */
+  .updates { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px 48px; align-items: start; background: linear-gradient(140deg, #1c1740, #14102b 70%); border: 1px solid var(--rule); border-radius: 24px; padding: clamp(22px, 4vw, 40px); scroll-margin-top: 16px; }
+  @media (min-width: 900px) { .updates { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); } }
+  .updates h2 { font-size: clamp(27px, 3.2vw, 36px); }
+  .updates-text p:not(.eyebrow) { margin: 12px 0 0; color: var(--ink-2); font-size: 16.5px; max-width: 30rem; }
   .signup { display: grid; gap: 12px; }
   .signup-row { display: flex; flex-wrap: wrap; gap: 10px; }
   .signup-row input { flex: 1 1 220px; }
-  .signup input[type="email"] {
-    font: 500 17px/1.2 var(--sans); color: var(--ink); background: var(--bg);
-    border: 1.5px solid var(--rule); border-radius: 999px; padding: 12px 18px; min-width: 0;
-  }
-  .signup input[type="email"]:focus { border-color: var(--indigo); outline: none; box-shadow: 0 0 0 3px var(--indigo-soft); }
-  .signup-q { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-family: var(--sans); font-size: 15px; }
+  .signup input[type="email"] { font: 600 16.5px/1.2 var(--sans); color: var(--ink); background: var(--bg); border: 1.5px solid var(--rule-2); border-radius: 999px; padding: 14px 20px; min-width: 0; }
+  .signup input[type="email"]::placeholder { color: var(--ink-3); }
+  .signup input[type="email"]:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px var(--blue-soft); }
+  .signup-q { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 15px; }
   .signup-q legend { width: 100%; padding: 0; margin-bottom: 4px; color: var(--ink); }
-  .signup-q legend span { color: var(--ink-2); }
-  .signup-q label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-  .signup-q input { accent-color: var(--indigo); }
-  .signup-wait { display: flex; align-items: flex-start; gap: 8px; font-family: var(--sans); font-size: 15px; line-height: 1.4; cursor: pointer; }
-  .signup-wait input { accent-color: var(--indigo); margin: 3px 0 0; flex: none; }
+  .signup-q legend span { color: var(--ink-3); }
+  .signup-q label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--ink-2); }
+  .signup-q input, .signup-wait input { accent-color: var(--gold); }
+  .signup-wait { display: flex; align-items: flex-start; gap: 8px; font-size: 15px; line-height: 1.4; cursor: pointer; color: var(--ink-2); }
+  .signup-wait input { margin: 3px 0 0; flex: none; }
   .signup-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-  .signup-status { margin: 0; font-family: var(--sans); font-size: 15px; min-height: 1.2em; }
-  .signup-status.ok { color: var(--ok); }
-  .signup-status.miss { color: var(--miss); }
-  .signup-note { margin: 0; font-size: 14px; color: var(--ink-2); }
-  .guide .watch {
-    font-family: var(--sans); font-size: 15px; color: var(--ink-2);
-    margin: -.2em 0 1.2em; padding-left: 14px; border-left: 2px solid var(--weld);
-  }
-
-  /* ---------- Reading layout ---------- */
-  .read { display: grid; grid-template-columns: minmax(0, 1fr); gap: 48px; margin-top: 72px; }
-  @media (min-width: 1100px) { .read { grid-template-columns: 220px minmax(0, 1fr); gap: 64px; } }
-  .sidenav { display: none; }
-  @media (min-width: 1100px) {
-    .sidenav { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; max-height: calc(100vh - 48px); overflow-y: auto; }
-  }
-  .sidenav p { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 8px; }
-  .sidenav ul { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 2px; }
-  .sidenav a { font-family: var(--sans); font-size: 14.5px; color: var(--ink-2); text-decoration: none; display: block; padding: 4px 0 4px 12px; border-left: 2px solid var(--rule); line-height: 1.35; }
-  .sidenav a:hover, .sidenav a.here { color: var(--ink); border-left-color: var(--weld); }
-
-  .guide { max-width: 68ch; }
-  .guide p { margin: 0 0 1.05em; }
-  .guide h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(28px, 3.2vw, 36px); line-height: 1.15;
-    letter-spacing: -0.015em; margin: 2.4em 0 .6em; text-wrap: balance; scroll-margin-top: 24px;
-  }
-  .guide h2:first-child { margin-top: 0; }
-  .guide h3 {
-    font-family: var(--sans); font-weight: 500; font-size: 21px; line-height: 1.3; margin: 1.8em 0 .5em; text-wrap: balance;
-  }
-  .part-label {
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--term);
-    margin: 3.2em 0 -1.4em; padding-top: 20px; border-top: 1px solid var(--rule);
-  }
-  .thought { font-style: italic; }
-  dfn { font-style: normal; font-weight: 500; color: var(--term); }
-  .benefits { margin: 0 0 1.2em; padding-left: 1.1em; }
-  .benefits li { margin-bottom: .7em; }
-  .benefits li::marker { color: var(--weld); }
-  .benefits strong { font-family: var(--sans); font-weight: 500; }
-  blockquote {
-    margin: 1.2em 0; padding: 14px 20px; border-left: 3px solid var(--weld); background: var(--surface);
-    border-radius: 0 8px 8px 0; font-size: 19px;
-  }
-  .digits { font-family: var(--mono); font-size: 22px; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
-  .table-wrap { overflow-x: auto; margin: 1.2em 0 1.4em; }
-  table { border-collapse: collapse; width: 100%; font-size: 16.5px; }
-  th, td { text-align: left; padding: 10px 14px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
-  th { font-family: var(--mono); font-weight: 500; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
-  td.num { font-family: var(--mono); color: var(--term); font-variant-numeric: tabular-nums; }
-  .contents td:first-child a { font-family: var(--sans); font-weight: 500; }
-  .contents td { padding-block: 12px; }
-  .back { font-family: var(--sans); font-size: 14.5px; }
-  .back a { color: var(--ink-2); }
-  .note { color: var(--ink-2); font-size: 16px; }
+  .signup-status { margin: 0; font-size: 15px; min-height: 1.2em; }
+  .signup-status.ok, .ok { color: var(--ok); }
+  .signup-status.miss, .miss { color: var(--miss); }
+  .signup-note { margin: 0; font-size: 13.5px; color: var(--ink-3); }
 
   /* ---------- About ---------- */
-  .byline a { color: inherit; white-space: nowrap; }
-  .about {
-    margin-top: 80px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; align-items: start;
-  }
-  @media (min-width: 900px) { .about { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } }
-  .about-text { max-width: 62ch; }
-  .about h2 {
-    font-family: var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 36px);
-    line-height: 1.15; letter-spacing: -0.015em; margin: 0 0 14px;
-  }
-  .about-text p:not(.eyebrow) { margin: 0 0 12px; }
-  /* Ted's photo, round, beside the hello. */
-  .about-hello { display: flex; align-items: center; gap: 18px; margin: 0 0 16px; }
-  .about-hello h2 { margin: 0; }
-  .about-photo {
-    display: block; flex: none; width: 104px; height: 104px; border-radius: 50%; object-fit: cover;
-    box-shadow: 0 0 0 3px var(--surface), 0 0 0 4.5px var(--rule);
-  }
-  @media (min-width: 900px) { .about-photo { width: 128px; height: 128px; } }
-  .contact {
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 24px;
-    box-shadow: 0 18px 40px -30px rgba(20, 30, 70, .35);
-  }
-  .contact h3 { font-family: var(--sans); font-weight: 700; font-size: 22px; margin: 0 0 10px; }
-  .contact p { margin: 0 0 14px; }
-  .contact strong { font-family: var(--sans); font-weight: 500; color: var(--term); }
-  .email {
-    font-family: var(--mono); font-size: 17px; background: var(--surface-2); border-radius: 8px;
-    padding: 10px 14px; user-select: all; word-break: break-all;
-  }
+  .about { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px clamp(32px, 5vw, 72px); align-items: start; scroll-margin-top: 16px; }
+  @media (min-width: 900px) { .about { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+  .about-hello { display: flex; align-items: center; gap: 20px; margin: 0 0 18px; }
+  .about-photo { display: block; flex: none; width: 96px; height: 96px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px var(--rule-2); }
+  @media (min-width: 900px) { .about-photo { width: 120px; height: 120px; } }
+  .about h2 { font-size: clamp(28px, 3.4vw, 38px); }
+  .about-text p:not(.eyebrow) { margin: 0 0 12px; color: var(--ink-2); max-width: 38rem; }
+  .contact { background: var(--surface); border: 1px solid var(--rule); border-radius: 20px; padding: 24px; }
+  .contact h3 { font-family: var(--display); font-weight: 500; font-size: 25px; letter-spacing: -0.01em; margin: 0 0 8px; }
+  .contact p { margin: 0 0 14px; color: var(--ink-2); }
+  .contact strong { color: var(--gold); font-weight: 700; }
+  .email { font-weight: 600; font-size: 16px; background: var(--bg); border: 1px solid var(--rule); border-radius: 12px; padding: 11px 14px; user-select: all; word-break: break-all; color: var(--ink) !important; }
 
   /* ---------- Footer ---------- */
-  .join {
-    margin-top: 72px; padding-top: 32px; border-top: 1px solid var(--rule);
-    display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px 48px;
+  .join { margin-top: 0; padding-block: 40px 56px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px 56px; }
+  @media (min-width: 820px) { .join { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
+  .join h2 { font-size: clamp(25px, 3vw, 31px); margin: 0 0 10px; }
+  .join p { margin: 0 0 16px; color: var(--ink-2); max-width: 30rem; }
+  .join ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px 28px; }
+  @media (min-width: 520px) { .join ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .join li a { font-weight: 700; font-size: 15.5px; }
+  .join li span { display: block; font-size: 14px; line-height: 1.4; color: var(--ink-3); }
+  .colophon { grid-column: 1 / -1; margin: 12px 0 0 !important; font-size: 13px; color: var(--ink-3) !important; }
+
+  /* Sections come in as they scroll onto the screen. It's tied to the scroll position in CSS, with no script, so a
+     browser that can't do it (or a visitor who prefers no motion) simply sees the page. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .rv { animation: rv-in linear both; animation-timeline: view(); animation-range: entry 0% entry 36%; }
+      @keyframes rv-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    }
   }
-  @media (min-width: 820px) { .join { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); } }
-  .join h2 { font-family: var(--sans); font-weight: 700; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.01em; }
-  .join p { margin: 0 0 14px; color: var(--ink-2); }
-  .join ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-family: var(--sans); }
-  .join li span { display: block; font-family: var(--serif); font-size: 15px; color: var(--ink-2); }
-  .colophon { margin-top: 40px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
 </style>
 
 <div class="page">
 
-  <header class="hero">
-    <div class="hero-text">
-      <h1 class="wordmark">thought<span>feel</span></h1>
-      <p class="hero-copy">thoughtfeel is a sense for concepts that some people have. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
-      <p class="hero-guide">This site teaches you mnemonic techniques that use thoughtfeel to help you comprehend complex material and improve your learning.</p>
-      <p class="byline">BY <a href="#about">TED SHACHTMAN</a> · <a href="#videos">WATCH THE VIDEOS</a> · <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">READ THE ESSAYS</a></p>
-    </div>
+  <div class="wrap">
+    <nav class="top" aria-label="Site">
+      <a class="mark" href="/" aria-label="thoughtfeel, home">thought<span>feel</span></a>
+      <div class="top-links">
+        <a href="#test">The test</a>
+        <a href="#start">The lesson</a>
+        <a href="#testimonials">What people say</a>
+        <a href="#what">What it is</a>
+        <a href="#about">About</a>
+      </div>
+      <a class="btn small top-app" href="https://stories.thoughtfeel.net/#/lesson" target="_blank" rel="noopener">Open the app</a>
+    </nav>
 
-    <section class="start" id="start" aria-labelledby="start-title">
-      <p class="eyebrow">Start here</p>
-      <a class="start-player" href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener" aria-label="Play the video: Learn a Bloom filter in your head: the interactive thoughtfeel lesson">
-        <img src="https://i.ytimg.com/vi/tgLRhlMjVkI/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/tgLRhlMjVkI/hqdefault.jpg'">
-        <span class="play" aria-hidden="true"></span>
-      </a>
-      <h2 id="start-title">Learn a Bloom filter in your head: the interactive thoughtfeel lesson</h2>
-      <p class="start-desc">In one interactive lesson, you’ll:</p>
-      <ol class="start-list">
-        <li>find out if you have thoughtfeel</li>
-        <li>learn what a concept bubble is</li>
-        <li>build a complicated idea, how a Bloom filter works, as a concept story, one line at a time</li>
-        <li>explain it back from memory</li>
-        <li>compare it with a visual analogy</li>
-      </ol>
-      <p class="start-meta">14 minutes, plus the story on stories.thoughtfeel.net · See it live: <a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">Julian’s first thoughtfeel lesson</a> (51 minutes)</p>
-      <a class="start-app" href="https://stories.thoughtfeel.net/#/lesson" target="_blank" rel="noopener">
-        <span class="start-app-q">Rather do it all in one place?</span>
-        <span class="start-app-cta">Take the whole lesson at <b>stories.thoughtfeel.net</b>, where the story plays one line at a time →</span>
-      </a>
-    </section>
-  </header>
+    <!-- ================= The idea, shown before any reading ================= -->
+    <header class="hero">
+      <div class="hero-top">
+        <h1>Follow an idea the way you <em>picture a story</em>.</h1>
+        <p class="hero-sub"><b>thoughtfeel</b> is a sense for concepts that some people have. This site teaches the techniques that use it to learn complex material and keep it.</p>
+        <div class="hero-go">
+          <div class="row">
+            <a class="btn primary" href="#test" data-hero="test">Do you have it? One question <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn" href="#start" data-hero="lesson">Take the lesson</a>
+          </div>
+          <a class="proof" href="#testimonials" data-hero="proof">
+            <span class="proof-faces" aria-hidden="true">
+              <img src="/img/rohan-reddy.jpg" width="60" height="60" alt="">
+              <img src="/img/zed-barakat.jpg" width="60" height="60" alt="">
+              <img src="/img/julian-putnam.jpg" width="60" height="60" alt="">
+              <img src="/img/liam-daly-smith.jpg" width="60" height="60" alt="">
+              <img src="/img/max-gurkalov.jpg" width="60" height="60" alt="">
+            </span>
+            <span>Used by medical students, engineers<br>and language learners</span>
+          </a>
+        </div>
+      </div>
 
-  <!-- ================= Definition, with the test beside it ================= -->
-  <section class="what" id="what" aria-labelledby="what-title">
-    <section class="imt-card imt" id="test" aria-labelledby="test-title">
-      <canvas id="swatch" aria-hidden="true"></canvas>
-      <div class="imt-card-body">
-        <p class="eyebrow">The one-question test</p>
+      <div class="duo" id="duo">
+        <figure class="duo-card duo-see">
+          <p class="duo-kind">A story you can see</p>
+          <p class="duo-line"><span>A boy and a girl went to the well.</span> <span>The boy pumped water.</span> <span>The girl poured it on the grass.</span></p>
+          <div class="duo-frame" role="img" aria-label="The story as three pictures: a boy and a girl walk to a well, the boy pumps water, and the girl pours it on a patch of grass.">
+            <span class="duo-empty" aria-hidden="true"><i></i></span>
+            <picture class="duo-shot"><source srcset="/img/hero/well-1.webp" type="image/webp"><img src="/img/hero/well-1.jpg" width="1280" height="640" alt="" fetchpriority="high"></picture>
+            <picture class="duo-shot"><source srcset="/img/hero/well-2.webp" type="image/webp"><img src="/img/hero/well-2.jpg" width="1280" height="640" alt=""></picture>
+            <picture class="duo-shot"><source srcset="/img/hero/well-3.webp" type="image/webp"><img src="/img/hero/well-3.jpg" width="1280" height="640" alt=""></picture>
+          </div>
+          <figcaption><b>Your mind’s eye</b> turns each line into a picture.</figcaption>
+        </figure>
+        <figure class="duo-card duo-feel">
+          <p class="duo-kind">A story you can’t see</p>
+          <p class="duo-line"><span>In 2008, Chinese authors</span> <span>wrote about America’s economic crisis,</span> <span>and how fast China was growing by comparison.</span></p>
+          <div class="duo-frame" role="img" aria-label="The story as three concept bubbles: three soft lights in a night sky, one for each part of the sentence, joined by threads of light.">
+            <canvas class="duo-sky" aria-hidden="true"></canvas>
+          </div>
+          <figcaption><b>thoughtfeel</b> turns each line into a concept bubble.</figcaption>
+        </figure>
+      </div>
+      <p class="duo-same">Same steps. Same payoff: you understand it, and you remember it.</p>
+      <!-- On phones the lesson button and the line about who uses it come after the picture. -->
+      <div class="hero-go hero-go-after">
+        <a class="btn" href="#start" data-hero="lesson">Take the lesson</a>
+        <a class="proof" href="#testimonials" data-hero="proof">
+          <span class="proof-faces" aria-hidden="true">
+            <img src="/img/rohan-reddy.jpg" width="60" height="60" alt="" loading="lazy">
+            <img src="/img/zed-barakat.jpg" width="60" height="60" alt="" loading="lazy">
+            <img src="/img/julian-putnam.jpg" width="60" height="60" alt="" loading="lazy">
+            <img src="/img/liam-daly-smith.jpg" width="60" height="60" alt="" loading="lazy">
+            <img src="/img/max-gurkalov.jpg" width="60" height="60" alt="" loading="lazy">
+          </span>
+          <span>Used by medical students, engineers and language learners</span>
+        </a>
+      </div>
+    </header>
+  </div>
+
+  <!-- ================= The one-question test ================= -->
+  <section class="sec test" id="test" aria-labelledby="test-title">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow">One question</p>
         <h2 id="test-title">Do you have it?</h2>
-        <p class="imt-intro">Think about your best friend. There are four ways people do it. Read all four, then answer one question.</p>
+        <p class="sec-sub imt-intro">Think about your best friend. There are four ways people do it. Read all four, then answer one question.</p>
+      </div>
+      <div class="imt-card imt rv">
         <div class="panel imt-panel fw" id="imt" aria-live="polite">
           <div class="fw-stage-wrap" aria-live="off">
             <div class="fw-stage">
@@ -908,84 +638,70 @@ window.tfTrack = function (path, title) {
           <div id="imt-result" hidden></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div class="what-main">
-      <p class="eyebrow">The sense</p>
-      <h2 id="what-title">What is thoughtfeel?</h2>
-      <p class="what-lead">thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
-      <div class="what-parts">
-        <div class="what-part">
-          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <div class="what-part-body">
-            <h3 id="what-sense">Like vision, but for concepts</h3>
-            <p>You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
-            <p>Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
+  <!-- ================= Start here: the lesson ================= -->
+  <section class="sec start" id="start" aria-labelledby="start-title">
+    <div class="wrap">
+      <div class="start-grid">
+        <a class="start-player rv" href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener" aria-label="Play the video: Learn a Bloom filter in your head: the interactive thoughtfeel lesson">
+          <img src="https://i.ytimg.com/vi/tgLRhlMjVkI/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/tgLRhlMjVkI/hqdefault.jpg'">
+          <span class="play" aria-hidden="true"></span>
+        </a>
+        <div class="start-text rv">
+          <p class="eyebrow">Start here · 14 minutes</p>
+          <h2 id="start-title">Learn a Bloom filter in your head</h2>
+          <ol class="start-steps">
+            <li><span><b>Find out if you have thoughtfeel</b>, and learn what a concept bubble is.</span></li>
+            <li><span><b>Build a complicated idea</b>, how a Bloom filter works, as a concept story, one line at a time.</span></li>
+            <li><span><b>Explain it back from memory</b>, then compare it with a visual analogy.</span></li>
+          </ol>
+          <div class="row">
+            <button class="btn primary" type="button" id="start-watch">Watch the lesson</button>
+            <a class="btn start-app" href="https://stories.thoughtfeel.net/#/lesson" target="_blank" rel="noopener">Do it in the app <span class="arrow" aria-hidden="true">→</span></a>
           </div>
+          <p class="start-meta">The app, stories.thoughtfeel.net, plays the story one line at a time.</p>
         </div>
-        <div class="what-part">
-          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></span>
-          <div class="what-part-body">
-            <h3 id="what-compare">Spotting what’s different</h3>
-            <p>That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
-          </div>
-        </div>
-        <div class="what-part">
-          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 19v-3M10 19v-7M15 19V9M20 19V5"/></svg></span>
-          <div class="what-part-body">
-            <h3 id="what-range">Faint, vivid, or not at all</h3>
-            <p>Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does. Based on studies of unsymbolized thinking, about 73% of people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
-            <p class="what-cite">Source: Russell Hurlburt’s study of inner experience (<a href="https://doi.org/10.1016/j.concog.2007.12.006" target="_blank" rel="noopener">Heavey &amp; Hurlburt, 2008</a>). 22 of 30 people had unsymbolized thinking at least once: a specific thought that comes without words or pictures.</p>
-          </div>
-        </div>
-        <div class="what-part">
-          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8z"/></svg></span>
-          <div class="what-part-body">
-            <h3 id="what-once">Is it really all at once?</h3>
-            <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
-            <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
-          </div>
-        </div>
-        <div class="what-part" id="why-it-works">
-          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19"/><path d="M9 7.5h6M9 11h4"/></svg></span>
-          <div class="what-part-body">
-            <h3 id="what-why">Why thoughtfeel works: follow a conceptual story the way your mind’s eye helps you follow a fairy tale</h3>
-            <p>If I tell you, “A boy and a girl went to the well. The boy pumped water, and water came out of the well. The girl took a bucket and poured the water on a patch of green grass,” you can understand and remember that story better by using your mind’s eye to imagine it.</p>
-            <p>But if I tell you, “The mother of the regent of the land is intrigued by the prospect of discovery,” you can’t use your mind’s eye to follow along, because the story is conceptual, not visual.</p>
-            <p>With thoughtfeel, though, you can use your ability to imagine in concepts to build that story in your imagination. That helps you understand the conceptual story the same way your mind’s eye helps you understand the visual one.</p>
-          </div>
-          <figure class="what-figure">
-            <a href="/img/two-stories.jpg" target="_blank" rel="noopener">
-              <picture>
-                <source srcset="/img/two-stories.webp" type="image/webp">
-                <img src="/img/two-stories.jpg" width="1456" height="1900" loading="lazy" alt="Two columns, the same four steps. A visual story about things you can see: read the words, choose your mind’s eye, picture each line, and end up with a movie in your head. A conceptual story about things you can’t see or touch: read the words, choose thoughtfeel, imagine each line in concepts, and end up with a concept movie. Both end the same way: you understand what happened, and you remember it long-term.">
-              </picture>
-            </a>
-            <figcaption>A visual story and a conceptual story, built the same way. <a href="/img/two-stories.jpg" target="_blank" rel="noopener">Open it full size</a></figcaption>
-          </figure>
-        </div>
-        <div class="what-part">
-          <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span>
-          <div class="what-part-body">
-            <h3 id="what-machine">Running a concept like a machine</h3>
-            <p>thoughtfeel also helps with mental simulation of concepts, the same way that your mind’s eye helps with mental simulation of objects. If you want to figure out what happens when you turn a gear in a gearbox, you can use your mind’s eye to run the simulation. In thoughtfeel, when you’ve built a conceptual machine like an algorithm or a biological process, you can simulate how the system would behave if you changed a conceptual property.</p>
-          </div>
+      </div>
+
+      <div class="videos rv" id="videos">
+        <h3>More to watch</h3>
+        <div class="video-grid">
+          <a class="video" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+            <span class="video-body">
+              <span class="video-label">See it live · 51 minutes</span>
+              <span class="video-title">Julian’s first thoughtfeel lesson</span>
+              <span class="video-desc">Julian had never used thoughtfeel. Watch him build a complicated idea as a concept story, then explain it back from memory.</span>
+            </span>
+          </a>
+          <a class="video" href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">
+            <span class="thumb"><img src="https://i.ytimg.com/vi/g3Z8VnARbQg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+            <span class="video-body">
+              <span class="video-label">The argument · 7 minutes</span>
+              <span class="video-title">Why visual analogies fail for complex concepts</span>
+              <span class="video-desc">Visual analogies are the best tool most people have for complex ideas. Here’s where they break, and what would work instead.</span>
+            </span>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ================= Testimonials ================= -->
-  <section class="voices" id="testimonials" aria-labelledby="voices-title">
-    <div class="voices-head">
-      <p class="eyebrow">Testimonials</p>
-      <h2 id="voices-title">In their own words</h2>
-    </div>
-    <div class="voices-nav" hidden>
-      <button type="button" class="voices-arrow" data-dir="-1" aria-label="Earlier testimonials">‹</button>
-      <button type="button" class="voices-arrow" data-dir="1" aria-label="More testimonials">›</button>
-    </div>
-    <div class="voices-track" tabindex="0" role="region" aria-label="Testimonials, side by side">
+  <section class="sec" aria-labelledby="voices-title" style="padding-top: 0">
+    <div class="wrap">
+      <div class="voices" id="testimonials">
+        <div class="voices-head sec-head rv">
+          <p class="eyebrow">Testimonials</p>
+          <h2 id="voices-title">In their own words</h2>
+        </div>
+        <div class="voices-nav" hidden>
+          <button type="button" class="voices-arrow" data-dir="-1" aria-label="Earlier testimonials">‹</button>
+          <button type="button" class="voices-arrow" data-dir="1" aria-label="More testimonials">›</button>
+        </div>
+        <div class="voices-track" tabindex="0" role="region" aria-label="Testimonials, side by side">
       <figure class="voice">
       <figcaption class="voice-who">
         <img class="voice-photo" src="/img/julian-putnam.jpg" width="88" height="88" alt="" loading="lazy">
@@ -1168,101 +884,181 @@ window.tfTrack = function (path, title) {
         </blockquote>
       </details>
     </figure>
-    </div>
-  </section>
-
-  <!-- ================= Videos ================= -->
-  <section class="videos" id="videos" aria-labelledby="videos-title">
-    <div class="videos-head">
-      <p class="eyebrow">The lessons</p>
-      <h2 id="videos-title">Start with these two videos</h2>
-    </div>
-    <div class="video-grid">
-      <a class="video" href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/tgLRhlMjVkI/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play play-corner" aria-hidden="true"></span></span>
-        <span class="video-label">Start here · 14 minutes, interactive</span>
-        <span class="video-title">Learn a Bloom filter in your head: the interactive thoughtfeel lesson</span>
-        <span class="video-desc">An animated lesson: find out if you have thoughtfeel, then build how a Bloom filter works as a concept story, one line at a time, and explain it back from memory. You do the story on stories.thoughtfeel.net.</span>
-      </a>
-      <a class="video" href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/I3WgK8cPa0A/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="video-label">See it live · 51 minutes</span>
-        <span class="video-title">Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span>
-        <span class="video-desc">Julian had never used thoughtfeel. Watch a whole lesson: building a complicated idea as a concept story, one line at a time, then explaining it back from memory.</span>
-      </a>
-    </div>
-    <div class="updates" id="updates">
-      <div class="updates-text">
-        <h3>Get new lessons by email</h3>
-        <p>More videos and exercises are on the way. Leave your email to get them when they’re out. You can also <a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">subscribe on YouTube</a>.</p>
-        <p>We’re also building guided training: short, step-by-step practice in imagining in concepts, and in using it to learn faster. Tick the box to join the waitlist for early access.</p>
-      </div>
-      <form class="signup" id="signup" action="https://formsubmit.co/teddyshachtman@gmail.com" method="POST">
-        <label class="visually-hidden" for="signup-email">Email address</label>
-        <div class="signup-row">
-          <input type="email" id="signup-email" name="email" required autocomplete="email" placeholder="you@example.com">
-          <button class="btn primary" type="submit" id="signup-submit">Send me new lessons</button>
         </div>
-        <fieldset class="signup-q">
-          <legend>Do you recognize thoughtfeel in yourself? <span>(optional)</span></legend>
-          <label for="signup-yes"><input type="radio" id="signup-yes" name="recognizes_thoughtfeel" value="yes"> Yes</label>
-          <label for="signup-unsure"><input type="radio" id="signup-unsure" name="recognizes_thoughtfeel" value="not sure"> Not sure</label>
-          <label for="signup-no"><input type="radio" id="signup-no" name="recognizes_thoughtfeel" value="no"> No</label>
-        </fieldset>
-        <label class="signup-wait" for="signup-waitlist"><input type="checkbox" id="signup-waitlist" name="waitlist" value="yes"> Also put me on the waitlist for guided training, with early access when it opens</label>
-        <input type="hidden" name="_subject" value="New thoughtfeel signup">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="https://thoughtfeel.net/#updates">
-        <input type="text" name="_honey" class="signup-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
-        <p class="signup-note">Only thoughtfeel lessons and guides, plus early access if you join the waitlist. Every email has an unsubscribe link.</p>
-      </form>
-    </div>
-  </section>
-
-  <section class="about" id="about" aria-labelledby="about-title">
-    <div class="about-text">
-      <p class="eyebrow">About the author</p>
-      <div class="about-hello">
-        <picture>
-          <source srcset="/img/ted.webp" type="image/webp">
-          <img class="about-photo" src="/img/ted.jpg" width="600" height="600" alt="Ted Shachtman" loading="lazy">
-        </picture>
-        <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
-      </div>
-      <p>I’m a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and I’m finishing a master’s in computer science at the University of Colorado Boulder in November 2026.</p>
-      <p>I developed thoughtfeel as a technique for learning and memory. I use it to remember lists, numbers, song lyrics and what people said, to learn board games, complex math and computer science, to play chess in my head, and to think through complex strategic problems. I made the animated lessons and started <a href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">r/MentalAtlas</a> so people can compare notes.</p>
-      <p>I write up the techniques as essays on <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">Substack</a>.</p>
-    </div>
-    <div class="contact">
-      <h3>Get in touch</h3>
-      <p>If you want to reach out about the technique, ask questions, or have a <strong>free tutoring session</strong>, please email me. I’d be very happy to jump on a call.</p>
-      <p class="email" id="email-address">teddyshachtman@gmail.com</p>
-      <div class="row">
-        <a class="btn primary" href="mailto:teddyshachtman@gmail.com?subject=thoughtfeel">Email me</a>
-        <button class="btn" type="button" id="copy-email">Copy address</button>
       </div>
     </div>
   </section>
 
-  <footer class="join">
-    <div>
-      <h2>Compare notes on r/MentalAtlas</h2>
-      <p>Tried a lesson? Post what you noticed and what came back the next day. Concrete reports help most, including reports that it didn’t work for you.</p>
-      <a class="btn primary" href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">Open r/MentalAtlas</a>
+  <!-- ================= The definition: one sentence, then parts that open ================= -->
+  <section class="sec what" id="what" aria-labelledby="what-title" style="padding-top: 0">
+    <div class="wrap what-grid">
+      <div class="what-head rv">
+        <p class="eyebrow">The sense</p>
+        <h2 id="what-title">What is thoughtfeel?</h2>
+        <p class="what-lead">thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.</p>
+        <p class="what-more">Open any part to read more. The <a href="/what-is-thoughtfeel/">definition page</a> has the rest.</p>
+      </div>
+      <div class="what-parts rv">
+        <details class="what-part">
+          <summary>
+            <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <h3 id="what-sense">Like vision, but for concepts</h3><span class="what-gist">Vision gives you a dog’s fur, nose and size at once. thoughtfeel does that for something like the economy.</span>
+            <span class="what-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="what-part-body">
+            <p>You could describe a dog in writing: it has fur, a wet black nose, and it’s about the size of a capybara. Or you could look at it, and vision gives you all of that at once, with no list.</p>
+            <p>Concepts have properties too, including properties you could never see. Take the economy. You could write out what’s true of it: millions of people, making and trading things, sometimes booming and sometimes in a slump. People with thoughtfeel can still make that list in words. But when they use thoughtfeel, the sense takes in properties like these all at once.</p>
+          </div>
+        </details>
+        <details class="what-part">
+          <summary>
+            <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></span>
+            <h3 id="what-compare">Spotting what’s different</h3><span class="what-gist">Two concepts that aren’t the same are clearly different right away, like photos of two dogs.</span>
+            <span class="what-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="what-part-body">
+            <p>That makes comparing fast. Show someone photos of two dogs, and they can tell right away whether it’s the same dog. If it isn’t, they can look again and point to why: one has a brown tail, the other a white one. With thoughtfeel, the same works for concepts you imagine. If two concepts aren’t the same, that’s clear right away, and paying attention to each one shows which properties differ.</p>
+          </div>
+        </details>
+        <details class="what-part">
+          <summary>
+            <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 19v-3M10 19v-7M15 19V9M20 19V5"/></svg></span>
+            <h3 id="what-range">Faint, vivid, or not at all</h3><span class="what-gist">About 73% of people have some of it. It ranges from faint to vivid, the way the mind’s eye does.</span>
+            <span class="what-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="what-part-body">
+            <p>Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does. Based on studies of unsymbolized thinking, about 73% of people have some of it, some have none, and among those who have it, it ranges from faint to vivid. For some people, taking in and imagining concepts is the default way they experience the world. For others, it’s much quieter. Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts.</p>
+            <p class="what-cite">Source: Russell Hurlburt’s study of inner experience (<a href="https://doi.org/10.1016/j.concog.2007.12.006" target="_blank" rel="noopener">Heavey &amp; Hurlburt, 2008</a>). 22 of 30 people had unsymbolized thinking at least once: a specific thought that comes without words or pictures.</p>
+          </div>
+        </details>
+        <details class="what-part">
+          <summary>
+            <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M13 2.5 5 13.5h6l-1 8 8-11h-6l1-8z"/></svg></span>
+            <h3 id="what-once">Is it really all at once?</h3><span class="what-gist">Taking in the concept is. Putting its properties into words comes after.</span>
+            <span class="what-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="what-part-body">
+            <p>Taking in the concept is. Putting its properties into words comes after. When a friend walks into a room, you know it’s them right away, before you could describe a single feature. If someone asks what color their eyes are, you look again and say. thoughtfeel works the same way. Someone with thoughtfeel who thinks of a promise knows right away what it is. Then they can pay attention to it and put its properties into words: it’s made to someone, it’s about the future, and it can be broken.</p>
+            <p>With practice, people notice finer properties, the way a birdwatcher learns to spot details in a bird that look the same to everyone else.</p>
+          </div>
+        </details>
+        <details class="what-part" id="why-it-works">
+          <summary>
+            <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19"/><path d="M9 7.5h6M9 11h4"/></svg></span>
+            <h3 id="what-why">Why thoughtfeel works: follow a conceptual story the way your mind’s eye helps you follow a fairy tale</h3><span class="what-gist">The four steps, side by side, in one picture.</span>
+            <span class="what-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="what-part-body">
+            <p>If I tell you, “A boy and a girl went to the well. The boy pumped water, and water came out of the well. The girl took a bucket and poured the water on a patch of green grass,” you can understand and remember that story better by using your mind’s eye to imagine it.</p>
+            <p>But if I tell you, “The mother of the regent of the land is intrigued by the prospect of discovery,” you can’t use your mind’s eye to follow along, because the story is conceptual, not visual.</p>
+            <p>With thoughtfeel, though, you can use your ability to imagine in concepts to build that story in your imagination. That helps you understand the conceptual story the same way your mind’s eye helps you understand the visual one.</p>
+            <figure class="what-figure">
+              <a href="/img/two-stories.jpg" target="_blank" rel="noopener">
+                <picture>
+                  <source srcset="/img/two-stories.webp" type="image/webp">
+                  <img src="/img/two-stories.jpg" width="1456" height="1900" loading="lazy" alt="Two columns, the same four steps. A visual story about things you can see: read the words, choose your mind’s eye, picture each line, and end up with a movie in your head. A conceptual story about things you can’t see or touch: read the words, choose thoughtfeel, imagine each line in concepts, and end up with a concept movie. Both end the same way: you understand what happened, and you remember it long-term.">
+                </picture>
+              </a>
+              <figcaption>A visual story and a conceptual story, built the same way. <a href="/img/two-stories.jpg" target="_blank" rel="noopener">Open it full size</a></figcaption>
+            </figure>
+          </div>
+        </details>
+        <details class="what-part">
+          <summary>
+            <span class="what-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg></span>
+            <h3 id="what-machine">Running a concept like a machine</h3><span class="what-gist">Build an algorithm or a biological process in concepts, change one property, and see what it does.</span>
+            <span class="what-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="what-part-body">
+            <p>thoughtfeel also helps with mental simulation of concepts, the same way that your mind’s eye helps with mental simulation of objects. If you want to figure out what happens when you turn a gear in a gearbox, you can use your mind’s eye to run the simulation. In thoughtfeel, when you’ve built a conceptual machine like an algorithm or a biological process, you can simulate how the system would behave if you changed a conceptual property.</p>
+          </div>
+        </details>
+      </div>
     </div>
-    <ul>
-      <li><a href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener">Start here: the interactive lesson</a><span>Learn a Bloom filter in your head: the interactive thoughtfeel lesson</span></li>
-      <li><a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">See it live: Julian’s first lesson</a><span>Julian’s first thoughtfeel lesson: temporal difference learning as a concept story</span></li>
-      <li><a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why visual analogies fail</a><span>Why Visual Analogies Fail for Complex Concepts (and What Would Work Instead)</span></li>
-      <li><a href="/what-is-thoughtfeel/">What is thoughtfeel?</a><span>The definition, and what thoughtfeel is not.</span></li>
-      <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The thoughtfeel YouTube channel</a><span>New lessons as they’re published.</span></li>
-      <li><a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">The thoughtfeel Substack</a><span>The techniques, written up as essays.</span></li>
-      <li><a href="#updates">Get new lessons by email</a><span>New videos and exercises when they’re out.</span></li>
-      <li><a href="#about">Email Ted</a><span>Questions, or a free tutoring session: teddyshachtman@gmail.com</span></li>
-    </ul>
-    <p class="colophon">thoughtfeel · a practical guide by Ted Shachtman</p>
-  </footer>
+  </section>
+
+  <!-- ================= New lessons by email ================= -->
+  <section class="sec" style="padding-top: 0" aria-labelledby="updates-title">
+    <div class="wrap">
+      <div class="updates rv" id="updates">
+        <div class="updates-text">
+          <p class="eyebrow">By email</p>
+          <h2 id="updates-title">Get new lessons as they come out</h2>
+          <p>More videos and exercises are on the way. Guided training is being built too: short, step-by-step practice in imagining in concepts. Tick the box for early access.</p>
+          <p>You can also <a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">subscribe on YouTube</a>.</p>
+        </div>
+        <form class="signup" id="signup" action="https://formsubmit.co/teddyshachtman@gmail.com" method="POST">
+          <label class="visually-hidden" for="signup-email">Email address</label>
+          <div class="signup-row">
+            <input type="email" id="signup-email" name="email" required autocomplete="email" placeholder="you@example.com">
+            <button class="btn primary" type="submit" id="signup-submit">Send me new lessons</button>
+          </div>
+          <fieldset class="signup-q">
+            <legend>Do you recognize thoughtfeel in yourself? <span>(optional)</span></legend>
+            <label for="signup-yes"><input type="radio" id="signup-yes" name="recognizes_thoughtfeel" value="yes"> Yes</label>
+            <label for="signup-unsure"><input type="radio" id="signup-unsure" name="recognizes_thoughtfeel" value="not sure"> Not sure</label>
+            <label for="signup-no"><input type="radio" id="signup-no" name="recognizes_thoughtfeel" value="no"> No</label>
+          </fieldset>
+          <label class="signup-wait" for="signup-waitlist"><input type="checkbox" id="signup-waitlist" name="waitlist" value="yes"> Also put me on the waitlist for guided training, with early access when it opens</label>
+          <input type="hidden" name="_subject" value="New thoughtfeel signup">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://thoughtfeel.net/#updates">
+          <input type="text" name="_honey" class="signup-trap" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="signup-status" id="signup-status" role="status" aria-live="polite"></p>
+          <p class="signup-note">Only thoughtfeel lessons and guides, plus early access if you join the waitlist. Every email has an unsubscribe link.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= About ================= -->
+  <section class="sec" style="padding-top: 0" aria-labelledby="about-title">
+    <div class="wrap about" id="about">
+      <div class="about-text rv">
+        <p class="eyebrow">About the author</p>
+        <div class="about-hello">
+          <picture>
+            <source srcset="/img/ted.webp" type="image/webp">
+            <img class="about-photo" src="/img/ted.jpg" width="600" height="600" alt="Ted Shachtman" loading="lazy">
+          </picture>
+          <h2 id="about-title">Hi, I’m Ted Shachtman</h2>
+        </div>
+        <p>I’m a teacher and software engineer with a deep interest in cognitive science. I have degrees in elementary education and cognitive studies from Vanderbilt University, and a master’s in computer science from the University of Colorado Boulder.</p>
+        <p>I developed thoughtfeel as a technique for learning and memory. I use it to remember lists, numbers, song lyrics and what people said, to learn board games, complex math and computer science, to play chess in my head, and to think through complex strategic problems. I made the animated lessons and started <a href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">r/MentalAtlas</a> so people can compare notes.</p>
+        <p>I write up the techniques as essays on <a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">Substack</a>.</p>
+      </div>
+      <div class="contact rv">
+        <h3>Get in touch</h3>
+        <p>If you want to reach out about the technique, ask questions, or have a <strong>free tutoring session</strong>, please email me. I’d be very happy to jump on a call.</p>
+        <p class="email" id="email-address">teddyshachtman@gmail.com</p>
+        <div class="row">
+          <a class="btn primary" href="mailto:teddyshachtman@gmail.com?subject=thoughtfeel">Email me</a>
+          <button class="btn" type="button" id="copy-email">Copy address</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <footer class="join">
+      <div>
+        <h2>Compare notes on r/MentalAtlas</h2>
+        <p>Tried a lesson? Post what you noticed and what came back the next day. Concrete reports help most, including reports that it didn’t work for you.</p>
+        <a class="btn" href="https://www.reddit.com/r/MentalAtlas/" target="_blank" rel="noopener">Open r/MentalAtlas</a>
+      </div>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=tgLRhlMjVkI" target="_blank" rel="noopener">Start here: the interactive lesson</a><span>Learn a Bloom filter in your head</span></li>
+        <li><a href="https://www.youtube.com/watch?v=I3WgK8cPa0A" target="_blank" rel="noopener">See it live: Julian’s first lesson</a><span>Temporal difference learning as a concept story</span></li>
+        <li><a href="https://www.youtube.com/watch?v=g3Z8VnARbQg" target="_blank" rel="noopener">Why visual analogies fail</a><span>For complex concepts, and what would work instead</span></li>
+        <li><a href="/what-is-thoughtfeel/">What is thoughtfeel?</a><span>The definition, and what thoughtfeel is not</span></li>
+        <li><a href="https://www.youtube.com/@ThoughtFeelGuide" target="_blank" rel="noopener">The YouTube channel</a><span>New lessons as they’re published</span></li>
+        <li><a href="https://thoughtfeel.substack.com" target="_blank" rel="noopener">The Substack</a><span>The techniques, written up as essays</span></li>
+        <li><a href="#updates">New lessons by email</a><span>Videos and exercises when they’re out</span></li>
+        <li><a href="#about">Email Ted</a><span>Questions, or a free tutoring session</span></li>
+      </ul>
+      <p class="colophon">thoughtfeel · a practical guide by Ted Shachtman</p>
+    </footer>
+  </div>
 </div>
 
 <script>
@@ -1488,57 +1284,6 @@ function tfWays(root) {
 <script>
 (function () {
   var tfTrack = window.tfTrack || function () {};
-  /* ---------- Woven swatch ---------- */
-  var canvas = document.getElementById('swatch');
-  function drawSwatch() {
-    if (!canvas) return;
-    var rect = canvas.getBoundingClientRect();
-    if (!rect.width) return;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(rect.width * dpr);
-    canvas.height = Math.round(rect.height * dpr);
-    var ctx = canvas.getContext('2d');
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var cs = getComputedStyle(document.documentElement);
-    var indigo = cs.getPropertyValue('--indigo').trim();
-    var weld = cs.getPropertyValue('--weld').trim();
-    var surface = cs.getPropertyValue('--surface-2').trim();
-    var ink = cs.getPropertyValue('--ink').trim();
-    var W = rect.width, H = rect.height, cell = Math.max(10, Math.round(W / 26)), gap = Math.max(2, cell * 0.18);
-    ctx.fillStyle = surface; ctx.fillRect(0, 0, W, H);
-    // deterministic pseudo-random so the swatch is stable
-    var seed = 7; function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
-    var cols = Math.ceil(W / cell), rows = Math.ceil(H / cell);
-    // one weft band of weld: the texture you pick out of the fabric
-    var band0 = Math.floor(rows * 0.42), band1 = band0 + 2;
-    var tones = [];
-    for (var c = 0; c < cols; c++) tones.push(0.72 + rnd() * 0.28);
-    function thread(x, y, w, h, color, alpha) {
-      ctx.globalAlpha = alpha; ctx.fillStyle = color;
-      var r = Math.min(w, h) / 5;
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(x, y, w, h, r); else ctx.rect(x, y, w, h);
-      ctx.fill();
-    }
-    for (var y = 0; y < rows; y++) {
-      var isBand = y >= band0 && y <= band1;
-      for (var x = 0; x < cols; x++) {
-        var over = (x + y) % 2 === 0; // plain weave
-        var px = x * cell, py = y * cell;
-        var warp = function () { thread(px + gap / 2, py - 1, cell - gap, cell + 2, indigo, tones[x]); };
-        var weft = function () { thread(px - 1, py + gap / 2, cell + 2, cell - gap, isBand ? weld : ink, isBand ? 0.95 : 0.16); };
-        if (over) { weft(); warp(); } else { warp(); weft(); }
-      }
-    }
-    ctx.globalAlpha = 1;
-  }
-  var raf; function schedule() { cancelAnimationFrame(raf); raf = requestAnimationFrame(drawSwatch); }
-  window.addEventListener('resize', schedule);
-  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', schedule); } catch (e) {}
-  new MutationObserver(schedule).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
-  schedule();
-
   /* ---------- The test: the four ways to think about your best friend; can you do the fourth? ---------- */
   // Since 2026-10-27 the test is the question from the live lessons (it replaced the four-step "surprise party"
   // test, and the quiz at /quiz/ asks the same). The answer goes along with an email signup (as test_result and
@@ -1740,8 +1485,8 @@ function tfWays(root) {
         tfTrack('signup-home');
         if (waitlist) tfTrack('waitlist-home');
       })
-      .catch(function () {
-        setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss');
+      .catch(function (err) {
+        if (!(window.tfSignupFailed && window.tfSignupFailed(status, err))) setStatus('That didn’t go through. Email teddyshachtman@gmail.com to sign up instead.', 'miss');
       })
       .then(function () { button.disabled = false; });
   });
@@ -1762,21 +1507,190 @@ function tfWays(root) {
       }, select);
     } catch (e) { select(); }
   });
+})();
+</script>
+<script>
+/* The hero's two stories (2026-11-10). Both sentences are read at once, one part at a time. On the left each part
+   brings its picture (the well story, from video 19). On the right each part brings a concept bubble: a light with no
+   shape, joined to the one before it by a thread. Then both hold, and it starts again. A visit opens on the finished
+   state for a couple of seconds, so the whole idea is there at first glance. It runs only while it's on screen, and with prefers-reduced-motion it shows the finished state and stays still. */
+(function () {
+  var duo = document.getElementById('duo');
+  if (!duo) return;
+  var tfTrack = window.tfTrack || function () {};
+  var shots = [].slice.call(duo.querySelectorAll('.duo-shot'));
+  var lines = [].slice.call(duo.querySelectorAll('.duo-line')).map(function (p) { return [].slice.call(p.querySelectorAll('span')); });
+  var empty = duo.querySelector('.duo-empty'), canvas = duo.querySelector('.duo-sky');
+  var g = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var still = !!(mq && mq.matches);
+  var READ = [0.5, 3.0, 5.5], HOLD = 10.8, END = 12;   // seconds: when each part is read, when the hold ends, the loop
+  var clock = HOLD - 2.6, last = 0, raf = 0, seen = false, part = -9;
 
-  /* ---------- Side nav: mark current section ---------- */
-  var links = Array.prototype.slice.call(document.querySelectorAll('.sidenav a'));
-  if ('IntersectionObserver' in window && links.length) {
-    var map = {}; links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting && map[en.target.id]) {
-          links.forEach(function (a) { a.classList.remove('here'); });
-          map[en.target.id].classList.add('here');
-        }
-      });
-    }, { rootMargin: '0px 0px -70% 0px' });
-    Object.keys(map).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  function clamp(u) { return u < 0 ? 0 : u > 1 ? 1 : u; }
+  function smooth(u) { u = clamp(u); return u * u * (3 - 2 * u); }
+  function back(u) { u = clamp(u); var c = 1.9; return 1 + (c + 1) * Math.pow(u - 1, 3) + c * Math.pow(u - 1, 2); }
+  function hash(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+  function col(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + clamp(a).toFixed(3) + ')'; }
+
+  // Which part is being read: -1 before the first, 0–2, then 3 once all three are said.
+  function setPart(n) {
+    if (n === part) return;
+    part = n;
+    shots.forEach(function (s, i) { s.classList.toggle('is-on', n >= 0 && i === Math.min(n, 2)); });
+    if (empty) empty.style.opacity = n < 0 ? 1 : 0;
+    lines.forEach(function (spans) {
+      spans.forEach(function (s, i) { s.classList.toggle('is-said', i <= n); s.classList.toggle('is-now', i === n); });
+    });
   }
+
+  // ── The night sky and its bubbles ──
+  var GOLD = { core: [255, 248, 226], mid: [255, 214, 132], edge: [242, 160, 62], deep: [217, 116, 30], halo: [255, 180, 80] };
+  var BLUE = { core: [240, 243, 255], mid: [186, 200, 255], edge: [134, 152, 244], deep: [88, 104, 216], halo: [140, 160, 255] };
+  var SPOTS = [[.2, .5, GOLD], [.5, .33, BLUE], [.8, .5, GOLD]];
+  function glow(x, y, r, c, a) {
+    if (a <= .003 || r <= .3) return;
+    var gr = g.createRadialGradient(x, y, 0, x, y, r);
+    gr.addColorStop(0, col(c, a)); gr.addColorStop(.2, col(c, a * .6)); gr.addColorStop(.5, col(c, a * .2)); gr.addColorStop(1, col(c, 0));
+    g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2);
+  }
+  function bubble(x, y, r, t, C, seed, a) {
+    if (r < .8 || a <= .01) return;
+    r *= 1 + .035 * Math.sin(t * 1.7 + seed * 2.1);
+    g.globalCompositeOperation = 'lighter';
+    glow(x, y, r * 4.6, C.halo, .17 * a); glow(x, y, r * 2.4, C.halo, .42 * a);
+    g.globalCompositeOperation = 'source-over';
+    var gr = g.createRadialGradient(x - r * .16, y - r * .2, 0, x, y, r * 1.06);
+    gr.addColorStop(0, col(C.core, a)); gr.addColorStop(.3, col(C.mid, a)); gr.addColorStop(.68, col(C.edge, a));
+    gr.addColorStop(.88, col(C.deep, .9 * a)); gr.addColorStop(.96, col(C.deep, .45 * a)); gr.addColorStop(1, col(C.deep, 0));
+    g.fillStyle = gr; g.fillRect(x - r * 1.1, y - r * 1.1, r * 2.2, r * 2.2);
+    // the inner texture: slow wisps of light turning over one another
+    g.save(); g.beginPath(); g.arc(x, y, r * .94, 0, Math.PI * 2); g.clip(); g.globalCompositeOperation = 'lighter';
+    for (var k = 0; k < 6; k++) {
+      var h = hash(seed * 7.3 + k), h2 = hash(seed * 3.1 + k * 1.7), sp = (.28 + .4 * h) * (k % 2 ? 1 : -1), an = t * sp + h2 * 6.283, q = r * (.16 + .42 * h2);
+      g.save(); g.translate(x + Math.cos(an) * q, y + Math.sin(an * 1.13 + k) * q); g.rotate(an * 1.2 + k); g.scale(1, .36 + .2 * h);
+      var w = g.createRadialGradient(0, 0, 0, 0, 0, r * .7); w.addColorStop(0, col(C.core, .2 * a)); w.addColorStop(.5, col(C.core, .07 * a)); w.addColorStop(1, col(C.core, 0));
+      g.fillStyle = w; g.fillRect(-r, -r, 2 * r, 2 * r); g.restore();
+    }
+    var hr = g.createRadialGradient(x - r * .1, y - r * .14, 0, x - r * .1, y - r * .14, r * .7);
+    hr.addColorStop(0, col([255, 255, 255], .5 * a)); hr.addColorStop(.4, col([255, 255, 255], .16 * a)); hr.addColorStop(1, col([255, 255, 255], 0));
+    g.fillStyle = hr; g.fillRect(x - r, y - r, 2 * r, 2 * r);
+    g.restore();
+    // a few sparks circling it
+    g.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < 5; i++) {
+      var s1 = hash(seed * 11.1 + i * 3.3), sa = t * (.5 + .4 * s1) * (i % 2 ? 1 : -1) + s1 * 6.283, sq = r * (1.25 + .4 * hash(seed + i)), tw = .5 + .5 * Math.sin(t * (2 + 3 * s1) + i);
+      var sx = x + Math.cos(sa) * sq, sy = y + Math.sin(sa) * sq * .9, sr = Math.max(.8, r * .024);
+      glow(sx, sy, sr * 7, C.core, .3 * tw * a); glow(sx, sy, sr * 2, [255, 255, 255], .8 * tw * a);
+    }
+    g.globalCompositeOperation = 'source-over';
+  }
+  function thread(a, b, grow, t, alpha, W) {
+    if (grow <= 0 || alpha <= .01) return;
+    var d = Math.hypot(b[0] - a[0], b[1] - a[1]), cx = (a[0] + b[0]) / 2, cy = (a[1] + b[1]) / 2 + d * .1 + Math.sin(t * .9 + a[0]) * d * .012, N = 28, P = [], i;
+    for (i = 0; i <= N; i++) { var u = i / N * clamp(grow), v = 1 - u; P.push([v * v * a[0] + 2 * v * u * cx + u * u * b[0], v * v * a[1] + 2 * v * u * cy + u * u * b[1]]); }
+    var path = function () { g.beginPath(); P.forEach(function (p, j) { if (j) g.lineTo(p[0], p[1]); else g.moveTo(p[0], p[1]); }); };
+    var w = Math.max(1.4, W * .0034);
+    g.save(); g.globalCompositeOperation = 'lighter'; g.lineCap = 'round'; g.lineJoin = 'round';
+    path(); g.strokeStyle = col([255, 168, 80], .1 * alpha); g.lineWidth = w * 9; g.stroke();
+    path(); g.strokeStyle = col([255, 201, 120], .28 * alpha); g.lineWidth = w * 3.4; g.stroke();
+    path(); g.strokeStyle = col([255, 243, 214], .92 * alpha); g.lineWidth = w; g.stroke();
+    g.restore();
+    g.globalCompositeOperation = 'lighter';
+    var tip = P[N], pu, pv;
+    if (grow < 1) { glow(tip[0], tip[1], w * 12, [255, 224, 160], .6 * alpha); glow(tip[0], tip[1], w * 4, [255, 255, 255], .9 * alpha); }
+    else { pu = (t * .34 + hash(a[0])) % 1; pv = 1 - pu; var px = pv * pv * a[0] + 2 * pv * pu * cx + pu * pu * b[0], py = pv * pv * a[1] + 2 * pv * pu * cy + pu * pu * b[1], pa = Math.sin(Math.PI * pu) * alpha; glow(px, py, w * 10, [255, 224, 160], .5 * pa); glow(px, py, w * 3, [255, 255, 255], .8 * pa); }
+    g.globalCompositeOperation = 'source-over';
+  }
+  function sky(t, c) {
+    if (!g) return;
+    var box = canvas.parentNode.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2), W = Math.round(box.width * d), H = Math.round(box.height * d);
+    if (!W || !H) return;
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    g.setTransform(1, 0, 0, 1, 0, 0); g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+    var hz = H * .8, bg = g.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#0c0828'); bg.addColorStop(.42, '#1d1048'); bg.addColorStop(.68, '#43186a'); bg.addColorStop(.8, '#8a2e78'); bg.addColorStop(.805, '#1c0f40'); bg.addColorStop(1, '#0c0722');
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.globalCompositeOperation = 'lighter';
+    glow(W * .5, hz, W * .62, [226, 96, 138], .3); glow(W * .5, hz, W * .22, [255, 170, 150], .22);
+    for (var i = 0; i < 46; i++) {
+      var sx = hash(i * 1.7) * W, sy = Math.pow(hash(i * 3.1 + .4), 1.4) * hz * .86, tw = .45 + .55 * Math.sin(t * (.7 + 2 * hash(i * 5.3)) + i);
+      g.fillStyle = col([238, 232, 255], .75 * tw * (1 - sy / hz)); g.beginPath(); g.arc(sx, sy, Math.max(.6, W * .0012) * (.6 + hash(i * 9.1)), 0, Math.PI * 2); g.fill();
+    }
+    g.globalCompositeOperation = 'source-over';
+    var fade = 1 - smooth((c - HOLD) / (END - HOLD - .15)), R = Math.min(W * .074, H * .17), at = [], k;
+    for (k = 0; k < 3; k++) {
+      var a = c - READ[k], S = SPOTS[k], x = S[0] * W + Math.sin(t * .8 + k * 2) * W * .004, y = S[1] * H + Math.sin(t * .66 + k * 1.3) * H * .012;
+      if (a < 0) { at.push(null); continue; }
+      // a point of light comes down from the words, then swells into the bubble
+      var fall = smooth(a / .75), swell = a < .55 ? 0 : back((a - .55) / 1.05), by = -H * .06 + (y + H * .06) * fall;
+      at.push({ x: x, y: by, r: R * swell, a: fade, born: a });
+      if (swell < 1) { g.globalCompositeOperation = 'lighter'; var ma = (1 - smooth((a - .55) / .8)) * fade; glow(x, by, R * .9, S[2].halo, .5 * ma); glow(x, by, R * .22, [255, 255, 255], ma); g.strokeStyle = col(S[2].core, .35 * ma * (1 - fall)); g.lineWidth = Math.max(1, R * .05); g.lineCap = 'round'; g.beginPath(); g.moveTo(x, by - R * 1.3 * (1 - fall) - R * .2); g.lineTo(x, by); g.stroke(); g.globalCompositeOperation = 'source-over'; }
+    }
+    // their light on the water
+    g.globalCompositeOperation = 'lighter';
+    at.forEach(function (b, j) { if (!b || b.r < 1) return; g.save(); g.translate(b.x, hz + (hz - b.y) * .16); g.scale(1, .3); glow(0, 0, b.r * 3.4, SPOTS[j][2].halo, .22 * b.a); g.restore(); });
+    g.globalCompositeOperation = 'source-over';
+    for (k = 0; k < 2; k++) {
+      var p = at[k], q = at[k + 1];
+      if (!p || !q || q.born < 1.25) continue;
+      var an = Math.atan2(q.y - p.y, q.x - p.x);
+      thread([p.x + Math.cos(an) * p.r * .92, p.y + Math.sin(an) * p.r * .92], [q.x - Math.cos(an) * q.r * .92, q.y - Math.sin(an) * q.r * .92], (q.born - 1.25) / .7, t, fade, W);
+    }
+    at.forEach(function (b, j) { if (b) bubble(b.x, b.y, b.r, t, SPOTS[j][2], j * 3 + 1, b.a); });
+  }
+
+  function frame(now) {
+    raf = 0;
+    var dt = last ? Math.min(1, (now - last) / 1000) : 0; last = now;
+    clock += dt;
+    var c = clock % END;
+    setPart(c < READ[0] || c > END - .35 ? -1 : c < READ[1] ? 0 : c < READ[2] ? 1 : c < READ[2] + 2.2 ? 2 : 3);
+    sky(clock, c);
+    if (seen && !document.hidden) raf = requestAnimationFrame(frame); else last = 0;
+  }
+  function wake() { if (!raf && seen && !document.hidden && !still) { last = 0; raf = requestAnimationFrame(frame); } }
+  function rest() { duo.classList.add('live'); setPart(3); sky(4, HOLD - 1); }
+
+  duo.classList.add('live');
+  if (still) rest();
+  else {
+    setPart(3); sky(clock, clock % END);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; wake(); }); }, { threshold: .12 }).observe(duo);
+    else { seen = true; wake(); }
+    document.addEventListener('visibilitychange', wake);
+  }
+  window.addEventListener('resize', function () { if (still || !raf) sky(still ? 4 : clock, still ? HOLD - 1 : clock % END); });
+  if (mq) { var ch = function () { still = mq.matches; if (still) rest(); else wake(); }; if (mq.addEventListener) mq.addEventListener('change', ch); else if (mq.addListener) mq.addListener(ch); }
+
+  // Which of the hero's ways on people take.
+  duo.parentNode.addEventListener('click', function (e) { var a = e.target.closest('[data-hero]'); if (a) tfTrack('hero-to-' + a.getAttribute('data-hero')); });
+})();
+
+/* The rest of the page's small behaviours. */
+(function () {
+  var tfTrack = window.tfTrack || function () {};
+  // "Watch the lesson" plays the video in place, the same as clicking its picture.
+  var watch = document.getElementById('start-watch');
+  if (watch) watch.addEventListener('click', function () {
+    var player = document.querySelector('.start-player');
+    if (player) { player.scrollIntoView({ behavior: 'smooth', block: 'center' }); player.click(); }
+    else { var f = document.querySelector('.start-frame'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  });
+  var app = document.querySelector('.top-app');
+  if (app) app.addEventListener('click', function () { tfTrack('top-to-app', 'Top bar: open the app'); });
+
+  // A link to a part of the definition (#why-it-works, #what-sense …) opens that part.
+  function openTarget() {
+    var id = decodeURIComponent((location.hash || '').slice(1)), el = id && document.getElementById(id);
+    var part = el && el.closest && el.closest('details.what-part');
+    if (part && !part.open) { part.open = true; part.scrollIntoView({ block: 'start' }); }
+  }
+  window.addEventListener('hashchange', openTarget);
+  openTarget();
+  [].forEach.call(document.querySelectorAll('details.what-part'), function (d) {
+    d.addEventListener('toggle', function () { if (d.open) tfTrack('what-open-' + ((d.querySelector('h3') || {}).id || 'part')); });
+  });
 })();
 </script>
 
