@@ -1,27 +1,36 @@
-# thoughtfeel
+# Concept bubbles
 
-> thoughtfeel is a sense for concepts. It lets you take in a concept and its properties all at once, the way vision lets you take in what’s in front of you.
+> Concept bubbles is a learning technique for complex material. A concept bubble is one idea, held in your mind with no words and no picture. You build what you’re learning one bubble at a time and link the bubbles into a story.
 
-Just as people can imagine in pictures or in sounds, people with thoughtfeel can imagine in concepts. Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does. Based on studies of unsymbolized thinking, about 73% of people have some of it, some have none, and among those who have it, it ranges from faint to vivid. (Source: Russell Hurlburt’s study of inner experience, Heavey & Hurlburt, 2008, https://doi.org/10.1016/j.concog.2007.12.006. 22 of 30 people had unsymbolized thinking at least once: a specific thought that comes without words or pictures.)
+It uses unsymbolized thinking, the psychologist Russell Hurlburt’s name for a specific thought that comes without words or pictures. Just as people can imagine in pictures or in sounds, people with unsymbolized thinking can imagine in concepts. Hurlburt named and studies unsymbolized thinking. The concept bubbles technique was developed by Ted Shachtman, and Hurlburt isn’t involved in it.
 
-thoughtfeel.net is a practical guide to harnessing that ability to learn faster and remember more, by Ted Shachtman, who named the sense thoughtfeel. The name is written as one lowercase word, as on the YouTube channel (youtube.com/@ThoughtFeelGuide).
+Not everyone has unsymbolized thinking. Like vision and hearing, it differs from person to person, and it most likely varies the way the mind’s eye does. Based on studies of unsymbolized thinking, about 73% of people have some of it, some have none, and among those who have it, it ranges from faint to vivid. (Source: Russell Hurlburt’s study of inner experience, Heavey & Hurlburt, 2008, https://doi.org/10.1016/j.concog.2007.12.006. 22 of 30 people had unsymbolized thinking at least once.)
 
-What thoughtfeel is not:
+thoughtfeel.net is a practical guide to the technique, by Ted Shachtman.
 
-- Not your mind’s eye or inner voice. Pictures and words can come along with a thought, but thoughtfeel works without them.
+## The earlier name
+
+From September to November 2026 the technique, and the kind of thinking it uses, were both called thoughtfeel. Since November 2026 the technique is called concept bubbles, and the kind of thinking goes by its research name, unsymbolized thinking. The videos and posts from before then still say thoughtfeel. thoughtfeel is still the name of the site (thoughtfeel.net) and of the YouTube channel (youtube.com/@ThoughtFeelGuide).
+
+What a concept bubble is not:
+
+- Not a diagram or a mind map. Nothing is drawn. A concept bubble is held in your mind. The lessons show bubbles on screen only to point at which concept is meant.
+- Not your mind’s eye or inner voice. Pictures and words can come along with a thought, but a concept bubble works without them.
 - Not an emotion. The economy and justice feel different from each other, but neither one feels happy or sad.
-- Not the feeling of knowing. Everyone knows what they’re thinking. thoughtfeel gives the thought itself detail you can notice, the way a picture has detail.
-- Not a technique. thoughtfeel is the sense. The lessons teach techniques that use it, the way the memory palace uses the mind’s eye.
+- Not the feeling of knowing. Everyone knows what they’re thinking. A concept bubble gives the thought itself detail you can notice, the way a picture has detail.
+- Not the same thing as unsymbolized thinking. Unsymbolized thinking is the kind of thought. Concept bubbles is the technique that uses it on purpose, the way the memory palace uses the mind’s eye.
 
 ## The definition
 
-- [What is thoughtfeel?](https://thoughtfeel.net/what-is-thoughtfeel/): the definition, with examples, and what thoughtfeel is not
+- [What are concept bubbles?](https://thoughtfeel.net/concept-bubbles/): the definition, with examples, and what a concept bubble is not
 
-## Do you have it?
+## Can you do it?
 
-- [The one-question quiz](https://thoughtfeel.net/quiz/): the four ways to think about your best friend (a picture, their voice, just knowing, a concept bubble); if you can get a sense of the fourth, you have thoughtfeel
+- [The one-question quiz](https://thoughtfeel.net/quiz/): the four ways to think about your best friend (a picture, their voice, just knowing, a concept bubble); if you can get a sense of the fourth, you can use concept bubbles
 
 ## Lessons
+
+The video titles below are as published; the older ones use the earlier name, thoughtfeel.
 
 - [Start here: Learn a Bloom Filter in Your Head: The Interactive thoughtfeel Lesson](https://www.youtube.com/watch?v=tgLRhlMjVkI); the activity is at https://stories.thoughtfeel.net/#/lesson
 - [See it live: Julian's first thoughtfeel lesson](https://www.youtube.com/watch?v=I3WgK8cPa0A): a whole lesson, recorded live
@@ -38,5 +47,5 @@ What thoughtfeel is not:
 
 ## More
 
-- [The thoughtfeel Substack](https://thoughtfeel.substack.com/): the techniques, written up as essays
+- [The Substack](https://thoughtfeel.substack.com/): the techniques, written up as essays
 - [r/MentalAtlas](https://www.reddit.com/r/MentalAtlas/): where people compare notes
