@@ -387,9 +387,7 @@
     add('Start', () => h('div', { class: 'b-body', style: 'align-content:center;justify-items:center;text-align:center' },
       h('div', {},
         h('h1', { class: 'b-title', style: 'font-size:clamp(40px,6vw,96px)' }, 'A Part of a Part'),
-        h('p', { class: 'b-sub' }, 'Today’s tool: a pan of brownies'),
-        h('p', { class: 'b-sub', style: 'margin-top:4vh' }, 'On your Chromebook, go to'),
-        h('div', { class: 'b-url' }, 'thoughtfeel.net/pan'))));
+        h('p', { class: 'b-sub' }, 'Today’s tool: a pan of brownies'))));
 
     add('Notice and wonder', () => {
       const col = h('div', { class: 'b-pan-col' });
