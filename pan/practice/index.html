@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Practice Panel</title>
+<style>
+:root{
+  --bg:#eef1f5; --card:#ffffff; --ink:#1f2933; --muted:#5f6b7a; --line:#d9dee6;
+  --accent:#2563eb; --accent-soft:#e3ecff; --good:#15803d; --good-soft:#dcfce7;
+  --glass:rgba(17,22,30,.86); --glass-line:rgba(255,255,255,.14);
+  --S:960px; /* screen width, set by JS */
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--line)}
+.top h1{margin:0;font-size:19px;letter-spacing:.2px}
+.top p{margin:2px 0 0;color:var(--muted);font-size:12.5px}
+.top-actions{display:flex;gap:8px;flex-shrink:0}
+.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 12px;font-size:14px}
+.btn:hover{border-color:#b8c2d0}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.layout{display:flex;gap:18px;padding:16px 20px 24px;align-items:flex-start}
+.stage{flex:1;min-width:0;display:flex;justify-content:center}
+.side{width:330px;flex-shrink:0;display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.card h2{margin:0 0 6px;font-size:15.5px}
+.progress{font-size:13px;color:var(--muted);margin-bottom:8px}
+.bar{height:6px;background:#eef1f5;border-radius:6px;overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;width:0;background:var(--good);transition:width .4s}
+.tasks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.task{display:flex;gap:10px;padding:8px 9px;border-radius:10px;border:1px solid transparent}
+.task.next{background:var(--accent-soft);border-color:#c8d8ff}
+.task.done{opacity:.72}
+.task .ck{width:22px;height:22px;border-radius:50%;border:2px solid #b8c2d0;flex-shrink:0;display:grid;place-items:center;margin-top:1px;transition:all .25s}
+.task.done .ck{background:var(--good);border-color:var(--good);color:#fff}
+.task .ck svg{width:13px;height:13px;opacity:0}
+.task.done .ck svg{opacity:1}
+.task b{display:block;font-size:14px;font-weight:600}
+.task span{display:block;font-size:12.5px;color:var(--muted)}
+.task.bonus .ck{border-style:dashed}
+.tips{margin:0;padding-left:18px;font-size:13px;color:#33404f}
+.tips li{margin:0 0 7px}
+.small{font-size:12px;color:var(--muted);margin:8px 0 0}
+
+/* ---------- the panel ---------- */
+.panel{position:relative;width:calc(var(--S) * 1.06);user-select:none;-webkit-user-select:none}
+.bezel{position:relative;background:linear-gradient(#1c1f24,#14171b);border-radius:calc(var(--S)*.012);padding:calc(var(--S)*.022) calc(var(--S)*.03);box-shadow:0 18px 40px rgba(15,23,42,.28),inset 0 0 0 1px #2a2f36}
+.border-zone{position:absolute;top:0;bottom:0;width:calc(var(--S)*.03);cursor:pointer;z-index:2}
+.border-zone.left{left:0}.border-zone.right{right:0}
+.border-zone:hover{background:rgba(255,255,255,.04)}
+.screen{position:relative;width:var(--S);height:calc(var(--S)*.5625);overflow:hidden;background:#000;border-radius:2px;font-size:calc(var(--S)*.0155);touch-action:none}
+.console{position:relative;margin:0 auto;width:calc(var(--S)*.42);min-width:min(100%,330px);height:calc(var(--S)*.05);min-height:34px;background:linear-gradient(#202329,#15181c);border-radius:0 0 calc(var(--S)*.012) calc(var(--S)*.012);display:flex;align-items:center;justify-content:space-evenly;box-shadow:0 8px 18px rgba(15,23,42,.25)}
+.cbtn{white-space:nowrap;background:none;border:0;color:#c9d1db;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:max(8px,calc(var(--S)*.0085));padding:2px 4px;border-radius:6px}
+.cbtn svg{width:max(14px,calc(var(--S)*.017));height:max(14px,calc(var(--S)*.017))}
+.cbtn:hover{color:#fff;background:rgba(255,255,255,.06)}
+.cbtn.lit{color:#ffb347}
+.cbtn.flame{color:#ff9a3c}
+.panel:fullscreen{background:#0b0d10;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100vw;height:100vh}
+.panel:fullscreen .bezel{box-shadow:none}
+.panel.maxed{position:fixed;inset:0;z-index:1000;width:100vw;height:100vh;background:#0b0d10;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.panel.maxed .bezel{box-shadow:none}
+#exitMax{position:fixed;top:10px;right:12px;z-index:1001;display:none}
+body.max #exitMax{display:block}
+body.max{overflow:hidden}
+
+/* layers */
+.layer{position:absolute;inset:0}
+.hidden{display:none !important}
+#off{background:#000;z-index:90;display:grid;place-items:center;color:#4b5563;font-size:.9em}
+#boot{z-index:89;background:radial-gradient(circle at 50% 45%,#1f2937,#000 70%);display:grid;place-items:center;color:#e5e7eb}
+#boot .spin{width:2.6em;height:2.6em;border-radius:50%;border:.28em solid rgba(255,255,255,.18);border-top-color:#ff9a3c;animation:sp 1s linear infinite;margin:0 auto .8em}
+@keyframes sp{to{transform:rotate(360deg)}}
+#welcome{z-index:88;background:linear-gradient(135deg,#0f2742,#1d4e6e 55%,#2f6f73);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:1em}
+#welcome h3{margin:0;font-size:2.2em;font-weight:600}
+#welcome p{margin:0;opacity:.8}
+.wbtns{display:flex;gap:1em;margin-top:.6em}
+.pill{border:0;border-radius:999px;padding:.7em 1.6em;font-size:1em;font-weight:600}
+.pill.light{background:#fff;color:#0f2742}
+.pill.ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35)}
+
+#home{background:
+  radial-gradient(ellipse 80% 55% at 70% 115%,#2f6d4f 0 60%,transparent 61%),
+  radial-gradient(ellipse 90% 50% at 15% 120%,#3f8a5f 0 60%,transparent 61%),
+  linear-gradient(#7cc1e8,#b9e1f1 55%,#dff1e9);color:#0f2742}
+.clock{position:absolute;left:3.5%;top:5%;font-weight:300}
+.clock .t{font-size:3.4em;line-height:1}
+.clock .d{font-size:1.1em;opacity:.8}
+.shortcuts{position:absolute;left:50%;top:50%;transform:translate(-50%,-45%);display:flex;gap:2.2em}
+.app{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:.45em;font-size:1em;color:inherit;padding:.3em;border-radius:.8em}
+.app .ic{width:4.4em;height:4.4em;border-radius:1.2em;display:grid;place-items:center;color:#fff;box-shadow:0 .3em .8em rgba(0,0,0,.18)}
+.app .ic svg{width:2.3em;height:2.3em}
+.app span{font-size:.95em;font-weight:600;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.app:active{transform:scale(.96)}
+.c-browser{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+.c-wb{background:linear-gradient(135deg,#10b981,#047857)}
+.c-anno{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.c-timer{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+.c-spin{background:linear-gradient(135deg,#a855f7,#7e22ce)}
+.c-apps{background:linear-gradient(135deg,#64748b,#334155)}
+.c-cap{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+.c-share{background:linear-gradient(135deg,#ec4899,#be185d)}
+.c-files{background:linear-gradient(135deg,#eab308,#a16207)}
+.c-set{background:linear-gradient(135deg,#94a3b8,#475569)}
+
+#appsGrid{z-index:12;background:rgba(10,14,20,.82);backdrop-filter:blur(6px);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.4em}
+#appsGrid h3{margin:0;font-weight:500;font-size:1.4em}
+.grid{display:grid;grid-template-columns:repeat(5,7em);gap:1.4em 1.2em}
+#appsGrid .app span{text-shadow:none}
+
+/* side tabs that open the menu */
+.tab{position:absolute;z-index:35;background:rgba(17,22,30,.55);border:1px solid rgba(255,255,255,.25);color:#fff;display:grid;place-items:center;padding:0}
+.tab svg{width:1.1em;height:1.1em}
+.tab.left{left:0;top:50%;transform:translateY(-50%);width:1.5em;height:4.2em;border-radius:0 .9em .9em 0;border-left:0}
+.tab.right{right:0;top:50%;transform:translateY(-50%);width:1.5em;height:4.2em;border-radius:.9em 0 0 .9em;border-right:0}
+.tab.bottom{z-index:9;bottom:0;left:50%;transform:translateX(-50%);width:4.2em;height:1.4em;border-radius:.9em .9em 0 0;border-bottom:0}
+.tab:hover{background:rgba(17,22,30,.8)}
+
+/* unified menu */
+#menu{position:absolute;z-index:40;left:50%;bottom:2.4em;transform:translateX(-50%) translateY(40%);opacity:0;visibility:hidden;pointer-events:none;transition:transform .22s ease,opacity .18s,visibility .22s;background:var(--glass);border:1px solid var(--glass-line);border-radius:1.2em;padding:.55em .7em;display:flex;gap:.25em;color:#fff;box-shadow:0 .8em 2em rgba(0,0,0,.35)}
+#menu.open{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible;pointer-events:auto}
+.mi{background:none;border:0;color:#fff;display:flex;flex-direction:column;align-items:center;gap:.2em;width:5.4em;padding:.45em .1em;border-radius:.8em;font-size:.82em}
+.mi svg{width:1.9em;height:1.9em}
+.mi:hover{background:rgba(255,255,255,.1)}
+.mi.sep{width:1px;padding:0;background:rgba(255,255,255,.18);margin:.3em .2em}
+#menuShade{position:absolute;inset:0;z-index:39}
+
+/* source popup */
+#source{position:absolute;z-index:42;right:4%;bottom:3.4em;width:22em;background:var(--glass);border:1px solid var(--glass-line);border-radius:1em;color:#fff;padding:.8em;box-shadow:0 .8em 2em rgba(0,0,0,.35)}
+#source h4{margin:.1em .3em .5em;font-size:1.05em;font-weight:600}
+.src{display:flex;align-items:center;gap:.7em;width:100%;text-align:left;background:none;border:1px solid transparent;color:#fff;border-radius:.7em;padding:.55em .6em;font-size:.95em}
+.src:hover{background:rgba(255,255,255,.08)}
+.src.on{background:rgba(37,99,235,.35);border-color:rgba(147,197,253,.6)}
+.src small{display:block;opacity:.7;font-size:.82em}
+.src svg{width:1.5em;height:1.5em;flex-shrink:0}
+#source p{margin:.5em .4em .1em;font-size:.78em;opacity:.75}
+
+/* app windows */
+.win{position:absolute;z-index:10;inset:0;display:flex;flex-direction:column;background:#fff;color:#111;transition:inset .2s}
+.win.dock-left{inset:0 50% 0 0;border-right:2px solid #111}
+.win.dock-right{inset:0 0 0 50%;border-left:2px solid #111}
+.mw{height:2.2em;flex-shrink:0;background:#2b2f36;display:flex;align-items:center;justify-content:center;gap:.4em;color:#e5e7eb}
+.mw button{background:none;border:0;color:#e5e7eb;width:2.4em;height:1.8em;border-radius:.4em;display:grid;place-items:center}
+.mw button:hover{background:rgba(255,255,255,.12)}
+.mw svg{width:1.15em;height:1.15em}
+.mw .lbl{font-size:.75em;opacity:.7;margin-right:.8em}
+
+/* browser */
+.bro{flex:1;display:flex;flex-direction:column;min-height:0;background:#fff}
+.bro-tabs{height:2.1em;background:#dfe3e8;display:flex;align-items:flex-end;padding:0 .6em}
+.bro-tab{background:#fff;border-radius:.6em .6em 0 0;padding:.3em 1em;font-size:.8em;max-width:16em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bro-bar{display:flex;align-items:center;gap:.4em;padding:.35em .6em;background:#fff;border-bottom:1px solid #e2e6eb}
+.bro-bar button{background:none;border:0;width:2em;height:2em;border-radius:50%;display:grid;place-items:center;color:#444}
+.bro-bar button:hover{background:#eef1f5}
+.bro-bar svg{width:1.1em;height:1.1em}
+.addr{flex:1;height:2.1em;border-radius:1.05em;border:1px solid #d5dbe3;background:#f1f3f6;padding:0 1em;font-size:.95em;color:#111;outline:none;min-width:0}
+.addr:focus{background:#fff;border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.2)}
+.bro-body{position:relative;flex:1;min-height:0;background:#fff}
+.bro-body{overflow:hidden}
+.bro-body iframe{position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;background:#fff;transform-origin:0 0}
+.newtab{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8em;color:#3a4350;text-align:center;padding:1em}
+.newtab .big{font-size:1.7em;font-weight:600;color:#1f2933}
+.chip{border:1px solid #c8d1dc;background:#f6f8fb;border-radius:999px;padding:.45em 1em;font-size:.95em;color:#1d4ed8}
+.loading{position:absolute;left:0;top:0;height:.22em;background:#2563eb;width:30%;animation:ld 1s ease-in-out infinite}
+@keyframes ld{0%{left:-30%}100%{left:100%}}
+
+/* on-screen keyboard */
+.osk{position:absolute;left:50%;bottom:.6em;transform:translateX(-50%);z-index:30;background:#1f242b;border-radius:.9em;padding:.5em;display:flex;flex-direction:column;gap:.35em;box-shadow:0 .6em 1.6em rgba(0,0,0,.35);width:min(44em,96%)}
+.osk .row{display:flex;gap:.3em;justify-content:center}
+.osk button{flex:1;min-width:0;height:2.3em;border:0;border-radius:.45em;background:#3a414b;color:#fff;font-size:.95em}
+.osk button:active{background:#56606d}
+.osk .wide{flex:2}.osk .go{background:#2563eb;flex:2}.osk .hide{background:#2b3038}
+
+/* whiteboard */
+.wb{flex:1;position:relative;min-height:0;background:#fff;background-image:radial-gradient(#e4e8ee 1px,transparent 1px);background-size:2.2em 2.2em}
+.wb canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.wbbar{position:absolute;left:2.1em;top:50%;transform:translateY(-50%);z-index:3;background:#fff;border:1px solid #dfe3e8;border-radius:1em;padding:.4em;display:flex;flex-direction:column;gap:.25em;box-shadow:0 .3em 1em rgba(15,23,42,.12)}
+.tb{background:none;border:0;width:2.5em;height:2.5em;border-radius:.6em;display:grid;place-items:center;color:#334155;position:relative}
+.tb svg{width:1.35em;height:1.35em}
+.tb:hover{background:#eef2f7}
+.tb.on{background:#dbe7ff;color:#1d4ed8}
+.tb .w{position:absolute;right:.25em;bottom:.2em;font-size:.55em;font-weight:700;color:#1d4ed8}
+.sw{width:1.5em;height:1.5em;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #c6ccd5;margin:.12em auto;display:block;padding:0}
+.sw.on{box-shadow:0 0 0 2px #1d4ed8}
+.pages{position:absolute;right:.8em;bottom:.8em;z-index:3;background:#fff;border:1px solid #dfe3e8;border-radius:999px;display:flex;align-items:center;gap:.2em;padding:.25em .4em;box-shadow:0 .3em 1em rgba(15,23,42,.12);color:#334155}
+.pages button{background:none;border:0;width:2em;height:2em;border-radius:50%;display:grid;place-items:center;color:#334155}
+.pages button:hover{background:#eef2f7}
+.pages svg{width:1.1em;height:1.1em}
+.pages .n{font-size:.85em;min-width:3.4em;text-align:center}
+.pages .add{background:#1d4ed8;color:#fff}
+.pages .add:hover{background:#1e40af}
+.wbhint{position:absolute;left:50%;top:.8em;transform:translateX(-50%);z-index:2;font-size:.8em;color:#64748b;background:rgba(255,255,255,.9);padding:.3em .9em;border-radius:999px;pointer-events:none}
+
+/* annotate */
+#annoCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:20;touch-action:none;cursor:crosshair}
+#annoCanvas.pass{pointer-events:none;cursor:default}
+#annoBar{position:absolute;z-index:31;left:50%;top:1.2em;transform:translateX(-50%);background:var(--glass);border:1px solid var(--glass-line);border-radius:999px;padding:.3em .5em;display:flex;align-items:center;gap:.2em;color:#fff;box-shadow:0 .6em 1.6em rgba(0,0,0,.3)}
+#annoBar .tb{color:#e5e7eb;width:2.3em;height:2.3em}
+#annoBar .tb:hover{background:rgba(255,255,255,.12)}
+#annoBar .tb.on{background:rgba(96,165,250,.35);color:#fff}
+#annoBar .tb .w{color:#bfdbfe}
+#annoBar.eyeon [data-atool].on{background:none;color:#e5e7eb}
+#annoBar .sw{display:inline-block;margin:0 .1em;width:1.3em;height:1.3em;border-color:#1f2937;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+#annoBar .sw.on{box-shadow:0 0 0 2px #fff}
+.grip{width:1.4em;height:2.3em;display:grid;place-items:center;cursor:grab;color:#9ca3af;touch-action:none}
+.grip svg{width:1em;height:1em}
+.vsep{width:1px;height:1.6em;background:rgba(255,255,255,.2);margin:0 .2em}
+.eyetag{position:absolute;z-index:31;left:50%;top:4.2em;transform:translateX(-50%);background:#fef3c7;color:#713f12;border-radius:999px;font-size:.78em;padding:.25em .9em;pointer-events:none}
+
+/* laptop (HDMI 1) */
+#laptop{z-index:15;background:linear-gradient(135deg,#312e81,#4338ca 45%,#0e7490);color:#fff}
+.dicons{position:absolute;left:1.4em;top:1.4em;display:flex;flex-direction:column;gap:1em}
+.dicon{background:none;border:0;color:#fff;display:flex;flex-direction:column;align-items:center;gap:.25em;width:6em;font-size:.85em;padding:.3em;border-radius:.5em}
+.dicon:hover{background:rgba(255,255,255,.12)}
+.dicon .ic{width:3em;height:3em;border-radius:.7em;display:grid;place-items:center}
+.dicon svg{width:1.6em;height:1.6em}
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:2.6em;background:rgba(15,23,42,.75);display:flex;align-items:center;gap:.6em;padding:0 1em;font-size:.85em}
+.taskbar .dot{width:1.6em;height:1.6em;border-radius:50%;background:linear-gradient(135deg,#a5b4fc,#38bdf8)}
+.taskbar .tclock{margin-left:auto;opacity:.85}
+.lapwin{position:absolute;left:8%;top:6%;right:8%;bottom:4.2em;background:#fff;color:#111;border-radius:.6em;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1em 2.4em rgba(0,0,0,.4)}
+.lapwin.max{left:0;top:0;right:0;bottom:2.6em;border-radius:0}
+.lapttl{height:2em;background:#e9ecf1;display:flex;align-items:center;padding:0 .4em 0 .9em;font-size:.8em;color:#334155;gap:.3em}
+.lapttl .sp{flex:1}
+.lapttl button{background:none;border:0;width:2.2em;height:1.6em;border-radius:.3em;display:grid;place-items:center;color:#334155}
+.lapttl button:hover{background:#d5dbe3}
+.lapttl svg{width:1em;height:1em}
+.lapbadge{position:absolute;right:1em;top:1em;font-size:.75em;background:rgba(0,0,0,.35);padding:.3em .8em;border-radius:999px}
+
+#nosig{z-index:16;background:#05070a;color:#cbd5e1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5em;text-align:center}
+#nosig b{font-size:1.5em;color:#fff}
+
+/* floating widgets */
+.float{position:absolute;z-index:32;background:#fff;color:#111;border-radius:1em;box-shadow:0 .8em 2.2em rgba(0,0,0,.35);overflow:hidden;min-width:16em}
+.fhead{display:flex;align-items:center;gap:.5em;padding:.45em .5em .45em .9em;background:#f1f4f8;cursor:grab;touch-action:none;font-size:.85em;font-weight:600;color:#334155}
+.fhead .sp{flex:1}
+.fhead button{background:none;border:0;width:2em;height:2em;border-radius:50%;display:grid;place-items:center;color:#334155}
+.fhead button:hover{background:#e2e8f0}
+.fhead svg{width:1.05em;height:1.05em}
+.tdisp{font-size:3.6em;font-weight:700;text-align:center;letter-spacing:.02em;padding:.15em .3em 0;font-variant-numeric:tabular-nums;color:#0f172a}
+.tdisp.done{color:#dc2626;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.tadj{display:flex;justify-content:center;gap:.35em;padding:.2em .8em}
+.tadj button,.tpre button{border:1px solid #d5dbe3;background:#fff;border-radius:.6em;padding:.3em .6em;font-size:.85em;color:#334155}
+.tadj button:hover,.tpre button:hover{background:#f1f5f9}
+.tpre{display:flex;justify-content:center;gap:.35em;padding:.4em .8em}
+.tgo{display:flex;gap:.5em;padding:.5em .8em .9em}
+.tgo button{flex:1;border:0;border-radius:.7em;padding:.6em;font-weight:700;font-size:.95em}
+.tgo .start{background:#16a34a;color:#fff}
+.tgo .start.pause{background:#f59e0b}
+.tgo .reset{background:#e2e8f0;color:#334155}
+.tiny .tadj,.tiny .tpre,.tiny .tgo{display:none}
+.tiny .tdisp{font-size:2.4em;padding:.1em .5em .15em}
+
+.spinwrap{padding:.6em .9em .9em;display:flex;gap:.9em;align-items:center}
+.spinwrap canvas{width:11em;height:11em}
+.spinside{display:flex;flex-direction:column;gap:.5em;width:10em}
+.spinside textarea{width:100%;height:7.2em;border:1px solid #d5dbe3;border-radius:.5em;font:inherit;font-size:.8em;padding:.4em;resize:none}
+.spinside .go{border:0;border-radius:.7em;padding:.55em;background:#7e22ce;color:#fff;font-weight:700}
+.spinres{font-weight:700;text-align:center;min-height:1.4em;color:#581c87}
+
+/* overlays */
+#freezeTag{position:absolute;z-index:46;left:50%;bottom:.8em;transform:translateX(-50%);background:#0ea5e9;color:#fff;border-radius:999px;padding:.3em 1em;font-size:.8em}
+#freezeShade{position:absolute;inset:0;z-index:45}
+#lockShade{position:absolute;inset:0;z-index:60}
+#toast{position:absolute;z-index:80;left:50%;bottom:8.4em;transform:translateX(-50%) translateY(250%);opacity:0;transition:transform .25s,opacity .25s;background:rgba(15,23,42,.92);color:#fff;border-radius:.8em;padding:.6em 1.1em;font-size:.9em;max-width:80%;text-align:center;pointer-events:none}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.vol{display:inline-block;width:8em;height:.4em;background:rgba(255,255,255,.25);border-radius:.4em;vertical-align:middle;margin-left:.6em;overflow:hidden}
+.vol i{display:block;height:100%;background:#fff}
+
+@media (max-width:980px){
+  .layout{flex-direction:column;padding:12px;align-items:stretch}
+  .stage{width:100%;flex:none}
+  .side{width:100%}
+  .top{padding:10px 12px}
+  .top p{font-size:11.5px}
+}
+@media (max-width:520px){
+  .top{flex-direction:column;align-items:flex-start}
+  .phone-note{display:block !important}
+}
+.phone-note{display:none;margin:0 0 10px;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Practice Panel</h1>
+    <p>Unofficial practice simulator, modeled on how Promethean ActivPanels generally work.</p>
+  </div>
+  <div class="top-actions">
+    <button class="btn" id="btnFull" type="button">Full screen</button>
+    <button class="btn" id="btnReset" type="button">Start over</button>
+  </div>
+</header>
+
+<button class="btn" id="exitMax" type="button">Exit full screen</button>
+<main class="layout">
+  <section class="stage" id="stage">
+    <div class="panel" id="panel">
+      <div class="bezel" id="bezel">
+        <div class="border-zone left" data-menu title="Tap the black border to open the menu"></div>
+        <div class="border-zone right" data-menu title="Tap the black border to open the menu"></div>
+        <div class="screen" id="screen">
+
+          <!-- built-in home -->
+          <div class="layer" id="home">
+            <div class="clock"><div class="t" id="clockT">9:41</div><div class="d" id="clockD">Monday</div></div>
+            <div class="shortcuts">
+              <button class="app" data-open="browser" type="button"><div class="ic c-browser" data-i="globe"></div><span>Chromium</span></button>
+              <button class="app" data-open="whiteboard" type="button"><div class="ic c-wb" data-i="board"></div><span>Whiteboard</span></button>
+              <button class="app" data-open="timer" type="button"><div class="ic c-timer" data-i="timer"></div><span>Timer</span></button>
+              <button class="app" data-open="apps" type="button"><div class="ic c-apps" data-i="grid"></div><span>Applications</span></button>
+            </div>
+          </div>
+
+          <!-- applications grid -->
+          <div class="layer hidden" id="appsGrid">
+            <h3>Applications</h3>
+            <div class="grid">
+              <button class="app" data-open="browser" type="button"><div class="ic c-browser" data-i="globe"></div><span>Chromium</span></button>
+              <button class="app" data-open="whiteboard" type="button"><div class="ic c-wb" data-i="board"></div><span>Whiteboard</span></button>
+              <button class="app" data-open="annotate" type="button"><div class="ic c-anno" data-i="pen"></div><span>Annotate</span></button>
+              <button class="app" data-open="timer" type="button"><div class="ic c-timer" data-i="timer"></div><span>Timer</span></button>
+              <button class="app" data-open="spinner" type="button"><div class="ic c-spin" data-i="spin"></div><span>Spinner</span></button>
+              <button class="app" data-open="capture" type="button"><div class="ic c-cap" data-i="camera"></div><span>Capture</span></button>
+              <button class="app" data-open="share" type="button"><div class="ic c-share" data-i="cast"></div><span>Screen Share</span></button>
+              <button class="app" data-open="files" type="button"><div class="ic c-files" data-i="folder"></div><span>Files</span></button>
+              <button class="app" data-open="settings" type="button"><div class="ic c-set" data-i="gear"></div><span>Settings</span></button>
+              <button class="app" data-open="home" type="button"><div class="ic c-apps" data-i="home"></div><span>Home</span></button>
+            </div>
+          </div>
+
+          <!-- browser window (panel's own browser) -->
+          <div class="win hidden" id="winBrowser">
+            <div class="bro" id="broPanel"></div>
+            <div class="mw"><span class="lbl">Chromium</span>
+              <button type="button" data-dock="left" title="Dock left" data-i="dockL"></button>
+              <button type="button" data-dock="full" title="Full screen" data-i="full"></button>
+              <button type="button" data-dock="right" title="Dock right" data-i="dockR"></button>
+              <button type="button" data-close="browser" title="Close" data-i="x"></button>
+            </div>
+          </div>
+
+          <!-- whiteboard window -->
+          <div class="win hidden" id="winWB">
+            <div class="wb" id="wb">
+              <canvas id="wbCanvas"></canvas>
+              <div class="wbhint" id="wbHint">Draw with a finger or the mouse. Palm erase: rub with your palm (mouse: drag with the right button).</div>
+              <div class="wbbar">
+                <button class="tb on" type="button" data-wbtool="pen" title="Pen (tap again for width)" data-i="pen"></button>
+                <button class="tb" type="button" data-wbtool="hl" title="Highlighter (tap again for width)" data-i="hl"></button>
+                <button class="tb" type="button" data-wbtool="erase" title="Eraser" data-i="eraser"></button>
+                <div id="wbSwatches"></div>
+                <button class="tb" type="button" id="wbClear" title="Clear all" data-i="trash"></button>
+                <button class="tb" type="button" id="wbUndo" title="Undo" data-i="undo"></button>
+                <button class="tb" type="button" id="wbRedo" title="Redo" data-i="redo"></button>
+              </div>
+              <div class="pages">
+                <button type="button" id="pgPrev" title="Previous page" data-i="chevL"></button>
+                <span class="n" id="pgN">1 / 1</span>
+                <button type="button" id="pgNext" title="Next page" data-i="chevR"></button>
+                <button type="button" class="add" id="pgAdd" title="Add a page" data-i="plus"></button>
+              </div>
+            </div>
+            <div class="mw"><span class="lbl">Whiteboard</span>
+              <button type="button" data-dock="left" title="Dock left" data-i="dockL"></button>
+              <button type="button" data-dock="full" title="Full screen" data-i="full"></button>
+              <button type="button" data-dock="right" title="Dock right" data-i="dockR"></button>
+              <button type="button" data-close="whiteboard" title="Close" data-i="x"></button>
+            </div>
+          </div>
+
+          <!-- HDMI 1: the classroom laptop -->
+          <div class="layer hidden" id="laptop">
+            <div class="lapbadge">HDMI 1 · classroom laptop</div>
+            <div class="dicons">
+              <button class="dicon" type="button" id="lapOpenBrowser"><div class="ic c-browser" data-i="globe"></div>Browser</button>
+              <button class="dicon" type="button" data-toast="Just a practice desktop. The browser is the one to try."><div class="ic c-files" data-i="folder"></div>Documents</button>
+              <button class="dicon" type="button" data-toast="Just a practice desktop. The browser is the one to try."><div class="ic c-set" data-i="gear"></div>Settings</button>
+            </div>
+            <div class="lapwin hidden" id="lapWin">
+              <div class="lapttl"><span>Browser</span><span class="sp"></span>
+                <button type="button" id="lapMax" title="Maximize" data-i="full"></button>
+                <button type="button" id="lapClose" title="Close" data-i="x"></button>
+              </div>
+              <div class="bro" id="broLaptop"></div>
+            </div>
+            <div class="taskbar"><span class="dot"></span><span>Classroom laptop</span><span class="tclock" id="lapClock">9:41</span></div>
+          </div>
+
+          <!-- no signal -->
+          <div class="layer hidden" id="nosig"><b>No signal</b><span id="nosigWhich">HDMI 2</span><span style="opacity:.75;font-size:.85em">Nothing is plugged in here. Pick another source with the Source button.</span></div>
+
+          <!-- annotate -->
+          <canvas id="annoCanvas" class="hidden"></canvas>
+          <div id="annoBar" class="hidden">
+            <div class="grip" id="annoGrip" title="Drag to move" data-i="grip"></div>
+            <button class="tb on" type="button" data-atool="pen" title="Pen (tap again for width)" data-i="pen"></button>
+            <button class="tb" type="button" data-atool="hl" title="Highlighter (tap again for width)" data-i="hl"></button>
+            <span id="annoSwatches"></span>
+            <button class="tb" type="button" data-atool="erase" title="Eraser" data-i="eraser"></button>
+            <button class="tb" type="button" id="annoClear" title="Clear all annotations" data-i="trash"></button>
+            <button class="tb" type="button" id="annoUndo" title="Undo" data-i="undo"></button>
+            <button class="tb" type="button" id="annoRedo" title="Redo" data-i="redo"></button>
+            <div class="vsep"></div>
+            <button class="tb" type="button" id="annoEye" title="Eye: stop drawing and use the screen underneath" data-i="eye"></button>
+            <button class="tb" type="button" id="annoClose" title="Close Annotate (erases all annotations)" data-i="x"></button>
+          </div>
+          <div class="eyetag hidden" id="eyeTag">Eye is on: your drawing stays, and taps go to the page underneath</div>
+
+          <!-- timer -->
+          <div class="float hidden" id="timer" style="left:62%;top:8%">
+            <div class="fhead" data-drag="timer"><span data-i="timer" style="display:grid;width:1.1em;height:1.1em"></span><span>Timer</span><span class="sp"></span>
+              <button type="button" id="tSound" title="Sound" data-i="bellOff"></button>
+              <button type="button" id="tTiny" title="Make small" data-i="shrink"></button>
+              <button type="button" id="tClose" title="Close" data-i="x"></button>
+            </div>
+            <div class="tdisp" id="tDisp">5:00</div>
+            <div class="tadj">
+              <button type="button" data-tadd="-60">−1 min</button><button type="button" data-tadd="-10">−10 s</button>
+              <button type="button" data-tadd="10">+10 s</button><button type="button" data-tadd="60">+1 min</button>
+            </div>
+            <div class="tpre"><button type="button" data-tset="60">1</button><button type="button" data-tset="180">3</button><button type="button" data-tset="300">5</button><button type="button" data-tset="600">10</button><span style="font-size:.8em;color:#64748b;align-self:center">min</span></div>
+            <div class="tgo"><button type="button" class="start" id="tStart">Start</button><button type="button" class="reset" id="tReset">Reset</button></div>
+          </div>
+
+          <!-- spinner -->
+          <div class="float hidden" id="spinner" style="left:6%;top:10%">
+            <div class="fhead" data-drag="spinner"><span data-i="spin" style="display:grid;width:1.1em;height:1.1em"></span><span>Spinner</span><span class="sp"></span>
+              <button type="button" id="sClose" title="Close" data-i="x"></button>
+            </div>
+            <div class="spinwrap">
+              <canvas id="spinCanvas" width="440" height="440"></canvas>
+              <div class="spinside">
+                <textarea id="spinList" aria-label="Spinner choices, one per line">Pair 1
+Pair 2
+Pair 3
+Pair 4
+Pair 5
+Pair 6</textarea>
+                <button type="button" class="go" id="sGo">Spin</button>
+                <div class="spinres" id="sRes"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- menu tabs + unified menu -->
+          <button class="tab left" type="button" data-menu title="Menu" data-i="chevR"></button>
+          <button class="tab right" type="button" data-menu title="Menu" data-i="chevL"></button>
+          <button class="tab bottom" type="button" data-menu title="Menu" data-i="chevU"></button>
+          <div id="menuShade" class="hidden"></div>
+          <div id="menu" aria-label="Menu">
+            <button class="mi" type="button" data-m="back"><span data-i="back"></span>Back</button>
+            <button class="mi" type="button" data-m="apps"><span data-i="grid"></span>Applications</button>
+            <button class="mi" type="button" data-m="home"><span data-i="home"></span>Home</button>
+            <span class="mi sep"></span>
+            <button class="mi" type="button" data-m="whiteboard"><span data-i="board"></span>Whiteboard</button>
+            <button class="mi" type="button" data-m="annotate"><span data-i="pen"></span>Annotate</button>
+            <button class="mi" type="button" data-m="capture"><span data-i="camera"></span>Capture</button>
+            <button class="mi" type="button" data-m="timer"><span data-i="timer"></span>Timer</button>
+            <button class="mi" type="button" data-m="spinner"><span data-i="spin"></span>Spinner</button>
+            <span class="mi sep"></span>
+            <button class="mi" type="button" data-m="source"><span data-i="source"></span>Source</button>
+            <button class="mi" type="button" data-m="share"><span data-i="cast"></span>Screen Share</button>
+          </div>
+
+          <!-- source chooser -->
+          <div id="source" class="hidden">
+            <h4>Source</h4>
+            <button class="src" type="button" data-src="home"><span data-i="home"></span><span>Home<small>The panel itself: its own browser and apps</small></span></button>
+            <button class="src" type="button" data-src="hdmi1"><span data-i="laptop"></span><span>HDMI 1<small>Classroom laptop (touch through the Touch 1 USB cable)</small></span></button>
+            <button class="src" type="button" data-src="hdmi2"><span data-i="hdmi"></span><span>HDMI 2<small>Nothing plugged in</small></span></button>
+            <button class="src" type="button" data-src="usbc"><span data-i="usbc"></span><span>USB-C<small>One cable carries picture and touch</small></span></button>
+            <button class="src" type="button" data-src="ops"><span data-i="box"></span><span>OPS<small>Slot-in computer, if the school has one</small></span></button>
+            <p>The source in use is highlighted. You can also use the Source button on the console.</p>
+          </div>
+
+          <div id="freezeShade" class="hidden"></div>
+          <div id="freezeTag" class="hidden">Frozen: the picture is paused. Press Freeze again to unfreeze.</div>
+          <div id="lockShade" class="hidden"></div>
+          <div id="toast"></div>
+
+          <div class="layer hidden" id="welcome">
+            <h3>Welcome</h3>
+            <p>Sign in to see your own files, or use the panel as a guest.</p>
+            <div class="wbtns">
+              <button class="pill ghost" type="button" id="wSign">Sign in</button>
+              <button class="pill light" type="button" id="wGuest">Continue as Guest</button>
+            </div>
+          </div>
+          <div class="layer hidden" id="boot"><div style="text-align:center"><div class="spin"></div>Starting up…</div></div>
+          <div class="layer" id="off">The panel is off. Press the power button on the console below.</div>
+        </div>
+      </div>
+      <div class="console" id="console">
+        <button class="cbtn" type="button" id="cPower" title="Power"><span data-i="power"></span>Power</button>
+        <button class="cbtn" type="button" id="cVolD" title="Volume down"><span data-i="volD"></span>Vol −</button>
+        <button class="cbtn" type="button" id="cVolU" title="Volume up"><span data-i="volU"></span>Vol +</button>
+        <button class="cbtn flame" type="button" id="cMenu" title="Menu button (the flame logo on the real panel)"><span data-i="flame"></span>Menu</button>
+        <button class="cbtn" type="button" id="cFreeze" title="Freeze"><span data-i="snow"></span>Freeze</button>
+        <button class="cbtn" type="button" id="cLock" title="Touch lock (no-touch)"><span data-i="hand"></span>Touch</button>
+        <button class="cbtn" type="button" id="cSource" title="Source"><span data-i="source"></span>Source</button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <div class="card">
+      <h2>Practice checklist</h2>
+      <p class="phone-note">On a phone the panel is small. It works, but a laptop or tablet is easier.</p>
+      <div class="progress" id="progTxt">0 of 9 done</div>
+      <div class="bar"><i id="progBar"></i></div>
+      <ul class="tasks" id="tasks"></ul>
+    </div>
+    <div class="card">
+      <h2>On the real panel</h2>
+      <ul class="tips">
+        <li>Panels differ by model. The two things to find first: the <b>menu</b> (a small tab on the left or right edge, the black border on the sides, or the flame-logo button on the console) and the <b>Source</b> button.</li>
+        <li>If it asks you to sign in, tap <b>Continue as Guest</b>.</li>
+        <li>Ask the host teacher: "Do you run the board from your laptop, or from the board's own browser?" Then use whichever they use.</li>
+        <li>A laptop needs its picture cable (HDMI) <i>and</i> its touch cable (USB) plugged in for touch to work, or one USB-C cable that does both. Touch 1 goes with HDMI 1.</li>
+        <li>If touch stops working, check the touch-lock button on the console first.</li>
+        <li>Annotate draws on top of anything. Tap the eye to use the page underneath. Closing Annotate erases everything you drew.</li>
+        <li>On the Whiteboard you can erase with your palm or fist (unless Palm Reject is on). Tap a pen twice for a different width.</li>
+        <li>Freeze holds the picture still, so you can fix something on the laptop without the class watching.</li>
+        <li>Bringing your own laptop? Bring a USB-C to HDMI adapter. If the school network blocks the site, the lesson still works on paper.</li>
+        <li>Older rooms may have an ActivBoard instead: a projector, a board you write on with a pen, and ActivInspire on the teacher's computer. The website just runs in that computer's browser.</li>
+      </ul>
+      <p class="small">Practice only. Nothing you do here is saved or sent anywhere.</p>
+    </div>
+  </aside>
+</main>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------------- icons ---------------- */
+const P = {
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  board:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21l4-4 4 4M7 9c2-2 3 2 5 0s3 1 5-1"/>',
+  timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>',
+  grid:'<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>',
+  pen:'<path d="M4 20l1-4L16 5l3 3L8 19l-4 1z"/><path d="M14 7l3 3"/>',
+  hl:'<path d="M9 16l-3 3H3l3-3"/><path d="M8 14l7-9 4 3-7 9-4 1z"/>',
+  eraser:'<path d="M7 20h10M5 16l9-11 6 5-8 10H8z"/><path d="M10 10l5 4"/>',
+  trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+  undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/>',
+  redo:'<path d="M15 14l5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/>',
+  eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  spin:'<circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4M12 12L5.6 18.4"/><circle cx="12" cy="12" r="1.5"/>',
+  camera:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l2-3h4l2 3"/><circle cx="12" cy="13.5" r="3.5"/>',
+  cast:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>',
+  folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+  back:'<path d="M15 5l-7 7 7 7"/>',
+  chevL:'<path d="M15 5l-7 7 7 7"/>', chevR:'<path d="M9 5l7 7-7 7"/>', chevU:'<path d="M5 15l7-7 7 7"/>',
+  source:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M9 10l3-3 3 3M12 7v6"/>',
+  dockL:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/><path d="M3 4h9v16H3z" fill="currentColor" opacity=".35"/>',
+  dockR:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/><path d="M12 4h9v16h-9z" fill="currentColor" opacity=".35"/>',
+  full:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+  shrink:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  power:'<path d="M12 3v8"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/>',
+  volD:'<path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 12h4"/>',
+  volU:'<path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 12h4M19 10v4"/>',
+  flame:'<path d="M12 3c.6 3.2 4.5 5 4.5 10a4.5 4.5 0 0 1-9 0c0-2.4 1.2-3.8 2.4-4.8-.1 1.9.7 3 1.9 3.3C11.5 9 10.9 6.3 12 3z"/>',
+  snow:'<path d="M12 2v20M4.9 6.5l14.2 11M19.1 6.5L4.9 17.5"/><path d="M9.5 3.8L12 6l2.5-2.2M9.5 20.2L12 18l2.5 2.2"/>',
+  hand:'<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11M11 10V4.5a1.5 1.5 0 0 1 3 0V11M14 10.5V6a1.5 1.5 0 0 1 3 0v8a7 7 0 0 1-7 7 6 6 0 0 1-5-3l-2.4-4.2a1.5 1.5 0 0 1 2.5-1.6L8 15"/>',
+  laptop:'<rect x="5" y="5" width="14" height="10" rx="1"/><path d="M2 19h20l-2-4H4z"/>',
+  hdmi:'<path d="M4 8h16v5l-2 3H6l-2-3z"/><path d="M8 11h8"/>',
+  usbc:'<rect x="5" y="9" width="14" height="6" rx="3"/><path d="M9 12h6"/>',
+  box:'<rect x="4" y="6" width="16" height="12" rx="1.5"/><path d="M8 10h8M8 14h5"/>',
+  grip:'<circle cx="9" cy="6" r="1.2"/><circle cx="15" cy="6" r="1.2"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/><circle cx="9" cy="18" r="1.2"/><circle cx="15" cy="18" r="1.2"/>',
+  bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  bellOff:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0M3 3l18 18"/>',
+  reload:'<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
+  arrowL:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7"/>'
+};
+const svg = (n, extra='') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ${extra}>${P[n]||''}</svg>`;
+function paintIcons(root=document){ root.querySelectorAll('[data-i]').forEach(el => { if (!el.dataset.painted) { el.insertAdjacentHTML('afterbegin', svg(el.dataset.i)); el.dataset.painted = '1'; } }); }
+
+/* ---------------- helpers ---------------- */
+const $ = id => document.getElementById(id);
+const screen = $('screen');
+const show = (el, on=true) => el.classList.toggle('hidden', !on);
+const isShown = el => !el.classList.contains('hidden');
+let toastT;
+function toast(msg, ms=2800){ const t=$('toast'); t.innerHTML=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'), ms); }
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
+  del(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+
+/* ---------------- sizing ---------------- */
+const panel = $('panel');
+function fit(){
+  const fs = document.fullscreenElement === panel || panel.classList.contains('maxed');
+  let W, H;
+  if (fs) { W = window.innerWidth - 16; H = window.innerHeight - 16; }
+  else {
+    const st = $('stage').getBoundingClientRect();
+    W = Math.min(st.width, document.documentElement.clientWidth - 24); H = Math.max(260, window.innerHeight - 110);
+    if (window.innerWidth <= 980) H = Math.max(240, window.innerHeight * 0.62);
+  }
+  // panel width = S*1.06 ; panel height ≈ S*(.5625+.044) + console(S*.05, min 34px)
+  let S = Math.min(W / 1.06, (H - 6) / 0.6565);
+  S = Math.max(280, Math.floor(S));
+  document.documentElement.style.setProperty('--S', S + 'px');
+  requestAnimationFrame(() => { annoInk.resize(); wbInk.resize(); });
+}
+window.addEventListener('resize', fit);
+document.addEventListener('fullscreenchange', () => { setTimeout(fit, 60); });
+function enterMax(){ panel.classList.add('maxed'); document.body.classList.add('max'); fit(); }
+function exitMax(){ panel.classList.remove('maxed'); document.body.classList.remove('max'); fit(); }
+$('btnFull').onclick = () => {
+  if (document.fullscreenElement) { document.exitFullscreen(); return; }
+  if (panel.classList.contains('maxed')) { exitMax(); return; }
+  if (panel.requestFullscreen) {
+    panel.requestFullscreen().catch(enterMax);
+    setTimeout(() => { if (!document.fullscreenElement && !panel.classList.contains('maxed')) enterMax(); }, 500);
+  } else enterMax();
+};
+$('exitMax').onclick = exitMax;
+
+/* ---------------- checklist ---------------- */
+const TASKS = [
+  ['power','Turn the panel on','Press Power on the console under the screen, then tap Continue as Guest.'],
+  ['menu','Open the menu','Tap a small tab on the left or right edge, the black border beside the screen, or the Menu (flame) button.'],
+  ['lesson','Load the lesson in the browser','Menu → Applications → Chromium. Tap the address bar and type thoughtfeel.net/pan/board'],
+  ['annoDraw','Draw on top of the lesson','Menu → Annotate, then draw. It floats over anything on the screen.'],
+  ['annoClear','Clear your drawing','On the Annotate toolbar, tap the trash can (Clear all).'],
+  ['lessonClick','Tap a button on the lesson again','Tap the eye on the Annotate toolbar (or close Annotate with X), then tap a button on the lesson.'],
+  ['wb','Whiteboard: draw, then add a page','Menu → Whiteboard. Draw something, then tap + at the bottom right.'],
+  ['timer5','Start a 5-minute timer','Menu → Timer. Set 5:00 and tap Start. Drag it out of the way by its top bar.'],
+  ['source','Switch to the laptop and back','Press Source on the console (or Menu → Source). Pick HDMI 1, then Home.'],
+  ['lock','Bonus: find the touch lock','Press Touch on the console, try tapping the screen, then press it again.', true]
+];
+let done = store.get('pp_done') || {};
+function renderTasks(){
+  const ul = $('tasks'); ul.innerHTML = '';
+  let firstOpen = null;
+  TASKS.forEach(([k,t,h,bonus]) => {
+    const li = document.createElement('li');
+    li.className = 'task' + (done[k] ? ' done' : '') + (bonus ? ' bonus' : '');
+    if (!done[k] && !bonus && !firstOpen) { firstOpen = k; li.classList.add('next'); }
+    li.innerHTML = `<div class="ck">${svg('check','stroke-width="3"')}</div><div><b>${t}</b><span>${h}</span></div>`;
+    ul.appendChild(li);
+  });
+  const core = TASKS.filter(t => !t[3]);
+  const n = core.filter(t => done[t[0]]).length;
+  $('progTxt').textContent = n === core.length ? `All ${core.length} done. You're ready.` : `${n} of ${core.length} done`;
+  $('progBar').style.width = (100 * n / core.length) + '%';
+}
+function tick(k){ if (done[k]) return; done[k] = true; store.set('pp_done', done); renderTasks(); const t = TASKS.find(x => x[0]===k); if (t) toast('✓ ' + t[1]); }
+$('btnReset').onclick = () => { store.del('pp_done'); location.reload(); };
+
+/* ---------------- state ---------------- */
+const S = {
+  power:'off', source:'home', menu:false, frozen:false, locked:false, vol:40,
+  annotate:false, eye:false, everAnnot:false, wbDrew:false, wbAdded:false, sawLaptop:false, lockOn:false
+};
+
+/* ---------------- power ---------------- */
+function setPower(p){
+  S.power = p;
+  show($('off'), p === 'off');
+  show($('boot'), p === 'boot');
+  show($('welcome'), p === 'welcome');
+  $('cPower').classList.toggle('lit', p !== 'off');
+}
+$('cPower').onclick = () => {
+  if (S.power === 'off') {
+    setPower('boot');
+    setTimeout(() => { setPower(S.wokeBefore ? 'on' : 'welcome'); S.wokeBefore = true; if (S.power === 'on') tick('power'); }, 1300);
+  } else if (S.power === 'on' || S.power === 'welcome') {
+    closeMenu(); setPower('off');
+  }
+};
+$('wGuest').onclick = () => { setPower('on'); tick('power'); toast('Tip: the menu is the small tab on either side of the screen.'); };
+$('wSign').onclick = () => toast('On a real panel you could sign in with a school account. <b>Continue as Guest</b> is fine.');
+
+/* ---------------- clock ---------------- */
+function clock(){
+  const d = new Date();
+  const t = d.toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}).replace(/\s?[AP]M/i,'');
+  $('clockT').textContent = t; $('lapClock').textContent = t;
+  $('clockD').textContent = d.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'});
+}
+clock(); setInterval(clock, 10000);
+
+/* ---------------- unified menu ---------------- */
+function openMenu(){
+  if (S.power !== 'on') { if (S.power === 'off') toast('The panel is off. Press Power first.'); return; }
+  if (S.locked) { lockedTap(); return; }
+  S.menu = true; $('menu').classList.add('open'); show($('menuShade')); show($('source'), false);
+  tick('menu');
+}
+function closeMenu(){ S.menu = false; $('menu').classList.remove('open'); show($('menuShade'), false); }
+document.querySelectorAll('[data-menu]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); S.menu ? closeMenu() : openMenu(); }));
+$('cMenu').onclick = () => { S.menu ? closeMenu() : openMenu(); };
+$('menuShade').addEventListener('pointerdown', closeMenu);
+$('menu').addEventListener('click', e => {
+  const b = e.target.closest('[data-m]'); if (!b) return;
+  const m = b.dataset.m; closeMenu();
+  doAction(m);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeMenu(); show($('source'), false); hideOSK(); if (panel.classList.contains('maxed')) exitMax(); } });
+
+/* ---------------- apps / navigation ---------------- */
+function topWindowClose(){
+  if (S.source !== 'home') { if (isShown($('lapWin'))) { show($('lapWin'), false); return; } return; }
+  if (isShown($('appsGrid'))) { show($('appsGrid'), false); return; }
+  if (isShown($('winBrowser'))) { show($('winBrowser'), false); hideOSK(); return; }
+  if (isShown($('winWB'))) { show($('winWB'), false); return; }
+}
+function goHome(){
+  setSource('home', true);
+  show($('appsGrid'), false); show($('winBrowser'), false); show($('winWB'), false); hideOSK();
+}
+function doAction(m){
+  switch(m){
+    case 'back': topWindowClose(); break;
+    case 'home': goHome(); break;
+    case 'apps': if (S.source !== 'home') setSource('home', true); show($('appsGrid')); break;
+    case 'browser':
+      if (S.source !== 'home') setSource('home', true);
+      show($('appsGrid'), false); show($('winWB'), false); show($('winBrowser'));
+      break;
+    case 'whiteboard':
+      if (S.source !== 'home') setSource('home', true);
+      show($('appsGrid'), false); show($('winBrowser'), false); show($('winWB')); hideOSK();
+      requestAnimationFrame(() => wbInk.resize());
+      break;
+    case 'annotate': openAnnotate(); break;
+    case 'timer': show($('appsGrid'), false); openTimer(); break;
+    case 'spinner': show($('appsGrid'), false); show($('spinner')); drawWheel(); break;
+    case 'capture': toast('Capture takes a picture of the screen and opens it in the Whiteboard. (Not simulated here.)', 3600); break;
+    case 'share': toast('Screen Share lets a phone or laptop mirror to the panel with a code. You won\'t need it today.', 3600); break;
+    case 'source': toggleSource(); break;
+    case 'files': case 'settings': toast('Not part of the practice. Try the browser, Whiteboard, Annotate or Timer.'); break;
+  }
+}
+document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => doAction(b.dataset.open)));
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => {
+  if (b.dataset.close === 'browser') { show($('winBrowser'), false); hideOSK(); }
+  if (b.dataset.close === 'whiteboard') show($('winWB'), false);
+}));
+document.querySelectorAll('[data-dock]').forEach(b => b.addEventListener('click', () => {
+  const w = b.closest('.win'); w.classList.remove('dock-left','dock-right');
+  if (b.dataset.dock === 'left') w.classList.add('dock-left');
+  if (b.dataset.dock === 'right') w.classList.add('dock-right');
+  setTimeout(() => { wbInk.resize(); }, 260);
+}));
+document.querySelectorAll('[data-toast]').forEach(b => b.addEventListener('click', () => toast(b.dataset.toast)));
+
+/* ---------------- source ---------------- */
+function toggleSource(){
+  if (S.power !== 'on') { toast('The panel is off. Press Power first.'); return; }
+  if (S.locked) { lockedTap(); return; }
+  closeMenu();
+  const on = !isShown($('source'));
+  show($('source'), on);
+  document.querySelectorAll('.src').forEach(b => b.classList.toggle('on', b.dataset.src === S.source));
+}
+$('cSource').onclick = toggleSource;
+document.querySelectorAll('.src').forEach(b => b.addEventListener('click', () => { setSource(b.dataset.src); show($('source'), false); }));
+function setSource(src, quiet){
+  S.source = src;
+  show($('laptop'), src === 'hdmi1');
+  show($('nosig'), ['hdmi2','usbc','ops'].includes(src));
+  if (['hdmi2','usbc','ops'].includes(src)) $('nosigWhich').textContent = {hdmi2:'HDMI 2', usbc:'USB-C', ops:'OPS'}[src];
+  if (src !== 'home') { show($('appsGrid'), false); hideOSK(); }
+  if (src === 'hdmi1') { S.sawLaptop = true; if (!quiet) toast('Now showing the laptop. Touching the screen controls the laptop, through its touch USB cable.', 3600); }
+  if (src === 'home' && S.sawLaptop) tick('source');
+}
+
+/* ---------------- volume, freeze, lock ---------------- */
+function vol(d){
+  if (S.power !== 'on') return;
+  S.vol = Math.max(0, Math.min(100, S.vol + d));
+  toast(`Volume ${S.vol}<span class="vol"><i style="width:${S.vol}%"></i></span>`, 1400);
+}
+$('cVolD').onclick = () => vol(-10);
+$('cVolU').onclick = () => vol(10);
+$('cFreeze').onclick = () => {
+  if (S.power !== 'on') return;
+  S.frozen = !S.frozen;
+  show($('freezeShade'), S.frozen); show($('freezeTag'), S.frozen);
+  $('cFreeze').classList.toggle('lit', S.frozen);
+};
+$('freezeShade').addEventListener('pointerdown', () => toast('The picture is frozen. Press Freeze on the console to unfreeze.'));
+function lockedTap(){ toast('Touch is locked. Press the <b>Touch</b> button on the console to turn touch back on.', 3200); }
+$('cLock').onclick = () => {
+  if (S.power !== 'on') return;
+  S.locked = !S.locked;
+  show($('lockShade'), S.locked);
+  $('cLock').classList.toggle('lit', S.locked);
+  if (S.locked) { closeMenu(); S.lockOn = true; toast('Touch is off. Try tapping the screen.'); }
+  else { toast('Touch is back on.'); if (S.lockOn) tick('lock'); }
+};
+$('lockShade').addEventListener('pointerdown', lockedTap);
+
+/* ---------------- ink engine ---------------- */
+class Ink {
+  constructor(canvas){ this.c = canvas; this.ctx = canvas.getContext('2d'); this.strokes = []; this.redoStack = []; }
+  resize(){
+    const r = this.c.getBoundingClientRect(); if (!r.width) return;
+    const dpr = window.devicePixelRatio || 1;
+    this.c.width = Math.max(1, Math.round(r.width * dpr)); this.c.height = Math.max(1, Math.round(r.height * dpr));
+    this.draw();
+  }
+  draw(){ const {ctx, c} = this; ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); for (const s of this.strokes) this.paint(s); }
+  paint(s){
+    const ctx = this.ctx, W = this.c.width, H = this.c.height;
+    if (s.type === 'clear') { ctx.clearRect(0,0,W,H); return; }
+    ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(1, s.w * W);
+    if (s.tool === 'erase') { ctx.globalCompositeOperation = 'destination-out'; ctx.strokeStyle = '#000'; }
+    else { ctx.strokeStyle = s.color; ctx.globalAlpha = s.tool === 'hl' ? 0.35 : 1; }
+    const p = s.pts; ctx.beginPath(); ctx.moveTo(p[0][0]*W, p[0][1]*H);
+    if (p.length === 1) ctx.lineTo(p[0][0]*W + 0.5, p[0][1]*H + 0.5);
+    for (let i = 1; i < p.length; i++) ctx.lineTo(p[i][0]*W, p[i][1]*H);
+    ctx.stroke(); ctx.restore();
+  }
+  undo(){ if (this.strokes.length) { this.redoStack.push(this.strokes.pop()); this.draw(); } }
+  redo(){ if (this.redoStack.length) { this.strokes.push(this.redoStack.pop()); this.draw(); } }
+  clear(){ if (this.strokes.length) { this.strokes.push({type:'clear'}); this.redoStack = []; this.draw(); } }
+  reset(){ this.strokes = []; this.redoStack = []; this.draw(); }
+}
+const WIDTHS = { pen:[0.0024,0.0042,0.007], hl:[0.012,0.02,0.03], erase:[0.03,0.03,0.03] };
+function bindDraw(canvas, ink, getTool, onDone){
+  let cur = null;
+  const pt = e => { const r = canvas.getBoundingClientRect(); return [(e.clientX - r.left)/r.width, (e.clientY - r.top)/r.height]; };
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+  canvas.addEventListener('pointerdown', e => {
+    if (S.locked || S.frozen) return;
+    e.preventDefault();
+    const palm = (e.pointerType === 'touch' && Math.max(e.width||0, e.height||0) > 38) || e.button === 2;
+    const t = palm ? {tool:'erase', color:'#000', w:0.05} : getTool();
+    cur = {tool:t.tool, color:t.color, w:t.w, pts:[pt(e)], palm};
+    ink.strokes.push(cur); ink.redoStack = [];
+    try { canvas.setPointerCapture(e.pointerId); } catch(_){}
+    ink.draw();
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (!cur) return;
+    const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    for (const ev of evs) cur.pts.push(pt(ev));
+    ink.draw();
+  });
+  const end = () => { if (cur) { const c = cur; cur = null; onDone && onDone(c); } };
+  canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end); canvas.addEventListener('lostpointercapture', end);
+}
+const COLORS = ['#111827','#2563eb','#dc2626','#16a34a','#f59e0b'];
+function makeSwatches(container, state, onPick){
+  container.innerHTML = '';
+  COLORS.forEach(c => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'sw' + (state.color === c ? ' on' : '');
+    b.style.background = c; b.title = 'Ink color';
+    b.onclick = () => { state.color = c; container.querySelectorAll('.sw').forEach(x => x.classList.toggle('on', x === b)); if (state.tool === 'erase') onPick && onPick('pen'); };
+    container.appendChild(b);
+  });
+}
+function toolButtons(selector, attr, state, onChange){
+  document.querySelectorAll(selector).forEach(b => b.addEventListener('click', () => {
+    const tool = b.dataset[attr];
+    if (state.tool === tool && tool !== 'erase') {
+      state.wi[tool] = (state.wi[tool] + 1) % 3;
+      toast((tool === 'pen' ? 'Pen' : 'Highlighter') + ' width: ' + ['thin','medium','thick'][state.wi[tool]], 1300);
+    }
+    state.tool = tool; onChange();
+  }));
+}
+function syncToolUI(selector, attr, state){
+  document.querySelectorAll(selector).forEach(b => {
+    const t = b.dataset[attr]; b.classList.toggle('on', state.tool === t);
+    let w = b.querySelector('.w'); if (t !== 'erase') { if (!w) { w = document.createElement('span'); w.className = 'w'; b.appendChild(w); } w.textContent = ['S','M','L'][state.wi[t]]; }
+  });
+}
+
+/* ---------------- annotate ---------------- */
+const annoCanvas = $('annoCanvas');
+const annoInk = new Ink(annoCanvas);
+const AT = { tool:'pen', color:'#dc2626', wi:{pen:1, hl:1, erase:0} };
+makeSwatches($('annoSwatches'), AT, t => { AT.tool = t; syncToolUI('[data-atool]','atool',AT); });
+toolButtons('[data-atool]', 'atool', AT, () => { syncToolUI('[data-atool]','atool',AT); setEye(false); });
+syncToolUI('[data-atool]','atool',AT);
+bindDraw(annoCanvas, annoInk, () => ({tool:AT.tool, color:AT.color, w:WIDTHS[AT.tool][AT.wi[AT.tool]]}), s => {
+  if (s.tool !== 'erase' && onLessonScreen()) tick('annoDraw');
+  else if (s.tool !== 'erase') toast('Nice. For the checklist, draw over the lesson page in the browser.', 2600);
+});
+function onLessonScreen(){
+  const panelLesson = S.source === 'home' && isShown($('winBrowser')) && bros.panel.isLesson;
+  const lapLesson = S.source === 'hdmi1' && isShown($('lapWin')) && bros.laptop.isLesson;
+  return panelLesson || lapLesson;
+}
+function openAnnotate(){
+  if (S.annotate) { setEye(false); return; }
+  S.annotate = true; S.everAnnot = true;
+  show(annoCanvas); show($('annoBar')); setEye(false);
+  requestAnimationFrame(() => annoInk.resize());
+  toast('Annotate is on. Draw anywhere. The eye lets you use the page underneath.', 3000);
+}
+function closeAnnotate(){
+  S.annotate = false; annoInk.reset();
+  show(annoCanvas, false); show($('annoBar'), false); show($('eyeTag'), false);
+  toast('Annotate closed. Everything you drew is gone (that\'s how the real one works too).', 3200);
+}
+function setEye(on){
+  S.eye = on; annoCanvas.classList.toggle('pass', on);
+  $('annoEye').classList.toggle('on', on); $('annoBar').classList.toggle('eyeon', on); show($('eyeTag'), on && S.annotate);
+}
+$('annoEye').onclick = () => setEye(!S.eye);
+$('annoClose').onclick = closeAnnotate;
+$('annoUndo').onclick = () => annoInk.undo();
+$('annoRedo').onclick = () => annoInk.redo();
+$('annoClear').onclick = () => {
+  const had = annoInk.strokes.some(s => s.type !== 'clear');
+  annoInk.clear();
+  if (had && done.annoDraw) tick('annoClear'); else if (had) toast('Cleared.');
+};
+dragBy($('annoGrip'), $('annoBar'));
+
+/* ---------------- whiteboard ---------------- */
+const wbCanvas = $('wbCanvas');
+const wbInk = new Ink(wbCanvas);
+const WT = { tool:'pen', color:'#111827', wi:{pen:1, hl:1, erase:0} };
+const pages = [[]]; let pageIx = 0; wbInk.strokes = pages[0];
+makeSwatches($('wbSwatches'), WT, t => { WT.tool = t; syncToolUI('[data-wbtool]','wbtool',WT); });
+toolButtons('[data-wbtool]', 'wbtool', WT, () => syncToolUI('[data-wbtool]','wbtool',WT));
+syncToolUI('[data-wbtool]','wbtool',WT);
+bindDraw(wbCanvas, wbInk, () => ({tool:WT.tool, color:WT.color, w:WIDTHS[WT.tool][WT.wi[WT.tool]]}), s => {
+  show($('wbHint'), false);
+  if (s.palm) toast('Palm erase.', 1000);
+  if (s.tool !== 'erase') { S.wbDrew = true; if (S.wbAdded) tick('wb'); }
+});
+function showPage(){ wbInk.strokes = pages[pageIx]; wbInk.redoStack = []; wbInk.draw(); $('pgN').textContent = `${pageIx+1} / ${pages.length}`; }
+$('pgAdd').onclick = () => { pages.push([]); pageIx = pages.length - 1; showPage(); if (S.wbDrew) { S.wbAdded = true; tick('wb'); } else toast('New page. (For the checklist, draw something first.)'); };
+$('pgPrev').onclick = () => { if (pageIx > 0) { pageIx--; showPage(); } };
+$('pgNext').onclick = () => { if (pageIx < pages.length - 1) { pageIx++; showPage(); } };
+$('wbClear').onclick = () => wbInk.clear();
+$('wbUndo').onclick = () => wbInk.undo();
+$('wbRedo').onclick = () => wbInk.redo();
+
+/* ---------------- drag helper ---------------- */
+function dragBy(handle, box){
+  let sx, sy, ox, oy, on = false;
+  handle.addEventListener('pointerdown', e => {
+    if (e.target.closest('button')) return;
+    on = true; e.preventDefault();
+    const r = box.getBoundingClientRect(), sr = screen.getBoundingClientRect();
+    box.style.transform = 'none'; box.style.left = (r.left - sr.left) + 'px'; box.style.top = (r.top - sr.top) + 'px';
+    sx = e.clientX; sy = e.clientY; ox = r.left - sr.left; oy = r.top - sr.top;
+    try { handle.setPointerCapture(e.pointerId); } catch(_){}
+  });
+  handle.addEventListener('pointermove', e => {
+    if (!on) return;
+    const sr = screen.getBoundingClientRect(), r = box.getBoundingClientRect();
+    let x = ox + e.clientX - sx, y = oy + e.clientY - sy;
+    x = Math.max(-r.width + 40, Math.min(sr.width - 40, x)); y = Math.max(0, Math.min(sr.height - 30, y));
+    box.style.left = x + 'px'; box.style.top = y + 'px';
+  });
+  const stop = () => { on = false; };
+  handle.addEventListener('pointerup', stop); handle.addEventListener('pointercancel', stop);
+}
+document.querySelectorAll('[data-drag]').forEach(h => dragBy(h, $(h.dataset.drag)));
+
+/* ---------------- timer ---------------- */
+const T = { total:300, left:300, running:false, id:null, sound:false, ended:false };
+const fmt = s => Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0');
+function tDraw(){ $('tDisp').textContent = fmt(T.left); $('tDisp').classList.toggle('done', T.ended); $('tStart').textContent = T.running ? 'Pause' : 'Start'; $('tStart').classList.toggle('pause', T.running); }
+function openTimer(){ show($('timer')); tDraw(); }
+document.querySelectorAll('[data-tadd]').forEach(b => b.onclick = () => { if (T.running) return; T.total = Math.max(10, Math.min(5940, T.total + (+b.dataset.tadd))); T.left = T.total; T.ended = false; tDraw(); });
+document.querySelectorAll('[data-tset]').forEach(b => b.onclick = () => { if (T.running) return; T.total = +b.dataset.tset; T.left = T.total; T.ended = false; tDraw(); });
+$('tStart').onclick = () => {
+  if (T.running) { T.running = false; clearInterval(T.id); tDraw(); return; }
+  if (T.left <= 0) { T.left = T.total; T.ended = false; }
+  T.running = true; tDraw();
+  if (T.total === 300 && T.left === 300) tick('timer5');
+  const startAt = Date.now(), startLeft = T.left;
+  T.id = setInterval(() => {
+    T.left = Math.max(0, startLeft - (Date.now() - startAt)/1000);
+    if (T.left <= 0) { T.running = false; T.ended = true; clearInterval(T.id); beep(); }
+    $('tDisp').textContent = fmt(Math.ceil(T.left)); if (!T.running) tDraw();
+  }, 200);
+};
+$('tReset').onclick = () => { T.running = false; clearInterval(T.id); T.left = T.total; T.ended = false; tDraw(); };
+$('tClose').onclick = () => { T.running = false; clearInterval(T.id); T.left = T.total; T.ended = false; show($('timer'), false); $('timer').classList.remove('tiny'); };
+$('tTiny').onclick = () => $('timer').classList.toggle('tiny');
+$('tSound').onclick = () => { T.sound = !T.sound; const b = $('tSound'); b.innerHTML = svg(T.sound ? 'bell' : 'bellOff'); toast(T.sound ? 'Timer sound on.' : 'Timer sound off.', 1200); };
+function beep(){
+  if (!T.sound) return;
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    [0, .35, .7].forEach(t0 => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 880; o.connect(g); g.connect(ac.destination);
+      g.gain.setValueAtTime(0.0001, ac.currentTime + t0); g.gain.exponentialRampToValueAtTime(0.15, ac.currentTime + t0 + .02); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + t0 + .25);
+      o.start(ac.currentTime + t0); o.stop(ac.currentTime + t0 + .3); });
+  } catch(_){}
+}
+
+/* ---------------- spinner ---------------- */
+let wheelAngle = 0, spinning = false;
+const WHEEL_COLORS = ['#a855f7','#3b82f6','#10b981','#f59e0b','#ef4444','#06b6d4','#ec4899','#84cc16'];
+function items(){ const a = $('spinList').value.split('\n').map(s => s.trim()).filter(Boolean); return a.length ? a.slice(0, 24) : ['?']; }
+function drawWheel(){
+  const c = $('spinCanvas'), ctx = c.getContext('2d'), n = items().length, R = c.width/2;
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.save(); ctx.translate(R, R); ctx.rotate(wheelAngle);
+  items().forEach((txt, i) => {
+    const a0 = i * 2*Math.PI/n, a1 = (i+1) * 2*Math.PI/n;
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,R-8,a0,a1); ctx.closePath();
+    ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length]; ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 4; ctx.stroke();
+    ctx.save(); ctx.rotate((a0+a1)/2); ctx.fillStyle = '#fff'; ctx.font = `bold ${Math.max(16, 34 - n)}px system-ui,sans-serif`; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(txt.length > 14 ? txt.slice(0,13) + '…' : txt, R - 26, 0); ctx.restore();
+  });
+  ctx.restore();
+  ctx.beginPath(); ctx.arc(R,R,26,0,2*Math.PI); ctx.fillStyle = '#fff'; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(c.width - 2, R); ctx.lineTo(c.width - 40, R - 16); ctx.lineTo(c.width - 40, R + 16); ctx.closePath(); ctx.fillStyle = '#111827'; ctx.fill();
+}
+$('spinList').addEventListener('input', drawWheel);
+$('sGo').onclick = () => {
+  if (spinning) return; spinning = true; $('sRes').textContent = '';
+  const start = wheelAngle, extra = 6*Math.PI + Math.random()*2*Math.PI, t0 = performance.now(), dur = 2600;
+  const step = now => {
+    const k = Math.min(1, (now - t0)/dur), e = 1 - Math.pow(1-k, 3);
+    wheelAngle = start + extra*e; drawWheel();
+    if (k < 1) requestAnimationFrame(step);
+    else {
+      spinning = false; const n = items().length;
+      const a = ((-wheelAngle) % (2*Math.PI) + 2*Math.PI) % (2*Math.PI);
+      $('sRes').textContent = items()[Math.floor(a / (2*Math.PI/n)) % n];
+    }
+  };
+  requestAnimationFrame(step);
+};
+$('sClose').onclick = () => show($('spinner'), false);
+
+/* ---------------- browser component ---------------- */
+const BASE = location.protocol === 'file:' ? 'https://thoughtfeel.net' : '';
+function resolveAddr(input){
+  let s = (input || '').trim().toLowerCase();
+  if (!s) return null;
+  s = s.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/[?#].*$/, '').replace(/\/index\.html$/, '').replace(/\/+$/, '');
+  if (s === 'thoughtfeel.net/pan/board') return {kind:'lesson', src: BASE + '/pan/board/', label:'thoughtfeel.net/pan/board'};
+  if (s === 'thoughtfeel.net/pan') return {kind:'lesson', src: BASE + '/pan/', label:'thoughtfeel.net/pan'};
+  if (s === 'thoughtfeel.net/pan/practice') return {kind:'note', label:s, msg:'You\'re already on the practice page. Try <b>thoughtfeel.net/pan/board</b> for the lesson.'};
+  if (s === 'thoughtfeel.net') return {kind:'note', label:s, msg:'Close! Add <b>/pan/board</b> to the end: <b>thoughtfeel.net/pan/board</b>'};
+  if (/thoughtfeel/.test(s)) return {kind:'note', label:s, msg:'Almost. Check the spelling: <b>thoughtfeel.net/pan/board</b>'};
+  return {kind:'note', label:s, msg:'This is a practice panel, so only the lesson opens here.<br>Type <b>thoughtfeel.net/pan/board</b>'};
+}
+const NOTE = (msg) => `<!doctype html><meta charset="utf-8"><body style="margin:0;font:18px/1.5 system-ui,sans-serif;color:#334155;display:grid;place-items:center;height:100vh;background:#f8fafc;text-align:center"><div style="max-width:30em;padding:1em"><div style="font-size:44px">🧭</div><p>${msg}</p></div>`;
+function makeBrowser(root, name){
+  root.innerHTML = `
+    <div class="bro-tabs"><div class="bro-tab">New tab</div></div>
+    <div class="bro-bar">
+      <button type="button" class="b-back" title="Back" data-i="arrowL"></button>
+      <button type="button" class="b-reload" title="Reload" data-i="reload"></button>
+      <input class="addr" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a web address" aria-label="Address bar">
+      <button type="button" class="b-go" title="Go" data-i="chevR"></button>
+    </div>
+    <div class="bro-body">
+      <div class="newtab"><div class="big">New tab</div><div>Tap the address bar at the top and type the lesson's address.</div><button type="button" class="chip">thoughtfeel.net/pan/board</button></div>
+    </div>`;
+  paintIcons(root);
+  const addr = root.querySelector('.addr'), body = root.querySelector('.bro-body'), tab = root.querySelector('.bro-tab');
+  const api = { isLesson:false, history:[], addr };
+  const VW = 1920;
+  function scaleFrame(){ const f = body.querySelector('iframe'); if (!f) return; const w = body.clientWidth, h = body.clientHeight; if (!w || !h) return; const k = w / VW; f.style.width = VW + 'px'; f.style.height = Math.round(h / k) + 'px'; f.style.transform = `scale(${k})`; }
+  if (window.ResizeObserver) new ResizeObserver(scaleFrame).observe(body); else window.addEventListener('resize', scaleFrame);
+  function frame(){ let f = body.querySelector('iframe'); if (!f) { f = document.createElement('iframe'); f.setAttribute('title', 'Web page'); body.appendChild(f); hook(f); scaleFrame(); } return f; }
+  function hook(f){
+    f.addEventListener('load', () => {
+      const ld = body.querySelector('.loading'); if (ld) ld.remove();
+      let doc = null; try { doc = f.contentDocument; } catch(_){}
+      if (doc && doc.body && api.isLesson) {
+        const txt = (doc.title + ' ' + (doc.body.innerText || '').slice(0, 300));
+        if (/404|not found|file not found/i.test(txt)) {
+          f.srcdoc = NOTE('The lesson page isn\'t up yet. It goes live when the site is deployed.<br><small>(Everything else in this practice still works.)</small>');
+          api.isLesson = false; return;
+        }
+        tab.textContent = doc.title || api.label;
+        doc.addEventListener('pointerdown', ev => {
+          if (ev.target.closest && ev.target.closest('button,a,[role=button],input,select,summary,label,canvas,svg,[data-act],[onclick]')) lessonClicked();
+        }, true);
+      }
+    });
+  }
+  function go(raw){
+    const r = resolveAddr(raw); if (!r) return;
+    root.querySelector('.newtab')?.remove();
+    hideOSK(); addr.blur();
+    const f = frame();
+    api.history.push(r);
+    addr.value = r.label;
+    if (r.kind === 'lesson') {
+      api.isLesson = true; api.label = r.label; tab.textContent = r.label;
+      if (!body.querySelector('.loading')) body.insertAdjacentHTML('beforeend', '<div class="loading"></div>');
+      f.removeAttribute('srcdoc'); f.src = r.src;
+      if (r.label.endsWith('/board')) tick('lesson'); else toast('That\'s the student page. The board version is <b>thoughtfeel.net/pan/board</b>', 3600);
+    } else {
+      api.isLesson = false; tab.textContent = r.label; f.removeAttribute('src'); f.srcdoc = NOTE(r.msg);
+    }
+  }
+  api.go = go;
+  addr.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go(addr.value); } });
+  addr.addEventListener('focus', () => { setTimeout(() => addr.select(), 0); showOSK(addr, go); });
+  root.querySelector('.b-go').onclick = () => go(addr.value);
+  root.querySelector('.b-reload').onclick = () => { const f = body.querySelector('iframe'); if (f && api.isLesson) { f.src = f.src; } };
+  root.querySelector('.b-back').onclick = () => { if (api.history.length > 1) { api.history.pop(); const prev = api.history.pop(); go(prev.label); } };
+  root.addEventListener('click', e => { const c = e.target.closest('.chip'); if (c) { addr.focus(); toast('Type it in the address bar. On the real panel a keyboard pops up when you tap there.', 3200); } });
+  return api;
+}
+const bros = { panel: makeBrowser($('broPanel'), 'panel'), laptop: makeBrowser($('broLaptop'), 'laptop') };
+function lessonClicked(){
+  if (S.annotate && !S.eye) return; // annotate is catching taps
+  if (S.everAnnot) tick('lessonClick');
+}
+// cross-origin fallback (e.g. opened from a file): a click into the iframe blurs the page
+window.addEventListener('blur', () => setTimeout(() => {
+  const a = document.activeElement;
+  if (a && a.tagName === 'IFRAME' && (bros.panel.isLesson || bros.laptop.isLesson)) lessonClicked();
+}, 0));
+
+/* laptop desktop */
+$('lapOpenBrowser').onclick = () => { show($('lapWin')); };
+$('lapClose').onclick = () => { show($('lapWin'), false); hideOSK(); };
+$('lapMax').onclick = () => $('lapWin').classList.toggle('max');
+
+/* ---------------- on-screen keyboard ---------------- */
+let osk = null, oskTarget = null, oskGo = null;
+const ROWS = [['1','2','3','4','5','6','7','8','9','0'],['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m','.','/','⌫'],['.net','hide','space','go']];
+function showOSK(input, goFn){
+  oskTarget = input; oskGo = goFn;
+  const host = input.closest('.win, .lapwin') || screen;
+  if (!osk) {
+    osk = document.createElement('div'); osk.className = 'osk';
+    osk.innerHTML = ROWS.map(r => `<div class="row">${r.map(k => `<button type="button" data-k="${k}" class="${k==='space'?'wide':''}${k==='go'?' go':''}${k==='hide'?' hide':''}">${k==='space'?' ':k==='go'?'Go':k==='hide'?'⌄':k}</button>`).join('')}</div>`).join('');
+    osk.addEventListener('pointerdown', e => e.preventDefault());
+    osk.addEventListener('click', e => {
+      const b = e.target.closest('[data-k]'); if (!b || !oskTarget) return;
+      const k = b.dataset.k, v = oskTarget.value, a = oskTarget.selectionStart ?? v.length, z = oskTarget.selectionEnd ?? v.length;
+      if (k === 'go') { oskGo && oskGo(oskTarget.value); return; }
+      if (k === 'hide') { hideOSK(); oskTarget.blur(); return; }
+      let ins = k === 'space' ? ' ' : k;
+      if (k === '⌫') { const s = a === z ? Math.max(0, a-1) : a; oskTarget.value = v.slice(0,s) + v.slice(z); oskTarget.setSelectionRange(s,s); return; }
+      oskTarget.value = v.slice(0,a) + ins + v.slice(z); const p = a + ins.length; oskTarget.setSelectionRange(p,p);
+    });
+  }
+  host.appendChild(osk); show(osk);
+}
+function hideOSK(){ if (osk) show(osk, false); }
+
+/* ---------------- start ---------------- */
+paintIcons();
+renderTasks();
+setPower('off');
+fit();
+setTimeout(fit, 100);
+window.__pp = { S, tick, bros }; // for testing
+})();
+</script>
+</body>
+</html>
