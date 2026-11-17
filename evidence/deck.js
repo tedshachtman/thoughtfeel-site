@@ -57,10 +57,10 @@ export const slides = [
       "Now you try it with your partner. Same book, new claim. 'The boy in A Different Pond is helpful.'",
       "Step one. What's the big word? Yes, helpful. I'll circle it.",
       "Step two. Say what it means. Being helpful means doing some of the work, so someone else has less to do. Two parts. Work you do. And someone who has less to do.",
-      "Step three. Show where it is in the evidence. Each pair has three strips. Each one is something that happens in the book. I'll read them. A. The boy gathers twigs and builds the fire. He lights it with one match. B. Dad tells the boy about fishing at a pond in Vietnam. C. The boy uses two hands to guide the fish into the bucket.",
+      "Step three. Show where it is in the evidence. Each pair has three strips. Each one is something that happens in the book. I'll read them. A. While Dad sets up, the boy gathers twigs and builds the fire. B. Dad tells the boy about fishing at a pond in Vietnam. C. Dad catches a fish. The boy uses two hands to help guide it into the bucket.",
       "Two of these strips show the boy is helpful. One doesn't. Check each strip for the two parts. Is the boy doing work? Does someone have less to do? Find the strip that doesn't have both parts, and hold it up. Go.",
       "It's strip B. It really happens in the book. But the boy isn't doing any work. So it can't show he's helpful.",
-      "Now pick strip A or strip C. Explain it to your partner. Start with 'Helpful means.' Go.",
+      "Look at strip A and strip C. Both parts are there. The boy does work. And Dad has less to do. Now pick strip A or strip C. Explain it to your partner. Start with 'Helpful means.' Go.",
       "Who will share their explanation? Say your name first."
     ]
   },
@@ -137,7 +137,11 @@ export const boardCopy = {
   partnerClaim: ["The boy in A Different Pond is ", "helpful", "."],
   partnerMeaning: ["Being helpful means ", "doing some of the work", ", so ", "someone else has less to do", "."],
   partnerParts: ["work you do", "someone who has less to do"],
-  strips: [["The boy gathers twigs and ", "builds the fire", ". He lights it with one match."], ["Dad tells the boy about fishing at a pond in Vietnam."], ["The boy ", "uses two hands to guide the fish into the bucket", "."]],
+  strips: [
+    {letter: "A", art: "fire", parts: [["While Dad sets up", 1], ", the boy ", ["gathers twigs and builds the fire", 0], "."]},
+    {letter: "B", art: "memory", parts: ["Dad tells the boy about fishing at a pond in Vietnam."]},
+    {letter: "C", art: "bucket", parts: [["Dad catches a fish", 1], ". The boy ", ["uses two hands to help guide it into the bucket", 0], "."]}
+  ],
   stripLetters: ["A","B","C"], partnerQuestion: "Which strip doesn't have both parts?", noWork: "No work for the boy", less: "less to do",
   frame: "Helpful means ___. In this part, ___. So this shows ___.",
   workClaim: "The dad in A Different Pond is hardworking.",
