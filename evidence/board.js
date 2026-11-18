@@ -6,7 +6,7 @@ import { assets } from './assets.js';
 const stage = document.querySelector('#stage');
 const overlay = document.querySelector('#connect');
 const position = document.querySelector('#position');
-const initialMs = 7 * 60000;
+const initialMs = 6 * 60000;
 let slide = 0, step = 0, pausedMs = initialMs, deadline = null;
 const roomKey = 'evidence-room-v1';
 function chooseRoom() {

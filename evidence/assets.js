@@ -1,4 +1,4 @@
-export const version = "46e2dcf8b322dc92";
+export const version = "507cede23a26be8e";
 export const assets = [
   "./art/bait.png",
   "./art/bucket.png",
