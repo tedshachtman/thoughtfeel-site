@@ -174,3 +174,6 @@ function startRemote() {
   }, 4000);
   setInterval(drawTime, 250);
 }
+
+// If the board's offline copy controls this page, check for a newer version on every load.
+if ('serviceWorker' in navigator) navigator.serviceWorker.getRegistration('../').then(r=>r&&r.update()).catch(()=>{});

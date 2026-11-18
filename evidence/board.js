@@ -120,6 +120,7 @@ async function ready() {
   window.lessonPictures=pictures;
   if ('serviceWorker' in navigator) {
     const registration = await navigator.serviceWorker.register('./sw.js',{type:'module',updateViaCache:'none'});
+    registration.update().catch(()=>{}); // check for a newer version on every load
     const worker = registration.installing;
     if (worker) {
       await new Promise((resolve,reject)=>{
