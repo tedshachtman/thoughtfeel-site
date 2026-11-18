@@ -77,14 +77,14 @@ function model(s, anim) {
 
 function finger(s) {
   const q = c.correct;
-  const on = s >= 6;
+  const on = s >= 4;
   const sentence = i => i < 2 ? c.fingers[i]
     : `<span class="${on ? 'ul' : ''}">${q[0]}</span>${q[1]}${on ? stamp(0, 'data-land="f0"') : ''}${wash(q[2], 0, on, 'data-wash="f0"')}${q[3]}${on ? stamp(1, 'data-land="f1"') : ''}${wash(q[4], 1, on, 'data-wash="f1"')}${q[5]}`;
-  const tag = i => s >= 6 && i === 2 ? `<span class="tag yes" ${K('tag2')}>${c.verdicts[2]}</span>`
-    : s >= 7 && i < 2 ? `<span class="tag no" ${K('tag' + i)}>${c.verdicts[i]}</span>` : '';
+  const tag = i => s >= 4 && i === 2 ? `<span class="tag yes" ${K('tag2')}>${c.verdicts[2]}</span>`
+    : s >= 5 && i < 2 ? `<span class="tag no" ${K('tag' + i)}>${c.verdicts[i]}</span>` : '';
   const cards = [0, 1, 2].map(i => {
     const shown = s > i;
-    const cls = `${shown ? 'shown' : 'covered'}${on && i === 2 ? ' chosen' : ''}${s >= 7 && i < 2 ? ' wrong' : ''}`;
+    const cls = `${shown ? 'shown' : 'covered'}${on && i === 2 ? ' chosen' : ''}${s >= 5 && i < 2 ? ' wrong' : ''}`;
     return `<div class="fcol"><div class="fcard ${cls}" ${K('f' + i + (shown ? 's' : 'c'))}><b class="num">${i + 1}</b>${shown ? `<p>${sentence(i)}</p>` : ''}</div>
       <div class="fvote">${S('finger' + (i + 1), 'fhand')}${tag(i)}</div></div>`;
   }).join('');
@@ -93,7 +93,7 @@ function finger(s) {
 
 function partner(s, anim) {
   // 0 claim · 1 partners name the big idea · 2 circle · 3 partners say the meaning · 4 meaning → two parts
-  // 5 strips · 6 which one doesn't fit · 7 B rejected · 8 parts land on A and C · 9 each partner explains · 10 share
+  // 5 strips · 6 which one doesn't fit · 7 B rejected · 8 parts land on A and C · 9 each partner explains, then a share
   const now = s >= 5 ? 2 : s >= 3 ? 1 : s >= 1 ? 0 : -1;
   const claim = panel('CLAIM', `<p>${c.partnerClaim[0]}${circled(c.partnerClaim[1], s >= 2, s === 2 && anim)}${c.partnerClaim[2]}</p>`, 'claim', 'claim');
   const rack = s >= 4 ? panel('HELPFUL MEANS', `<div class="rack col">${[0, 1].map(i =>
@@ -138,12 +138,12 @@ function camp() {
 }
 
 function closing(s) {
-  // 0 partners check · 1 share · 2 remember · 3 thanks
-  const top = s < 2
+  // 0 partners check and share · 1 remember · 2 thanks
+  const top = s < 1
     ? `<div class="panel share" ${K('share')}><h2>${c.share}</h2><ul>${c.checks.map(w => `<li><i class="box"></i>${w}</li>`).join('')}</ul></div>`
     : `<div class="panel close-card" ${K('close')}><h2>${c.close}</h2>${tracker(-1, true)}</div>`;
-  const thanks = s === 3 ? `<div class="ribbon thanks" ${K('thx')}>${c.thanks}</div>` : '';
-  return screen(IMG('morning', 'bg') + (s >= 2 ? IMG('gold', 'bg final-sun') : '') + family(s >= 2) + top + thanks, 'pano closing');
+  const thanks = s === 2 ? `<div class="ribbon thanks" ${K('thx')}>${c.thanks}</div>` : '';
+  return screen(IMG('morning', 'bg') + (s >= 1 ? IMG('gold', 'bg final-sun') : '') + family(s >= 1) + top + thanks, 'pano closing');
 }
 
 const views = [title, outline, steps, model, finger, partner, writing, camp, closing];
@@ -207,7 +207,7 @@ function play(board, slide, step, keys, before) {
     if (step === 5) [0, 1].forEach(i => { sweep($(`[data-source="mw${i}"]`), i * 260); flight(board, before['mw' + i], $(`[data-land="r${i}"]`), {delay: 250 + i * 260, dur: 700}); });
     if (step === 7 || step === 8) { const i = step - 7; flight(board, before['m' + i], $(`[data-land="m${i}"]`), {wash: $(`[data-wash="m${i}"]`)}); run($('.vig img'), [{opacity: .2}, {opacity: 1}], 500, 150); }
   }
-  if (slide === 4 && step === 6) [0, 1].forEach(i => { run($(`[data-land="f${i}"]`), [{opacity: 0}, {opacity: 1}], 400, 300 + i * 300); sweep($(`[data-wash="f${i}"]`), 300 + i * 300); });
+  if (slide === 4 && step === 4) [0, 1].forEach(i => { run($(`[data-land="f${i}"]`), [{opacity: 0}, {opacity: 1}], 400, 300 + i * 300); sweep($(`[data-wash="f${i}"]`), 300 + i * 300); });
   if (slide === 5) {
     if (step === 4) [0, 1].forEach(i => flight(board, here(`[data-source="pw${i}"]`), $(`[data-land="pr${i}"]`), {delay: 650 + i * 280, dur: 750}));
     if (step === 8) [0, 2].forEach((s, j) => [0, 1].forEach(i => {
@@ -215,7 +215,7 @@ function play(board, slide, step, keys, before) {
       flight(board, rect(src, board), $(`[data-land="s${s}${i}"]`), {mode: 'shrink', node: src, delay: j * 500 + i * 220, dur: 760, wash: $(`[data-wash="s${s}${i}"]`)});
     }));
   }
-  if (slide === 8 && step === 2) {
+  if (slide === 8 && step === 1) {
     run($('.final-sun'), [{opacity: 0}, {opacity: 1}], 1800);
     run($('.family'), [{transform: 'translate(120px,40px)'}, {transform: 'none'}], 1600);
   }

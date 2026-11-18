@@ -21,8 +21,7 @@ export const slides = [
       "Today I want to teach you that essay writers don't stop at the evidence. They explain it, in three steps.",
       "Step one. Circle the big idea. That's what your claim is really about. Sometimes it's one word. Sometimes it's a few words.",
       "Step two. Say what it means, in your own words.",
-      "Step three. Show where it is in the evidence.",
-      "Watch me do all three."
+      "Step three. Show where it is in the evidence. Watch me do all three."
     ]
   },
   {
@@ -46,9 +45,7 @@ export const slides = [
       "Now I'll write it down. Here are three sentences I could write. Only one explains my evidence. The other two are mistakes writers make all the time.",
       "One. 'This shows that families make sacrifices for each other. The family in A Different Pond makes sacrifices. That is what families do for each other in this book.'",
       "Two. 'Dad wakes up early, hours before the sun comes up. He goes fishing at the pond so the family will have fish for dinner. Then he goes to his job.'",
-      "Three. 'A sacrifice means giving up something you want to help someone else. In this part, Dad gives up his sleep so his family will have dinner. This shows that families make sacrifices for each other.'",
-      "Which one explains? Think first. Hold your fingers against your chest, so only I can see. One, two, three.",
-      "Most of you have three. Who can tell us why? Say your name first. … OR … I see some ones and twos. Let's check them together.",
+      "Three. 'A sacrifice means giving up something you want to help someone else. In this part, Dad gives up his sleep so his family will have dinner. This shows that families make sacrifices for each other.' … Which one explains? Think first. Hold your fingers against your chest, so only I can see. One, two, three. … Most of you have three. Who can tell us why? Say your name first. … OR … I see some ones and twos. Let's check them together.",
       "It's number three. It says what sacrifice means. It shows both parts in the evidence. Then it goes back to the claim.",
       "Number one starts with 'This shows.' That's one of your starters, and it's a good start. But then it only says the claim again. Number two only says the evidence again. Neither one tells the reader how the evidence proves the claim."
     ]
@@ -65,8 +62,7 @@ export const slides = [
       "Two of these strips show the boy is helpful. One doesn't. Check each strip for the two parts. Is the boy doing work? Does someone have less to do? Find the strip that doesn't have both parts, and hold it up. Go.",
       "It's strip B. It really happens in the book. But is the boy doing any work? No. So it can't show he's helpful.",
       "Look at strip A and strip C. Both parts are there. The boy does work. And Dad has less to do.",
-      "Now both of you explain one. Partner closer to the board, explain strip A. Other partner, explain strip C. Start with 'Helpful means.' Go.",
-      "I heard a strong one over here. Say your name first, and say it again for everyone."
+      "Now both of you explain one. Partner closer to the board, explain strip A. Other partner, explain strip C. Start with 'Helpful means.' Go. … I heard a strong one over here. Say your name first, and say it again for everyone."
     ]
   },
   {
@@ -77,21 +73,19 @@ export const slides = [
       "Here's the evidence. At the bait store, Dad says he got a second job. He has to work on a Saturday morning.",
       "Tell your partner what hardworking means. Say it without the word hardworking. Go.",
       "Now do the three steps on your sheet. Circle the big idea. Say what it means. Show where it is in the evidence. Write it in purple pen.",
-      "This sheet is practice. Your own essay is the real work. When you finish the sheet, open your A Different Pond essay on your Chromebook. Pick one piece of evidence. Do the same three steps. Off you go."
+      "Start with the sheet. When you finish it, open your A Different Pond essay on your Chromebook. Pick one piece of evidence. Do the same three steps. Off you go."
     ]
   },
   {
     "name": "Writing time (campfire timer)",
     "steps": [
-      "",
-      "Writers, three, two, one. Eyes on me. Listen to [name]'s explanation. … [Name] said what hardworking means. Then [name] showed where it is in the evidence. Check that yours does both. Back to work."
+      ""
     ]
   },
   {
     "name": "Share and close",
     "steps": [
-      "Writers, finish the sentence you're on. Read your explanation to your partner. Partners, listen for two things. Does it say what the big idea means? Does it show where that is in the evidence?",
-      "I heard a strong one over here. Say your name first, and read it for everyone. … [Name] said what the big idea means. Then [name] showed where it is in the evidence. That's an explanation.",
+      "Writers, finish the sentence you're on. Read your explanation to your partner. Partners, listen for two things. Does it say what the big idea means? Does it show where that is in the evidence? … I heard a strong one over here. Say your name first, and read it for everyone. … [Name] said what the big idea means. Then [name] showed where it is in the evidence. That's an explanation.",
       "Here's what I want you to remember. Evidence doesn't explain itself. You explain it. Circle the big idea. Say what it means. Show where it is in the evidence.",
       "Make sure your name is on your sheet. Leave it on your desk. I'll give them to Mrs. Lazar. Thank you, writers. Thank you, Mrs. Lazar."
     ]
@@ -122,6 +116,10 @@ export const prompts = [
   [
     "Own essay",
     "Your claim has two big ideas. Make both bold. Those are your two parts. · Your big idea is a few words. Make all of them bold. · I see the first part. Where's the second part? If it's not here, add another piece of evidence. · You looked, and it's not there. That's useful. Pick different evidence, or change your claim a little. · You showed what Dad does. Now go back to your claim. Write 'This shows that' and finish it with your claim."
+  ],
+  [
+    "Halfway",
+    "Writers, three, two, one. Eyes on me. Listen to [name]'s explanation. … [Name] said what hardworking means. Then [name] showed where it is in the evidence. Check that yours does both. Back to work."
   ],
   [
     "No essay",
