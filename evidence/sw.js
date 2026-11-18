@@ -17,8 +17,21 @@ self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url);
   if(event.request.method!=='GET' || !url.href.startsWith(self.registration.scope)) return;
   if(url.pathname.endsWith('/')) url.pathname+='index.html';
+  // Online: always the live version (and refresh the saved copy). Offline or slow (>4 s): the saved copy.
   event.respondWith((async()=>{
     const cache=await caches.open(cacheName);
-    return await cache.match(url.href,{ignoreSearch:true}) || fetch(event.request);
+    const saved=cache.match(url.href,{ignoreSearch:true});
+    const live=fetch(event.request,{cache:'no-cache'}).then(res=>{
+      if(res.ok) cache.put(url.href,res.clone());
+      return res;
+    });
+    const timeout=new Promise(resolve=>setTimeout(resolve,4000));
+    try {
+      const res=await Promise.race([live,timeout.then(()=>saved)]);
+      if(res) return res;
+      return await live;
+    } catch(e) {
+      return (await saved) || Response.error();
+    }
   })());
 });
