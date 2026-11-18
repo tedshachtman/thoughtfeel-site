@@ -1,4 +1,4 @@
-export const version = "ea46f0bb132b4304";
+export const version = "46e2dcf8b322dc92";
 export const assets = [
   "./art/bait.png",
   "./art/bucket.png",
@@ -7,6 +7,7 @@ export const assets = [
   "./art/dawn.png",
   "./art/dinner.png",
   "./art/fire.png",
+  "./art/fishing-line.png",
   "./art/fishing.png",
   "./art/frames.json",
   "./art/gold.png",
@@ -20,6 +21,8 @@ export const assets = [
   "./art/scenes.png",
   "./art/sprites.css",
   "./art/sprites.png",
+  "./art/water-dawn.png",
+  "./art/water-gold.png",
   "./art/yawn.png",
   "./board.css",
   "./board.js",

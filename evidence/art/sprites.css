@@ -76,3 +76,43 @@
 .pond-car{background-position:0% 100%;}
 .pond-sun{background-position:50% 100%;}
 .pond-twigs{background-position:100% 100%;}
+
+/* Registered cutouts of pond reflections. The still plate shows through the gaps. */
+@media (prefers-reduced-motion: no-preference) {
+  .lesson.pano:has(.sunrise)::after,
+  .lesson.pano:has(.final-sun)::after {
+    inset: 55.925926% auto auto 29.791667%;
+    width: 60%;
+    height: 14.814815%;
+    background: var(--water) 0 0 / 100% 600% no-repeat;
+    image-rendering: pixelated;
+    pointer-events: none;
+    animation: water-reflection 2.8s steps(5) infinite alternate, water-light 2.6s ease-in both;
+  }
+  .pano:has(.sunrise) { --water: url("water-dawn.png"); }
+  .pano:has(.final-sun) { --water: url("water-gold.png"); }
+  @keyframes water-light { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes water-reflection {
+    from { background-position-y: 0%; }
+    to { background-position-y: 100%; }
+  }
+}
+
+/* The transparent film begins at the tip of Dad's rod. Its float rests on the pond. */
+.family .s-dad-rod { position: relative; }
+.family .s-dad-rod::after {
+  content: '';
+  position: absolute;
+  left: 91.7%;
+  top: 20%;
+  width: 133.3333%;
+  height: 55%;
+  background: url("fishing-line.png") 0 0 / 100% 600% no-repeat;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pano:has(.sunrise) .s-dad-rod::after {
+    animation: water-reflection 3.2s steps(5) infinite alternate;
+  }
+}
