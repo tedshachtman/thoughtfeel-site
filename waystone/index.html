@@ -4,31 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <title>Waystone: the ripe line</title>
+<link rel="icon" href="a/p_mid.png">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#141423">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&display=swap">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 <canvas id="c"></canvas>
-<div id="hud"><span id="light" class="pill">Daylight 100%</span><span id="dew" class="pill" hidden></span><span id="asks" class="pill" hidden></span><span id="goal" class="pill"></span></div>
+<div id="hud"><span id="dew" class="pill" hidden></span><span id="asks" class="pill" hidden></span><span id="goal" class="pill"></span></div>
 <div id="talk" hidden><canvas id="face" width="66" height="66"></canvas><div class="tbody"><b id="tname"></b><p id="ttext"></p><div id="tchoices"></div></div><i id="tmore">▼</i></div>
 <div id="slate" hidden>
   <div class="code"><div id="gutter"></div><div id="hl"></div><pre id="paint"></pre><textarea id="src" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea></div>
   <div class="side">
     <div class="wrow"><canvas id="wface" width="64" height="64"></canvas><p id="wsay"><b id="wname"></b><span id="wtext"></span></p></div>
     <p id="tally"></p>
-    <div class="btns"><button id="run">Try it on all three rows</button><button id="bind" hidden>Bind the way</button><button id="show">Teach them again from the start</button><button id="memory">Remember Yusra</button><button id="out">Step out</button></div>
+    <div class="btns"><button id="run">Try it on all three rows</button><button id="bind" hidden>Bind the way</button><button id="show">Teach them again from the start</button><button id="memory">Ask the wisps</button><button id="out">Step out</button></div>
   </div>
 </div>
-<div id="bubs"></div>
+<div id="letters" hidden></div><div id="bubs"></div>
 <div id="fade"></div>
 <div id="title"><div><h1>Waystone</h1><p>The first morning</p><button id="begin" class="main">Begin</button><small>Best with sound on. Arrow keys or click to walk.</small></div></div>
 <div id="end" hidden><div class="page"><h2 id="endh"></h2><div id="endb"></div><button id="endx">Play again</button></div></div>
-<script src="meta.js?v=7"></script>
-<script src="py.js?v=7"></script>
-<script src="game.js?v=7"></script>
+<script src="meta.js?v=8"></script>
+<script src="vendor/eval5.min.js"></script><script src="vendor/skulpt.min.js"></script><script src="py.js?v=8"></script>
+<script src="game.js?v=8"></script>
 </body>
 </html>

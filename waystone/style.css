@@ -132,3 +132,9 @@ button:disabled { opacity: .45; cursor: default; }
 .code {
   background-image: url("a/slate-grain.png"), linear-gradient(128deg,#1d3036,#263a3c);
 }
+#light {display:none}
+#letters {position:fixed;z-index:29;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;background:#302637;padding:6px;border:2px solid #bb9669}
+#letters button {font-size:24px;min-width:42px}
+#letters .filled {background:#f5c568}
+.bub {max-width:min(290px,68vw);width:max-content;white-space:normal}
+.target-bubble {top:45px!important;left:50%!important;transform:translateX(-50%);max-width:min(520px,90vw);text-align:center}

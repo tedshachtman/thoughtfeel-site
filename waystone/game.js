@@ -5,7 +5,12 @@
 (() => {
   const $ = (id) => document.getElementById(id);
   const cv = $('c'), cx = cv.getContext('2d');
-  const V = '7';
+  const V = '8';
+  let muted = new URLSearchParams(location.search).get('mute') === '1';
+  let typing = null, pan = null, harvestAt = Infinity, flickerAt = -10, stoopAt = -10;
+  let helpRung = 0, ghost = null, targetBubble = null, helpSequence = 0;
+  let fieldCost = 0, fieldTime = 0;
+  const fieldText = () => (Math.round(fieldCost / 100) * 100).toLocaleString('en-US');
   const IMG = {}, names = Object.keys(META);
   let loaded = 0, ready = false;
   for (const n of names) { const i = new Image(); i.onload = () => { if (++loaded === names.length) start(); }; i.src = 'a/' + n + '.png?v=' + V; IMG[n] = i; }
@@ -18,13 +23,22 @@
 
   // ---------- sound: a few synthesized notes, no files ----------
   let AC = null;
-  const tone = (f, d = .15, type = 'sine', vol = .08, to = 0, when = 0) => { if (!AC) return; const t = AC.currentTime + when, o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(.0005, t + d); o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + d + .03); };
+  const tone = (f, d = .15, type = 'sine', vol = .08, to = 0, when = 0) => { if (!AC || muted) return; const t = AC.currentTime + when, o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + d); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(.0005, t + d); o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + d + .03); };
   const SFX = {
     bell: () => { tone(660, 1.6, 'sine', .09); tone(1320, 1.1, 'sine', .04); tone(1980, .7, 'sine', .02); },
     ripe: () => tone(880, .12, 'triangle', .07, 1320), green: () => tone(620, .14, 'triangle', .07, 440),
     hop: () => tone(520, .08, 'triangle', .05, 700), bad: () => tone(170, .22, 'sawtooth', .04, 120),
     come: () => { tone(660, .2, 'sine', .07, 990); tone(990, .3, 'sine', .05, 1320, .12); },
-    moth: () => { tone(90, .9, 'sine', .12, 40); tone(140, .7, 'sawtooth', .025, 60); },
+    breath: () => {
+      if (!AC || muted) return;
+      const buffer = AC.createBuffer(1,AC.sampleRate,AC.sampleRate), data = buffer.getChannelData(0);
+      let low = 0;
+      for (let i=0;i<data.length;i++) {
+        low = .96*low + .04*(Math.random()*2-1);
+        data[i] = (low*.7 + (Math.random()<.003 ? .13 : 0))*Math.sin(Math.PI*i/data.length);
+      }
+      const sound=AC.createBufferSource(); sound.buffer=buffer; sound.connect(AC.destination); sound.start();
+    },
     win: () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, .34, 'triangle', .07, 0, i * .11)),
     tick: () => tone(1500, .02, 'square', .012),
     cut: () => tone(rnd(300, 380), .05, 'sawtooth', .02, 180),
@@ -35,13 +49,14 @@
   };
 
   // ---------- the map ----------
-  const TW = 48, TH = 34, TS = 16, WW = TW * TS, WH = TH * TS;
+  const TW = 48, TH = 74, TS = 16, WW = TW * TS, WH = TH * TS;
   const map = Array.from({ length: TH }, () => Array(TW).fill('g'));
   const rect = (c, x0, y0, x1, y1) => { for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) if (map[y] && x >= 0 && x < TW) map[y][x] = c; };
   const blob = (c, cx0, cy0, rx, ry) => { for (let y = 0; y < TH; y++) for (let x = 0; x < TW; x++) { const dx = (x + .5 - cx0) / rx, dy = (y + .5 - cy0) / ry; if (dx * dx + dy * dy < 1) map[y][x] = c; } };
   rect('p', 0, 17, 47, 18); rect('p', 8, 15, 9, 16); rect('p', 23, 19, 24, 21); rect('p', 34, 12, 35, 16);
   blob('w', 3.5, 26.5, 4.2, 6); blob('w', 42, 4.5, 4.4, 3.2);
   rect('s', 11, 23, 37, 29); rect('s', 30, 10, 39, 11); blob('w', 27.9, 10.7, 1.9, 2.1);
+  rect('s',5,30,42,73); rect('w',0,31,3,73);
   const tile = (tx, ty) => map[clamp(ty, 0, TH - 1)][clamp(tx, 0, TW - 1)];
   const tileAt = (x, y) => tile(Math.floor(x / TS), Math.floor(y / TS));
 
@@ -116,6 +131,19 @@
         g.fillStyle = '#88c6c118'; g.fillRect(x, y, 7 + h % 12, 2);
       }
     }
+    // A worn footpath threads the distant strips. The banks carry flowers and
+    // willow stakes where workers leave their baskets between trips.
+    for (let y=483; y<1130; y++) {
+      const x=fieldPath(y);
+      g.fillStyle='#8a7159'; g.fillRect(x-5,y,11,1);
+      g.fillStyle='#ad8d67'; g.fillRect(x-4,y,8,1);
+      if(hash(x,y)%4===0){g.fillStyle='#cfb48b';g.fillRect(x-3+hash(y,x)%6,y,2,1);}
+    }
+    for (let row=1;row<29;row+=3) {
+      const y=502+row*22, x=fieldPath(y);
+      g.drawImage(IMG['border_'+(row%2)],x+6,y-9,14,10);
+      if(row%2===0)g.drawImage(IMG.end_post,x-13,y-10,8,11);
+    }
     glints = glints.slice(0, 400);
   };
 
@@ -156,7 +184,7 @@
   T('stump', 680, 330, { hw: 9, d: 7 }); T('mushroom', 30, 180, { hw: 0, d: 0, soft: true });
   const forest = () => {
     for (let n = 0; n < 900 && things.length < 95; n++) {
-      const x = 12 + sr() * (WW - 24), y = 40 + sr() * (WH - 44);
+      const x = 12 + sr() * (WW - 24), y = 40 + sr() * (544 - 44);
       const far = y < 74 || (x > 650 && y < 250) || (x < 70 && y < 250) || (y > 500 && (x < 150 || x > 650)) || (x > 660 && y > 330 && y < 400);
       if (!far) continue;
       let ok = true;
@@ -173,7 +201,7 @@
     ['stall', 302, 259], ['hedge_fence', 65, 267], ['hedge_fence', 556, 268],
     ['hedge_fence', 265, 325], ['hedge_fence', 498, 324],
     ['hedge_fence', 206, 480], ['hedge_fence', 568, 480],
-    ['duck', 451, 179], ['duck', 438, 187], ['lantern_cord', 385, 320],
+    ['reeds',429,187], ['reeds',435,196], ['reeds',463,160], ['duck', 451, 179], ['duck', 438, 187], ['lantern_cord', 385, 320],
   ].map(([n, x, y]) => ({ n, x, y }));
 
   // ---------- beds of wheat. known: 0 under dew, 1 ripe, 2 green, 3 cut. lo and hi are where those two wisps stand. ----------
@@ -232,7 +260,10 @@
   // ---------- talking ----------
   let talking = null, lines = [], li = 0, typed = 0, typeT = 0, talkRes = null, choices = null;
   const portrait = (who) => {
-    const f = $('face').getContext('2d'); f.imageSmoothingEnabled = false; f.clearRect(0, 0, 66, 66); if (!who.face) return; const im = IMG[who.face];
+    const f = $('face').getContext('2d'); f.imageSmoothingEnabled = false; f.clearRect(0, 0, 66, 66); if (!who.face) return; const line = who === talking ? lines[li] : '';
+    const moods = [['A wisp whose waymaker','sad'],['Grey ash','worried'],['The reapers are out','worried'],['There are a thousand','worried'],['Go on, love','glad'],['Twenty quiet','worried'],['It was a hungry','worried'],["tastes for the whole field. Wen's needed",'glad']];
+    const mood = moods.find(([text])=>line.includes(text))?.[1];
+    const im = IMG[who.face+'_'+mood] || IMG[who.face];
     if (im.width < 40) f.drawImage(im, 0, 0, im.width, 22, Math.round((66 - im.width * 3) / 2), 0, im.width * 3, 66); else f.drawImage(im, Math.round((66 - im.width) / 2), 66 - im.height);
   };
   const openTalk = (who, isNote) => { $('talk').hidden = false; $('talk').classList.toggle('note', isNote); $('talk').classList.toggle('narr', !who.face); $('tname').textContent = who.name; $('tchoices').innerHTML = ''; portrait(who); };
@@ -244,10 +275,10 @@
   });
   const showChoices = () => { $('tmore').style.display = 'none'; const box = $('tchoices'); if (box.children.length) return; choices.forEach((c, i) => { const b = document.createElement('button'); b.textContent = c; if (!i) b.className = 'main'; b.addEventListener('click', (e) => { e.stopPropagation(); const r = talkRes; talking = null; talkRes = null; choices = null; $('talk').hidden = true; r(i); }); box.appendChild(b); }); };
   const nextLine = () => {
-    if (!talking) return;
+    if (!talking || pan || typing) return;
     if (typed < lines[li].length) { typed = lines[li].length; $('ttext').textContent = lines[li]; if (choices && li === lines.length - 1) showChoices(); return; }
     if (li === lines.length - 1) { if (choices) return; const r = talkRes; talking = null; talkRes = null; $('talk').hidden = true; r(); return; }
-    li++; typed = 0; $('ttext').textContent = '';
+    li++; portrait(talking); typed = 0; $('ttext').textContent = '';
   };
   const note = (who, text) => { openTalk(who, true); $('ttext').textContent = text; };
   const noteOff = () => { if (!talking) $('talk').hidden = true; };
@@ -268,22 +299,22 @@
   const keys = {}; let target = null, pending = null, mode = 'locked', req = null, held = null, mouse = { x: -99, y: -99 };
   const KEYMAP = { ArrowLeft: 'l', a: 'l', ArrowRight: 'r', d: 'r', ArrowUp: 'u', w: 'u', ArrowDown: 'd', s: 'd' };
   addEventListener('keydown', (e) => {
+    if (typing) { e.preventDefault(); if (!e.repeat) typeLetter(e.key); return; }
+    if(talking && casting && e.target===$('src')) src.blur();
     if (e.target === $('src')) return;
-    if (meanReq && !talking) { if (e.key === ' ') holding = true; e.preventDefault(); return; }
     if (talking) { if (e.key === ' ' || e.key === 'Enter' || e.key === 'e') nextLine(); e.preventDefault(); return; }
     if (mode !== 'walk') return;
     const k = KEYMAP[e.key]; if (k) { keys[k] = true; target = null; pending = null; e.preventDefault(); }
     if (e.key === ' ' || e.key === 'e' || e.key === 'Enter') { const n = nearest(30); if (n) use(n); e.preventDefault(); }
   });
-  addEventListener('keyup', (e) => { if (e.key === ' ') holding = false; const k = KEYMAP[e.key]; if (k) keys[k] = false; });
-  addEventListener('pointerup', () => { holding = false; });
+  addEventListener('keyup', (e) => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
   const wpos = (e) => { const r = cv.getBoundingClientRect(); return { x: cam.x + (e.clientX - r.left) / r.width * view.w, y: cam.y + (e.clientY - r.top) / r.height * view.h }; };
   const plotAt = (b, w) => { if (w.y < b.y - 34 || w.y > b.y + 14) return -1; const i = Math.round((w.x - b.x0) / 16); return i >= 0 && i < b.n ? i : -1; };
   const wispAt = (w) => { let best = null, bd = 15; for (const k of ['lo', 'hi']) { const q = W[k]; if (!q) continue; const d = Math.hypot(q.x - w.x, q.y - 10 - w.y); if (d < bd) { bd = d; best = q; } } return best; };
   const plant = (w) => { const b = req.bed, index = clamp(Math.round((w.x - b.x0) / 16), 0, b.n), r = req, who = held.w.kind; held = null; req = null; r.resolve({ who, index }); };
   cv.addEventListener('pointerdown', (e) => {
+    if (typing) return;
     if (talking) { nextLine(); return; }
-    if (meanReq) { holding = true; return; }
     const w = wpos(e); mouse = w;
     if (req) {
       if (req.kind === 'plot') { const i = plotAt(req.bed, w); if (i >= 0) { const r = req; req = null; r.resolve(i); } }
@@ -308,8 +339,29 @@
   const used = (o) => new Promise((res) => { o.onUse = () => { o.onUse = null; res(); }; });
 
   // ---------- meaning it: the player holds, a light fills, and a wisp comes ----------
-  let meanReq = null, holding = false;
-  const meanIt = (at) => new Promise((res) => { holding = false; meanReq = { at, p: 0, res, hum: 0 }; goal('Hold Space, or hold the mouse button, and mean it.'); });
+  const ritual = (word, at, hint) => new Promise(resolve => {
+    typing = {word, at, n:0, since:now, stages:[now], resolve}; goal(hint); document.activeElement.blur();
+    $('slate').inert = true; $('letters').replaceChildren(); $('letters').hidden = false;
+    for (const [i,letter] of [...word].entries()) {
+      const tile=document.createElement('button'); tile.textContent=letter.toUpperCase();
+      tile.onclick=()=>{if(typing?.n===i)typeLetter(letter);}; $('letters').append(tile);
+    }
+  });
+  const typeLetter = key => {
+    const t=typing; if(!t || t.n===t.word.length)return;
+    if(key==='Backspace') t.n=Math.max(0,t.n-1);
+    else if(key.toLowerCase()===t.word[t.n]) {t.n++; SFX.hop();} else return;
+    t.since=now; t.stages.length=t.n+1; t.stages[t.n]=now;
+    [...$('letters').children].forEach((b,i)=>b.classList.toggle('filled',i<t.n));
+    if(t.n===t.word.length) sleep(.4).then(()=>{
+      typing=null; $('slate').inert=false; $('letters').hidden=true; goal(''); t.resolve();
+    });
+  };
+  const fieldPan = async bound => {
+    const previous=focus, origin={x:cam.x+view.w/2,y:cam.y+view.h/2};
+    pan={bound,start:now,origin}; await sleep(bound ? 4.5 : 5.5);
+    pan=null; focus=previous;
+  };
 
   // ---------- the slate ----------
   const src = $('src');
@@ -340,10 +392,10 @@
   };
   const lineOf = (re) => { const m = re.exec(src.value); return m ? src.value.slice(0, m.index).split('\n').length : 0; };
   const RE = { mid: /^(\s*)mid\s*=.*$/m, lo: /^( {5,})lo\s*=.*$/m, hi: /^( {5,})hi\s*=.*$/m };
-  const writeLine = (name, expr) => { if (!RE[name].test(src.value)) return; src.value = src.value.replace(RE[name], '$1' + name + ' = ' + expr); gutter(); hl(lineOf(RE[name])); SFX.tick(); };
+  const writeLine = (name, expr) => { resetHelp(); if (!RE[name].test(src.value)) return; src.value = src.value.replace(RE[name], '$1' + name + ' = ' + expr); gutter(); hl(lineOf(RE[name])); SFX.tick(); };
   src.addEventListener('input', () => { gutter(); hl(0); $('bind').hidden = true; });
   src.addEventListener('scroll', gutter);
-  src.addEventListener('keydown', (e) => { if (e.key === 'Tab') { e.preventDefault(); const s = src.selectionStart; src.value = src.value.slice(0, s) + '    ' + src.value.slice(src.selectionEnd); src.selectionStart = src.selectionEnd = s + 4; gutter(); } });
+  src.addEventListener('keydown', (e) => { if (e.key === 'Tab' && !src.readOnly) { e.preventDefault(); const s = src.selectionStart; src.value = src.value.slice(0, s) + '    ' + src.value.slice(src.selectionEnd); src.selectionStart = src.selectionEnd = s + 4; src.dispatchEvent(new Event('input')); } });
 
   // ---------- view ----------
   const view = { w: 320, h: 200, z: 3 }, cam = { x: 0, y: 0, fx: 0, fy: 0 };
@@ -363,21 +415,21 @@
 
   // ---------- light ----------
   let light = 100, lightTo = null, tally = null, dew = 100, dewRun = false, dewShown = false;
-  const hud = () => { $('light').hidden = night > .8; $('dew').hidden = !dewShown; $('dew').textContent = 'Dew ' + Math.round(dew) + '%'; $('light').textContent = 'Daylight ' + Math.round(light) + '%'; const a = $('asks'); a.hidden = tally === null; if (tally !== null) a.textContent = tally; };
+  const hud = () => { $('dew').hidden = !dewShown; $('dew').textContent = 'Dew ' + Math.round(dew) + '%'; const a = $('asks'); a.hidden = tally === null; if (tally !== null) a.textContent = tally; };
 
   // ---------- ambient ----------
   const smoke = [], bfly = [];
   for (let i = 0; i < 9; i++) bfly.push({ x: rnd(60, 700), y: rnd(120, 360), tx: rnd(60, 700), ty: rnd(120, 360), ph: rnd(0, 6), c: ['#fff3c4', '#ffb3c8', '#bfe3ff', '#ffd76a'][i % 4] });
-  const moth = { x: 520, y: 200, vis: false, fly: null };
+  const hungryWisp = { x: 520, y: 200, vis: false, fly: null };
 
   const update = (dt) => {
     now += dt;
+    if (!frozen && night < .01) fieldTime += dt;
     for (let i = waits.length - 1; i >= 0; i--) if (waits[i].f()) { const w = waits.splice(i, 1)[0]; w.res(); }
     if (dewRun && !frozen) dew = Math.max(20, dew - dt * 80 / 300);
     if (lightTo !== null) { light += (lightTo - light) * Math.min(1, dt * 1.2); if (Math.abs(lightTo - light) < .4) { light = lightTo; lightTo = null; } }
     if (nightTo !== null) { night += (nightTo - night) * Math.min(1, dt * 1.1); if (Math.abs(nightTo - night) < .01) { night = nightTo; nightTo = null; } }
     hud();
-    if (meanReq) { const m = meanReq; m.p = clamp(m.p + (holding ? dt / 1.5 : -dt * .9), 0, 1); m.hum -= dt; if (holding && m.hum <= 0) { m.hum = .14; SFX.hum(m.p); } if (m.p >= 1) { meanReq = null; holding = false; goal(''); m.res(); } }
     if (AC && !frozen && Math.random() < dt * (night > .5 ? 1.1 : .35)) (night > .5 ? SFX.cricket : SFX.bird)();
     const glide = (w, tx, ty, sp) => { const dx = tx - w.x, dy = ty - w.y, L = Math.hypot(dx, dy), s = sp * dt; if (L <= s) { w.x = tx; w.y = ty; return true; } w.x += dx / L * s; w.y += dy / L * s; return false; };
     for (const w of wisps) {
@@ -387,7 +439,7 @@
       else if (ab && w.kind !== 'mid') { const s = seatOf(w); glide(w, s.x, s.y, 240); }
       else if (!ab && w.follow) { const ox = w.kind === 'mid' ? 4 : w.kind === 'lo' ? -15 : 19; glide(w, you.x + ox, you.y - (w.kind === 'mid' ? 34 : 42), 60 + dist(w, you) * 2); }
     }
-    for (const m of [moth, ...folk]) if (m.fly) { if (glide(m, m.fly.x, m.fly.y, m.fly.speed)) { const r = m.fly.res; m.fly = null; r(); } }
+    for (const m of [hungryWisp, ...folk]) if (m.fly) { if (glide(m, m.fly.x, m.fly.y, m.fly.speed * (m===hungryWisp ? 1+.68*Math.sin(now*6) : 1))) { const r = m.fly.res; m.fly = null; r(); } }
     for (const f of folk) if (f.hop > 0) f.hop -= dt;
     for (const s of sparks) { s.t += dt; s.x += s.vx * dt; s.y += s.vy * dt; s.vy += 26 * dt; }
     for (let i = sparks.length - 1; i >= 0; i--) if (sparks[i].t > sparks[i].life) sparks.splice(i, 1);
@@ -421,8 +473,13 @@
         const L = Math.hypot(b.tx - b.x, b.ty - b.y) || 1; b.x += (b.tx - b.x) / L * 16 * dt; b.y += (b.ty - b.y) / L * 16 * dt + Math.sin(now * 9 + b.ph) * .25;
       }
     }
+    if(pan) {
+      const elapsed=now-pan.start, hold=pan.bound?0:1;
+      let t=elapsed<2.5?elapsed/2.5:1-clamp((elapsed-2.5-hold)/2,0,1);
+      t=t*t*(3-2*t); focus={x:pan.origin.x+(390-pan.origin.x)*t,y:pan.origin.y+(1110-pan.origin.y)*t};
+    }
     const f = focus || you, tx = clamp(f.x - view.w / 2, 0, WW - view.w), ty = clamp(f.y - (focus ? 0 : 16) - view.h / 2, 0, WH - view.h);
-    const k = Math.min(1, dt * (focus ? 4 : 30)); cam.fx += (tx - cam.fx) * k; cam.fy += (ty - cam.fy) * k; cam.x = Math.round(cam.fx); cam.y = Math.round(cam.fy);
+    const k = pan ? 1 : Math.min(1, dt * (focus ? 4 : 30)); cam.fx += (tx - cam.fx) * k; cam.fy += (ty - cam.fy) * k; cam.x = Math.round(cam.fx); cam.y = Math.round(cam.fy);
     if (talking && typed < lines[li].length) { typeT += dt; while (typeT > .016 && typed < lines[li].length) { typeT -= .016; typed++; if (typed % 3 === 0 && lines[li][typed - 1] !== ' ') SFX.talk(); } $('ttext').textContent = lines[li].slice(0, typed); if (typed >= lines[li].length && choices && li === lines.length - 1) showChoices(); }
   };
 
@@ -456,6 +513,7 @@
   };
 
   // Paint the lamps after dusk grading so their warm cores survive the blue shadows.
+  const wispLight = w => w===W.mid && now-flickerAt<1 && Math.sin((now-flickerAt)*4*Math.PI)>0 ? .2 : 1;
   const drawAtmosphere = () => {
     const dot = (x, y, w, h, col) => {
       cx.fillStyle = col;
@@ -517,19 +575,134 @@
     for (const ch of s) { const g = GLY[ch]; for (let r = 0; r < 5; r++) for (let c = 0; c < g[r].length; c++) if (g[r][c] === '1') cx.fillRect(ox + c, y + r, 1, 1); ox += g[0].length + 1; }
     ox += 2; cx.fillStyle = '#ffffff'; for (const ch of n) { const g = DIG[ch]; for (let i = 0; i < 15; i++) if (g[i] === '1') cx.fillRect(ox + i % 3, y + Math.floor(i / 3), 1, 1); ox += 4; }
   };
+  const fieldPath = y => Math.round(416+34*Math.sin(y*.011)+.045*(y-480));
+  const drawFarField = () => {
+    if(cam.y+view.h<480)return;
+    for(let row=0;row<29;row++) {
+      const y=501+row*22;
+      if(y<cam.y-8||y>cam.y+view.h+30)continue;
+      const start=96+(row%3)*4, boundary=8+hash(row,31)%16;
+      const working=row%4===0 && night<.01, bound=now>=harvestAt;
+      const phase=(bound?(now-harvestAt)*3.4:fieldTime*.24)+row*.61+6;
+      const at=Math.floor(phase)%boundary, scale=1-row*.009;
+      // These long furrows catch the silver light on their upper lip.
+      const ridge=cx.createLinearGradient(0,y-cam.y-7,0,y-cam.y+4);
+      ridge.addColorStop(0,'#584a4820');ridge.addColorStop(.7,'#c6a37c55');ridge.addColorStop(1,'#54414b66');
+      cx.fillStyle=ridge;cx.fillRect(start-cam.x-6,y-cam.y-7,574,11);
+      for(let i=0;i<48;i++) {
+        const x=start+i*12;
+        if(x<cam.x-16||x>cam.x+view.w+12 || Math.abs(x+6-fieldPath(y))<9)continue;
+        const state=working && (i>>1)<at ? 3 : 0, im=IMG[SPR[state]];
+        const h=Math.max(2,Math.round((im.height-hash(row,i)%3)*scale));
+        cx.drawImage(im,x-cam.x+(hash(i,row)%3),y-cam.y-h,14,h);
+      }
+      if(working) {
+        const img=IMG[['reaper_f_move','farmer_move','reaper_m_move'][(row/4)%3|0]];
+        const step=phase%1, stoop=bound?0:Math.max(0,Math.sin(step*2*Math.PI));
+        const frame=Math.floor(step*4), h=Math.round((30-8*stoop)*scale);
+        const wx=start+at*24+Math.max(0,step-.7)*80-cam.x;
+        if(bound)cx.drawImage(IMG.basket,fieldPath(y)-20-cam.x,y-cam.y-10,12,12);
+        if(bound) cx.drawImage(img,frame*34,0,34,34,wx,y-h-cam.y+2,Math.round(27*scale),h);
+        else {
+          const worker=IMG[(row%8?'reaper_f':'reaper_m')+'_taste'];
+          const size=Math.round(32*scale);
+          cx.drawImage(worker,frame*32,0,32,32,wx,y-size-cam.y+2,size,size);
+        }
+      }
+      if(bound && pan) {
+        const age=Math.max(0,now-harvestAt-row*.055);let lo=0,hi=24,mid=12;
+        for(let k=0;k<Math.min(7,1+Math.floor(age*4));k++){mid=(lo+hi)>>1;if(mid<boundary)lo=mid+1;else hi=mid;}
+        const x=start+mid*24;glow(x,y-12,8,.65);cx.fillStyle='#ffe8a3';cx.fillRect(x-cam.x,y-13-cam.y,2,2);
+      }
+    }
+    const haze=cx.createLinearGradient(0,485-cam.y,0,1132-cam.y);
+    haze.addColorStop(0,'rgba(213,226,214,0)');haze.addColorStop(.78,'rgba(213,226,214,.32)');haze.addColorStop(1,'#d5e2d6');
+    cx.fillStyle=haze;cx.fillRect(0,485-cam.y,view.w,WH-485);
+  };
+  const drawRitual = () => {
+    if(!typing)return;
+    const {word,n,at,since}=typing, x=at.x-cam.x,y=at.y-cam.y, elapsed=now-since;
+    cx.save();cx.lineWidth=1;
+    if(word==='come' && at===stone) {
+      if(n>=2) {
+        cx.strokeStyle='#fff1bb';cx.beginPath();
+        const limit=n>2?38:Math.min(38,6+elapsed*55);
+        for(let i=0;i<=limit;i++){const a=i*.21,r=i*.12;cx.lineTo(x+Math.cos(a)*r,y-21+Math.sin(a)*r);}
+        cx.stroke();
+      }
+      if(n>=3) {
+        cx.strokeStyle='#ffe6a5';cx.beginPath();
+        for(let i=0;i<24;i++)cx.lineTo(x+Math.sin(now*2+i*.32)*2,y-25-i);
+        cx.stroke(); if(n===4)cx.drawImage(elapsed<.15?IMG.w_mid_h:IMG.w_mid,x-8,y-62);
+      }
+    } else if(word==='come') {
+      if(n>=2)for(let i=0;i<3;i++){
+        const age=now-typing.stages[2]-i*.28;
+        if(age<0 || age>1.4)continue;
+        const r=3+age*10;cx.strokeStyle='rgba(216,250,242,.8)';cx.beginPath();cx.ellipse(446-cam.x,174-cam.y,r,r*.43,0,0,2*Math.PI);cx.stroke();
+      }
+      if(n>=3)for(const [kind,sx,sy] of [['lo',150,420],['hi',640,120]]) {
+        const ex=clamp(sx-cam.x,9,view.w-10),ey=clamp(sy-cam.y,14,view.h-12);
+        glow(ex+cam.x,ey+cam.y,10,.8,GLOWC[kind]);cx.fillStyle='rgb('+GLOWC[kind]+')';cx.fillRect(ex,ey,2,2);
+      }
+    } else if(word==='keep') {
+      // The chalk strokes settle into the engraving, disappearing under the seam.
+      cx.save();cx.beginPath();cx.rect(x-28,y-64,56,59);cx.clip();
+      if(n<4) {
+        cx.font='6px monospace';cx.textAlign='center';cx.fillStyle='#f6e4bf';
+        const chalk=src.value.split('\n').map(v=>v.trim()).filter(v=>/^(mid|lo|hi)\s*=/.test(v)).slice(-3);
+        chalk.forEach((v,i)=>cx.fillText(v,x,y-56+i*7+n*8,52));
+      }
+      for(let j=0;j<8;j++){cx.fillStyle=j%3===0?'#ffda87':'#d1e4d6';cx.fillRect(x-14+(j%3)*2,y-45+j*3+n*8,20-(j%4)*3,1);}
+      cx.restore();
+    }
+    const ux=clamp(you.x-cam.x,32,view.w-32), uy=clamp(you.y-cam.y+17,24,view.h-8);
+    cx.font='bold 12px "Pixelify Sans", monospace';cx.textAlign='center';
+    cx.fillStyle='#282338';cx.fillRect(ux-23,uy-12,46,16);
+    [...word].forEach((letter,i)=>{cx.fillStyle=i<n?'#ffdf86':'#928aa4';cx.fillText(letter.toUpperCase(),ux-15+10*i,uy);});
+    cx.restore();
+  };
+  const drawGhost = () => {
+    if(!ghost||!casting)return;
+    const age=now-ghost.start;
+    if(age>4){ghost=null;return;}
+    cx.save();cx.globalAlpha=Math.min(.75,4-age);
+    let x,y;
+    if(ghost.bed) {
+      const b=ghost.bed;
+      const i=ghost.kind==='plot'?(b.lo+b.hi)>>1:b.mid+(b.known[b.mid]===1?1:0);
+      x=px(b,i)-cam.x;y=b.y-cam.y;
+      if(ghost.kind==='wisp'){
+        const w=W[b.known[b.mid]===1?'lo':'hi'];cx.strokeStyle='#f1dfaa';cx.beginPath();cx.moveTo(w.x-cam.x,w.y-cam.y);cx.lineTo(x,y-8);cx.stroke();
+      }
+    } else {
+      const left=view.w-108,top=17;cx.fillStyle='#252c41';cx.fillRect(left,top,98,43);
+      for(let i=0;i<8;i++)cx.drawImage(IMG[i===4 && age>1?'wheat_r':'wheat_d'],left+5+i*11,top+28,10,9);
+      const t=clamp(age-1,0,1);cx.drawImage(IMG.w_lo,left+5+t*55,top+16,10,8);
+      cx.drawImage(IMG.w_mid,left+5+44*clamp(age,0,1),top+11,9,12);
+      x=left+50;y=top+35;
+    }
+    cx.drawImage(IMG.yusra_act,32*(Math.floor(age*5)%4),0,32,40,x-25,y-35,25,31);
+    cx.fillStyle='#fff4bd';cx.fillRect(x-3,y-8,5,1);cx.fillRect(x-1,y-10,1,5);cx.restore();
+  };
   const SPR = ['wheat_d', 'wheat_r', 'wheat_g', 'wheat_s'];
   const drawBed = (b) => {
     const live = b === ab;
     for (let i = 0; i < b.n; i++) {
       const st = b.known[i], inf = !st && live ? (i < b.lo ? 1 : i >= b.hi ? 2 : 0) : 0, im = IMG[SPR[st]], X = Math.round(px(b, i) - im.width / 2) - cam.x, Y = b.y - im.height - cam.y + 2;
+      cx.save();
+      if(typing?.word==='come' && typing.at===stone && typing.n && b===topRow && Math.abs(px(b,i)-stone.x)<54){
+        cx.translate(X+8,b.y-cam.y);cx.rotate(Math.sign(stone.x-px(b,i))*.4);cx.translate(-X-8,cam.y-b.y);
+      }
       const variation = hash(i + 5, b.y);
       const trim = variation % 3;
       if (variation & 4) {
         cx.save(); cx.translate(X + im.width, Y + trim); cx.scale(-1, 1);
         cx.drawImage(im, 0, 0, im.width, im.height - trim); cx.restore();
       } else cx.drawImage(im, X, Y + trim, im.width, im.height - trim);
+      cx.restore();
       if (inf) { const dx = px(b, i) - cam.x; cx.fillStyle = '#1b1408'; cx.fillRect(dx - 3, Y + 1, 6, 6); cx.fillStyle = inf === 1 ? '#ffd24a' : '#7fe04a'; cx.fillRect(dx - 2, Y + 2, 4, 4); }
-      if (!st) { const h = hash(i * 7 + b.y, Math.floor((frozen ? 0 : now) * 3 + i * .37)); if (h % 5 === 0) { cx.fillStyle = '#ffffff'; cx.fillRect(X + 4 + (h >>> 4) % 14, Y + 4 + (h >>> 9) % 16, 1, 1); } }
+      if (!st) { const h = hash(i * 7 + b.y, Math.floor((frozen ? 0 : now) * 3 + i * .37)); if (h % 5 === 0) { cx.fillStyle = '#ffffff'; cx.fillRect(X + 4 + (h >>> 4) % 14, Y + 1 + (h >>> 9) % Math.max(1,im.height-2), 1, 1); } }
     }
     const p = IMG.end_post; cx.drawImage(p, Math.round(px(b, b.n) - p.width / 2) - cam.x, b.y - p.height - cam.y + 2);
   };
@@ -538,6 +711,7 @@
     cx.imageSmoothingEnabled = false;
     cx.drawImage(ground, -cam.x, -cam.y);
     for (const g of glints) { const s = Math.sin((frozen ? 0 : now) * g.sp + g.ph); if (s > .55) { cx.fillStyle = s > .9 ? '#ffffff' : '#b8ecff'; cx.fillRect(g.x - cam.x + Math.round(s * 2), g.y - cam.y, g.w, 1); } }
+    drawFarField();
     const list = [];
     for (const o of things.concat(scenery)) if (o.x > cam.x - 80 && o.x < cam.x + view.w + 80 && o.y > cam.y - 10 && o.y < cam.y + view.h + 160) list.push(o);
     for (const p of people) if (!p.hide) list.push(p);
@@ -558,8 +732,19 @@
         cx.drawImage(im, frame * width, 0, width, im.height, x - Math.floor(width / 2), y - im.height + 1 - up, width, im.height);
         continue;
       }
-      if (o.dir !== undefined) { drawPerson(o); continue; }
+      if (o.dir !== undefined) {
+        cx.save(); if (o===you && now-stoopAt<.8) {const y=you.y-cam.y;cx.translate(0,y);cx.scale(1,.72);cx.translate(0,-y);}
+        drawPerson(o); cx.restore(); continue;
+      }
       const im = IMG[o.n], x = Math.round(o.x - im.width / 2) - cam.x, y = o.y - im.height - cam.y + 2;
+      if(o.n==='reeds' && o.x>410 && typing?.word==='come' && typing.at===you && typing.n){
+        cx.save();cx.translate(o.x-cam.x,o.y-cam.y);cx.rotate(.42);cx.drawImage(im,-im.width/2,-im.height);cx.restore();continue;
+      }
+      if(o===stone && typing && ['open','keep'].includes(typing.word)){
+        const gap=typing.word==='open'?typing.n:4-typing.n, half=im.width>>1;
+        cx.drawImage(im,0,0,half,im.height,x-gap,y,half,im.height);
+        cx.drawImage(im,half,0,im.width-half,im.height,x+half+gap,y,im.width-half,im.height);continue;
+      }
       if (o.sway && !frozen) drawSway(o, im, x, y); else cx.drawImage(im, x, y);
     }
 
@@ -569,18 +754,12 @@
     const d = (100 - light) / 100, m = (a, b, t) => Math.round(a + (b - a) * Math.min(1, t));
     if (d > .005 || frozen || night > .01) { cx.globalCompositeOperation = 'multiply'; cx.fillStyle = night > .01 ? `rgb(${m(255, 99, night)},${m(255, 113, night)},${m(255, 179, night)})` : frozen ? 'rgb(118,153,210)' : `rgb(${m(255, 150, d * 1.5)},${m(255, 130, d * 1.5)},${m(255, 170, d * 1.5)})`; cx.fillRect(0, 0, view.w, view.h); cx.globalCompositeOperation = 'source-over'; }
     drawAtmosphere();
-    if (moth.vis) {
-      // The pale wings catch lamplight against the cold hollow.
-      const wing = IMG.moth, beat = (1 + Math.sin(now * 14)) / 2;
-      const width = wing.width - Math.round(beat * 9);
-      const x = Math.round(moth.x) - cam.x, y = Math.round(moth.y + Math.sin(now * 3) * 2) - cam.y;
-      glow(moth.x, moth.y - 4, 26, .21, '176,156,215');
-      for (let i = 0; i < 12; i++) {
-        const drift = (now * .8 + i / 12) % 1;
-        cx.fillStyle = i % 2 ? '#9e91a7' : '#635872';
-        cx.fillRect(x + Math.round(Math.sin(i * 4) * (8 + drift * 12)), y + Math.round(drift * 15), 1, 1);
-      }
-      cx.drawImage(wing, x - Math.floor(width / 2), y - 16 - Math.round(beat * 2), width, wing.height);
+    if (hungryWisp.vis) {
+      // Torn smoke catches the lamplight around the dark core.
+      const x=Math.round(hungryWisp.x-cam.x+Math.sin(now*9)*2),y=Math.round(hungryWisp.y-cam.y+Math.sin(now*5)*2);
+      for(let i=1;i<9;i++){cx.fillStyle=i%2?'#71736b':'#525a56';cx.fillRect(x-i,y-6+Math.round(Math.sin(now*3+i*.5)*2),2,1);}
+      cx.drawImage(IMG.hungry,x-11,y-21);
+      if(Math.hypot(hungryWisp.x-stone.x,hungryWisp.y-stone.y+26)<38 || wisps.some(w=>dist(w,hungryWisp)<24)){glow(x+cam.x,y+cam.y-8,8,.65,'242,126,61');cx.fillStyle='#ffd585';cx.fillRect(x,y-8,2,2);}
     }
     if (casting) drawSlateFace();
     for (const b of beds) {
@@ -592,10 +771,9 @@
     if (req && req.kind === 'plot') { const i = plotAt(req.bed, mouse); if (i >= 0) { const x = px(req.bed, i) - cam.x, y = req.bed.y - 38 - cam.y + Math.round(Math.sin(now * 6)); cx.fillStyle = '#fff3c4'; cx.fillRect(x - 2, y, 5, 2); cx.fillRect(x - 1, y + 2, 3, 1); cx.fillRect(x, y + 3, 1, 1); } }
     if (held && req) { const b = req.bed, snap = clamp(Math.round((mouse.x - b.x0) / 16), 0, b.n); cx.fillStyle = 'rgba(255,255,255,.8)'; cx.fillRect(px(b, snap) - 7 - cam.x, b.y + 2 - cam.y, 14, 1); }
     cx.globalCompositeOperation = 'lighter';
-    if (meanReq) { const a = meanReq.at; glow(a.x, a.y - 18, 12 + meanReq.p * 46, .25 + meanReq.p * .6, '255,224,150'); }
     if (stone.n === 'way') glow(stone.x, stone.y - 18, 26 + night * 14, .24 + night * .12 + Math.sin(now * 2) * .045, '255,205,110');
     if (night > .05) { glow(cottage.x - 43, cottage.y - 95, 28, .6 * night); glow(cottage.x - 20, cottage.y - 55, 25, .55 * night); glow(lamp.x + 6, lamp.y - 22, 34, .5 * night); }
-    for (const w of wisps) glow(w.x, w.y - 9, 15, .5 * (1 - w.dim * .7), GLOWC[w.kind]);
+    for (const w of wisps) glow(w.x, w.y - 9, 15, .5 * (1 - w.dim * .7) * wispLight(w), GLOWC[w.kind]);
     for (const s of sparks) { cx.fillStyle = s.green ? 'rgba(190,255,150,.9)' : 'rgba(255,230,150,.95)'; cx.fillRect(Math.round(s.x) - cam.x, Math.round(s.y) - cam.y, 1, 1); }
     cx.globalCompositeOperation = 'source-over';
     const labels = [];
@@ -603,7 +781,7 @@
       const speaking = bubs.some(b => b.w === w && b.until > now);
       const mood = w.dim > .5 ? '_puzzle' : w.happy > 0 ? '_h' : speaking && Math.sin(now * 12) > -.3 ? '_talk' : '';
       const im = IMG['w_' + w.kind + mood], X = Math.round(w.x - im.width / 2) - cam.x, Y = Math.round(w.y - im.height + Math.sin(now * (w.kind === 'hi' ? 7 : w.kind === 'lo' ? 2 : 4) + w.ph) * (w.kind === 'hi' ? 2 : 1)) - cam.y;
-      cx.globalAlpha = 1 - w.dim * .45; cx.drawImage(im, X, Y); cx.globalAlpha = 1;
+      cx.globalAlpha = (1 - w.dim * .45) * wispLight(w); cx.drawImage(im, X, Y); cx.globalAlpha = 1;
       if (ab && !w.notag) {
         const v = held && held.w === w ? clamp(Math.round((mouse.x - ab.x0) / 16), 0, ab.n) : ab[w.kind];
         if (v >= 0) labels.push({ w, v, x: Math.round(w.x) - cam.x, y: Y - 9 });
@@ -617,6 +795,7 @@
     }
     const n = !talking && mode === 'walk' && nearest(34);
     if (n) { const h = n === goat ? 20 : n === stone ? 36 : 30, y = Math.round(n.y - h - 10 + Math.sin(now * 5) * 1.5) - cam.y, x = Math.round(n.x) - cam.x; cx.fillStyle = '#2a1a08'; cx.fillRect(x - 4, y - 1, 9, 7); cx.fillRect(x - 1, y + 6, 3, 2); cx.fillStyle = '#ffe08a'; cx.fillRect(x - 3, y, 7, 5); cx.fillRect(x, y + 5, 1, 2); cx.fillStyle = '#2a1a08'; cx.fillRect(x - 2, y + 2, 1, 1); cx.fillRect(x, y + 2, 1, 1); cx.fillRect(x + 2, y + 2, 1, 1); }
+    drawGhost(); drawRitual();
     // speech bubbles ride above the canvas
     const r = cv.getBoundingClientRect();
     for (let i = bubs.length - 1; i >= 0; i--) { const b = bubs[i]; if (now > b.until) { b.el.remove(); bubs.splice(i, 1); continue; } b.el.style.left = (r.left + (b.w.x - cam.x) * view.z) + 'px'; let top = b.w.y - 36 - cam.y;
@@ -654,8 +833,8 @@
   const lesson = async (first) => {
     const b = pbed; b.line = LINES[lessons++ % 3]; resetBed(b); b.nums = true; mode = 'locked'; focus = { x: 556, y: 172 };
     if (first) {
-      await say(yusra, ["So you're the one it came to. Good. I'll say all of it once, then your hands will do it.", 'Same as the big field: the ripening creeps out from the water each night. Here the water is the duck pond.', 'So ripe is all on the pond side and green is all on the far side. Nothing is mixed.', 'That means you never have to taste every plot. One taste can tell you about half the row.', 'You need three wisps. One to taste. You have that one. And two to keep your place.', "Call them. Don't say it. Mean it."]);
-      await meanIt(you);
+      await say(yusra, ["So you're the one it came to. Good. I'll say all of it once, then your hands will do it.", 'Same as the big field: the ripening creeps out from the water each night. Here the water is the duck pond.', 'So ripe is all on the pond side and green is all on the far side. Nothing is mixed.', 'That means you never have to taste every plot. One taste can tell you about half the row.', 'You need three wisps. One to taste. You have that one. And two to keep your place.', "Call them. The same word. Mean it."]);
+      await ritual('come', you, 'Type COME again.');
       const lo = mkWisp('lo', 150, 420), hi = mkWisp('hi', 640, 120); lo.follow = hi.follow = true; SFX.come();
       await Promise.all([flyTo(lo, you.x - 16, you.y - 40, 300), flyTo(hi, you.x + 16, you.y - 40, 300)]); puff(lo.x, lo.y - 8, 10); puff(hi.x, hi.y - 8, 10);
       bubble(lo, 'Lo.', 1.8); await sleep(.7); bubble(hi, 'HI! Hi. I am Hi.', 2); await sleep(1.6);
@@ -663,7 +842,7 @@
     }
     ab = b; W.mid.follow = false; flyTo(W.mid, px(b, 0) - 18, b.y - 44, 170);
     await sleep(.9); bubble(W.lo, 'Nothing behind me yet.', 2.6); await sleep(1.2); bubble(W.hi, "I'm on the stump. Nothing after me yet.", 2.8); await sleep(1.8);
-    if (first) await say(yusra, ['Lo says: everything behind me is ripe. Lo stands on the first plot we are not sure of.', 'Hi says: I am green, and so is everything after me. To start, Hi sits on the stump past the last plot.', 'The line is somewhere from Lo up to Hi. So send Mid to taste the middle plot.', 'If it is ripe, a ripe plot cannot be the line. So Lo hops to just past it.', 'If it is green, it might be the very first green one. So Hi comes onto it, and keeps it.', 'When Lo and Hi stand on the same plot, that plot is the line: the first green one. Eight plots. Go.']);
+    if (first) await say(yusra, ["Lo's sentence: everything behind Lo is ripe. Lo stands on the first plot we are not sure of.", "Hi's sentence: Hi is green, and so is everything after. To start, Hi sits on the stump past the last plot.", 'The line is somewhere from Lo up to Hi. So send Mid to taste the middle plot.', 'If it is ripe, a ripe plot cannot be the line. So Lo hops to just past it.', 'If it is green, it might be the very first green one. So Hi comes onto it, and keeps it.', 'When Lo and Hi stand on the same plot, that plot is the line: the first green one. Eight plots. Go.']);
     let n = 0;
     while (b.lo < b.hi) {
       const m = (b.lo + b.hi) >> 1, even = (b.hi - b.lo) % 2 === 0 && b.hi - b.lo > 2; let mid = m;
@@ -694,11 +873,14 @@
   const clearRows = () => { for (const r of rows) { resetBed(r); r.nums = true; } };
   const demonstrate = async () => {
     const my = ++demoId, b = rows[0], live = () => my === demoId; let stuck = false;
+    resetHelp(); clearTarget();
+    const targetText="Wen's way drinks about 13,000 tastes across the whole field, every dawn. Bring it to half that or less.";
+    wsay('mid',targetText);bubble(W.mid,targetText,Infinity);targetBubble=bubs[bubs.length-1];targetBubble.el.classList.add('target-bubble');
     rules = {}; clearRows(); ab = b; req = null; held = null; tally = null;
     await flyTo(W.mid, px(b, 0) - 18, b.y - 44, 240); if (!live()) return;
     while (b.lo < b.hi) {
       if (!rules.mid) {
-        wsay('mid', 'This slate is the way. Every ? is something you have not told us yet. Blue is Lo, red is Hi, gold is me. So: where do I taste? Touch a plot between Lo and Hi.');
+        if(!targetBubble) wsay('mid', openingPrompt);
         for (;;) {
           const i = await askPlot(b); if (!live()) return; const m = (b.lo + b.hi) >> 1;
           if (i < b.lo || i >= b.hi) { SFX.bad(); wsay('mid', 'That plot is settled. Touch one between Lo and Hi.'); continue; }
@@ -738,48 +920,106 @@
   };
   let running = false;
   const fail = (e) => { running = false; hl(e.line || 0, true); SFX.bad(); wsay('mid', e.message + (e.line ? ' (Line ' + e.line + '.)' : '')); $('tally').textContent = ''; };
-  const runAll = async () => {
-    if (running) return; demoId++; req = null; held = null; $('bind').hidden = true;
-    let fn; try { fn = PY.parse(src.value); } catch (e) { fail(e); return; }
-    running = true; let total = 0; $('tally').textContent = ''; wsay('mid', 'Trying it on all three rows.'); clearRows();
-    for (let ri = 0; ri < rows.length; ri++) {
-      const b = rows[ri]; ab = b; const g = PY.run(fn, b.n); let res, count = 0, last = -1, rep = 0;
-      try {
-        let st = g.next();
-        while (!st.done) {
-          const { ask, line, env } = st.value; hl(line);
-          if (typeof env.lo === 'number') b.lo = clamp(env.lo, 0, b.n); if (typeof env.hi === 'number') b.hi = clamp(env.hi, 0, b.n);
-          b.mid = ask; count++; total++; rep = ask === last ? rep + 1 : 0; last = ask;
-          if (rep >= 2 || count > b.n * 3) throw new PY.PyError(`I keep tasting plot ${ask}, and Lo and Hi are not closing in. Look at the line that moves one of them after that answer.`, line);
-          await flyTo(W.mid, px(b, ask), b.y - 44, 340); reveal(b, ask); tally = 'Tastes: ' + total; await sleep(.1);
-          st = g.next(b.known[ask] === 1);
-        }
-        res = st.value;
-      } catch (e) { fail(e); return; }
-      if (typeof res.env.lo === 'number') b.lo = clamp(res.env.lo, 0, b.n); if (typeof res.env.hi === 'number') b.hi = clamp(res.env.hi, 0, b.n); b.mid = -1;
-      if (res.value !== b.line) {
-        for (let i = 0; i < b.n; i++) b.known[i] = i < b.line ? 1 : 2; b.wrong = typeof res.value === 'number' ? res.value : 0; b.lineAt = b.line;
-        fail({ message: `Row ${ri + 1}: your way says the first green plot is plot ${res.value}. Look at the row. Plots 0 to ${b.line - 1} are ripe, so the first green plot is plot ${b.line}. The red mark is where the reapers would have stopped.` }); return;
+  // All three demonstrations, the weather extremes and the field census use the same Python function.
+  const morning = async (fn, boundary, bed, pace) => {
+    const run = PY.run(fn,24);
+    let state=run.next(), tastes=0, last=-1, repeats=0;
+    while (!state.done) {
+      const {ask,line,env}=state.value;
+      repeats = ask===last ? repeats+1 : 0; last=ask; tastes++;
+      if(repeats>=2 || tastes>72) throw new PY.PyError(`I keep tasting plot ${ask}, and Lo and Hi are not closing in. Look at the line that moves one of them after that answer.`,line);
+      if(bed) {
+        hl(line); ab=bed;
+        for(const name of ['lo','hi']) if(Number.isInteger(env[name])) bed[name]=clamp(env[name],0,24);
+        bed.mid=Number.isInteger(env.mid)?env.mid:ask;
+        await flyTo(W.mid,px(bed,ask),bed.y-44,pace==='quick'?1200:340);
+        reveal(bed,ask); if(pace!=='quick') tally='Tastes: '+(pace+tastes);
+        await sleep(pace==='quick'?.035:.1);
       }
-      b.lineAt = b.line; for (let i = 0; i < b.n; i++) b.known[i] = i < b.line ? 1 : 2; puff(px(b, b.line) - 8, b.y - 16, 10); await sleep(.4);
+      if(bed && Number.isInteger(env.mid) && env.mid!==ask) await flyTo(W.mid,px(bed,clamp(env.mid,0,24)),bed.y-44,500);
+      state=run.next(ask<boundary);
     }
-    running = false; hl(0); for (const k of ['mid', 'lo', 'hi']) W[k].happy = 4; castTastes = total; SFX.win();
-    $('tally').textContent = `Your way: ${total} tastes. Wen's way: ${WEN} tastes.`;
-    wsay('mid', total <= WEN * .5 ? `All three lines, in ${total} tastes. Wen's way took ${WEN}. Bind it, and that daylight goes back to the wheat.` : total < WEN ? `It works: ${total} tastes, against Wen's ${WEN}. Could each taste settle more? You can bind it as it is.` : `It works. It drinks as much daylight as Wen's did: ${total} tastes. You can bind it. Or think about which plot settles the most.`, true);
-    $('bind').hidden = false;
+    if(bed) {
+      bed.mid=-1; bed.lineAt=boundary; bed.known=Array.from({length:24},(_,i)=>i<boundary?1:2);
+      if(state.value.value===boundary) bed.lo=bed.hi=boundary;
+      else bed.wrong=state.value.value;
+    }
+    return {value:state.value.value,tastes};
+  };
+  const runAll = async () => {
+    if(running || typing)return;
+    demoId++; helpSequence++; ghost=null; clearTarget(); req=null; held=null; running=true;
+    src.readOnly=true; $('bind').hidden=true; $('tally').textContent=''; hl(0);
+    let total=0;
+    try {
+      const fn=PY.parse(src.value); clearRows(); wsay('mid','Trying it on all three rows.');
+      const wrongRow=(row,b,v)=>`Row ${row}: your way says the first green plot is plot ${v}. Look at the row. Plots 0 to ${b-1} are ripe, so the first green plot is plot ${b}. The red mark is where the reapers would have stopped.`;
+      for(const [i,bed] of rows.entries()) {
+        const result=await morning(fn,bed.line,bed,total); total+=result.tastes;
+        if(result.value!==bed.line)throw new Error(wrongRow(i+1,bed.line,result.value));
+        puff(px(bed,bed.line)-8,bed.y-16,10); await sleep(.4);
+      }
+      const bed=rows[0], saved={...bed,known:bed.known.slice()};
+      try {
+        for(const boundary of [24,0]) {
+          resetBed(bed); bed.line=boundary; ab=bed;
+          const text=boundary?'A warm night: every plot ripe.':'A cold night: nothing ripe.';
+          wsay('mid',text); bubble(W.mid,text,2); await sleep(.65);
+          const {value}=await morning(fn,boundary,bed,'quick'); await sleep(.55);
+          if(value!==boundary) throw new Error(boundary
+            ? `On a warm night, your way says the line is at plot ${value}. Every plot was ripe, so the line is the stump, plot 24.`
+            : `On a cold night, your way says the line is at plot ${value}. Nothing was ripe, so the line is plot 0.`);
+        }
+      } finally {Object.assign(bed,saved);}
+      let sum=0;
+      for(let i=0;i<=24;i++) {
+        const r=await morning(fn,i,null);
+        // QUESTION: reject a wrong interior morning using the existing wrong-row line.
+        if(r.value!==i) {ab=bed; bed.known=bed.known.map((_,k)=>k<i?1:2);bed.lineAt=i;bed.wrong=r.value;throw new Error(wrongRow(1,i,r.value));}
+        sum+=r.tastes;
+      }
+      fieldCost=sum*40; castTastes=total; tally='Tastes: '+total; hl(0); SFX.win();
+      for(const w of wisps) w.happy=4;
+      $('tally').textContent=`These three rows: ${total} tastes (Wen's: 44). The whole field: about ${fieldText()} (Wen's: about 13,000).`;
+      wsay('mid',fieldCost<=6500 ? `All three lines, in ${total} tastes. On the whole field, about ${fieldText()} against Wen's 13,000. Bind it, and that daylight goes back to the wheat.` : fieldCost<12960 ? `It works: about ${fieldText()} across the field, against Wen's 13,000. Could each taste settle more? You can bind it as it is.` : `It works. It drinks as much daylight as Wen's did: about ${fieldText()} across the field. You can bind it. Or think about which plot settles the most.`,true);
+      $('bind').hidden=false;
+    } catch(e){fail(e);} finally {running=false;src.readOnly=false;}
   };
   let castTastes = 0, castDone = null, outArmed = false;
   $('run').addEventListener('click', runAll);
   $('show').addEventListener('click', () => { if (running) return; src.value = TEMPLATE; gutter(); $('bind').hidden = true; $('tally').textContent = ''; demonstrate(); });
-  $('memory').addEventListener('click', () => wsay('mid', 'You remember Yusra: "Everything behind Lo is ripe. Hi is green, and so is everything after. Send Mid to the middle plot. If it is ripe, Lo hops to just past it. If it is green, Hi comes onto it. When they stand on the same plot, that plot is the line."'));
+  const openingPrompt='This slate is the way. Every ? is something you have not told us yet. Blue is Lo, red is Hi, gold is me. So: where do I taste? Touch a plot between Lo and Hi.';
+  const clearTarget=()=>{if(targetBubble){targetBubble.until=-1;targetBubble=null;wsay('mid',openingPrompt);}};
+  document.addEventListener('pointerdown',clearTarget,true);
+  const resetHelp=()=>{helpRung=0;helpSequence++;ghost=null;};
+  src.addEventListener('input',()=>{resetHelp();demoId++;req=null;held=null;clearTarget();});
+  $('memory').addEventListener('click',async ()=>{
+    if(running||typing||talking)return;
+    clearTarget(); for(const b of bubs) b.until=-1; const sequence=++helpSequence; helpRung=Math.min(4,helpRung+1);
+    if(helpRung===1) {
+      for(const [name,line] of [['lo','Everything behind Lo is ripe. Lo stands on the first plot we are not sure of.'],['hi','Hi is green, and so is everything after. To start, Hi sits on the stump past the last plot.'],['mid','Mid tastes one plot and says ripe or green.']]) {
+        if(sequence!==helpSequence||!casting)return;
+        wsay(name,line);bubble(W[name],line,3);await sleep(3);
+      }
+    } else if(helpRung===2) { const line='You remember Yusra: "Everything behind Lo is ripe. Hi is green, and so is everything after. Send Mid to the middle plot. If it is ripe, Lo hops to just past it. If it is green, Hi comes onto it. When they stand on the same plot, that plot is the line."'; wsay('mid',line);bubble(W.mid,line,4); }
+    else if(helpRung===3) {
+      ghost={start:now,bed:req?.bed,kind:req?.kind};
+      const line=req?'That is what she would do. Now you.':'That is how she did it at the pond.';
+      wsay('mid',line);bubble(W.mid,line,3);
+    } else {
+      $('slate').inert=true;
+      const yes=await say({name:'Mid',face:'p_mid'},['I can start the showing again, from the ? lines. What you have typed will go. Shall I?'],['Yes, show them again','No']);
+      $('slate').inert=false; if(yes===0)$('show').click();
+    }
+  });
   $('out').addEventListener('click', () => { if (running) return; if (!outArmed) { outArmed = true; $('out').textContent = 'Yes, step out'; wsay('mid', 'If you step out, the stone shuts, and the wheat dries before anyone else can come. Are you sure?'); setTimeout(() => { outArmed = false; $('out').textContent = 'Step out'; }, 6000); return; } castDone('left'); });
-  $('bind').addEventListener('click', () => { if (!running) castDone('bound'); });
+  $('bind').addEventListener('click', async () => { if (running || typing) return; await ritual('keep', stone, 'Type KEEP.'); castDone('bound'); });
   const cast = async () => {
     mode = 'locked'; frozen = true; casting = true; document.body.classList.add('casting'); $('slate').hidden = false; goal(''); noteOff();
     src.value = TEMPLATE; gutter(); fit(); focus = { x: 392, y: 420 }; for (const k in keys) keys[k] = false; for (const k of ['mid', 'lo', 'hi']) W[k].follow = false;
     const done = new Promise((res) => { castDone = res; });
     demonstrate();
-    const how = await done;
+    const how = await done; clearTarget(); resetHelp();
     demoId++; req = null; held = null; running = false; casting = false; frozen = false; document.body.classList.remove('casting'); $('slate').hidden = true; fit(); tally = null; ab = null;
     for (const r of rows) { r.nums = false; r.mid = -1; r.wrong = null; } for (const k of ['mid', 'lo', 'hi']) W[k].follow = true;
     return how;
@@ -794,8 +1034,8 @@
     night = 1; focus = { x: 384, y: 344 }; cam.fx = clamp(384 - view.w / 2, 0, WW - view.w); cam.fy = clamp(344 - view.h / 2, 0, WH - view.h); goat.stay = true;
     await fade(false, 2);
     await say(NARR, ['Tonight you turned twelve.', 'In Briar Glen, every child of twelve stands at the reaping stone and asks a wisp to come.', 'None has come since Wen, seventy years ago.']);
-    await say(mum, ['A way is what the stone tells a wisp to do. A waymaker is someone a wisp will listen to.', "Go on, love. Don't say it. Just mean it."]);
-    await meanIt(stone);
+    await say(mum, ['A way is what the stone tells a wisp to do. A waymaker is someone a wisp will listen to.', "Go on, love. The word is \"come\". Mean it, or it's only a word."]);
+    await ritual('come', stone, 'Type COME, and mean it.');
     const w = mkWisp('mid', stone.x, stone.y - 16); w.notag = true; SFX.come(); puff(stone.x, stone.y - 20, 16); await flyTo(w, stone.x, stone.y - 52, 26); await sleep(.4); await flyTo(w, you.x + 2, you.y - 34, 30); w.happy = 3; cheerAll(true); SFX.win(); play(tobiah, 0, 7, 8, 2);
     await sleep(1.6);
     await say(tobiah, ["Well, I'll be reaped. A waymaker. In my lifetime.", "That is Wen's own wisp. It has tasted this field every dawn since she was your age. And it came to you."]);
@@ -803,11 +1043,11 @@
     cheerAll(false); await fade(true, 1.2);
     // ----- the night -----
     for (const f of folk) f.vis = false; for (const p of [tobiah, yusra, you, goat]) p.hide = true; w.follow = false; place(w, stone.x + 14, stone.y - 10); w.dim = .6; w.happy = 0;
-    place(moth, 560, 250); moth.vis = true; await fade(false, 1.2);
+    place(hungryWisp, -5, 300); hungryWisp.vis = true; await fade(false, 1.2);
     await say(NARR, ['That night, while the village slept, something came that eats ways.']);
-    await new Promise((res) => { moth.fly = { x: stone.x + 2, y: stone.y - 26, speed: 46, res }; }); SFX.moth(); await sleep(.5);
+    await new Promise((res) => { hungryWisp.fly = { x: stone.x - 8, y: stone.y - 32, speed: 46, res }; }); bubble(w, "Go away. This is Wen's.", 2); await sleep(2); SFX.breath(); await sleep(.5);
     stone.n = 'way_bit'; puff(stone.x, stone.y - 20, 22); w.dim = 1; await sleep(1.4);
-    await new Promise((res) => { moth.fly = { x: -20, y: 300, speed: 90, res }; }); moth.vis = false;
+    await new Promise((res) => { hungryWisp.fly = { x: 150, y: -24, speed: 90, res }; }); hungryWisp.vis = false;
     await fade(true, 1.2);
     // ----- the morning -----
     night = 0; place(you, 150, 292); you.dir = 0; place(mum, 176, 292); place(tobiah, 232, 296); place(yusra, 500, 214); yusra.weeds = true; place(goat, 128, 300); goat.stay = false;
@@ -817,27 +1057,44 @@
     place(w, stone.x + 20, stone.y - 6); w.dim = .8; focus = null; cam.fx = clamp(you.x - view.w / 2, 0, WW - view.w); cam.fy = clamp(you.y - 16 - view.h / 2, 0, WH - view.h);
     SFX.bell(); await fade(false, 1.4); SFX.bell();
     await say(mum, ["Up, up! Tobiah has been ringing that bell like the river's on fire."]);
-    await say(tobiah, ['The reaping stone has been bitten. Hollow as a drum.', 'The reapers are standing in the field with nothing to cut. Come and see. Quick.']);
+    await say(tobiah, ['The reaping stone has been bitten. Hollow as a drum.', "The reapers are out there tasting as they go. At that rate half of it dries before it's cut. Come and see. Quick."]);
     goal('Follow Tobiah down to the field and look at the reaping stone. Arrow keys or click to walk. Space or click to talk.');
     tobiah.route = [[330, 296], [372, 300], [414, 350]]; mode = 'walk';
     goat.onUse = () => say(goat, [['Meh.'], ['(Remainder has eaten the corner of something. You decide not to ask what.)'], ['Meh.', '(It sounded encouraging.)']][(goat.k = (goat.k || 0) + 1) % 3]);
     mum.onUse = () => say(mum, [["Go on. I'll keep your breakfast warm."], ['I am not worried. This is my not-worried face.']][(mum.k = (mum.k || 0) + 1) % 2]);
     await used(stone);
     mode = 'locked'; goal('');
-    await say(tobiah, ['Grey dust in the hollow. Moth. It ate the way right out of the stone.', "Wen made that way the summer she turned twelve. It has fed us for seventy years.", 'Every night the wheat ripens out from the river. Every morning the ripe stops somewhere new.', "Under the dew, ripe and green look the same. Bite a grain and it tastes of nothing. A wisp can taste the difference. We can't.", 'And ripe wheat has to come off wet. Once the sun dries it, the heads shatter and the grain is in the dirt.', 'So we cut before the dew lifts. Up to the line, and not one plot past it.']);
+    await say(tobiah, ['Grey ash in the hollow. A hungry wisp. It ate the way right out of the stone.']);
+    flickerAt = now;
+    await say(tobiah, ["A wisp whose waymaker died with no stone to wait at. It starves, and it turns. Then it eats ways.", "Not this one. It waited at Wen's stone seventy years, and now it has you.", "Wen made that way the summer she turned twelve. It has fed us for seventy years.", "Every night new ears come ripe, nearest the water first. Every morning the ripe stops somewhere new.", "What we cut this morning is what we eat today. It's spoiled by tonight. There is no store.", "Under the dew, ripe and green look the same. Go on. Pick an ear on that first plot and bite a grain."]);
+    focus = {x: 268, y: 375}; goal('Touch the first plot of the top row.');
+    while (await askPlot(topRow) !== 0) SFX.bad();
+    goal(''); const besideStone={x:you.x,y:you.y};
+    const approach=async (x,y)=>{
+      const from={x:you.x,y:you.y}, start=now, duration=Math.hypot(x-you.x,y-you.y)/100;
+      you.dir=x<you.x?1:2;
+      await until(()=>{const k=clamp((now-start)/duration,0,1);place(you,from.x+(x-from.x)*k,from.y+(y-from.y)*k);you.moving=k<1;you.t=now;return k===1;});
+    };
+    await approach(px(topRow,0),topRow.y-2); stoopAt = now;
+    await sleep(.55); reveal(topRow,0,false); bubble(you,'Ripe.',1.4); await sleep(1.4); await approach(besideStone.x,besideStone.y);
+    await say(tobiah, ["That's how you tell. One plot, easy."]);
+    focus = null;
+    const panLine = say(tobiah, ['There are a thousand rows.']);
+    await fieldPan(false); await panLine;
+    await say(tobiah, ["And ripe wheat has to come off wet. Once the sun dries it, the heads shatter and the grain is in the dirt.", "Wen's way tasted every row for us before the dew lifted, and we cut to where it said."]);
     bubble(w, '...?', 2); await sleep(1.2);
     await say(tobiah, ["Look at the poor thing. Without the stone it doesn't know what to do next.", "It won't hear me. It will hear you. Wen's way was simple: taste this plot, then the next, then the next.", 'Lead it down the top row.']);
     w.dim = 0; const n = await handWay();
-    await say(tobiah, [`${n} tastes, and that is one row out of four.`, 'Every taste, the wisp drinks a sip of our daylight. Daylight the wheat wanted. That is why we are forty people and no more.', 'Forty-one, once. My sister made forty-one.', 'Top row is known. Get cutting!']);
+    await say(tobiah, [`${n} tastes, and that is one row out of a thousand.`, 'Every taste, the wisp drinks a sip of our daylight. Daylight the wheat wanted. That is why we are forty people and no more.', 'Forty-one, once. My sister made forty-one.', 'Top row is known. Get cutting!']);
     const firstCut = reapRow(reaperM, topRow, topRow.line); topRow.nums = false;
-    await say(tobiah, ['You could lead it down every row, every dawn, for the rest of your life. A way in the stone does it without you.', "You could put Wen's way back. It would hold us at forty for another seventy years.", "The stone is empty this morning. If a better way is ever going in, it is today. Yusra knows one. Knows it, can't cast it. She is up the path, by the duck pond.", 'Run. The dew is lifting.']);
+    await say(tobiah, ['You could lead it by hand every dawn, and the dew would be gone before the tenth row. A way in the stone does it without you.', "You could put Wen's way back. It would hold us at forty for another seventy years.", "The stone is empty this morning. If a better way is ever going in, it is today.", "Yusra knows one. Knows it, can't cast it. She is up the path, by the duck pond.", 'Run. The dew is lifting.']);
     tally = null; dewShown = true; dewRun = true; w.follow = true;
     goal('Find Yusra, up the path by the duck pond.'); mode = 'walk';
     await used(yusra);
     goal(''); yusra.weeds = false;
     await lesson(true);
     const toStone = [[556, 214], [556, 292], [424, 298], [356, 352]];
-    await say(yusra, ['Two words before you go. To cast a way is to show the wisps what you mean. To bind it is to leave it in the stone, so it runs every dawn without you.', 'And one more thing.', 'Twenty quiet years. Then the night a wisp comes to you, the moth comes too. Do not think about that yet.', 'That moth eats ways. It goes for the stone first, because stone cannot hide. I can, mostly.', 'You will not have to hide. A waymaker can drive it off. You will learn how.']);
+    await say(yusra, ['Two words before you go. To cast a way is to show the wisps what you mean.', 'To bind it is to leave it in the stone, so it runs every dawn without you.', 'And one more thing.', 'Twenty quiet years. Then the night a wisp comes to you, a hungry one comes too. Do not think about that yet.', 'Hungry wisps eat ways. They go for the stone first, because stone cannot hide. I can, mostly.', 'You will not have to hide. A waymaker can drive one off. You will learn how.']);
     yusra.route = toStone.slice();
     for (;;) {
       goal('Go to the reaping stone when you are ready. Talk to Yusra to practise on a new bed first.');
@@ -854,31 +1111,32 @@
       mode = 'walk';
     }
     dewRun = false; const dewIn = Math.round(dew), lost = clamp(Math.floor((100 - dewIn) / 12), 0, 4);
+    await ritual('open', stone, 'Type OPEN.');
     const how = await cast();
     if (how === 'bound') {
       stone.n = 'way'; puff(stone.x, stone.y - 20, 30); SFX.come(); focus = { x: 392, y: 414 };
       await sleep(.9); bubble(W.mid, 'I know what I am for.', 2.6); await sleep(1.6);
       for (const b of rows) { b.lineAt = b.line; for (let i = 0; i < b.n; i++) b.known[i] = i < b.line ? 1 : 2; }
-      await firstCut;
+      await firstCut; harvestAt = now; await fieldPan(true);
       await Promise.all([reapRow(reaperF, rows[0], Math.max(0, rows[0].line - lost)), reapRow(farmer, rows[1], Math.max(0, rows[1].line - lost)), reapRow(reaperM, rows[2], Math.max(0, rows[2].line - lost))]);
       for (const b of [topRow, ...rows]) { T('basket', b.x0 - 4, b.y + 2, { hw: 8, d: 5 }); b.lineAt = undefined; }
       cheerAll(true); SFX.win(); play(tobiah, 0, 7, 8, 2); await sleep(1.6); focus = null;
-      const fed = 40 + Math.round(16 * Math.max(0, 1 - castTastes / WEN)), lostAll = rows.reduce((t, b) => t + Math.min(lost, b.line), 0);
-      await say(tobiah, castTastes < WEN ? [`${castTastes} tastes for three rows. Wen needed ${WEN}.`, lostAll ? `We lost ${lostAll} plots to the sun while you learned. We will manage.` : 'And not one plot lost to the sun.', 'From tomorrow the far plots get daylight they have never had. More of this field will ripen.', 'When there got to be too many of us for the field, my sister was the one who left. I am writing to her tonight.', 'Wen would have liked you.'] : [`${castTastes} tastes. The same as Wen's.`, lostAll ? `We lost ${lostAll} plots to the sun. But the reapers are cutting, and that is because of you.` : 'The reapers are cutting. Nobody goes hungry today, and that is because of you.', 'Maybe there is a cheaper way. There is time to look for it now.']);
+      const fed = 40 + Math.round(16 * (1 - fieldCost / 12960)), lostAll = rows.reduce((t, b) => t + Math.min(lost, b.line), 0);
+      await say(tobiah, fieldCost < 12960 ? [`About ${fieldText()} tastes for the whole field. Wen's needed thirteen thousand.`, lostAll ? `Every row lost ${lost} plots to the sun while you learned. Across the field that's ${lost} thousand plots. We will manage.` : 'And not one plot lost to the sun.', 'From tomorrow the far plots get daylight they have never had. More of this field will ripen.', 'When there got to be too many of us for the field, my sister was the one who left. I am writing to her tonight.', 'Wen would have liked you.'] : [`About ${fieldText()} tastes across the field. The same as Wen's.`, lostAll ? `Every row lost ${lost} plots to the sun. But the reapers are cutting, and that is because of you.` : 'The reapers are cutting. Nobody goes hungry today, and that is because of you.', 'Maybe there is a cheaper way. There is time to look for it now.']);
       W.mid.follow = false; await flyTo(W.mid, yusra.x + 4, yusra.y - 34, 120); bubble(W.mid, 'Your way.', 2.2); await sleep(1.6);
-      await say(yusra, ['Twenty years. So that is what it looks like.', 'It is in the stone now, and in you. Two places, and one of them can fight.', 'The moth will be back. They always come back. When it does, you will know this one cold.']);
+      await say(yusra, ['Twenty years. So that is what it looks like.', 'It is in the stone now, and in you. Two places, and one of them can fight.', 'The hungry wisp will be back. They always come back. When it does, you will know this one cold.']);
       W.mid.follow = true; place(mum, you.x - 18, you.y + 4);
       await say(mum, ["You didn't eat breakfast.", '...I am so proud I could burst. Now eat something.']);
       cheerAll(false); await fade(true, 1); night = .55; boy.vis = true; place(boy, Math.max(10, you.x - 240), you.y + 2); await say(NARR, ['That evening.']); await fade(false, 1);
       await new Promise((res) => { boy.fly = { x: you.x - 26, y: you.y + 2, speed: 120, res }; }); boy.hop = .6;
-      await say(boy, ['Is that a waymaker? I saw your stone light up from the river.', 'I am from Harrow. I was running for the city. Our waymaker was called there a year ago.', "Our ferry stone was bitten two nights back. The boats can't find the channel.", 'It was a grey moth, big as a hand. It flew upriver.']);
+      await say(boy, ['Is that a waymaker? I saw your stone light up from the river.', 'I am from Harrow. I was running for the city. Our waymaker was called there a year ago.', "Our ferry stone was bitten two nights back. The boats can't find the channel.", 'It was a hungry wisp. Dark, like a hole with a coal in it. It flew upriver.']);
       await say(yusra, ['Ours.']);
       await say(boy, ['Please. We have nobody.']);
-      ending(castTastes < WEN ? 'Room at the table' : 'The line holds', `<div class="nums"><div>Wen's way<b>${WEN}</b>tastes each dawn</div><div>Your way<b>${castTastes}</b>tastes each dawn</div><div>Briar Glen can feed<b>${fed}</b>people (it was 40)</div></div><p>You went in with ${dewIn}% of the dew left. ${lostAll ? lostAll + ' ripe plots dried out before they could be cut.' : 'No ripe wheat was lost.'}</p><p>On Earth this way is called <b>binary search</b>. It is how a database finds one record among millions, and how programmers find the first broken version of their code. The three wisps are its three variables: <b>lo</b>, <b>hi</b> and <b>mid</b>.</p><p>Next: Harrow.</p>`);
+      ending(fieldCost < 12960 ? 'Room at the table' : 'The line holds', `<div class="nums"><div>Wen's way<b>about 13,000</b>tastes each dawn</div><div>Your way<b>about ${fieldText()}</b>tastes each dawn</div><div>Briar Glen can feed<b>${fed}</b>people (it was 40)</div></div><small>On the three rows you cast: ${castTastes} tastes, against Wen's 44.</small><p>You went in with ${dewIn}% of the dew left. ${lostAll ? lost + ' ripe plots on every row dried out before they could be cut.' : 'No ripe wheat was lost.'}</p><p>On Earth this way is called <b>binary search</b>. It is how a database finds one record among millions, and how programmers find the first broken version of their code. The three wisps are its three variables: <b>lo</b>, <b>hi</b> and <b>mid</b>.</p><p>Next: Harrow.</p>`);
     } else {
       await sleep(1.5);
       await say(yusra, ['The stone has shut.', 'The order sent a waymaker on the third day. Until then we shared what there was. Nobody starved. It was close.', 'Tomorrow, sit with me again. You can still learn this one.']);
-      ending('Three thin days', '<p>The reapers guessed where the line was. Some cut green wheat, and some ripe wheat dried and shattered.</p><p>The way can be learned again another morning.</p>');
+      ending('Three thin days', '<p>The reapers tasted as they went. It took them twice as long, and by the time the dew lifted, half the ripe wheat was still standing. There was food for half the village, and everyone shared it.</p><p>The way can be learned again another morning.</p>');
     }
   };
 
@@ -891,5 +1149,5 @@
   const begin = () => { if (begun || !ready) return; begun = true; try { AC = new (window.AudioContext || window.webkitAudioContext)(); if (AC.state !== 'running') AC.resume(); } catch (e) { AC = null; } SFX.bell(); $('title').hidden = true; story(); };
   $('begin').addEventListener('click', begin);
   for (const ev of ['pointerdown', 'keydown']) addEventListener(ev, () => { if (AC && AC.state !== 'running') AC.resume(); }, true);
-  window.GAME = { mean: () => { if (meanReq) { holding = true; meanReq.p = 1; } }, topRow, audio: () => AC && AC.state, you, yusra, tobiah, stone, mum, rows, pbed, wisps, W, cam, view, px, begin, state: () => ({ mode, talking: talking && (talking.name || 'narrator'), line: talking ? lines[li] : null, req: req && req.kind, held: held && held.w.kind, casting, light: Math.round(light), goal: $('goal').textContent, rules, running, night }), click: (wx, wy) => { const r = cv.getBoundingClientRect(); return { clientX: r.left + (wx - cam.x) / view.w * r.width, clientY: r.top + (wy - cam.y) / view.h * r.height }; }, next: nextLine, tp: (x, y) => { you.x = x; you.y = y; }, use, resolvePlot: (i) => { if (req && req.kind === 'plot') { const r = req; req = null; r.resolve(i); return true; } return false; }, resolveWisp: (who, index) => { if (req && req.kind === 'wisp') { const r = req; req = null; held = null; r.resolve({ who, index }); return true; } return false; }, tick: (sec) => { for (let t = 0; t < sec; t += .04) update(.04); draw(); } };
+  window.GAME = { type: word=>{for(const c of word)typeLetter(c);}, field:()=>fieldCost, mute:v=>{muted=v;}, topRow, audio: () => AC && AC.state, you, yusra, tobiah, stone, mum, rows, pbed, wisps, W, cam, view, px, begin, state: () => ({ word:typing?.word, letters:typing?.n, pan:pan && (pan.bound?"harvest":"morning"), helpRung, mode, talking: talking && (talking.name || 'narrator'), line: talking ? lines[li] : null, req: req && req.kind, held: held && held.w.kind, casting, light: Math.round(light), goal: $('goal').textContent, rules, running, night }), click: (wx, wy) => { const r = cv.getBoundingClientRect(); return { clientX: r.left + (wx - cam.x) / view.w * r.width, clientY: r.top + (wy - cam.y) / view.h * r.height }; }, next: nextLine, tp: (x, y) => { you.x = x; you.y = y; }, use, resolvePlot: (i) => { clearTarget(); if (req && req.kind === 'plot') { const r = req; req = null; r.resolve(i); return true; } return false; }, resolveWisp: (who, index) => { if (req && req.kind === 'wisp') { const r = req; req = null; held = null; r.resolve({ who, index }); return true; } return false; }, tick: (sec) => { for (let t = 0; t < sec; t += .04) update(.04); draw(); } };
 })();
