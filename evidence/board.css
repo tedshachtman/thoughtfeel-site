@@ -1,6 +1,6 @@
 /* Board styles, authored in stage pixels on the 1920 × 1080 stage (board.js scales it to the screen).
    Rules: words students read are 44 px or larger; one thing in focus, the rest dimmed; orange is always part 1,
-   blue is always part 2, purple is always the circle around the big word. */
+   blue is always part 2, purple is always the circle around the big idea. */
 #stage {
   --ink: #2a2320; --paper: #fff8e6; --edge: #5b4433; --shadow: #150f1fcc;
   --purple: #7b45b8; --green: #2f7d4f; --red: #a8432f;

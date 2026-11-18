@@ -18,7 +18,7 @@ export const slides = [
     "name": "The three steps",
     "steps": [
       "Essay writers explain their evidence in three steps.",
-      "Step one. Circle the big word. That's the word your whole claim depends on.",
+      "Step one. Circle the big idea. That's the idea your whole claim depends on.",
       "Step two. Say what it means, in your own words.",
       "Step three. Show where it is in the evidence.",
       "Watch me do all three."
@@ -30,7 +30,7 @@ export const slides = [
       "Here's my claim. 'A Different Pond teaches that families make sacrifices for each other.'",
       "Here's my evidence. Dad wakes up hours before the sun comes up. He goes fishing so his family will have dinner. Then he goes to work.",
       "If I stop here, my reader is still wondering, 'How does that show a sacrifice?' So I explain.",
-      "Step one. Circle the big word. My whole claim depends on 'sacrifices.' So I circle it.",
+      "Step one. Circle the big idea. My whole claim depends on 'sacrifices.' So I circle it.",
       "Step two. Say what it means. A sacrifice is when you give up something you want, to help someone else.",
       "So a sacrifice has two parts. Something you give up. And someone you help.",
       "Step three. Show where it is in the evidence. I look for both parts.",
@@ -55,7 +55,7 @@ export const slides = [
     "name": "Partner try: helpful",
     "steps": [
       "Now you try it with your partner. Same book, new claim. 'The boy in A Different Pond is helpful.'",
-      "Step one. What's the big word? Yes, helpful. I'll circle it.",
+      "Step one. What's the big idea? Yes, helpful. I'll circle it.",
       "Step two. Say what it means. Being helpful means doing some of the work, so someone else has less to do. Two parts. Work you do. And someone who has less to do.",
       "Step three. Show where it is in the evidence. Each pair has three strips. Each one is something that happens in the book. I'll read them. A. While Dad sets up, the boy gathers twigs and builds the fire. B. Dad tells the boy about fishing at a pond in Vietnam. C. Dad catches a fish. The boy uses two hands to help guide it into the bucket.",
       "Two of these strips show the boy is helpful. One doesn't. Check each strip for the two parts. Is the boy doing work? Does someone have less to do? Find the strip that doesn't have both parts, and hold it up. Go.",
@@ -67,10 +67,10 @@ export const slides = [
   {
     "name": "Your turn: hardworking",
     "steps": [
-      "So today, and every time you write an essay, don't stop at the evidence. Circle the big word. Say what it means. Show where it is in the evidence.",
+      "So today, and every time you write an essay, don't stop at the evidence. Circle the big idea. Say what it means. Show where it is in the evidence.",
       "On your sheet is one more claim, about Dad. 'The dad in A Different Pond is hardworking.'",
       "Here's the evidence. At the bait store, Dad says he got a second job. He has to work on a Saturday morning.",
-      "Do the three steps. Circle the big word. Tell your partner what it means. Then write your explanation in purple pen. The sentence starters on the sheet will help.",
+      "Do the three steps. Circle the big idea. Tell your partner what it means. Then write your explanation in purple pen. The sentence starters on the sheet will help.",
       "When you finish, take out your own essay. Pick one piece of evidence. Do the same three steps. Off you go."
     ]
   },
@@ -84,10 +84,10 @@ export const slides = [
   {
     "name": "Share and close",
     "steps": [
-      "Writers, finish the sentence you're on. Read your explanation to your partner. Partners, listen for two things. Does it say what the big word means? Does it show where that is in the evidence?",
+      "Writers, finish the sentence you're on. Read your explanation to your partner. Partners, listen for two things. Does it say what the big idea means? Does it show where that is in the evidence?",
       "Now pick your best sentence. Copy it onto a sticky note, and put your name on it.",
-      "Who will read theirs to the class? Say your name first. … [Name] said what the big word means. Then [name] showed where it is in the evidence. That's an explanation.",
-      "Here's what I want you to remember. Evidence doesn't explain itself. You explain it. Circle the big word. Say what it means. Show where it is in the evidence.",
+      "Who will read theirs to the class? Say your name first. … [Name] said what the big idea means. Then [name] showed where it is in the evidence. That's an explanation.",
+      "Here's what I want you to remember. Evidence doesn't explain itself. You explain it. Circle the big idea. Say what it means. Show where it is in the evidence.",
       "Bring your sticky note up and put it on the chart. Thank you, writers. Thank you, Mrs. Lazar."
     ]
   }
@@ -96,7 +96,7 @@ export const slides = [
 export const prompts = [
   [
     "To get a student started",
-    "Read me the claim. What's your big word? · What does hardworking mean? Say it in your own words. · Now look at the evidence. Where is that in the evidence? Say it to me. · Good. Now write what you just said."
+    "Read me the claim. What's your big idea? · What does hardworking mean? Say it in your own words. · Now look at the evidence. Where is that in the evidence? Say it to me. · Good. Now write what you just said."
   ],
   [
     "If a student can't say what the word means",
@@ -112,7 +112,7 @@ export const prompts = [
   ],
   [
     "If a student is done",
-    "You explained your evidence. Now take out your own essay. Read me your claim. What's your big word? Which piece of evidence will you explain?"
+    "You explained your evidence. Now take out your own essay. Read me your claim. What's your big idea? Which piece of evidence will you explain?"
   ]
 ];
 
@@ -122,7 +122,7 @@ export const boardCopy = {
   labels: ["CLAIM", "EVIDENCE", "EXPLANATION"], question: "?",
   readerQuestion: "How does that prove your claim?",
   stepsHeading: "Explain your evidence in 3 steps",
-  steps: ["Circle the big word.", "Say what it means.", "Show where it is in the evidence."],
+  steps: ["Circle the big idea.", "Say what it means.", "Show where it is in the evidence."],
   modelClaim: ["A Different Pond teaches that families make ", "sacrifices", " for each other."],
   modelEvidence: [["Dad ", "wakes up hours before the sun comes up", "."], ["He goes fishing ", "so his family will have dinner", "."], "Then he goes to work."],
   storeSign: "OPEN",
@@ -146,9 +146,9 @@ export const boardCopy = {
   frame: "Helpful means ___. In this part, ___. So this shows ___.",
   workClaim: "The dad in A Different Pond is hardworking.",
   workEvidence: "At the bait store, Dad says he got a second job. He has to work on a Saturday morning.",
-  directions: ["Circle the big word (purple pen).", "Tell your partner what it means.", "Write your explanation (purple pen)."],
+  directions: ["Circle the big idea (purple pen).", "Tell your partner what it means.", "Write your explanation (purple pen)."],
   finished: "Finished?", extra: "Your own essay. Pick one piece of evidence. Same three steps.",
-  share: "Read your explanation to your partner.", checks: ["Says what the big word means", "Shows where it is in the evidence"],
+  share: "Read your explanation to your partner.", checks: ["Says what the big idea means", "Shows where it is in the evidence"],
   note: "Best sentence → sticky note → your name",
   close: "Evidence doesn't explain itself. You explain it.", thanks: "Thank you, writers!"
 };
